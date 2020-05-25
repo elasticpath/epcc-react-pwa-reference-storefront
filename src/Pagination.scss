@@ -1,0 +1,17 @@
+
+.pagination {
+  &__link {
+    font-size: 18px;
+    color: hsl(0, 0, 30%);
+    padding: 12px;
+    text-decoration: none;
+
+    &--current {
+      color: hsl(0, 0, 70%);
+    }
+  }
+
+  &__ellipsis {
+    color: hsl(0, 0, 70%);
+  }
+}

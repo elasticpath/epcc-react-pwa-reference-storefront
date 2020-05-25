@@ -1,0 +1,12 @@
+{
+  "public": "build",
+  "rewrites": [
+    { "source": "**", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source" : "**/static/**",
+      "headers" : [{ "key" : "Cache-Control", "value" : "max-age=7200000" }]
+    }
+  ]
+}
