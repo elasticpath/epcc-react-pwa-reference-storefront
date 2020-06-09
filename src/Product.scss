@@ -59,6 +59,10 @@
         margin-top: 20px;
         width: 200px;
       }
+
+      #{$block}__moltinbtncontainer {
+        margin-top: 20px;
+      }
     }
   }
 }

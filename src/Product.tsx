@@ -38,7 +38,12 @@ export const Product: React.FC = () => {
                 {product.meta.stock.availability === 'in-stock' ? 'Available' : 'Out of stock'}
               </div>
               <div className="product__separator"></div>
-              <button className="product__addtocartbtn epbtn --primary --large">Add To Cart</button>
+              <div className="product__moltinbtncontainer">
+                <span
+                  className="moltin-buy-button"
+                  data-moltin-product-id={product.id}
+                ></span>
+              </div>
             </>
           )}
         </div>
