@@ -1,44 +1,78 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<img src="https://www.elasticpath.com/themes/custom/bootstrap_sass/logo.svg" alt="" width="400" />
 
-## Available Scripts
+# REACT PWA Reference Storefront
 
-In the project directory, you can run:
+[![Netlify Status](https://api.netlify.com/api/v1/badges/174a486c-d1d9-4c2c-8434-94c30708c07d/deploy-status)](https://app.netlify.com/sites/modest-hodgkin-ae0fe0/deploys)
+[![Stable Branch](https://img.shields.io/badge/stable%20branch-master-blue.svg)](https://github.com/elasticpath/epcc-react-pwa-reference-storefront)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/elasticpath/epcc-react-pwa-reference-storefront/issues)
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![follow on Twitter](https://img.shields.io/twitter/follow/elasticpath?style=social&logo=twitter)](https://twitter.com/intent/follow?screen_name=elasticpath)
 
-### `yarn start`
+## Overview 🚀
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The Elastic Path Commerce Cloud REACT PWA Reference Storefront is a flexible e-commerce website built on Elastic Path’s RESTful e-commerce API. The storefront uses the e-commerce capabilities provided by Elastic Path Commerce Cloud and gets data in a RESTful manner.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+[Demo](http://epcc-reference.elasticpath.com/)
 
-### `yarn test`
+## Documentation 📖
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+You need an Elastic Path Commerce Cloud platform which is used as the backend of this storefront.
 
-### `yarn build`
+**Note**: If you are running a Windows environment, launch the Windows Subsystem for Linux application and perform the following steps from the console window.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+# Clone the Git repository
+git clone https://github.com/elasticpath/epcc-react-pwa-reference-storefront.git
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+# Go into the cloned directory
+cd epcc-react-pwa-reference-storefront
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Install all the dependencies for all sub-project and create necessary symlinks in-between them
+yarn
 
-### `yarn eject`
+# Configure the ./src/config.ts file.
+# For more information, see Configuration Parameter Descriptions.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# Start the app in development mode
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Run the main application:
+yarn start
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+# Builds the app for production to the build folder:
+yarn build
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Contributors ✨
 
-## Learn More
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/shaunmaharaj"><img src="https://avatars3.githubusercontent.com/u/39800563?v=4" width="100px;" alt=""/><br /><sub><b>Shaun Maharaj</b></sub></a><br /><a href="https://github.com/elasticpath/epcc-react-pwa-reference-storefront/commits?author=shaunmaharaj" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/dusanradovanovic"><img src="https://avatars3.githubusercontent.com/u/41649443?v=4" width="100px;" alt=""/><br /><sub><b>Dusan Radovanovic</b></sub></a><br /><a href="https://github.com/elasticpath/epcc-react-pwa-reference-storefront/commits?author=dusanradovanovic" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/aChanEP"><img src="https://avatars3.githubusercontent.com/u/25829859?v=4" width="100px;" alt=""/><br /><sub><b>aChanEP</b></sub></a><br /><a href="https://github.com/elasticpath/epcc-react-pwa-reference-storefront/commits?author=aChanEP" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/rostyk-kanafotskyy"><img src="https://avatars3.githubusercontent.com/u/34774987?v=4" width="100px;" alt=""/><br /><sub><b>Rostyk</b></sub></a><br /><a href="https://github.com/elasticpath/epcc-react-pwa-reference-storefront/commits?author=rostyk-kanafotskyy" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/petro97"><img src="https://avatars3.githubusercontent.com/u/34708483?v=4" width="100px;" alt=""/><br /><sub><b>Dubno Petro</b></sub></a><br /><a href="https://github.com/elasticpath/epcc-react-pwa-reference-storefront/commits?author=petro97" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/yulia-dnistrian"><img src="https://avatars3.githubusercontent.com/u/12392532?v=4" width="100px;" alt=""/><br /><sub><b>yulia-dnistrian</b></sub></a><br /><a href="https://github.com/elasticpath/epcc-react-pwa-reference-storefront/commits?author=yulia-dnistrian" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/skarpyak"><img src="https://avatars3.githubusercontent.com/u/8594755?v=4" width="100px;" alt=""/><br /><sub><b>Sergii Karpiak</b></sub></a><br /><a href="https://github.com/elasticpath/epcc-react-pwa-reference-storefront/commits?author=skarpyak" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/BonnieEP"><img src="https://avatars3.githubusercontent.com/u/49495842?v=4" width="100px;" alt=""/><br /><sub><b>Bonnie Bishop</b></sub></a><br /><a href="https://ui-components.elasticpath.com" title="Design">🎨</td>
+    <td align="center"><a href="https://github.com/JenSmith-EP"><img src="https://avatars3.githubusercontent.com/u/58435007?v=4" width="100px;" alt=""/><br /><sub><b>Jen Smith</b></sub></a><br /><a href="https://documentation.elasticpath.com/storefront-react" title="Documentation">📖</a></td>
+  </tr>
+</table>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+## Terms And Conditions
+
+- Any changes to this project must be reviewed and approved by the repository owner. For more information about contributing, see the [Contribution Guide](https://github.com/elasticpath/epcc-react-pwa-reference-storefront/blob/master/.github/CONTRIBUTING.md).
+- For more information about the license, see [GPLv3 License](https://github.com/elasticpath/epcc-react-pwa-reference-storefront/blob/master/LICENSE).
