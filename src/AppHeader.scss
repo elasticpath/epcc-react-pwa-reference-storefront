@@ -1,0 +1,15 @@
+
+.appheader {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  align-items: center;
+
+  &__logo {
+    flex: 1;
+  }
+
+  &__moltincartcontainer {
+    flex: 0 0 auto;
+  }
+}
