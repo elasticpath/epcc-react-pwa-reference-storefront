@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import './AppHeader.scss';
 
-import headerLogo from './images/Company-Logo.svg';
+import headerLogo from './images/site-images/Company-Logo.svg';
 
 export const AppHeader: React.FC = (props) => {
   return (
