@@ -1,0 +1,68 @@
+@import './theme/common';
+
+.app-footer {
+  position: relative;
+  background-color: $mainColor;
+  color: $mainNavigationColor;
+  padding: 30px 30px 40px;
+
+  .share-icon {
+    width: 16px;
+    height: 18px;
+    fill: $mainBackgroundColor;
+    margin: 0 10px 7px 0;
+    vertical-align: top;
+  }
+
+  .title {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  .first-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    .footer-column {
+      flex: 1;
+      max-width: 250px;
+      margin: 20px;
+
+      .content {
+        opacity: 0.7;
+        color: $mainNavigationColor;
+
+        a {
+          display: block;
+          color: inherit;
+        }
+      }
+    }
+  }
+
+  .second-row {
+    display: none;
+  }
+
+  @media (max-width: $mobileWidth - 1px) {
+    .footer-column.social {
+      display: none;
+    }
+
+    .second-row {
+      display: block;
+      text-align: center;
+      padding-top: 20px;
+
+      .share-icon {
+        width: 21px;
+        height: 24px;
+        fill: $mainNavigationColor;
+        margin: 0 20px;
+      }
+    }
+  }
+}

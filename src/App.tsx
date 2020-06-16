@@ -5,6 +5,7 @@ import { routes } from './routes';
 import { config } from './config';
 import { AppState } from './AppState';
 import { AppHeader } from './AppHeader';
+import { AppFooter } from './AppFooter';
 import { NavMenu } from './NavMenu';
 import './App.scss';
 
@@ -33,6 +34,7 @@ const App: React.FC = () => {
             </Switch>
           </div>
           <div className="app__footer">
+            <AppFooter />
           </div>
         </div>
       </AppState>
