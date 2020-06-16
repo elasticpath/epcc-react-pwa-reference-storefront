@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import useScript from 'react-script-hook';
 import { routes } from './routes';
 import { config } from './config';
-import { AppState } from './AppState';
+import { AppStateProvider } from './app-state';
 import { AppHeader } from './AppHeader';
 import { AppFooter } from './AppFooter';
 import { NavMenu } from './NavMenu';
+import { CompareOverlay } from './CompareOverlay';
 import './App.scss';
 
 const App: React.FC = () => {
@@ -18,7 +19,7 @@ const App: React.FC = () => {
 
   return (
     <Router>
-      <AppState>
+      <AppStateProvider>
         <div className="app">
           <div className="app__header">
             <AppHeader />
@@ -36,8 +37,11 @@ const App: React.FC = () => {
           <div className="app__footer">
             <AppFooter />
           </div>
+          <div className="app__compareoverlay">
+            <CompareOverlay />
+          </div>
         </div>
-      </AppState>
+      </AppStateProvider>
     </Router>
   );
 };

@@ -1,10 +1,11 @@
 import React from 'react';
-import { useResolve } from './hooks';
-import { loadImageHref, Product } from './service';
-
-import './ProductThumbnail.scss';
+import { Product } from './service';
 import { createProductUrl } from './routes';
 import { Link } from 'react-router-dom';
+import { CompareCheck } from './CompareCheck';
+
+import './ProductThumbnail.scss';
+import { ProductMainImage } from './ProductMainImage';
 
 
 interface ProductThumbnailProps {
@@ -12,17 +13,13 @@ interface ProductThumbnailProps {
 }
 
 export const ProductThumbnail: React.FC<ProductThumbnailProps> = (props) => {
-  const productMainImageId = props.product.relationships?.main_image?.data?.id;
   const productUrl = createProductUrl(props.product.slug);
-  const [imageUrl] = useResolve(() => loadImageHref(productMainImageId), [productMainImageId]);
 
   return (
     <div className="productthumbnail">
-      <div className="productthumbnail__imgcontainer" style={{ backgroundColor: props.product.background_color }}>
+      <div className="productthumbnail__imgcontainer">
         <Link className="productthumbnail__imglink" to={productUrl}>
-          {imageUrl && (
-            <img className="productthumbnail__img" src={imageUrl} alt={props.product.name} />
-          )}
+          <ProductMainImage product={props.product} size={160} />
         </Link>
       </div>
       <div className="productthumbnail__name">
@@ -35,6 +32,9 @@ export const ProductThumbnail: React.FC<ProductThumbnailProps> = (props) => {
       </div>
       <div className="productthumbnail__availability">
         {props.product.meta.stock.availability === 'in-stock' ? 'Available' : 'Out of stock'}
+      </div>
+      <div className={`productthumbnail__comparecheck`}>
+        <CompareCheck product={props.product} />
       </div>
     </div>
   );

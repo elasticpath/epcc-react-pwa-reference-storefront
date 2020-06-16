@@ -31,24 +31,53 @@ $btnColor: hsl(190, 70%, 35%);
   padding: 8px 10px;
   font-size: 14px;
   background-color: white;
-  border: 1px solid $btnColor;
+  border: 1px solid transparent;
   color: $btnColor;
   cursor: pointer;
-  box-shadow: 0 1px 3px change-color($color: $btnColor, $lightness: 20%, $alpha: 0.3);
+
+  &.--bordered {
+    border: 1px solid $btnColor;
+  }
+
+  &.--shading {
+    box-shadow: 0 1px 3px change-color($color: $btnColor, $lightness: 20%, $alpha: 0.3);
+  }
+
+  &.--primary {
+    background-color: $btnColor;
+    color: white;
+
+    &:hover {
+      background-color: adjust-color($color: $btnColor, $lightness: 5%);
+    }
+
+    &:active {
+      background-color: adjust-color($color: $btnColor, $lightness: -5%);
+    }
+  }
 
   &:hover {
     background-color: change-color($color: $btnColor, $saturation: 40%, $lightness: 95%);
   }
 
   &:focus {
-    background-color: white;
-    border: 1px solid $btnColor;
     box-shadow: 0 0 0px 2px change-color($color: $btnColor, $saturation: 35%, $lightness: 75%);
   }
 
   &:active {
     top: 1px;
     background-color: change-color($color: $btnColor, $saturation: 20%, $lightness: 85%);
+  }
+
+  &:disabled {
+    border: none;
+    background-color: hsl(0, 0, 90%);
+    color: hsl(0, 0, 70%);
+    box-shadow: none;
+
+    &:hover {
+      background-color: hsl(0, 0, 90%);
+    }
   }
 
   &.--small {
@@ -59,20 +88,6 @@ $btnColor: hsl(190, 70%, 35%);
   &.--large {
     padding: 12px 16px;
     font-size: 16px;
-  }
-
-  &.--primary {
-    background-color: $btnColor;
-    border: none;
-    color: white;
-
-    &:hover {
-      background-color: adjust-color($color: $btnColor, $lightness: 5%);
-    }
-
-    &:active {
-      background-color: adjust-color($color: $btnColor, $lightness: -5%);
-    }
   }
 }
 

@@ -17,12 +17,6 @@
 
     #{$block}__imgcontainer {
       flex: 0 0 $imgSize;
-
-      #{$block}__img {
-        width: $imgSize;
-        height: $imgSize;
-        object-fit: cover;
-      }
     }
 
     #{$block}__details {
@@ -48,6 +42,10 @@
         padding: 8px 14px;
         border: 1px solid hsl(0, 0, 80%);
         border-radius: 16px;
+      }
+
+      #{$block}__comparecheck {
+        margin-top: 20px;
       }
 
       #{$block}__separator {

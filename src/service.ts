@@ -23,6 +23,13 @@ export interface FormattedPrice {
   formatted: string;
 }
 
+export interface Weight {
+  g: number,
+  kg: number,
+  lb: number,
+  oz: number,
+}
+
 export interface ProductBase {
   id: string;
   type: string;
@@ -44,10 +51,10 @@ export interface ProductBase {
       availability: 'in-stock' | 'out-stock';
     };
     display_price: {
-      whith_tax: FormattedPrice;
+      with_tax: FormattedPrice;
       without_tax: FormattedPrice;
     };
-    variations: any[];
+    variations?: any[];
   };
   relationships: {
     main_image: {
@@ -56,19 +63,23 @@ export interface ProductBase {
         type: string;
       };
     };
+    categories?: any;
+    collections?: any;
+    brands?: any;
   };
 }
 
 export interface Product extends ProductBase {
   background_color: string;
-  background_colour: string;
+  background_colour: string | null;
   bulb: string;
   bulb_qty: string;
   finish: string;
   material: string;
   max_watt: string;
-  new: string;
-  on_sale: string;
+  new: string | null;
+  on_sale: string | null;
+  weight: Weight;
 }
 
 export interface Pagination {
