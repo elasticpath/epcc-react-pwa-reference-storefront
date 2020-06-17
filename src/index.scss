@@ -1,6 +1,7 @@
 @import './../node_modules/css-reset-and-normalize/scss/reset-and-normalize.scss';
 @import './../node_modules/css-reset-and-normalize/scss/button-reset.scss';
 @import './../node_modules/css-reset-and-normalize/scss/link-reset.scss';
+@import './theme/common';
 
 html {
   height: 100%;
@@ -131,4 +132,144 @@ $btnColor: hsl(190, 70%, 35%);
 
 .static-container {
   padding-bottom: 60px;
+}
+
+$shopkitBtnColor: $buttonActiveColor;
+$shopkitBtnColorBorder: $buttonFocusColor;
+$shopkitBtnColorOutline: $mainBackgroundColor;
+$shopkitBtnOutlineBorder: $secondComplimentColor;
+$shopkitBtnOutlineText: $firstComplimentColor;
+
+@mixin shopkitBtn($bg, $border, $color: $mainBackgroundColor) {
+  border: 1px solid $border;
+  background: $bg;
+  color: $color;
+  border-radius: 0;
+  padding: 10px 15px;
+  font-size: 13px;
+  font-family: inherit;
+}
+
+.moltin-shopkit.shopkit-modal {
+
+  font-family: inherit;
+  padding: 32px;
+
+  .shopkit-primary {
+    background: $shopkitBtnColor;
+    border-radius: unset;
+    font-family: inherit;
+  }
+
+  button[class^="Header__ActionButton"] {
+    position: absolute;
+    top: 38px;
+  }
+
+  h2[class^="typography__Heading"] {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 34px;
+    padding-bottom: 50px;
+  }
+
+  div[class^="CartItem__PhotoBox"] {
+    border-radius: unset;
+  }
+
+  p[class^="CartItem__ProductName"] {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  button[class^="Button__TextButton"] {
+    font-weight: bold;
+    font-size: 13px !important;
+    color: $shopkitBtnOutlineText;
+    text-decoration: none;
+  }
+
+  label[class^="Label__StyledLabel"] {
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  span[class^="Cart__CartTotalTitle"] {
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  span[class^="Cart__CartTotalSubTotal"] {
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  div[class^="QuantityStepper__Wrapper"] {
+    margin-right: 10px;
+  }
+
+  div[class^="AddressFields__FieldsWrapper"], div[class^="Checkout__Wrapper"] {
+    label[class^="Label__StyledLabel"] {
+      font-weight: normal;
+    }
+  }
+
+  div[class^="Select__SelectWrapper"] {
+    select {
+      border-radius: 3px;
+    }
+
+    div[class^="Select__Icon"] {
+      background-color: transparent;
+    }
+  }
+
+  input[class^="Input__StyledInput"], .ap-nostyle-input {
+    &:focus {
+      border: 1px solid $shopkitBtnOutlineBorder;
+    }
+  }
+
+  .ap-nostyle-dropdown-menu {
+    border: 1px solid $shopkitBtnOutlineBorder;
+
+    .ap-nostyle-suggestion:hover, .ap-nostyle-cursor {
+      background-color: rgba(25, 124, 147, 0.1);
+    }
+  }
+
+  div[class^="PromotionManager__Wrapper"] {
+    .shopkit-primary-button {
+      @include shopkitBtn(
+        $shopkitBtnColorOutline,
+        $shopkitBtnOutlineBorder,
+        $shopkitBtnOutlineText
+      );
+    }
+  }
+
+  form {
+    input:not([type="checkbox"]) {
+      height: 40px;
+    }
+  }
+}
+
+.product .shopkit-buy-button {
+  @include shopkitBtn(
+    $shopkitBtnColor,
+    $shopkitBtnColorBorder
+  );
+  padding-left: 35px;
+  padding-right: 35px;
+}
+
+.appheader .shopkit-cart-button {
+  @include shopkitBtn(
+    $shopkitBtnColorOutline,
+    $shopkitBtnOutlineBorder,
+    $shopkitBtnOutlineText
+  );
 }
