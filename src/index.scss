@@ -1,6 +1,7 @@
 @import './../node_modules/css-reset-and-normalize/scss/reset-and-normalize.scss';
 @import './../node_modules/css-reset-and-normalize/scss/button-reset.scss';
 @import './../node_modules/css-reset-and-normalize/scss/link-reset.scss';
+@import './theme/common';
 
 html {
   height: 100%;
@@ -133,13 +134,13 @@ $btnColor: hsl(190, 70%, 35%);
   padding-bottom: 60px;
 }
 
-$shopkitBtnColor: #4C5666;
-$shopkitBtnColorBorder: #979797;
-$shopkitBtnColorOutline: #FFFFFF;
-$shopkitBtnOutlineBorder: #228197;
-$shopkitBtnOutlineText: #197C93;
+$shopkitBtnColor: $buttonActiveColor;
+$shopkitBtnColorBorder: $buttonFocusColor;
+$shopkitBtnColorOutline: $mainBackgroundColor;
+$shopkitBtnOutlineBorder: $secondComplimentColor;
+$shopkitBtnOutlineText: $firstComplimentColor;
 
-@mixin shopkitBtn($bg, $border, $color: #FFFFFF) {
+@mixin shopkitBtn($bg, $border, $color: $mainBackgroundColor) {
   border: 1px solid $border;
   background: $bg;
   color: $color;
