@@ -26,6 +26,8 @@ Before you begin, ensure that you have the following accounts set up:
 - [Elastic Path Commerce Cloud account](https://dashboard.elasticpath.com/login)
 - [Stripe account](https://dashboard.stripe.com/) - Stripe is used as the payment gateway. From your [Dashboard](https://dashboard.elasticpath.com), configure Stripe as the payment gateway from your.
 
+### Start Building the Storefront
+
 **Note**: If you are running a Windows environment, launch the Windows Subsystem for Linux application and perform the following steps from the console window.
 
 ```bash
