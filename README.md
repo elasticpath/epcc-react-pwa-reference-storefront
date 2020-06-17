@@ -2,7 +2,7 @@
 
 # REACT PWA Reference Storefront
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/174a486c-d1d9-4c2c-8434-94c30708c07d/deploy-status)](https://app.netlify.com/sites/modest-hodgkin-ae0fe0/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/174a486c-d1d9-4c2c-8434-94c30708c07d/deploy-status)](https://app.netlify.com/sites/epcc-ref-store/deploys)
 [![Stable Branch](https://img.shields.io/badge/stable%20branch-master-blue.svg)](https://github.com/elasticpath/epcc-react-pwa-reference-storefront)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/elasticpath/epcc-react-pwa-reference-storefront/issues)
@@ -13,11 +13,18 @@
 
 The Elastic Path Commerce Cloud REACT PWA Reference Storefront is a flexible e-commerce website built on Elastic Path’s RESTful e-commerce API. The storefront uses the e-commerce capabilities provided by Elastic Path Commerce Cloud and gets data in a RESTful manner.
 
+> 💳 Use the test card 4242 4242 4242 4242, any future expiry date, and any CVC below to checkout.
+
 [Demo](http://epcc-reference.elasticpath.com/)
 
 ## Documentation 📖
 
-You need an Elastic Path Commerce Cloud platform which is used as the backend of this storefront.
+### Prerequisites
+
+Before you begin, ensure that you have the following accounts set up:
+
+- [Elastic Path Commerce Cloud account](https://dashboard.elasticpath.com/login)
+- [Stripe account](https://dashboard.stripe.com/) - Stripe is used as the payment gateway. From your [Dashboard](https://dashboard.elasticpath.com), configure Stripe as the payment gateway from your.
 
 **Note**: If you are running a Windows environment, launch the Windows Subsystem for Linux application and perform the following steps from the console window.
 
@@ -43,6 +50,16 @@ yarn start
 yarn build
 ```
 
+## Configuration Parameter Descriptions ⚙️
+
+Parameters that require configuration are in the `./src/config.ts` file:
+
+|  Parameter| Importance|Type|Description|
+|--|--|--|--|
+|`clientId`| Required| String| The Client ID of your store.|
+|`stripeKey`| Required| String| Stripe publishable API key.|
+|`categoryPageSize`| Required| String| Maximum number of products to display on a category page.|
+
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -52,8 +69,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/shaunmaharaj"><img src="https://avatars3.githubusercontent.com/u/39800563?v=4" width="100px;" alt=""/><br /><sub><b>Shaun Maharaj</b></sub></a><br /><a href="https://github.com/elasticpath/epcc-react-pwa-reference-storefront/commits?author=shaunmaharaj" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/dusanradovanovic"><img src="https://avatars3.githubusercontent.com/u/41649443?v=4" width="100px;" alt=""/><br /><sub><b>Dusan Radovanovic</b></sub></a><br /><a href="https://github.com/elasticpath/epcc-react-pwa-reference-storefront/commits?author=dusanradovanovic" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/shaunmaharaj"><img src="https://avatars3.githubusercontent.com/u/39800563?v=4" width="100px;" alt=""/><br /><sub><b>Shaun Maharaj</b></sub></a><br /><a href="https://github.com/elasticpath/epcc-react-pwa-reference-storefront/commits?author=shaunmaharaj" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/aChanEP"><img src="https://avatars3.githubusercontent.com/u/25829859?v=4" width="100px;" alt=""/><br /><sub><b>aChanEP</b></sub></a><br /><a href="https://github.com/elasticpath/epcc-react-pwa-reference-storefront/commits?author=aChanEP" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/rostyk-kanafotskyy"><img src="https://avatars3.githubusercontent.com/u/34774987?v=4" width="100px;" alt=""/><br /><sub><b>Rostyk</b></sub></a><br /><a href="https://github.com/elasticpath/epcc-react-pwa-reference-storefront/commits?author=rostyk-kanafotskyy" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/petro97"><img src="https://avatars3.githubusercontent.com/u/34708483?v=4" width="100px;" alt=""/><br /><sub><b>Dubno Petro</b></sub></a><br /><a href="https://github.com/elasticpath/epcc-react-pwa-reference-storefront/commits?author=petro97" title="Code">💻</a></td>
