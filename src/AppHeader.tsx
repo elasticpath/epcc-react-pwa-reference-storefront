@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from "react-router-dom";
 
 import './AppHeader.scss';
-
 import headerLogo from './images/site-images/Company-Logo.svg';
 
-export const AppHeader: React.FC = (props) => {
+
+export const AppHeader: React.FC = () => {
   return (
     <div className="appheader">
       <div className="appheader__logo">

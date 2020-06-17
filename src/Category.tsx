@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { loadCategoryProducts } from './service';
-import { useCategoryBySlug } from './AppState';
+import { useCategories } from './app-state';
 import { ProductThumbnail } from './ProductThumbnail';
 import { createCategoryUrl } from './routes';
 import { Pagination } from './Pagination';
@@ -37,7 +37,8 @@ interface CategoryParams {
 export const Category: React.FC = () => {
   const params = useParams<CategoryParams>();
   const categorySlug = params.categorySlug;
-  const category = useCategoryBySlug(categorySlug);
+  const { categoryBySlug } = useCategories();
+  const category = categoryBySlug(categorySlug);
   const parsedPageNum = parseInt(params.pageNum!);
   const pageNum = isNaN(parsedPageNum) ? 1 : parsedPageNum;
 

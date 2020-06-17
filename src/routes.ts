@@ -6,6 +6,8 @@ import AboutUsPage from './AboutUsPage';
 import ContactUsPage from './ContactUsPage';
 import ShippingReturnsPage from './ShippingReturns';
 import TermsAndConditionsPage from './TermsAndConditionsPage';
+import { CompareProducts } from './CompareProducts';
+
 
 interface RouteConfig {
   path: string;
@@ -14,41 +16,14 @@ interface RouteConfig {
 }
 
 export const routes: RouteConfig[] = [
-  {
-    path: '/',
-    exact: true,
-    component: Home,
-  },
-  {
-    path: '/category/:categorySlug/:pageNum?',
-    exact: true,
-    component: Category,
-  },
-  {
-    path: '/product/:productSlug',
-    exact: true,
-    component: Product,
-  },
-  {
-    path: '/aboutus',
-    exact: true,
-    component: AboutUsPage,
-  },
-  {
-    path: '/contactus',
-    exact: true,
-    component: ContactUsPage,
-  },
-  {
-    path: '/shippingreturns',
-    exact: true,
-    component: ShippingReturnsPage,
-  },
-  {
-    path: '/termsandconditions',
-    exact: true,
-    component: TermsAndConditionsPage,
-  }
+  { exact: true, path: '/', component: Home, },
+  { exact: true, path: '/category/:categorySlug/:pageNum?', component: Category, },
+  { exact: true, path: '/product/:productSlug', component: Product, },
+  { exact: true, path: '/aboutus', component: AboutUsPage, },
+  { exact: true, path: '/contactus', component: ContactUsPage, },
+  { exact: true, path: '/shippingreturns', component: ShippingReturnsPage, },
+  { exact: true, path: '/termsandconditions', component: TermsAndConditionsPage, },
+  { exact: true, path: '/compare-products', component: CompareProducts, }
 ];
 
 export function createHomeUrl(): string {
@@ -61,4 +36,8 @@ export function createCategoryUrl(categorySlug: string, pageNum?: number): strin
 
 export function createProductUrl(productSlug: string): string {
   return `/product/${productSlug}`;
+}
+
+export function createCompareProductsUrl(): string {
+  return `/compare-products`;
 }

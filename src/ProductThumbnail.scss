@@ -6,18 +6,9 @@
   text-align: left;
   margin-bottom: 40px;
 
-  $imgSize: 160px;
-
   #{$block}__imgcontainer {
-    width: $imgSize;
-    height: $imgSize;
-    margin-bottom: 10px;
-  }
-
-  #{$block}__img {
-    width: $imgSize;
-    height: $imgSize;
-    object-fit: fill;
+    width: 160px;
+    height: 160px;
   }
 
   #{$block}__name {
@@ -46,5 +37,15 @@
     padding: 5px 10px;
     border: 1px solid hsl(0, 0, 80%);
     border-radius: 16px;
+  }
+
+  #{$block}__comparecheck {
+    margin-top: 10px;
+    font-size: smaller;
+
+    label {
+      display: flex;
+      align-items: center;
+    }
   }
 }

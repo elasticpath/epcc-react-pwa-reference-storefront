@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { createCategoryUrl } from './routes';
 import { Category } from './service';
-import { useCategoriesTree } from './AppState';
+import { useCategories } from './app-state';
 
 import './NavMenu.scss';
 
@@ -25,11 +25,11 @@ function renderCategories(categories: Category[], level: number = 0): React.Reac
 }
 
 export const NavMenu: React.FC = () => {
-  const categories = useCategoriesTree();
+  const { categoriesTree } = useCategories();
 
   return (
     <div className="navmenu">
-      {categories && renderCategories(categories)}
+      {categoriesTree && renderCategories(categoriesTree)}
     </div>
   );
 };
