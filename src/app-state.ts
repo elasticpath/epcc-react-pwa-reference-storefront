@@ -3,32 +3,46 @@ import constate from 'constate';
 import { Category, loadCategoryTree, Product } from './service';
 import { config } from './config';
 
-function flatTree(tree: Category[]): Category[] {
-  return [
-    ...tree.map(c => ({ ...c, children: undefined })),
-    ...tree.flatMap(c => c.children ? flatTree(c.children) : []),
-  ];
+
+function getCategoryPaths(categories: Category[]): { [categoryId: string]: Category[] } {
+  const lastCat = categories[categories.length - 1];
+
+  let map: { [categoryId: string]: Category[] } = {
+    [lastCat.slug]: [...categories]
+  };
+
+  const childCats = lastCat.children ?? [];
+
+  for (const child of childCats) {
+    map = { ...map, ...getCategoryPaths([...categories, child]) };
+  }
+
+  return map;
+}
+
+function mergeMaps(tree: Category[]): { [categoryId: string]: Category[] } {
+  return tree.reduce((acc, c) => ({ ...acc, ...getCategoryPaths([c]) }), {});
 }
 
 function useCategoriesState() {
-  const [categoriesTree, setCategoriesTree] = useState<Category[]>();
-  const [categoriesFlat, setCategoriesFlat] = useState<Category[]>();
+  const [categoryPaths, setCategoryPaths] = useState<{ [categoryId: string]: Category[] }>();
 
-  const categoryBySlug = (slug: string) => {
-    return categoriesFlat?.filter(c => c.slug === slug)[0];
-  };
+  const [categoriesTree, setCategoriesTree] = useState<Category[]>();
 
   useEffect(() => {
     loadCategoryTree().then(result => {
       setCategoriesTree(result);
-      setCategoriesFlat(flatTree(result));
+      setCategoryPaths(mergeMaps(result));
     });
   }, []);
 
+  const categoryPathBySlug = (slug: string) => {
+    return categoryPaths?.[slug];
+  };
+
   return {
     categoriesTree,
-    categoriesFlat,
-    categoryBySlug,
+    categoryPathBySlug,
   };
 }
 

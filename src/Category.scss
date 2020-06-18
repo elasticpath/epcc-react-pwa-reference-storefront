@@ -7,9 +7,21 @@
   align-items: center;
   height: 100%;
 
+  #{$block}__breadcrumbs {
+    width: 100%;
+    margin-top: 20px;
+
+    #{$block}__breadcrumbseparator {
+      color: hsl(0, 0, 70%);
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
+
   #{$block}__categoryname {
     flex: 0;
-    padding: 50px 0px 80px;
+    margin-top: 30px;
+    margin-bottom: 80px;
     font-size: 26px;
     font-weight: bold;
   }
