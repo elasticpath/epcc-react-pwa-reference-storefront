@@ -41,8 +41,8 @@ export const CompareOverlay: React.FC = (props) => {
               <div className="compareoverlay__productprice">{product.meta.display_price.without_tax.formatted}</div>
             </div>
             <div className="compareoverlay__removeproduct">
-              <button className="epbtn --small" onClick={() => handleRemoveProduct(product)}>
-                <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+              <button className="epbtn --small" aria-label="Remove Product" onClick={() => handleRemoveProduct(product)}>
+                <svg fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
                   <path d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
               </button>
@@ -51,8 +51,8 @@ export const CompareOverlay: React.FC = (props) => {
         ))}
       </div>
       <div className="compareoverlay__btns">
-        <button className="epbtn --primary" disabled={!compareEnabled} onClick={handleCompareClicked}>Compare</button>
-        <button className="epbtn --shading" onClick={handleRemoveAllClicked}>Remove All</button>
+        <button className="epbtn --primary" aria-label="Compare" disabled={!compareEnabled} onClick={handleCompareClicked}>Compare</button>
+        <button className="epbtn --shading" aria-label="Remove All" onClick={handleRemoveAllClicked}>Remove All</button>
       </div>
     </div>
   );

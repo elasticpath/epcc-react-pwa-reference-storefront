@@ -19,7 +19,7 @@ export const AppFooter: React.FC = (props) => {
   };
   return (
     <div className="container">
-      <footer className="app-footer" role="contentinfo">
+      <div className="app-footer">
         <div className="first-row">
           <div className="footer-column">
             <div className="title">
@@ -82,7 +82,7 @@ export const AppFooter: React.FC = (props) => {
             <InstagramIcon className="share-icon" />
           </Link>
         </div>
-      </footer>
+      </div>
     </div>
   );
 };
