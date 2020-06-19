@@ -18,12 +18,12 @@ export const ProductThumbnail: React.FC<ProductThumbnailProps> = (props) => {
   return (
     <div className="productthumbnail">
       <div className="productthumbnail__imgcontainer">
-        <Link className="productthumbnail__imglink" to={productUrl}>
+        <Link className="productthumbnail__imglink" to={productUrl} aria-label="productthumbnail__imglink">
           <ProductMainImage product={props.product} size={160} />
         </Link>
       </div>
       <div className="productthumbnail__name">
-        <Link className="productthumbnail__namelink" to={productUrl}>
+        <Link className="productthumbnail__namelink" to={productUrl} aria-label="productthumbnail__namelink">
           {props.product.name}
         </Link>
       </div>

@@ -9,7 +9,7 @@ export const AppHeader: React.FC = () => {
   return (
     <div className="appheader">
       <div className="appheader__logo">
-        <Link to="/">
+        <Link to="/" aria-label="logo image">
           <img src={headerLogo} className="logo-image" alt=""/>
         </Link>
       </div>

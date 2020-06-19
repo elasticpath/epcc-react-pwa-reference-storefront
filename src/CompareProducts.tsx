@@ -15,6 +15,7 @@ export const CompareProducts: React.FC = () => {
 
   return (
     <div className="compareproducts">
+      <h1>Products comparison</h1>
       {compareProducts.length === 0
       ? (
         <div className="compareproducts__noproducts">

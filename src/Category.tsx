@@ -45,26 +45,33 @@ export const Category: React.FC = () => {
   const { products, totalPages } = useCategoryProducts(category?.id, pageNum);
 
   return (
-    <div className="category">
-      <h1 className="category__categoryname">{category?.name ?? ' '}</h1>
+    <div>
+      {category ? (
+        <div className="category">
 
-      <ul className="category__productlist">
-        {products && products.data.map(product => (
-          <li key={product.id} className="category__product">
-            <ProductThumbnail product={product} />
-          </li>
-        ))}
-      </ul>
+          <h1 className="category__categoryname">{category?.name ?? ' '}</h1>
 
-      <div className="category__pagination">
-        {totalPages && (
-          <Pagination
-            totalPages={totalPages}
-            currentPage={products?.pagination?.currentPage ?? pageNum}
-            formatUrl={(page) => createCategoryUrl(categorySlug, page)}
-          />
-        )}
-      </div>
+          <ul className="category__productlist">
+            {products && products.data.map(product => (
+              <li key={product.id} className="category__product">
+                <ProductThumbnail product={product} />
+              </li>
+            ))}
+          </ul>
+
+          <div className="category__pagination">
+            {totalPages && (
+              <Pagination
+                totalPages={totalPages}
+                currentPage={products?.pagination?.currentPage ?? pageNum}
+                formatUrl={(page) => createCategoryUrl(categorySlug, page)}
+              />
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className="loader" />
+      )}
     </div>
   );
 };

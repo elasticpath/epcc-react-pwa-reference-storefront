@@ -24,7 +24,7 @@ body {
   height: 100%;
 }
 
-$btnColor: hsl(190, 70%, 35%);
+$btnColor: hsl(190, 70%, 34%);
 
 .epbtn {
   position: relative;
@@ -132,6 +132,17 @@ $btnColor: hsl(190, 70%, 35%);
 
 .static-container {
   padding-bottom: 60px;
+}
+
+.loader {
+  border: 16px solid $mainBackgroundColor;
+  border-top: 16px solid $secondComplimentColor;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px !important;
+  animation: spin 0.5s linear infinite;
+  margin: 0 auto;
+  margin-top: 20px;
 }
 
 $shopkitBtnColor: $buttonActiveColor;
@@ -255,6 +266,13 @@ $shopkitBtnOutlineText: $firstComplimentColor;
       height: 40px;
     }
   }
+}
+
+.compareproducts .shopkit-buy-button {
+  @include shopkitBtn(
+      $shopkitBtnColor,
+      $shopkitBtnColorBorder
+  );
 }
 
 .product .shopkit-buy-button {
