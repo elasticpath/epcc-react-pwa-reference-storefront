@@ -40,5 +40,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint-plugin-jsx-a11y": "^6.3.0",
+    "react-axe": "^3.4.1"
   }
 }
