@@ -8,3 +8,5 @@ export CI=true
 yarn build
 
 cp ./_redirects build/
+
+ls -lsa build/
