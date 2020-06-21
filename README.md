@@ -61,6 +61,7 @@ Parameters that require configuration are in the `./src/config.ts` file:
 |`clientId`| Required| String| The Client ID of your store.|
 |`stripeKey`| Required| String| Stripe publishable API key.|
 |`categoryPageSize`| Required| String| Maximum number of products to display on a category page.|
+|`maxCompareProducts`| Required| String| Maximum number of products to display in compare view.|
 
 ## Contributors ✨
 
