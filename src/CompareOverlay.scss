@@ -1,7 +1,8 @@
 
+@import './theme/common';
+
 $overlayHeight: 100px;
 $animLength: 0.2s;
-$maxScrollWidth: 34px;
 
 .compareoverlay {
   $block: &;

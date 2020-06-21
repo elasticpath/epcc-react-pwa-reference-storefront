@@ -18,7 +18,7 @@ function useCategoryProducts(categoryId: string | undefined, pageNum: number) {
   }, [categoryId]);
 
   const [products] = useResolve(async () => {
-    // during initial loading of categories categoryId mught be undefined
+    // during initial loading of categories categoryId might be undefined
     if (categoryId) {
       const result = await loadCategoryProducts(categoryId, pageNum);
       setTotalPages(result.pagination.totalPages);
@@ -37,8 +37,9 @@ interface CategoryParams {
 export const Category: React.FC = () => {
   const params = useParams<CategoryParams>();
   const categorySlug = params.categorySlug;
-  const { categoryBySlug } = useCategories();
-  const category = categoryBySlug(categorySlug);
+  const { categoryPathBySlug } = useCategories();
+  const categoryPath = categoryPathBySlug(categorySlug);
+  const category = categoryPath?.[categoryPath?.length - 1];
   const parsedPageNum = parseInt(params.pageNum!);
   const pageNum = isNaN(parsedPageNum) ? 1 : parsedPageNum;
 
@@ -48,6 +49,16 @@ export const Category: React.FC = () => {
     <div>
       {category ? (
         <div className="category">
+          <div className="category__breadcrumbs">
+            {categoryPath?.map((category, index) => (
+              <React.Fragment key={category.id}>
+                {index > 0 && (
+                  <span className="category__breadcrumbseparator">{'>'}</span>
+                )}
+                <a className="category__breadcrumblink" href={createCategoryUrl(category.slug)}>{category.name}</a>
+              </React.Fragment>
+            ))}
+          </div>
 
           <h1 className="category__categoryname">{category?.name ?? ' '}</h1>
 

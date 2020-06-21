@@ -1,4 +1,6 @@
 
+@import './theme/common';
+
 .category {
   $block: &;
 
@@ -6,10 +8,26 @@
   flex-direction: column;
   align-items: center;
   height: 100%;
+  padding-left: $maxScrollWidth;
+  padding-right: calc(#{$maxScrollWidth} - 100vw + 100%);
+
+  #{$block}__breadcrumbs {
+    margin-top: 20px;
+    font-size: 15px;
+    font-weight: bold;
+    color: hsl(0, 0%, 45%);
+
+    #{$block}__breadcrumbseparator {
+      color: hsl(0, 0, 70%);
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
 
   #{$block}__categoryname {
     flex: 0;
-    padding: 50px 0px 80px;
+    margin-top: 20px;
+    margin-bottom: 80px;
     font-size: 26px;
     font-weight: bold;
   }
