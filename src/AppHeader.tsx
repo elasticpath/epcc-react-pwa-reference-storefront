@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 
 import './AppHeader.scss';
+import { AppHeaderLogin } from './AppHeaderLogin';
 import headerLogo from './images/site-images/Company-Logo.svg';
 import { ImageContainer } from './ImageContainer';
 
@@ -17,6 +18,7 @@ export const AppHeader: React.FC = () => {
       <div className="appheader__moltincartcontainer">
         <span className="moltin-cart-button"></span>
       </div>
+      <AppHeaderLogin />
     </div>
   );
 };

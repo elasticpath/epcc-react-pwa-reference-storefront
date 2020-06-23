@@ -1,0 +1,23 @@
+
+@import './theme/common.scss';
+
+.registrationform {
+  margin-bottom: 30px;
+
+  &__content {
+    position: relative;
+
+    &.--loading {
+      opacity: 0.5;
+    }
+  }
+
+  &__feedback {
+    min-height: 20px;
+    position: relative;
+    top: -5px;
+    color: $mainErrorColor;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+}

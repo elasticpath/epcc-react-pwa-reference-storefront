@@ -1,0 +1,45 @@
+
+@import './theme/common.scss';
+
+.appmodallogin {
+  min-width: 500px;
+  margin: auto;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 5px 10px;
+    border-bottom: 1px solid $firstBorderColor;
+  }
+
+  &__title {
+    font-size: 15px;
+  }
+
+  &__content {
+    background-color: $mainBackgroundColor;
+    border: none;
+
+    &.--loading {
+      opacity: 0.5;
+    }
+  }
+
+  &__body {
+    padding: 10px 5px 5px;
+  }
+
+  &__feedback {
+    margin-top: 10px;
+    font-weight: bold;
+    color: $mainErrorColor;
+  }
+}
+
+@media (max-width: $mobileWidth - 1) {
+  .appmodallogin {
+    height: 100%;
+    min-width: 100%;
+  }
+}

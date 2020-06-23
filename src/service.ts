@@ -175,3 +175,34 @@ export async function loadProductBySlug(productSlug: string): Promise<Product> {
 
   return product;
 }
+
+export async function register(name: string, email: string, password: string) {
+  const moltin = MoltinGateway({ client_id: config.clientId });
+  const { data } = await moltin.Customers.Create({
+    type: 'customer',
+    name,
+    email,
+    password
+  });
+
+  await login(data.email, password);
+}
+
+export async function login(email: string, password: string) {
+  const moltin = MoltinGateway({ client_id: config.clientId });
+  const { data } = await moltin.Customers.Token(email, password).then();
+
+  await getCustomer(data.id, data.token);
+
+  window.location.href = '/';
+}
+
+export async function getCustomer(id: string, token: string) {
+  const moltin = MoltinGateway({ client_id: config.clientId });
+  const result = await moltin.Customers.Get(id, token);
+
+  localStorage.setItem('mcustomer', id);
+  localStorage.setItem('mtoken', token);
+
+  return result;
+}
