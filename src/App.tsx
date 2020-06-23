@@ -21,33 +21,27 @@ const App: React.FC = () => {
     <Router>
       <AppStateProvider>
         <div className="app">
-          <header role="banner" id="app-header">
-          <div className="app__header">
+          <header className="app__header">
             <AppHeader />
-          </div>
           </header>
-          <nav role="navigation" id="app-navmenu">
-          <div className="app__navmenu">
+          <nav className="app__navmenu">
             <NavMenu />
-          </div>
           </nav>
-          <main role="main">
-          <div className="app__main">
+          <main className="app__main">
             <Switch>
               {routes.map(route => (
                 <Route key={route.path} {...route} />
               ))}
             </Switch>
-          </div>
           </main>
           <footer id="app-footer" role="contentinfo" aria-label="app-footer">
             <div className="app__footer">
               <AppFooter />
             </div>
-            <div className="app__compareoverlay">
-              <CompareOverlay />
-            </div>
           </footer>
+          <aside className="app__compareoverlay">
+            <CompareOverlay />
+          </aside>
         </div>
       </AppStateProvider>
     </Router>
