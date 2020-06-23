@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import './AppHeader.scss';
 import headerLogo from './images/site-images/Company-Logo.svg';
+import { ImageContainer } from './ImageContainer';
 
 
 export const AppHeader: React.FC = () => {
@@ -10,7 +11,7 @@ export const AppHeader: React.FC = () => {
     <div className="appheader">
       <div className="appheader__logo">
         <Link to="/" aria-label="logo image">
-          <img src={headerLogo} className="logo-image" alt=""/>
+          <ImageContainer imgUrl={headerLogo} imgClassName="logo-image" alt="logoImage"/>
         </Link>
       </div>
       <div className="appheader__moltincartcontainer">

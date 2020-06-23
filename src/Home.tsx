@@ -1,4 +1,5 @@
 import React from 'react';
+import { ImageContainer } from './ImageContainer';
 
 import './Home.scss'
 
@@ -28,7 +29,7 @@ export const Home: React.FC = () => {
   return (
     <div className="home-page-b2c">
       <section className="main-banner">
-        <img src={bannerImage1} alt={bannerFileName1} className="main-banner-image" />
+        <ImageContainer imgUrl={bannerImage1} alt={bannerFileName1} imgClassName="main-banner-image" />
         <div className="main-banner-title-wrap">
           <div className="container">
             <h1 className="goods-heading">Go from bean to cup at the touch of a button</h1>
@@ -57,7 +58,7 @@ export const Home: React.FC = () => {
                       <button type="button" className="epbtn primary learn-more-btn">Learn more</button>
                     </div>
                   </div>
-                  <img src={productImage1} alt={productFileName1} className="main-goods-image" />
+                  <ImageContainer imgUrl={productImage1} alt={productFileName1} imgClassName="main-goods-image" />
                 </div>
               </li>
               <li className="main-goods__cell">
@@ -68,7 +69,7 @@ export const Home: React.FC = () => {
                     <p className="goods-description">Make the most of your fresh ingredients with the 3X Bluicer Pro. This high performance blender juicer features our Kinetix®</p>
                     <button type="button" className="epbtn primary learn-more-btn">Add to cart</button>
                   </div>
-                  <img src={productImage2} alt={productFileName2} className="main-goods-image" />
+                  <ImageContainer imgUrl={productImage2} alt={productFileName2} imgClassName="main-goods-image" />
                 </div>
               </li>
               <li className="main-goods__cell">
@@ -81,7 +82,7 @@ export const Home: React.FC = () => {
                     </p>
                     <button type="button" className="epbtn primary learn-more-btn">Ice cream makers</button>
                   </div>
-                  <img src={productImage3} alt={productFileName3} className="main-goods-image" />
+                  <ImageContainer imgUrl={productImage3} alt={productFileName3} imgClassName="main-goods-image" />
                 </div>
               </li>
               <li className="main-goods__cell">
@@ -93,7 +94,7 @@ export const Home: React.FC = () => {
                       Free shipping on all orders of $50!
                     </p>
                   </div>
-                  <img src={productImage4} alt={productFileName4} className="main-goods-image" />
+                  <ImageContainer imgUrl={productImage4} alt={productFileName4} imgClassName="main-goods-image" />
                 </div>
               </li>
               <li className="main-goods__cell">
@@ -104,7 +105,7 @@ export const Home: React.FC = () => {
                       View Our Products in 360
                     </p>
                   </div>
-                  <img src={productImage5} alt={productFileName5} className="main-goods-image" />
+                  <ImageContainer imgUrl={productImage5} alt={productFileName5} imgClassName="main-goods-image" />
                 </div>
               </li>
             </ul>
@@ -113,7 +114,7 @@ export const Home: React.FC = () => {
       </section>
 
       <section className="main-banner banner-section-2">
-        <img src={bannerImage2} alt={bannerFileName2} className="main-banner-image" />
+        <ImageContainer imgUrl={bannerImage2} alt={bannerFileName2} imgClassName="main-banner-image" />
         <div className="main-banner-title-wrap">
           <div className="container">
             <h2 className="goods-heading">Immersion Blenders</h2>
@@ -141,7 +142,7 @@ export const Home: React.FC = () => {
                     <p className="goods-title">Our blenders were voted the best value 3 years in a row</p>
                     <p className="goods-description">“Bellevie is a quality blender maker that will process your ingredients into smooth, creamy perfection”</p>
                   </div>
-                  <img src={productImage6} alt={productFileName6} className="main-goods-image" />
+                  <ImageContainer imgUrl={productImage6} alt={productFileName6} imgClassName="main-goods-image" />
                 </div>
               </li>
               <li className="main-goods__cell">
@@ -151,7 +152,7 @@ export const Home: React.FC = () => {
                     <p className="goods-title">Stainless steel perfection</p>
                     <p className="goods-description">Our blenders are made with top of the line stainless steel. The appliances are built strong and to last. These appliances can wistand even the most active chefs kitchen.</p>
                   </div>
-                  <img src={productImage7} alt={productFileName7} className="main-goods-image" />
+                  <ImageContainer imgUrl={productImage7} alt={productFileName7} imgClassName="main-goods-image" />
                 </div>
               </li>
             </ul>
@@ -160,7 +161,7 @@ export const Home: React.FC = () => {
       </section>
 
       <section className="main-banner banner-section-3">
-        <img src={bannerImage3} alt={bannerFileName3} className="main-banner-image" />
+        <ImageContainer imgUrl={bannerImage3} alt={bannerFileName3} imgClassName="main-banner-image" />
         <div className="main-banner-title-wrap">
           <div className="container">
             <h2 className="goods-heading">The BellVie Difference</h2>
