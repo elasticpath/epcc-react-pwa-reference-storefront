@@ -46,9 +46,9 @@ export const Category: React.FC = () => {
   const { products, totalPages } = useCategoryProducts(category?.id, pageNum);
 
   return (
-    <div>
+    <div className="category">
       {category ? (
-        <div className="category">
+        <>
           <div className="category__breadcrumbs">
             {categoryPath?.map((category, index) => (
               <React.Fragment key={category.id}>
@@ -79,7 +79,7 @@ export const Category: React.FC = () => {
               />
             )}
           </div>
-        </div>
+        </>
       ) : (
         <div className="loader" />
       )}
