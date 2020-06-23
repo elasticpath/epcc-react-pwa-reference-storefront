@@ -1,6 +1,7 @@
 import React from 'react';
 import { Product, loadImageHref } from './service';
 import { useResolve } from './hooks';
+import { ImageContainer } from './ImageContainer';
 
 interface ProductMainImageProps {
   product: Product;
@@ -15,11 +16,11 @@ export const ProductMainImage: React.FC<ProductMainImageProps> = (props) => {
   return (
     <>
       {productImageUrl && (
-        <img
-          className="productmainimage"
-          src={productImageUrl}
-          style={{ width: props.size, height: props.size, objectFit: 'fill', backgroundColor: productBackground }}
-          alt={props.product.name}
+        <ImageContainer
+        imgClassName="productmainimage"
+        imgUrl={productImageUrl}
+        alt={props.product.name}
+        imageStyle={{ width: props.size, height: props.size, objectFit: 'fill', backgroundColor: productBackground }}
         />
       )}
     </>
