@@ -15,10 +15,10 @@ export const AppHeader: React.FC = () => {
           <ImageContainer imgUrl={headerLogo} imgClassName="logo-image" alt="logoImage"/>
         </Link>
       </div>
+      <AppHeaderLogin />
       <div className="appheader__moltincartcontainer">
         <span className="moltin-cart-button"></span>
       </div>
-      <AppHeaderLogin />
     </div>
   );
 };
