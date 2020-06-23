@@ -29,7 +29,7 @@ export const CompareOverlay: React.FC = (props) => {
   };
 
   return (
-    <div className={`compareoverlay ${isShowingOverlay ? '--showing' : ''}`}>
+    <div className={`compareoverlay ${isShowingOverlay ? 'compareoverlay--visible' : ''}`}>
       <div className="compareoverlay__products">
         {compareProducts.map(product => (
           <div key={product.id} className="compareoverlay__product">
@@ -41,7 +41,7 @@ export const CompareOverlay: React.FC = (props) => {
               <div className="compareoverlay__productprice">{product.meta.display_price.without_tax.formatted}</div>
             </div>
             <div className="compareoverlay__removeproduct">
-              <button className="epbtn --small" aria-label="Remove Product" onClick={() => handleRemoveProduct(product)}>
+              <button className="epbtn --small" aria-label="Remove product from comparison" onClick={() => handleRemoveProduct(product)}>
                 <svg fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
                   <path d="M6 18L18 6M6 6l12 12"></path>
                 </svg>

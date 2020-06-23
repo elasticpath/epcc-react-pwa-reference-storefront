@@ -4,7 +4,7 @@
 
   margin-top: 60px;
 
-  h1 {
+  #{$block}__title {
     text-align: center;
     font-weight: bold;
     font-size: 26px;

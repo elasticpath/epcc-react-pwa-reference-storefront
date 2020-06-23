@@ -10,17 +10,18 @@ $animLength: 0.2s;
   position: fixed;
   width: 100%;
   height: $overlayHeight;
-  bottom: -$overlayHeight;
+  bottom: -$overlayHeight - 10px;
   background-color: white;
   box-shadow: 0 0 10px hsla(0, 0, 0, 0.3);
   transition: bottom 0.1s ease-out;
   padding-left: $maxScrollWidth;
   padding-right: calc(#{$maxScrollWidth} - 100vw + 100%);
+  z-index: 10;
   display: flex;
   align-items: center;
   flex-direction: row;
 
-  &.--showing {
+  &--visible {
     bottom: 0;
   }
 

@@ -10,8 +10,10 @@
     "@types/react-router-dom": "^5.1.5",
     "constate": "^2.0.0",
     "css-reset-and-normalize": "^2.1.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
     "node-sass": "^4.13.0",
     "react": "^16.13.1",
+    "react-axe": "^3.5.2",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-script-hook": "^1.1.1",
@@ -40,9 +42,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "eslint-plugin-jsx-a11y": "^6.3.0",
-    "react-axe": "^3.4.1"
   }
 }
