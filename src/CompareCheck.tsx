@@ -1,6 +1,7 @@
 import React from 'react';
 import { useCompareProducts } from './app-state';
 import { Product } from './service';
+import { useTranslation } from './app-state';
 
 import './CompareCheck.scss';
 
@@ -11,6 +12,7 @@ interface CompareCheckProps {
 
 export const CompareCheck: React.FC<CompareCheckProps> = (props) => {
   const { isComparing, isCompareEnabled, addToCompare, removeFromCompare } = useCompareProducts();
+  const { t } = useTranslation();
 
   const handleCompareClicked = () => {
     if (isComparing(props.product.id)) {
@@ -29,7 +31,7 @@ export const CompareCheck: React.FC<CompareCheckProps> = (props) => {
           checked={isComparing(props.product.id)}
           onChange={handleCompareClicked}
         />
-        <span>Compare</span>
+        <span>{t('compare')}</span>
       </label>
     </div>
   );
