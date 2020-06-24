@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from './app-state';
 
 import './AppFooter.scss';
 
@@ -8,6 +9,8 @@ import { ReactComponent as InstagramIcon } from './images/icons/ic_instagram.svg
 import { ReactComponent as TwitterIcon } from './images/icons/ic_twitter.svg';
 
 export const AppFooter: React.FC = (props) => {
+  const { t } = useTranslation();
+
   const linkTo = {
     aboutus: '/aboutus',
     contactus: '/contactus',
@@ -17,68 +20,69 @@ export const AppFooter: React.FC = (props) => {
     shareTwitter: '/',
     shareInstagram: '/',
   };
+
   return (
     <div className="container">
       <div className="app-footer">
         <div className="first-row">
           <div className="footer-column">
             <div className="title">
-              BelleVie
+              {t('bellvie')}
             </div>
             <div className="content">
-              Commerce software that powers the next generation of digital experience
+              {t('footer-1-content')}
             </div>
           </div>
           <div className="footer-column">
             <div className="title">
-              Assistance
+              {t('assistance')}
             </div>
             <div className="content">
               <Link to={linkTo.aboutus}>
-                About Us
+                {t('about-us')}
               </Link>
               <Link to={linkTo.contactus}>
-                Contact
+                {t('contact')}
               </Link>
               <Link to={linkTo.shippingreturns}>
-                Shipping & Returns
+                {t('shipping-and-returns')}
               </Link>
               <Link to={linkTo.termsandconditions}>
-                Terms & Conditions
+                {t('terms-and-conditions')}
               </Link>
             </div>
           </div>
           <div className="footer-column social">
             <div className="title">
-              Find us Online
+              {t('find-us-online')}
             </div>
             <div className="content">
-              <Link to={linkTo.shareFacebook} aria-label="share facebook">
+              <Link to={linkTo.shareFacebook} aria-label={t('share-facebook')}>
                 <FacebookIcon className="share-icon" />
-                facebook
+                {t('facebook')}
               </Link>
-              <Link to={linkTo.shareTwitter} aria-label="share twitter">
+              <Link to={linkTo.shareTwitter} aria-label={t('share-twitter')}>
                 <TwitterIcon className="share-icon" />
-                twitter
+                {t('twitter')}
               </Link>
-              <Link to={linkTo.shareInstagram} aria-label="share instagram">
+              <Link to={linkTo.shareInstagram} aria-label={t('share-instagram')}>
                 <InstagramIcon className="share-icon" />
-                instagram
+                {t('instagram')}
               </Link>
             </div>
           </div>
         </div>
         <div className="second-row">
           <div className="title">
-            Find us Online
+            {t('find-us-online')}
           </div>
-          <Link to={linkTo.shareFacebook} aria-label="share facebook">
+          <Link to={linkTo.shareFacebook} aria-label={t('share-facebook')}>
             <FacebookIcon className="share-icon" />
           </Link>
-          <Link to={linkTo.shareTwitter} aria-label="share twitter">
+          <Link to={linkTo.shareTwitter} aria-label={t('share-twitter')}>
             <TwitterIcon className="share-icon" />
           </Link>
-          <Link to={linkTo.shareInstagram} aria-label="share instagram">
+          <Link to={linkTo.shareInstagram} aria-label={t('share-instagram')}>
             <InstagramIcon className="share-icon" />
           </Link>
         </div>
