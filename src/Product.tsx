@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useResolve } from './hooks';
 import { loadProductBySlug } from './service';
 import { CompareCheck } from './CompareCheck';
+import { useTranslation } from './app-state';
 
 import './Product.scss';
 import { ProductMainImage } from './ProductMainImage';
@@ -14,7 +15,8 @@ interface ProductParams {
 
 export const Product: React.FC = () => {
   const { productSlug } = useParams<ProductParams>();
-  const [product] = useResolve(async () => loadProductBySlug(productSlug), [productSlug]);
+  const { t, selectedLanguage } = useTranslation();
+  const [product] = useResolve(async () => loadProductBySlug(productSlug, selectedLanguage), [productSlug, selectedLanguage]);
 
   return (
     <div className="product">
@@ -31,7 +33,7 @@ export const Product: React.FC = () => {
               {product.meta.display_price.without_tax.formatted}
             </div>
             <div className="product__availability">
-              {product.meta.stock.availability === 'in-stock' ? 'Available' : 'Out of stock'}
+              {product.meta.stock.availability === 'in-stock' ? t('available') : t('out-of-stock')}
             </div>
             <div className="product__comparecheck">
               <CompareCheck product={product} />

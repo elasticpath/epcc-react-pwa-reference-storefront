@@ -154,7 +154,7 @@ export async function loadImageHref(imageId: string): Promise<string | undefined
   return result.data.link.href;
 }
 
-export async function loadProductBySlug(productSlug: string): Promise<Product> {
+export async function loadProductBySlug(productSlug: string, selectedLanguage: string): Promise<Product> {
   if (productCache[productSlug]) {
     return productCache[productSlug];
   }

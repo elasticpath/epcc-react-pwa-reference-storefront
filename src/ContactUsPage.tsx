@@ -1,7 +1,10 @@
 
 import React from 'react';
+import { useTranslation } from './app-state';
 
 function ContactUsPage() {
+  const { t } = useTranslation();
+
   return (
     <div className="viewport ui-container static-ui-container" data-region="viewPortRegion">
       <div>
@@ -12,14 +15,14 @@ function ContactUsPage() {
                 <div className="static-title-container">
                   <div>
                     <h1 className="view-title">
-                      Contact Us
+                      {t('contact-us')}
                     </h1>
                   </div>
                 </div>
                 <div className="static-main-container">
                   <div className="static-container">
                     <span className="static-message">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                      {t('lorem-ipsum')}
                     </span>
                   </div>
                 </div>

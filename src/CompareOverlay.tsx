@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
-import { useCompareProducts } from './app-state';
+import { useCompareProducts, useTranslation } from './app-state';
 import { createCompareProductsUrl } from './routes';
 import { ProductMainImage } from './ProductMainImage';
 import { Product } from './service';
@@ -15,6 +15,7 @@ export const CompareOverlay: React.FC = (props) => {
   const compareUrl = createCompareProductsUrl();
   const compareUrlMatch = useRouteMatch(compareUrl);
   const isShowingOverlay = compareProducts.length > 0 && !compareUrlMatch;
+  const { t } = useTranslation();
 
   const handleCompareClicked = () => {
     history.push(compareUrl);
@@ -41,7 +42,7 @@ export const CompareOverlay: React.FC = (props) => {
               <div className="compareoverlay__productprice">{product.meta.display_price.without_tax.formatted}</div>
             </div>
             <div className="compareoverlay__removeproduct">
-              <button className="epbtn --small" aria-label="Remove product from comparison" onClick={() => handleRemoveProduct(product)}>
+              <button className="epbtn --small" aria-label={t('remove-from-comparison')} onClick={() => handleRemoveProduct(product)}>
                 <svg fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
                   <path d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
@@ -51,8 +52,8 @@ export const CompareOverlay: React.FC = (props) => {
         ))}
       </div>
       <div className="compareoverlay__btns">
-        <button className="epbtn --primary" aria-label="Compare" disabled={!compareEnabled} onClick={handleCompareClicked}>Compare</button>
-        <button className="epbtn --shading" aria-label="Remove All" onClick={handleRemoveAllClicked}>Remove All</button>
+        <button className="epbtn --primary" disabled={!compareEnabled} onClick={handleCompareClicked}>{t('compare')}</button>
+        <button className="epbtn --shading" onClick={handleRemoveAllClicked}>{t('remove-all')}</button>
       </div>
     </div>
   );
