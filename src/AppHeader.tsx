@@ -2,17 +2,14 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { ImageContainer } from './ImageContainer';
 import { useTranslation } from './app-state';
+import { LanguageDropdown } from './LanguageDropdown';
 
 import './AppHeader.scss';
 import headerLogo from './images/site-images/Company-Logo.svg';
 
 
 export const AppHeader: React.FC = () => {
-  const { t, selectedLanguage, setLanguage } = useTranslation();
-
-  const onChangeLang = (e: React.FocusEvent<HTMLSelectElement>) => {
-    setLanguage(e.target.value);
-  };
+  const { t } = useTranslation();
 
   return (
     <div className="appheader">
@@ -22,10 +19,7 @@ export const AppHeader: React.FC = () => {
         </Link>
       </div>
       <div className="appheader__language">
-        <select value={selectedLanguage} aria-label={t('language')} onChange={onChangeLang} onBlur={onChangeLang}>
-          <option value="en">{t('english')}</option>
-          <option value="fr">{t('french')}</option>
-        </select>
+        <LanguageDropdown />
       </div>
       <div className="appheader__moltincartcontainer">
         <span className="moltin-cart-button"></span>

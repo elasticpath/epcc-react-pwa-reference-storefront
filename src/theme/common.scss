@@ -33,6 +33,9 @@ $firstAccentColor: #78B13F;
 
 $mainErrorColor: #E00646;
 
+$btnColor: hsl(190, 70%, 34%);
+$btnFocusOutlineColor: change-color($color: $btnColor, $saturation: 35%, $lightness: 75%);
+
 $maxScrollWidth: 34px;
 
 $mobileWidth: 768px;

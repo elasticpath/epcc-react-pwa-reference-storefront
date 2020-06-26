@@ -3,10 +3,10 @@ import { useParams } from 'react-router-dom';
 import { useResolve } from './hooks';
 import { loadProductBySlug } from './service';
 import { CompareCheck } from './CompareCheck';
-import { useTranslation } from './app-state';
+import { ProductMainImage } from './ProductMainImage';
+import { useTranslation, useCurrency } from './app-state';
 
 import './Product.scss';
-import { ProductMainImage } from './ProductMainImage';
 
 
 interface ProductParams {
@@ -16,7 +16,11 @@ interface ProductParams {
 export const Product: React.FC = () => {
   const { productSlug } = useParams<ProductParams>();
   const { t, selectedLanguage } = useTranslation();
-  const [product] = useResolve(async () => loadProductBySlug(productSlug, selectedLanguage), [productSlug, selectedLanguage]);
+  const { selectedCurrency } = useCurrency();
+  const [product] = useResolve(
+    async () => loadProductBySlug(productSlug, selectedLanguage, selectedCurrency),
+    [productSlug, selectedLanguage, selectedCurrency]
+  );
 
   return (
     <div className="product">

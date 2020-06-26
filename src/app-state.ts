@@ -11,7 +11,7 @@ const translations: { [lang: string]: { [name: string]: string } } = {
   fr,
 };
 
-const fallbackLanguage = 'en';
+const defaultLanguage = 'en';
 
 function getInitialLanguage(): string {
   const savedLanguage = localStorage.getItem('selectedLanguage');
@@ -44,7 +44,7 @@ function getInitialLanguage(): string {
     }
   }
 
-  return fallbackLanguage;
+  return defaultLanguage;
 }
 
 function checkTranslations() {
@@ -99,6 +99,22 @@ function useTranslationState() {
     selectedLanguage,
     setLanguage,
   };
+}
+
+const defaultCurrency = 'USD';
+
+function useCurrencyState() {
+  const [selectedCurrency, setSelectedCurrency] = useState(localStorage.getItem('selectedCurrency') ?? defaultCurrency);
+
+  const setCurrency = (newCurrency: string) => {
+    localStorage.setItem('selectedCurrency', newCurrency);
+    setSelectedCurrency(newCurrency);
+  };
+
+  return {
+    selectedCurrency,
+    setCurrency,
+  }
 }
 
 function getCategoryPaths(categories: Category[]): { [categoryId: string]: Category[] } {
@@ -177,9 +193,11 @@ function useCompareProductsState() {
 
 function useGlobalState() {
   const translation = useTranslationState();
+  const currency = useCurrencyState();
 
   return {
     translation,
+    currency,
     categories: useCategoriesState(translation.selectedLanguage),
     compareProducts: useCompareProductsState(),
   };
@@ -188,11 +206,13 @@ function useGlobalState() {
 export const [
   AppStateProvider,
   useTranslation,
+  useCurrency,
   useCategories,
   useCompareProducts,
 ] = constate(
   useGlobalState,
   value => value.translation,
+  value => value.currency,
   value => value.categories,
   value => value.compareProducts
 );
