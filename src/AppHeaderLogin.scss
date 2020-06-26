@@ -5,96 +5,95 @@
   position: relative;
   margin-right: 10px;
 
-  &__dropdown {
-    &__btn {
-      padding: 5px;
-      &__icon {
+  &__btn {
+    padding: 5px;
+
+    &__icon {
+      display: inline-block;
+      content: " ";
+      width: 25px;
+      height: 21px;
+      background-size: cover;
+      margin-right: 5px;
+    }
+
+    &:after {
+      display: inline-block;
+      content: ' ';
+      width: 8px;
+      height: 8px;
+      border: none;
+      border-left: 1.5px solid $mainColor;
+      border-bottom: 1.5px solid $mainColor;
+      transform-origin: center;
+      transform: rotate(-45deg);
+      vertical-align: middle;
+    }
+  }
+
+  &__menu {
+    display: none;
+    padding: 10px 10px 15px;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: $mainBackgroundColor;
+    z-index: 1;
+    min-width: 200px;
+    border: 1px solid $secondComplimentColor;
+  }
+
+  &__list {
+    &__item {
+      &__link {
+        width: 100%;
         display: inline-block;
-        content: " ";
-        width: 25px;
-        height: 21px;
-        background-size: cover;
-        margin-right: 5px;
+        padding: 7px 0;
+        color: $thirdComplimentColor;
+        font-size: 13px;
+        line-height: 19px;
+      }
+
+      &__info {
+        font-size: 13px;
+        font-weight: bold;
+
+        &.--email-info {
+          font-size: 12px;
+          font-style: italic;
+          color: $firstComplimentTextColor;
+        }
+      }
+
+      &.--dropdown-title {
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+        border-bottom: 1px solid $fifthComplimentTextColor;
+      }
+
+      &.--btn-container {
+        margin-top: 5px;
+      }
+    }
+  }
+
+  &:hover & {
+    &__menu {
+      display: block;
+    }
+
+    &__btn {
+      cursor: pointer;
+
+      &__icon {
+        fill: $thirdComplimentColor;
       }
 
       &:after {
-        display: inline-block;
-        content: ' ';
-        width: 8px;
-        height: 8px;
-        border: none;
-        border-left: 1.5px solid $mainColor;
-        border-bottom: 1.5px solid $mainColor;
-        transform-origin: center;
-        transform: rotate(-45deg);
-        vertical-align: middle;
-      }
-    }
-
-    &__menu {
-      display: none;
-      padding: 10px 10px 15px;
-      position: absolute;
-      right: 0;
-      top: 100%;
-      background-color: $mainBackgroundColor;
-      z-index: 1;
-      min-width: 200px;
-      border: 1px solid $secondComplimentColor;
-    }
-
-    &__list {
-      &__item {
-        &__link {
-          width: 100%;
-          display: inline-block;
-          padding: 7px 0;
-          color: $thirdComplimentColor;
-          font-size: 13px;
-          line-height: 19px;
-        }
-
-        &__info {
-          font-size: 13px;
-          font-weight: bold;
-
-          &.--email-info {
-            font-size: 12px;
-            font-style: italic;
-            color: $firstComplimentTextColor;
-          }
-        }
-
-        &.--dropdown-title {
-          padding-bottom: 5px;
-          margin-bottom: 5px;
-          border-bottom: 1px solid $fifthComplimentTextColor;
-        }
-
-        &.--btn-container {
-          margin-top: 5px;
-        }
-      }
-    }
-
-    &:hover & {
-      &__menu {
-        display: block;
-      }
-
-      &__btn {
-        cursor: pointer;
-
-        &__icon {
-          fill: $thirdComplimentColor;
-        }
-
-        &:after {
-          transform: rotate(135deg);
-          border-left-color: $thirdComplimentColor;
-          border-bottom-color: $thirdComplimentColor;
-          margin-top: 5px;
-        }
+        transform: rotate(135deg);
+        border-left-color: $thirdComplimentColor;
+        border-bottom-color: $thirdComplimentColor;
+        margin-top: 5px;
       }
     }
   }
