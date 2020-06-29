@@ -94,6 +94,25 @@ export interface Paginated<T> {
   pagination: Pagination;
 }
 
+export interface Currency {
+  id: string;
+  code: string;
+  decimal_places: number;
+  decomal_point: string;
+  default: boolean;
+  enabled: boolean;
+  exchange_rate: number;
+  format: string;
+  thousand_separator: string;
+}
+
+export async function loadEnabledCurrencies(): Promise<Currency[]> {
+  const moltin = MoltinGateway({ client_id: config.clientId });
+  const response = await moltin.Currencies.All();
+
+  return response.data.filter((c: Currency) => c.enabled);
+}
+
 export async function loadCategoryTree(): Promise<Category[]> {
   const moltin = MoltinGateway({ client_id: config.clientId });
   const result = await moltin.Categories.Tree();

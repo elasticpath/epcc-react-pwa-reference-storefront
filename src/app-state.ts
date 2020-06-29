@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import constate from 'constate';
 import { Category, loadCategoryTree, Product } from './service';
+import * as service from './service';
 import { config } from './config';
 
 import en from './locales/en.json';
@@ -104,6 +105,8 @@ function useTranslationState() {
 const defaultCurrency = 'USD';
 
 function useCurrencyState() {
+  const [allCurrencies, setAllCurrencies] = useState<service.Currency[]>([]);
+  // Set previously saved or defautlt currency before fetching the list of supported ones
   const [selectedCurrency, setSelectedCurrency] = useState(localStorage.getItem('selectedCurrency') ?? defaultCurrency);
 
   const setCurrency = (newCurrency: string) => {
@@ -111,7 +114,29 @@ function useCurrencyState() {
     setSelectedCurrency(newCurrency);
   };
 
+  useEffect(() => {
+    service.loadEnabledCurrencies().then(currencies => {
+
+      // Check if we need to update selectedCurrency
+      setSelectedCurrency(s => {
+        const selected = currencies.find(c => c.code === s);
+
+        if (!selected) {
+          // Saved or default currency we initially selected was not found in the list of supported currencies
+          // Switch to server default one if exist or first one in the list
+          return currencies.find(c => c.default)?.code ?? currencies[0].code;
+        }
+
+        // No need to update, return existing value
+        return s;
+      });
+
+      setAllCurrencies(currencies);
+    });
+  }, []);
+
   return {
+    allCurrencies,
     selectedCurrency,
     setCurrency,
   }

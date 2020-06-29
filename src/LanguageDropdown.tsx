@@ -9,12 +9,10 @@ const languages = [
   { key: 'fr', name: 'french' },
 ];
 
-const currencies = ['USD', 'CAD'];
-
 export const LanguageDropdown: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { t, selectedLanguage, setLanguage } = useTranslation();
-  const { selectedCurrency, setCurrency } = useCurrency();
+  const { allCurrencies, selectedCurrency, setCurrency } = useCurrency();
 
   const selectedLangName = languages.find(l => l.key === selectedLanguage)!.name;
 
@@ -62,14 +60,14 @@ export const LanguageDropdown: React.FC = () => {
             <div className="languagedropdown__title">
               Currency
             </div>
-            {currencies.map(c => (
+            {allCurrencies.map(c => (
               <button
-                key={c}
+                key={c.id}
                 className="languagedropdown__itembtn"
-                disabled={selectedCurrency === c}
-                onClick={() => handleCurrencySelected(c)}
+                disabled={selectedCurrency === c.code}
+                onClick={() => handleCurrencySelected(c.code)}
               >
-                {t(c)}
+                {c.code}
               </button>
             ))}
           </div>
