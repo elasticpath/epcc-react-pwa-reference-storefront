@@ -115,25 +115,27 @@ function useCurrencyState() {
   };
 
   useEffect(() => {
+    // Only fetch currencies once
+    if (allCurrencies.length > 0) {
+      return;
+    }
+
     service.loadEnabledCurrencies().then(currencies => {
-
       // Check if we need to update selectedCurrency
-      setSelectedCurrency(s => {
-        const selected = currencies.find(c => c.code === s);
+      const selected = currencies.find(c => c.code === selectedCurrency);
 
-        if (!selected) {
-          // Saved or default currency we initially selected was not found in the list of supported currencies
-          // Switch to server default one if exist or first one in the list
-          return currencies.find(c => c.default)?.code ?? currencies[0].code;
-        }
+      if (!selected) {
+        // Saved or default currency we initially selected was not found in the list of server currencies
+        // Switch selectedCurrency to server default one if exist or first one in the list
+        setSelectedCurrency(currencies.find(c => c.default)?.code ?? currencies[0].code);
 
-        // No need to update, return existing value
-        return s;
-      });
+        // Clear selection in local storage
+        localStorage.removeItem('selectedCurrency');
+      }
 
       setAllCurrencies(currencies);
     });
-  }, []);
+  }, [allCurrencies.length, selectedCurrency]);
 
   return {
     allCurrencies,
