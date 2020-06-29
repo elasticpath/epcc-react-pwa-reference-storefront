@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { loadCategoryProducts } from './service';
-import { useCategories } from './app-state';
+import { useCategories, useTranslation, useCurrency } from './app-state';
 import { ProductThumbnail } from './ProductThumbnail';
 import { createCategoryUrl } from './routes';
 import { Pagination } from './Pagination';
@@ -10,6 +10,9 @@ import { useResolve } from './hooks';
 import './Category.scss';
 
 function useCategoryProducts(categoryId: string | undefined, pageNum: number) {
+  const { selectedLanguage } = useTranslation();
+  const { selectedCurrency } = useCurrency();
+
   const [totalPages, setTotalPages] = useState<number>();
 
   useEffect(() => {
@@ -20,11 +23,11 @@ function useCategoryProducts(categoryId: string | undefined, pageNum: number) {
   const [products] = useResolve(async () => {
     // during initial loading of categories categoryId might be undefined
     if (categoryId) {
-      const result = await loadCategoryProducts(categoryId, pageNum);
+      const result = await loadCategoryProducts(categoryId, pageNum, selectedLanguage, selectedCurrency);
       setTotalPages(result.pagination.totalPages);
       return result;
     }
-  }, [categoryId, pageNum]);
+  }, [categoryId, pageNum, selectedLanguage, selectedCurrency]);
 
   return { products, totalPages };
 }

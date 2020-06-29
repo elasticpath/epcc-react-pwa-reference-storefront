@@ -1,0 +1,62 @@
+@import './theme/common';
+
+.languagedropdown {
+  $block: &;
+
+  position: relative;
+
+  #{$block}__selectorbtn {
+    padding: 5px 5px;
+    cursor: pointer;
+
+    &:focus {
+      box-shadow: 0 0 0px 2px $btnFocusOutlineColor;
+    }
+  }
+
+  #{$block}__dropdown {
+    position: absolute;
+    border-radius: 5px;
+    box-shadow: 0 0 10px hsla(0, 0, 0, 0.2);
+    width: 150px;
+    right: 0;
+    top: 100%;
+    background-color: white;
+    padding: 5px 0;
+    z-index: 10;
+
+    #{$block}__section {
+      padding: 5px 0;
+      border-bottom: 1px solid hsl(0, 0, 95%);
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      #{$block}__title {
+        padding: 5px 12px;
+        font-size: smaller;
+        font-weight: bold;
+      }
+
+      #{$block}__itembtn {
+        display: block;
+        width: 100%;
+        padding: 5px 12px;
+        cursor: pointer;
+
+        &:focus {
+          box-shadow: 0 0 0px 2px $btnFocusOutlineColor inset;
+        }
+
+        &:hover:not(:disabled) {
+          background-color: hsl(0, 0, 95%);
+        }
+
+        &:disabled {
+          color: hsl(0, 0, 80%);
+        }
+      }
+    }
+  }
+}

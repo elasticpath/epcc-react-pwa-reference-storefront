@@ -24,8 +24,6 @@ body {
   height: 100%;
 }
 
-$btnColor: hsl(190, 70%, 34%);
-
 .epbtn {
   position: relative;
   text-align: center;
@@ -62,7 +60,7 @@ $btnColor: hsl(190, 70%, 34%);
   }
 
   &:focus {
-    box-shadow: 0 0 0px 2px change-color($color: $btnColor, $saturation: 35%, $lightness: 75%);
+    box-shadow: 0 0 0px 2px btnFocusOutlineColor;
   }
 
   &:active {

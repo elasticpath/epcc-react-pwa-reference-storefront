@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import constate from 'constate';
 import { Category, loadCategoryTree, Product } from './service';
+import * as service from './service';
 import { config } from './config';
 
 import en from './locales/en.json';
@@ -11,7 +12,7 @@ const translations: { [lang: string]: { [name: string]: string } } = {
   fr,
 };
 
-const fallbackLanguage = 'en';
+const defaultLanguage = 'en';
 
 function getInitialLanguage(): string {
   const savedLanguage = localStorage.getItem('selectedLanguage');
@@ -44,7 +45,7 @@ function getInitialLanguage(): string {
     }
   }
 
-  return fallbackLanguage;
+  return defaultLanguage;
 }
 
 function checkTranslations() {
@@ -99,6 +100,48 @@ function useTranslationState() {
     selectedLanguage,
     setLanguage,
   };
+}
+
+const defaultCurrency = 'USD';
+
+function useCurrencyState() {
+  const [allCurrencies, setAllCurrencies] = useState<service.Currency[]>([]);
+  // Set previously saved or defautlt currency before fetching the list of supported ones
+  const [selectedCurrency, setSelectedCurrency] = useState(localStorage.getItem('selectedCurrency') ?? defaultCurrency);
+
+  const setCurrency = (newCurrency: string) => {
+    localStorage.setItem('selectedCurrency', newCurrency);
+    setSelectedCurrency(newCurrency);
+  };
+
+  useEffect(() => {
+    // Only fetch currencies once
+    if (allCurrencies.length > 0) {
+      return;
+    }
+
+    service.loadEnabledCurrencies().then(currencies => {
+      // Check if we need to update selectedCurrency
+      const selected = currencies.find(c => c.code === selectedCurrency);
+
+      if (!selected) {
+        // Saved or default currency we initially selected was not found in the list of server currencies
+        // Switch selectedCurrency to server default one if exist or first one in the list
+        setSelectedCurrency(currencies.find(c => c.default)?.code ?? currencies[0].code);
+
+        // Clear selection in local storage
+        localStorage.removeItem('selectedCurrency');
+      }
+
+      setAllCurrencies(currencies);
+    });
+  }, [allCurrencies.length, selectedCurrency]);
+
+  return {
+    allCurrencies,
+    selectedCurrency,
+    setCurrency,
+  }
 }
 
 function getCategoryPaths(categories: Category[]): { [categoryId: string]: Category[] } {
@@ -177,9 +220,11 @@ function useCompareProductsState() {
 
 function useGlobalState() {
   const translation = useTranslationState();
+  const currency = useCurrencyState();
 
   return {
     translation,
+    currency,
     categories: useCategoriesState(translation.selectedLanguage),
     compareProducts: useCompareProductsState(),
   };
@@ -188,11 +233,13 @@ function useGlobalState() {
 export const [
   AppStateProvider,
   useTranslation,
+  useCurrency,
   useCategories,
   useCompareProducts,
 ] = constate(
   useGlobalState,
   value => value.translation,
+  value => value.currency,
   value => value.categories,
   value => value.compareProducts
 );
