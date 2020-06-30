@@ -1,3 +1,4 @@
+@import './theme/common';
 
 .appheader {
   display: flex;
@@ -16,5 +17,15 @@
 
   &__moltincartcontainer {
     flex: 0 0 auto;
+  }
+
+  .toggle-btn {
+    display: none;
+  }
+
+  @media(max-width: $tabletWidth) {
+    .toggle-btn {
+      display: inline-block;
+   }
   }
 }

@@ -6,6 +6,7 @@ import { LanguageDropdown } from './LanguageDropdown';
 
 import './AppHeader.scss';
 import headerLogo from './images/site-images/Company-Logo.svg';
+import { Navigation } from "./Navigation";
 
 
 export const AppHeader: React.FC = () => {
@@ -24,6 +25,7 @@ export const AppHeader: React.FC = () => {
       <div className="appheader__moltincartcontainer">
         <span className="moltin-cart-button"></span>
       </div>
+      <Navigation />
     </div>
   );
 };

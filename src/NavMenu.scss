@@ -1,28 +1,32 @@
 
 .navmenu {
+  padding-bottom: 20px;
 
   .navmenu__sub {
-    padding-left: 20px;
 
     .navmenu__link {
       height: 48px;
       display: flex;
       align-items: center;
-      padding: 0px 20px;
+      margin: 0 60px;
       font-size: 13px;
       font-weight: bold;
       text-decoration: none;
-      color: white;
+      color: #777777;
     }
 
     &--level-0 {
       display: flex;
       padding-left: 0px;
+      text-transform: uppercase;
     }
 
     &--level-1, &--level-2, &--level-3 {
       .navmenu__link {
         height: 30px;
+        color: black;
+        margin-left: 60px;
+        text-transform: none;
       }
     }
   }
