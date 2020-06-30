@@ -94,6 +94,25 @@ export interface Paginated<T> {
   pagination: Pagination;
 }
 
+export interface Currency {
+  id: string;
+  code: string;
+  decimal_places: number;
+  decomal_point: string;
+  default: boolean;
+  enabled: boolean;
+  exchange_rate: number;
+  format: string;
+  thousand_separator: string;
+}
+
+export async function loadEnabledCurrencies(): Promise<Currency[]> {
+  const moltin = MoltinGateway({ client_id: config.clientId });
+  const response = await moltin.Currencies.All();
+
+  return response.data.filter((c: Currency) => c.enabled);
+}
+
 export async function loadCategoryTree(): Promise<Category[]> {
   const moltin = MoltinGateway({ client_id: config.clientId });
   const result = await moltin.Categories.Tree();
@@ -103,8 +122,16 @@ export async function loadCategoryTree(): Promise<Category[]> {
 
 const productCache: { [id: string]: Product } = {};
 
-export async function loadCategoryProducts(categoryId: string, pageNum: number): Promise<Paginated<Product>> {
-  const moltin = MoltinGateway({ client_id: config.clientId });
+function setProductCache(key: string, language: string, currency: string, product: Product) {
+  productCache[`${key}:${language}:${currency}`] = product;
+}
+
+function getProductCache(key: string, language: string, currency: string): Product | undefined {
+  return productCache[`${key}:${language}:${currency}`];
+}
+
+export async function loadCategoryProducts(categoryId: string, pageNum: number, language: string, currency: string): Promise<Paginated<Product>> {
+  const moltin = MoltinGateway({ client_id: config.clientId, currency: currency });
 
   const result = await moltin.Products
     .Offset((pageNum - 1) * config.categoryPageSize)
@@ -126,7 +153,7 @@ export async function loadCategoryProducts(categoryId: string, pageNum: number):
   };
 
   for (const product of result.data) {
-    productCache[product.slug] = product;
+    setProductCache(product.id, language, currency, product);
   }
 
   return {
@@ -154,12 +181,14 @@ export async function loadImageHref(imageId: string): Promise<string | undefined
   return result.data.link.href;
 }
 
-export async function loadProductBySlug(productSlug: string, selectedLanguage: string): Promise<Product> {
-  if (productCache[productSlug]) {
-    return productCache[productSlug];
+export async function loadProductBySlug(productSlug: string, language: string, currency: string): Promise<Product> {
+  const cachedProduct = getProductCache(productSlug, language, currency);
+
+  if (cachedProduct) {
+    return cachedProduct;
   }
 
-  const moltin = MoltinGateway({ client_id: config.clientId });
+  const moltin = MoltinGateway({ client_id: config.clientId, currency: currency });
 
   const result = await moltin.Products
     .Limit(1)
@@ -171,7 +200,7 @@ export async function loadProductBySlug(productSlug: string, selectedLanguage: s
     .All();
 
   const product = result.data[0];
-  productCache[product.slug] = product;
+  setProductCache(product.slug, language, currency, product);
 
   return product;
 }
