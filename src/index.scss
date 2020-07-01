@@ -105,10 +105,17 @@ img, svg {
 
 .epform {
   &__group {
-    margin-bottom: 15px;
+    position: relative;
+    margin-bottom: 18px;
 
     &.--btn-container {
       padding-top: 15px;
+    }
+
+    &.--error {
+      .epform__input {
+        border-color: $mainErrorColor;
+      }
     }
   }
 
@@ -120,12 +127,6 @@ img, svg {
     color: $secondComplimentTextColor;
     text-transform: uppercase;
     margin-bottom: 5px;
-
-    &__required {
-      font-size: 16px;
-      font-weight: bold;
-      color: $mainErrorColor;
-    }
   }
 
   &__input {
@@ -145,6 +146,13 @@ img, svg {
     &:focus {
       border-color: #0099DE;
     }
+  }
+
+  &__error {
+    font-size: 12px;
+    color: $mainErrorColor;
+    position: absolute;
+    top: 100%;
   }
 }
 
@@ -217,6 +225,7 @@ img, svg {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 2;
   }
 }
 

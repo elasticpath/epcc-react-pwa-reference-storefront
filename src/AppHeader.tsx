@@ -5,7 +5,7 @@ import { useTranslation } from './app-state';
 import { LanguageDropdown } from './LanguageDropdown';
 
 import './AppHeader.scss';
-import { AppHeaderLogin } from './AppHeaderLogin';
+import { AccountDropdown } from './AccountDropdown';
 import headerLogo from './images/site-images/Company-Logo.svg';
 
 
@@ -19,7 +19,9 @@ export const AppHeader: React.FC = () => {
           <ImageContainer imgUrl={headerLogo} imgClassName="logo-image" alt="logoImage"/>
         </Link>
       </div>
-      <AppHeaderLogin />
+      <div className="appheader__account">
+        <AccountDropdown />
+      </div>
       <div className="appheader__language">
         <LanguageDropdown />
       </div>

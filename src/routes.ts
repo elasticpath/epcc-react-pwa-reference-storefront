@@ -42,3 +42,7 @@ export function createProductUrl(productSlug: string): string {
 export function createCompareProductsUrl(): string {
   return `/compare-products`;
 }
+
+export function createRegistrationUrl(): string {
+  return `/registration`;
+}

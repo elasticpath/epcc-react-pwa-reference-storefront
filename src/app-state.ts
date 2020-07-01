@@ -113,14 +113,18 @@ function useCustomerDataState() {
   const [customerName, setCustomerName] = useState('');
 
   useEffect(() => {
-    customerToken && getCustomer(customerId, customerToken).then(res => {
-      setCustomerEmail(res.data.email);
-      setCustomerName(res.data.name);
-      setIsLoggedIn(true);
-    });
+    if (customerToken) {
+      getCustomer(customerId, customerToken).then(res => {
+        setCustomerEmail(res.data.email);
+        setCustomerName(res.data.name);
+        setIsLoggedIn(true);
+      });
+    } else {
+      clearCustomerData();
+    }
   }, [customerId, customerToken]);
 
-  const setCustomerData = (token:string, id:string) => {
+  const setCustomerData = (token: string, id: string) => {
     localStorage.setItem('mtoken', token);
     localStorage.setItem('mcustomer', id);
     setCustomerToken(token);

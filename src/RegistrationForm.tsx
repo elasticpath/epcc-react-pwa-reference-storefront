@@ -7,6 +7,14 @@ import { useCustomerData, useTranslation } from './app-state';
 
 import './RegistrationForm.scss';
 
+interface FormValues {
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string,
+  passwordConfirm: string,
+}
+
 export const RegistrationForm: React.FC = (props) => {
   const { setCustomerData } = useCustomerData();
   const { t } = useTranslation();
@@ -15,25 +23,48 @@ export const RegistrationForm: React.FC = (props) => {
   const [registrationErrors, setRegistrationErrors] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const formik = useFormik({
-    initialValues: {
-      RegFormFirstName: '',
-      RegFormLastName: '',
-      RegFormUserName: '',
-      RegFormPassword: '',
-      RegFormPasswordConfirm: '',
-    },
+  const initialValues:FormValues = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    passwordConfirm: '',
+  };
+
+  const validate = (values:FormValues) => {
+    const errors:any = {};
+    if (!values.firstName) {
+      errors.firstName = t('required');
+    }
+    if (!values.lastName) {
+      errors.lastName = t('required');
+    }
+    if (!values.email) {
+      errors.email = t('required');
+    }
+    if (!values.password) {
+      errors.password = t('required');
+    }
+    if (!values.passwordConfirm) {
+      errors.passwordConfirm = t('required');
+    }
+    if (values.password && values.passwordConfirm && values.password !== values.passwordConfirm) {
+      errors.passwordConfirm = t('password-confirm-error');
+    }
+
+    return errors;
+  }
+
+  const {handleSubmit, handleChange, values, errors} = useFormik({
+    initialValues,
+    validate,
     onSubmit: (values) => {
-      if (values.RegFormPassword !== values.RegFormPasswordConfirm) {
-        setRegistrationErrors(t('password-confirm-error'));
-        return;
-      }
       setRegistrationErrors('');
       setIsLoading(true);
 
-      register(`${values.RegFormFirstName} ${values.RegFormLastName}`, values.RegFormUserName, values.RegFormPassword)
+      register(`${values.firstName} ${values.lastName}`, values.email, values.password)
         .then(() => {
-          login(values.RegFormUserName.toLowerCase(), values.RegFormPassword).then((result) => {
+          login(values.email.toLowerCase(), values.password).then((result) => {
             setIsLoading(false);
             setCustomerData(result.token, result.id);
             history.push('/');
@@ -55,66 +86,61 @@ export const RegistrationForm: React.FC = (props) => {
       </h1>
 
       <div className="registrationform__feedback">
-        {registrationErrors ? (registrationErrors) : ('')}
+        {registrationErrors}
       </div>
 
       <div className={`registrationform__content ${isLoading ? '--loading' : ''}`}>
-        <form className="epform" onSubmit={formik.handleSubmit}>
-          <div className="epform__group">
-            <label htmlFor="RegFormFirstName" className="epform__label">
-              <span className="epform__label__required">
-                *
-              </span>
-              {' '}
-              {t('first-name')}
+        <form className="epform" onSubmit={handleSubmit}>
+          {
+            (isLoading) ? <div className="epminiLoader --centered" /> : ('')
+          }
+          <div className={`epform__group ${errors.firstName ? '--error' : ''}`}>
+            <label htmlFor="firstName" className="epform__label">
+              {t('first-name')} *
             </label>
-            <input id="RegFormFirstName" name="RegFormFirstName" className="epform__input" type="text" onChange={formik.handleChange} value={formik.values.RegFormFirstName} />
+            <input id="firstName" name="firstName" className="epform__input" type="text" onChange={handleChange} value={values.firstName} />
+            <div className="epform__error">
+              {errors.firstName ? errors.firstName : null}
+            </div>
           </div>
-          <div className="epform__group">
-            <label htmlFor="RegFormLastName" className="epform__label">
-              <span className="epform__label__required">
-                *
-              </span>
-              {' '}
-              {t('last-name')}
+          <div className={`epform__group ${errors.lastName ? '--error' : ''}`}>
+            <label htmlFor="lastName" className="epform__label">
+              {t('last-name')} *
             </label>
-            <input id="RegFormLastName" name="RegFormLastName" className="epform__input" type="text" onChange={formik.handleChange} value={formik.values.RegFormLastName} />
+            <input id="lastName" name="lastName" className="epform__input" type="text" onChange={handleChange} value={values.lastName} />
+            <div className="epform__error">
+              {errors.lastName ? errors.lastName : null}
+            </div>
           </div>
-          <div className="epform__group">
-            <label htmlFor="RegFormUserName"  className="epform__label">
-              <span className="epform__label__required">
-                *
-              </span>
-              {' '}
-              {t('email-slash-username')}
+          <div className={`epform__group ${errors.email ? '--error' : ''}`}>
+            <label htmlFor="email"  className="epform__label">
+              {t('email-slash-username')} *
             </label>
-            <input id="RegFormUserName" name="RegFormUserName" className="epform__input" type="email" onChange={formik.handleChange} value={formik.values.RegFormUserName} />
+            <input id="email" name="email" className="epform__input" type="email" onChange={handleChange} value={values.email} />
+            <div className="epform__error">
+              {errors.email ? errors.email : null}
+            </div>
           </div>
-          <div className="epform__group">
-            <label htmlFor="RegFormPassword" className="epform__label">
-              <span className="epform__label__required">
-                *
-              </span>
-              {' '}
-              {t('password')}
+          <div className={`epform__group ${errors.password ? '--error' : ''}`}>
+            <label htmlFor="password" className="epform__label">
+              {t('password')} *
             </label>
-            <input id="RegFormPassword" name="RegFormPassword" className="epform__input" type="password" onChange={formik.handleChange} value={formik.values.RegFormPassword} />
+            <input id="password" name="password" className="epform__input" type="password" onChange={handleChange} value={values.password} />
+            <div className="epform__error">
+              {errors.password ? errors.password : null}
+            </div>
           </div>
-          <div className="epform__group">
-            <label htmlFor="RegFormPasswordConfirm" className="epform__label">
-              <span className="epform__label__required">
-                *
-              </span>
-              {' '}
-              {t('password-confirmation')}
+          <div className={`epform__group ${errors.passwordConfirm ? '--error' : ''}`}>
+            <label htmlFor="passwordConfirm" className="epform__label">
+              {t('password-confirmation')} *
             </label>
-            <input id="RegFormPasswordConfirm" name="RegFormPasswordConfirm" className="epform__input" type="password" onChange={formik.handleChange} value={formik.values.RegFormPasswordConfirm} />
+            <input id="passwordConfirm" name="passwordConfirm" className="epform__input" type="password" onChange={handleChange} value={values.passwordConfirm} />
+            <div className="epform__error">
+              {errors.passwordConfirm ? errors.passwordConfirm : null}
+            </div>
           </div>
           <div className="epform__group --btn-container">
-            {
-              (isLoading) ? <div className="epminiLoader --centered" /> : ('')
-            }
-            <button className="epbtn --primary" id="registration_form_register_button" type="submit">
+            <button className="epbtn --primary" id="registration_form_register_button" type="submit" disabled={isLoading}>
               {t('submit')}
             </button>
           </div>

@@ -106,6 +106,24 @@ export interface Currency {
   thousand_separator: string;
 }
 
+export interface Customer {
+  data: {
+    type: string;
+    id: string;
+    name: string;
+    email: string;
+    password: boolean;
+  }
+}
+
+export interface CustomerToken {
+  type: string;
+  id: string;
+  customer_id: string;
+  token: string;
+  expires: any;
+}
+
 export async function loadEnabledCurrencies(): Promise<Currency[]> {
   const moltin = MoltinGateway({ client_id: config.clientId });
   const response = await moltin.Currencies.All();
@@ -205,7 +223,7 @@ export async function loadProductBySlug(productSlug: string, language: string, c
   return product;
 }
 
-export async function register(name: string, email: string, password: string) {
+export async function register(name: string, email: string, password: string): Promise<Customer> {
   const moltin = MoltinGateway({ client_id: config.clientId });
   const { data } = await moltin.Customers.Create({
     type: 'customer',
@@ -217,14 +235,14 @@ export async function register(name: string, email: string, password: string) {
   return data;
 }
 
-export async function login(email: string, password: string) {
+export async function login(email: string, password: string): Promise<CustomerToken> {
   const moltin = MoltinGateway({ client_id: config.clientId });
   const { data } = await moltin.Customers.Token(email, password).then();
 
   return data;
 }
 
-export async function getCustomer(id: string, token: string) {
+export async function getCustomer(id: string, token: string): Promise<Customer> {
   const moltin = MoltinGateway({ client_id: config.clientId });
   const result = await moltin.Customers.Get(id, token);
 
