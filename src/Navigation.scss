@@ -2,6 +2,8 @@
 
 .app__navmenu {
   flex: 0 0 48px;
+  z-index: 1;
+  width: 100%;
   background-color: black;
   text-align: center;
   //padding-left: $maxScrollWidth;
@@ -82,9 +84,9 @@
   }
 }
 
-
 .dropbtn {
   border: none;
+  width: 100%;
 }
 
 .dropdown {
@@ -115,7 +117,6 @@
 
 .dropdown:hover .dropbtn {cursor: pointer;}
 
-
 @media(max-width: $tabletWidth) {
   .dropdown-content  {
     display: block;
@@ -125,13 +126,13 @@
     width: 100%;
     height: 100%;
     transform: translateX(100%);
-    background-color: silver;
-    transition: 5s;
+    background-color: $mainBackgroundColor;
+    transition: 0.5s;
 
     &.show {
-        transform: translateX(0);
-        visibility: visible;
-      }
+      transform: translateX(0);
+      visibility: visible;
+    }
   }
 
   .toggle-btn {

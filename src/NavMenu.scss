@@ -1,3 +1,4 @@
+@import './theme/common';
 
 .navmenu {
   padding-bottom: 20px;
@@ -27,6 +28,69 @@
         color: black;
         margin-left: 60px;
         text-transform: none;
+      }
+    }
+  }
+}
+
+@media (max-width: $tabletWidth) {
+  .navmenu__li {
+    display: block;
+  }
+
+  .dropdown-contents {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    //transform: translateX(100%);
+    background-color: $mainBackgroundColor;
+    transition: 0.5s;
+
+    &.show {
+      transform: translateX(0);
+      visibility: visible;
+    }
+  }
+
+  .navmenu {
+    .navmenu__sub {
+      &--level-0 {
+        display: block;
+      }
+      &--level-1 {
+        display: none;
+      }
+
+      .navmenu__link {
+        //display: none;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        margin: 0 20px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #167A92;
+        text-transform: none;
+
+        &.has-children {
+          &:after {
+            display: inline-block;
+            position: absolute;
+            right: 28px;
+            content: ' ';
+            width: 8px;
+            height: 8px;
+            border: none;
+            border-left: 1.5px solid $firstComplimentColor;
+            border-bottom: 1.5px solid $firstComplimentColor;
+            transform-origin: center;
+            transform: rotate(-135deg);
+            vertical-align: middle;
+          }
+        }
       }
     }
   }
