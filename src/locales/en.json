@@ -77,7 +77,7 @@
   "email": "Email",
   "password": "Password",
   "register": "Register",
-  "invalid-username-or-password": "Your username or password is invalid.",
+  "invalid-email-or-password": "Your email or password is invalid.",
   "password-confirm-error": "The specified passwords do not match",
   "register-new-account": "Register a New Account",
   "first-name": "First Name",

@@ -90,11 +90,10 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
           </button>
         </div>
 
-        <div className="logindialog__feedback">
-          {failedLogin ? t('invalid-username-or-passwordField') : ('')}
-        </div>
-
         <div className="logindialog__body">
+          <div className="logindialog__feedback">
+            {failedLogin ? t('invalid-email-or-password') : ('')}
+          </div>
           <form className="epform" id="login_modal_form" onSubmit={handleSubmit}>
             <div className={`epform__group ${errors.emailField ? '--error' : ''}`}>
               <label className="epform__label" htmlFor="emailField">

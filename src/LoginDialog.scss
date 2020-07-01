@@ -38,11 +38,15 @@
   }
 
   &__body {
-    padding: 10px 5px 5px;
+    position: relative;
+    padding: 25px 5px 5px;
   }
 
   &__feedback {
-    margin-top: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 5px;
     font-weight: bold;
     color: $mainErrorColor;
   }
