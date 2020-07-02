@@ -53,19 +53,30 @@
       transform: translateX(0);
       visibility: visible;
     }
+    //&.hide {
+    //  transform: translateX(0);
+    //  visibility: hidden;
+    //}
   }
 
   .navmenu {
     .navmenu__sub {
+      overflow: hidden;
       &--level-0 {
         display: block;
       }
       &--level-1 {
-        display: none;
+        visibility: hidden;
+        transform: translateX(100%);
+      }
+      &.show {
+        visibility: visible;
+        transform: translateX(0);
       }
 
       .navmenu__link {
-        //display: none;
+        width: 100%;
+        cursor: pointer;
         height: 48px;
         display: flex;
         align-items: center;

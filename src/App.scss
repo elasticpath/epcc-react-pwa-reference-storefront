@@ -10,7 +10,7 @@
     height: 60px;
     flex: 0 0 auto;
     background-color: white;
-    padding-right: calc(#{$maxScrollWidth} - 100vw + 100%);
+    //padding-right: calc(#{$maxScrollWidth} - 100vw + 100%);
   }
 
   &__main {

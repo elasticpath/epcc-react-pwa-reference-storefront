@@ -25,10 +25,12 @@
   .toggle-btn {
     display: none;
   }
+
   &__navigation {
     z-index: 1;
     width: 100%
   }
+
   @media(max-width: $tabletWidth) {
     .toggle-btn {
       display: inline-block;
