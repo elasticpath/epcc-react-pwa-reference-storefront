@@ -1,39 +1,32 @@
-import React, {useState} from 'react';
-import {Link, useParams} from 'react-router-dom';
+import React from 'react';
+import {Link} from 'react-router-dom';
 import { createCategoryUrl } from './routes';
-import {Category, Product} from './service';
+import {Category} from './service';
 import { useCategories } from './app-state';
 
 import './NavMenu.scss';
 
 interface NavMenuProps {
-  isShowNavMenu: boolean;
-  isNavMenu: boolean;
   categoryHistory: string[];
   showNavigation: () => void;
-  handleCategoryClick: (id: string) => void;
-
+  handleCategoryClick: (id: string, name: string) => void;
 }
 
 export const NavMenu: React.FC<NavMenuProps> = (props) => {
+  const { showNavigation, categoryHistory, handleCategoryClick } = props;
   const { categoriesTree } = useCategories();
-  const [isNavMenu, setHandleShow] = useState(false);
-  if (props.isNavMenu) {
-    setHandleShow(false);
-  }
+
   const handleCloseMenu = () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    props.showNavigation();
+    showNavigation();
   };
 
   const handleShow = (category: Category) => {
-    props.handleCategoryClick(category.id);
-    setHandleShow(!isNavMenu);
+    handleCategoryClick(category.id, category.name);
   };
 
-  function renderCategories(categories: Category[], level: number = 0): React.ReactElement {
+  function renderCategories(categories: Category[], level: number = 0, isVisible: boolean = false): React.ReactElement {
     return (
-      <ul className={`navmenu__sub navmenu__sub--level-${level} dropdown-contents ${!props.isNavMenu ? "show" : "hide"}`}>
+      <ul className={`navmenu__sub navmenu__sub--level-${level} dropdown-contents ${isVisible ? "show" : "hide"}`}>
         {categories?.map(category => (
           <li key={category.id} className={`navmenu__li navmenu__li--level-${level}`}>
             {!category.children ? (
@@ -49,7 +42,7 @@ export const NavMenu: React.FC<NavMenuProps> = (props) => {
                 {category.name}
               </button>
             )}
-            {category.children && renderCategories(category.children, level + 1)}
+            {category.children && renderCategories(category.children, level + 1, categoryHistory.includes(category.id))}
           </li>
         ))}
       </ul>

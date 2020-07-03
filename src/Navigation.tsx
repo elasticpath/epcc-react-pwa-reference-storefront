@@ -5,94 +5,93 @@ import { useTranslation } from './app-state';
 
 import { Category } from './service';
 import { useCategories } from './app-state';
-// import { handleShow } from './NavMenu';
 
 import './Navigation.scss';
 import { NavMenu } from './NavMenu';
 import { ReactComponent as MenuIcon } from './images/icons/ic_menu.svg';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 
-let isDesktop = true;
 export const Navigation: React.FC = () => {
   const { t } = useTranslation();
   const { categoriesTree } = useCategories();
 
   const [isOpen, setIsOpen] = useState(false);
   const [isTopMenuOpen, setIsTopMenuOpen] = useState(false);
-  const [isNavMenu, setIsNavMenu] = useState(false);
-  const [categoryHistory, setCategoryHistory] = useState([]);
-
-
-
-
-  function updatePredicate() {
-    isDesktop = window.innerWidth  > 1092;
-  }
-
-  window.addEventListener('resize', updatePredicate);
-
-  const handleCategoryClick = (categoryId: string) => {
-    // @ts-ignore
-    setCategoryHistory([...categoryHistory, categoryId])
+  const [categoryHistory, setCategoryHistory] = useState<string[]>([]);
+  const [categoryName, setCategoryName] = useState("");
+  const handleCategoryClick = (categoryId: string, categoryName: string) => {
+    setCategoryHistory([...categoryHistory, categoryId]);
+    setCategoryName(categoryName);
   };
 
   const showNavigation = () => {
     setIsTopMenuOpen(!isTopMenuOpen);
+    setCategoryName(t('categories'));
   };
 
-  const handleSelectorClicked = () => {
+  const handleSelectorClicked = (category: string) => {
     setIsOpen(!isOpen);
+    setCategoryHistory([]);
+    setCategoryName(category);
   };
 
   const handleBack = () => {
-    setIsNavMenu(true);
+    if (categoryHistory.length !== 0) {
+      const updatedCategoryHistory: string[] = categoryHistory.slice(categoryHistory.length, 1);
+      setCategoryName(t('products'));
+      setCategoryHistory(updatedCategoryHistory);
+    } else {
+      setIsOpen(false);
+      setCategoryName(t('categories'));
+    }
   };
 
   const reference = useOnclickOutside(() => {
-      setIsOpen(false);
-   });
+    setIsOpen(false);
+  });
 
-  function renderCategories(categories: Category[], level: number = 0): React.ReactElement {
-
+  function renderTopCategories(categories: Category[]): React.ReactElement {
     const topCategories = [
-        { name: 'home', displayName: 'Home', url: '/' },
-        { name: 'sale', displayName: 'Sale', url: '/' },
-        { name: 'products', displayName: 'Products', children: categories },
-        { name: 'guides', displayName: 'Guides', url: '/' },
-        { name: 'support', displayName: 'Support', url:'contactus' },
-      ];
+      { name: 'home', displayName: 'Home', url: '/' },
+      { name: 'sale', displayName: 'Sale', url: '/shippingreturns' },
+      { name: 'products', displayName: 'Products', children: categories },
+      { name: 'guides', displayName: 'Guides', url: '/termsandconditions' },
+      { name: 'support', displayName: 'Support', url:'/contactus' },
+    ];
 
     return (
-      <div className="navigation">
-        <div className="navigation__header" ref={reference}>
+      <div className="navigation__categories">
+        <div className="navigation__categories--header" ref={reference}>
           {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions,jsx-a11y/click-events-have-key-events */}
-          <div onClick={handleBack} className="navigation__header--left-arrow" />
-            <span>
-              {t('categories')}
+          <div onClick={handleBack} className="navigation__categories--header--left-arrow">
+            {t('back')}
+          </div>
+            <span className="navigation__title">
+              {categoryName}
             </span>
-          <CloseIcon onClick={showNavigation} className="navigation__header--close" />
+          <CloseIcon onClick={showNavigation} className="navigation__categories--header--close" />
         </div>
-        <ul className={`navigation__sub navigation__sub--level-${level}`}>
+        <ul className="navigation__sub navigation__sub">
           {topCategories?.map(category => (
-            <li key={category.name} className={`navigation__li navigation__li--level-${level}`}>
+            <li key={category.name} className="navigation__list">
               {category.url ? (
-                  <Link
-                    className={`navigation__link navigation__link--level-${level}`}
-                    to={category.url}
-                    title={category.displayName}
-                    onClick={showNavigation}
-                  >
-                    {category.displayName}
-                  </Link>
+                <Link
+                  className="navigation__link"
+                  to={category.url}
+                  title={category.displayName}
+                  onClick={showNavigation}
+                >
+                  {category.displayName}
+                </Link>
               ) : (
-                  <button className="navigation__link nav__item-link--has-children dropbtn" ref={reference} onClick={handleSelectorClicked}>{category.displayName}</button>
+                <button className="navigation__link navigation__link--has-children dropbtn" ref={reference} onClick={() => handleSelectorClicked(category.displayName)}>{category.displayName}</button>
               )
               }
             </li>
           ))}
         </ul>
         <div ref={reference} className={`dropdown-content ${isOpen ? 'show' : ''}`}>
-          <NavMenu isShowNavMenu={isNavMenu} categoryHistory={categoryHistory} showNavigation={showNavigation} isNavMenu={isNavMenu} handleCategoryClick={handleCategoryClick} />
+          <NavMenu categoryHistory={categoryHistory} showNavigation={showNavigation} handleCategoryClick={handleCategoryClick} />
         </div>
       </div>
     );
@@ -108,9 +107,9 @@ export const Navigation: React.FC = () => {
       >
         <MenuIcon className="menu-icon" />
       </button>
-      <nav className={`app__navmenu dropdown ${isTopMenuOpen ? 'show' : 'hide'}`}>
-        <div className={`app-header-navigation-component ${isDesktop ? 'app-header-navigation-component--desktop-view' : 'app-header-navigation-component--mobile-view'}`}>
-          {categoriesTree && renderCategories(categoriesTree)}
+      <nav className={`navigation ${isTopMenuOpen ? 'show-modal' : 'hide-modal'}`}>
+        <div className="navigation--component">
+          {categoriesTree && renderTopCategories(categoriesTree)}
         </div>
       </nav>
     </>
