@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import constate from 'constate';
-import { Category, loadCategoryTree, Product } from './service';
+import {Category, getCustomer, loadCategoryTree, Product} from './service';
 import * as service from './service';
 import { config } from './config';
 
@@ -100,6 +100,57 @@ function useTranslationState() {
     selectedLanguage,
     setLanguage,
   };
+}
+
+function useCustomerDataState() {
+  const token = localStorage.getItem('mtoken') || '';
+  const id = localStorage.getItem('mcustomer') || '';
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [customerToken, setCustomerToken] = useState(token);
+  const [customerId, setCustomerId] = useState(id);
+  const [customerEmail, setCustomerEmail] = useState('');
+  const [customerName, setCustomerName] = useState('');
+
+  useEffect(() => {
+    if (customerToken) {
+      getCustomer(customerId, customerToken).then(res => {
+        setCustomerEmail(res.data.email);
+        setCustomerName(res.data.name);
+        setIsLoggedIn(true);
+      });
+    } else {
+      clearCustomerData();
+    }
+  }, [customerId, customerToken]);
+
+  const setCustomerData = (token: string, id: string) => {
+    localStorage.setItem('mtoken', token);
+    localStorage.setItem('mcustomer', id);
+    setCustomerToken(token);
+    setCustomerId(id);
+  };
+
+  const clearCustomerData = () => {
+    localStorage.setItem('mtoken', '');
+    localStorage.setItem('mcustomer', '');
+    setCustomerToken('');
+    setCustomerId('');
+    setIsLoggedIn(false);
+  };
+
+  const setEmail = (email:string) => {
+    setCustomerEmail(email);
+  };
+
+  return {
+    isLoggedIn,
+    customerEmail,
+    customerName,
+    setEmail,
+    setCustomerData,
+    clearCustomerData
+  }
 }
 
 const defaultCurrency = 'USD';
@@ -224,6 +275,7 @@ function useGlobalState() {
 
   return {
     translation,
+    customerData: useCustomerDataState(),
     currency,
     categories: useCategoriesState(translation.selectedLanguage),
     compareProducts: useCompareProductsState(),
@@ -233,12 +285,14 @@ function useGlobalState() {
 export const [
   AppStateProvider,
   useTranslation,
+  useCustomerData,
   useCurrency,
   useCategories,
   useCompareProducts,
 ] = constate(
   useGlobalState,
   value => value.translation,
+  value => value.customerData,
   value => value.currency,
   value => value.categories,
   value => value.compareProducts
