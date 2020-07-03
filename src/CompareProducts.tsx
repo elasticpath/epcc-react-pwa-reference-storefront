@@ -2,6 +2,7 @@ import React from 'react';
 import { useCompareProducts, useTranslation } from './app-state';
 import { ProductMainImage } from './ProductMainImage';
 import { Product } from './service';
+import { ReactComponent as RecycleBinIcon } from './images/icons/ic_trash.svg';
 
 import './CompareProducts.scss';
 
@@ -81,12 +82,25 @@ export const CompareProducts: React.FC = () => {
                 <td key={product.id}>{product.finish}</td>
               ))}
             </tr>
+            <tr className="compareproducts__datarowmobile">
+              <td></td>
+              {compareProducts.map(product => (
+                <td key={product.id}>
+                  <p><span>{t('bulb')}:</span> {product.bulb}</p>
+                  <p><span>{t('wattage')}:</span> {product.max_watt}</p>
+                  <p><span>{t('bulb-qty')}:</span> {product.bulb_qty}</p>
+                  <p><span>{t('material')}:</span> {product.material}</p>
+                  <p><span>{t('finish')}:</span> {product.finish}</p>
+                </td>
+              ))}
+            </tr>
             <tr className="compareproducts__removeitemrow">
               <td></td>
               {compareProducts.map(product => (
                 <td key={product.id}>
                   <button onClick={() => handleRemoveItem(product)} className="epbtn --small">
-                    {t('remove')}
+                    <span className="compareproducts__deletetxt">{t('remove')}</span>
+                    <RecycleBinIcon className="compareproducts__deleteicon" />
                   </button>
                 </td>
               ))}
