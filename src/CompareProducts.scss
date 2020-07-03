@@ -108,11 +108,9 @@
   }
 
   @media (max-width: 575px) {
-    table, tbody, td, tr {
-      display: block;
-    }
-
     #{$block}__table {
+      display: block;
+
       tbody {
         display: grid;
         grid-template-columns: 60px 1fr 1fr 50px;
@@ -120,7 +118,12 @@
         border-bottom: 1px solid $firstBorderColor;
       }
 
+      tr {
+        display: block;
+      }
+
       td {
+        display: block;
         min-height: 190px;
         width: auto;
         padding: 10px 5px;
