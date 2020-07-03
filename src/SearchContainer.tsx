@@ -1,6 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-// @ts-ignore
+import useOnclickOutside from 'react-cool-onclickoutside';
 import { SearchBox, Hits } from 'react-instantsearch-dom';
 import { createSearchUrl } from './routes';
 
@@ -15,21 +15,9 @@ export const SearchContainer: React.FC<SearchBoxProps> = () => {
   const [ hitsVisible, setHitsVisible ] = useState(false);
   const history = useHistory();
 
-  const searchContainerRef: any = useRef(null);
-
-  useEffect(() => {
-    function handleClickOutside(event: any) {
-      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target)) {
-        setHitsVisible(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-
-  }, [searchContainerRef]);
+  const searchContainerRef = useOnclickOutside(() => {
+    setHitsVisible(false);
+  });
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -42,11 +30,11 @@ export const SearchContainer: React.FC<SearchBoxProps> = () => {
     }
   };
 
-  const handleFocus = (event: any) => {
+  const handleFocus = () => {
     setHitsVisible(true);
   };
 
-  const handleLinkClick = (event: any) => {
+  const handleLinkClick = () => {
     setHitsVisible(false);
   };
 
@@ -67,21 +55,19 @@ export const SearchContainer: React.FC<SearchBoxProps> = () => {
   return (
     <div ref={searchContainerRef} className="search-container">
       <div className="search-container__input">
-        <SearchBox
+        {/*@ts-ignore*/}
+        <SearchBox onFocus={handleFocus}
           searchAsYouType
           showLoadingIndicator
-          onFocus={handleFocus}
           onSubmit={handleSubmit}
           submit={<MagnifyingGlassIcon />}
-          translations={{
-            placeholder: 'Search tere...',
-          }}
         />
         { hitsVisible &&
-          <Hits
-            className="search-container__hints"
-            hitComponent={Hit}
-          />
+          <div className="search-container__hints">
+            <Hits
+              hitComponent={Hit}
+            />
+          </div>
         }
       </div>
     </div>

@@ -5,6 +5,7 @@ import { loadProductBySlug } from './service';
 import { CompareCheck } from './CompareCheck';
 import { ProductMainImage } from './ProductMainImage';
 import { useTranslation, useCurrency } from './app-state';
+import { Availability } from './Availability';
 
 import './Product.scss';
 
@@ -36,9 +37,7 @@ export const Product: React.FC = () => {
             <div className="product__price">
               {product.meta.display_price.without_tax.formatted}
             </div>
-            <div className="product__availability">
-              {product.meta.stock.availability === 'in-stock' ? t('available') : t('out-of-stock')}
-            </div>
+            <Availability available={product.meta.stock.availability === 'in-stock'} />
             <div className="product__comparecheck">
               <CompareCheck product={product} />
             </div>

@@ -4,7 +4,7 @@ import { createProductUrl } from './routes';
 import { Link } from 'react-router-dom';
 import { CompareCheck } from './CompareCheck';
 import { ProductMainImage } from './ProductMainImage';
-import { useTranslation } from './app-state';
+import { Availability } from './Availability';
 
 import './ProductThumbnail.scss';
 
@@ -15,7 +15,6 @@ interface ProductThumbnailProps {
 
 export const ProductThumbnail: React.FC<ProductThumbnailProps> = (props) => {
   const productUrl = createProductUrl(props.product.slug);
-  const { t } = useTranslation();
 
   return (
     <div className="productthumbnail">
@@ -32,9 +31,7 @@ export const ProductThumbnail: React.FC<ProductThumbnailProps> = (props) => {
       <div className="productthumbnail__price">
         {props.product.meta.display_price.without_tax.formatted}
       </div>
-      <div className="productthumbnail__availability">
-        {props.product.meta.stock.availability === 'in-stock' ? t('available') : t('out-of-stock')}
-      </div>
+      <Availability available={props.product.meta.stock.availability === 'in-stock'}/>
       <div className={`productthumbnail__comparecheck`}>
         <CompareCheck product={props.product} />
       </div>

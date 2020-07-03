@@ -1,3 +1,4 @@
+@import './theme/common';
 
 .appheader {
   display: flex;
@@ -28,5 +29,13 @@
 
   &__moltincartcontainer {
     flex: 0 0 auto;
+  }
+}
+
+@media (max-width: $mobileWidth - 1px) {
+  .appheader {
+    &__search {
+      display: none;
+    }
   }
 }

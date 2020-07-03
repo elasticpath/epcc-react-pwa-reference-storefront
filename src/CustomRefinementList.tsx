@@ -1,5 +1,4 @@
 import React from 'react'
-// @ts-ignore
 import { RefinementList } from 'react-instantsearch-dom'
 import { ReactComponent as FilterIcon } from './images/icons/filter_list.svg';
 

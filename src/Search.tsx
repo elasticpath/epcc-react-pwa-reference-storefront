@@ -1,6 +1,5 @@
 import React from 'react';
-// @ts-ignore
-import { Hits, SortBy, Pagination, HitsPerPage } from 'react-instantsearch-dom'
+import { Hits, SortBy, Pagination } from 'react-instantsearch-dom'
 import { ProductHit } from './ProductHit';
 import { CustomRefinementList } from './CustomRefinementList';
 import { config } from './config';
@@ -12,34 +11,41 @@ interface SearchParams  {
 }
 
 export const Search: React.FC<SearchParams> = (props) => {
-  // const { keywords } = useParams<SearchParams>();
 
-  const Hit = ({ hit }: any) => {
+  const Hit = ({ hit }: any) => (
+    <div className="search__product">
+      <ProductHit hit={hit} />
+    </div>
+  );
 
-    return (
-      <div className="search__product"><ProductHit hit={hit} /></div>
-    );
-  };
+  const Facets = () => (
+    <div className="search__facets">
+      <div>
+        <h4 className="">Sort by:</h4>
+        <SortBy
+          key="facets-SortBy"
+          defaultRefinement={config.algoliaIndexName}
+          items={[
+            { value: config.algoliaIndexName, label: 'Featured' },
+            { value: 'product_price_asc', label: 'Price asc.' },
+            { value: 'product_price_desc', label: 'Price desc.' }
+          ]}
+        />
+      </div>
+      <CustomRefinementList key="facets-list-1" title="Category" attribute="categories" />
+      <CustomRefinementList key="facets-list-2" title="Collection" attribute="collections" />
+      <CustomRefinementList key="facets-list-3" title="Brand" attribute="brands" />
+    </div>
+  );
 
   return (
     <div className="search">
       <h1 className="search__title">Search</h1>
-      <div className="search__fasets">
-        <div className="">
-          <h4 className="">Sort by:</h4>
-          <SortBy
-            defaultRefinement={config.algoliaIndexName}
-            items={[
-              { value: config.algoliaIndexName, label: 'Featured' },
-              { value: 'product_price_asc', label: 'Price asc.' },
-              { value: 'product_price_desc', label: 'Price desc.' }
-            ]}
-          />
-        </div>
-        <CustomRefinementList title="Category" attribute="categories" />
-        <CustomRefinementList title="Collection" attribute="collections" />
-        <CustomRefinementList title="Brand" attribute="brands" />
-      </div>
+      <label htmlFor="checkbox" className="search__facets-toggle epbtn --bordered">
+        Filter
+      </label>
+      <input type="checkbox" id="checkbox" className="search__facets-toggle-input"/>
+      <Facets key="search-facets" />
       <div className="search__productlist">
         <Hits hitComponent={Hit} />
       </div>

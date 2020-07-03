@@ -1,16 +1,16 @@
+@import './theme/common';
+
 .search {
   $block: &;
 
-  margin: auto;
   display: grid;
   grid-template-columns: 2fr 6fr;
   grid-gap: 10px;
   width: 900px;
   grid-template-areas:
           "title      title"
-          "fasets     productlist"
+          "facets     productlist"
           "pagination pagination";
-
 
 
   #{$block}__title {
@@ -40,11 +40,12 @@
     }
   }
 
-  #{$block}__fasets {
-    grid-area: fasets;
+  #{$block}__facets {
+    grid-area: facets;
     border: 1px solid rgba(0,0,0,.125);
     margin: 10px;
     height: fit-content;
+    transition: translate 1s;
 
     h4, .ais-RefinementList-item, .ais-SortBy {
       padding: 12px 20px;
@@ -80,10 +81,42 @@
       margin-right: 10px;
     }
 
-    //ais-RefinementList-labelText
     .ais-RefinementList-count {
       margin-left: 4px;
     }
+
+    &-title {
+      display: none;
+      padding: 20px;
+    }
+
+    &-title-text, &-close {
+      display: inline-block;
+    }
+
+    &-close {
+      position: relative;
+      padding: 15px;
+      float: right;
+
+      &:before, &:after {
+        position: absolute;
+        top: 7px;
+        left: 15px;
+        content: ' ';
+        height: 15px;
+        width: 1px;
+        background-color: #333333;
+        transform: rotate(45deg);
+      }
+      &:after {
+        transform: rotate(-45deg);
+      }
+    }
+  }
+
+  #{$block}__facets-show {
+    display: none;
   }
 
   #{$block}__pagination {
@@ -103,5 +136,78 @@
         color: #737373;
       }
     }
+  }
+}
+
+@media (max-width: $tabletWidth - 1px) {
+  .search {
+    $block: &;
+    width: 100%;
+    padding: 0 20px;
+    grid-template-columns: 3fr 6fr;
+
+    #{$block}__productlist .ais-Hits-list {
+      justify-content: center;
+    }
+  }
+}
+
+@media (max-width: $mobileWidth - 1px) {
+  .search {
+    $block: &;
+
+    grid-template-columns: 1fr;
+    grid-template-areas:
+            "title"
+            "facets-toggle"
+            "facets"
+            "productlist"
+            "pagination";
+
+    #{$block}__title {
+      margin-bottom: 10px;
+    }
+
+
+    #{$block}__facets-toggle {
+      grid-area: facets-toggle;
+    }
+    #{$block}__facets-show {
+      display: block;
+    }
+
+    input[type="checkbox"]:checked ~  #{$block}__facets {
+      max-height: 100%;
+      border-width: 1px;
+    }
+
+    #{$block}__facets {
+      max-height: 0;
+      transition: max-height 0.3s;
+      overflow: hidden;
+      border-width: 0;
+
+      &-title {
+        display: block;
+      }
+
+      &-toggle {
+        width: 100px;
+        margin: auto;
+
+        &:active, &:focus {
+          background-color: transparent;
+          box-shadow: none;
+        }
+      }
+    }
+
+    #{$block}__facets-toggle-input {
+      display: none;
+    }
+  }
+
+  body {
+    //position: fixed;
   }
 }
