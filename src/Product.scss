@@ -5,14 +5,15 @@
   $block: &;
 
   height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-left: $maxScrollWidth;
-  padding-right: calc(#{$maxScrollWidth} - 100vw + 100%);
+  padding-left: 15px;
+  padding-right: 15px;
 
   #{$block}__maincontainer {
-    width: 800px;
+    width: 100%;
     display: flex;
     flex-direction: row;
     margin-top: 60px;
@@ -65,6 +66,55 @@
 
       #{$block}__moltinbtncontainer {
         margin-top: 20px;
+      }
+    }
+  }
+
+  @media (min-width: 576px) {
+    #{$block}__maincontainer {
+      width: 540px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    #{$block}__maincontainer {
+      width: 720px;
+    }
+  }
+
+  @media (min-width: 992px) {
+    padding-left: $maxScrollWidth;
+    padding-right: calc(#{$maxScrollWidth} - 100vw + 100%);
+
+    #{$block}__maincontainer {
+      width: 800px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    &mainimage {
+      height: auto !important;
+      width: 100% !important;
+    }
+
+    #{$block}__maincontainer {
+      #{$block}__imgcontainer {
+        flex: 0 0 50%;
+      }
+    }
+  }
+
+  @media (max-width: 575px) {
+    #{$block}__maincontainer {
+      flex-direction: column;
+
+      #{$block}__imgcontainer {
+        flex: 0 0 100%;
+        margin-bottom: 20px;
+      }
+
+      #{$block}__details {
+        margin-left: 0;
       }
     }
   }

@@ -7,7 +7,7 @@ import ContactUsPage from './ContactUsPage';
 import ShippingReturnsPage from './ShippingReturns';
 import TermsAndConditionsPage from './TermsAndConditionsPage';
 import { CompareProducts } from './CompareProducts';
-
+import { RegistrationForm } from "./RegistrationForm";
 
 interface RouteConfig {
   path: string;
@@ -23,7 +23,8 @@ export const routes: RouteConfig[] = [
   { exact: true, path: '/contactus', component: ContactUsPage, },
   { exact: true, path: '/shippingreturns', component: ShippingReturnsPage, },
   { exact: true, path: '/termsandconditions', component: TermsAndConditionsPage, },
-  { exact: true, path: '/compare-products', component: CompareProducts, }
+  { exact: true, path: '/compare-products', component: CompareProducts, },
+  { exact: true, path: '/registration', component: RegistrationForm, }
 ];
 
 export function createHomeUrl(): string {
@@ -40,4 +41,8 @@ export function createProductUrl(productSlug: string): string {
 
 export function createCompareProductsUrl(): string {
   return `/compare-products`;
+}
+
+export function createRegistrationUrl(): string {
+  return `/registration`;
 }

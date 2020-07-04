@@ -74,5 +74,19 @@
   "language": "Language",
   "english": "English",
   "french": "French",
-  "lorem-ipsum": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  "lorem-ipsum": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  "logout": "Logout",
+  "login": "Login",
+  "email": "Email",
+  "password": "Password",
+  "register": "Register",
+  "invalid-email-or-password": "Your email or password is invalid.",
+  "password-confirm-error": "The specified passwords do not match",
+  "register-new-account": "Register a New Account",
+  "first-name": "First Name",
+  "last-name": "Last Name",
+  "email-slash-username": "Email/Username",
+  "password-confirmation": "Password Confirmation",
+  "submit": "Submit",
+  "required": "Required"
 }

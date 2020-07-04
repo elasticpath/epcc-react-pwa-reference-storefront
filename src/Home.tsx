@@ -39,7 +39,7 @@ export const Home: React.FC = () => {
             <div className="main-banner-txt">
               <p className="goods-description">{t('home-1-content')}</p>
               <div className="btn-wrap">
-                <button type="button" className="epbtn primary learn-more-btn">{t('learn-more')}</button>
+                <button type="button" className="epbtn --primary learn-more-btn">{t('learn-more')}</button>
               </div>
             </div>
           </div>
@@ -56,7 +56,7 @@ export const Home: React.FC = () => {
                     <p className="goods-title-small">{t('home-2-subheading')}</p>
                     <p className="goods-title">{t('home-2-heading')}</p>
                     <div className="btn-wrap">
-                      <button type="button" className="epbtn primary learn-more-btn">{t('learn-more')}</button>
+                      <button type="button" className="epbtn --primary learn-more-btn">{t('learn-more')}</button>
                     </div>
                   </div>
                   <ImageContainer imgUrl={productImage1} alt={productFileName1} imgClassName="main-goods-image" />
@@ -68,7 +68,7 @@ export const Home: React.FC = () => {
                     <p className="goods-title-small">{t('home-3-subheading')}</p>
                     <p className="goods-title">{t('home-3-heading')}</p>
                     <p className="goods-description">{t('home-3-content')}</p>
-                    <button type="button" className="epbtn primary learn-more-btn">{t('add-to-cart')}</button>
+                    <button type="button" className="epbtn --primary learn-more-btn">{t('add-to-cart')}</button>
                   </div>
                   <ImageContainer imgUrl={productImage2} alt={productFileName2} imgClassName="main-goods-image" />
                 </div>
@@ -79,7 +79,7 @@ export const Home: React.FC = () => {
                     <p className="goods-title-small">{t('home-4-subheading')}</p>
                     <p className="goods-title">{t('home-4-heading')}</p>
                     <p className="goods-description">{t('home-4-content')}</p>
-                    <button type="button" className="epbtn primary learn-more-btn">{t('ice-cream-makers')}</button>
+                    <button type="button" className="epbtn --primary learn-more-btn">{t('ice-cream-makers')}</button>
                   </div>
                   <ImageContainer imgUrl={productImage3} alt={productFileName3} imgClassName="main-goods-image" />
                 </div>
@@ -116,7 +116,7 @@ export const Home: React.FC = () => {
             <div className="main-banner-txt">
               <p className="goods-description">{t('home-7-content')}</p>
               <div className="btn-wrap">
-                <button type="button" className="epbtn primary learn-more-btn">{t('learn-more')}</button>
+                <button type="button" className="epbtn --primary learn-more-btn">{t('learn-more')}</button>
               </div>
             </div>
           </div>
@@ -177,7 +177,7 @@ export const Home: React.FC = () => {
                     <p className="goods-description">{t('home-11-content-1')}</p>
                     <p className="goods-description">{t('home-11-content-2')}</p>
                     <div className="btn-wrap">
-                      <button type="button" className="epbtn primary learn-more-btn">{t('bellvie-help')}</button>
+                      <button type="button" className="epbtn --primary learn-more-btn">{t('bellvie-help')}</button>
                     </div>
                   </div>
                 </div>
@@ -190,7 +190,7 @@ export const Home: React.FC = () => {
                     <p className="goods-description">{t('home-12-content-1')}</p>
                     <p className="goods-description">{t('home-12-content-2')}</p>
                     <div className="btn-wrap">
-                      <button type="button" className="epbtn primary learn-more-btn">{t('about')}</button>
+                      <button type="button" className="epbtn --primary learn-more-btn">{t('about')}</button>
                     </div>
                   </div>
                 </div>

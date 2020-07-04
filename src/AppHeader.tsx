@@ -4,6 +4,7 @@ import { ImageContainer } from './ImageContainer';
 import { useTranslation } from './app-state';
 import { LanguageDropdown } from './LanguageDropdown';
 import './AppHeader.scss';
+import { AccountDropdown } from './AccountDropdown';
 import headerLogo from './images/site-images/Company-Logo.svg';
 import { Navigation } from "./Navigation";
 export const AppHeader: React.FC = () => {
@@ -15,6 +16,9 @@ export const AppHeader: React.FC = () => {
           <Link to="/" aria-label={t('bellvie-logo')}>
             <ImageContainer imgUrl={headerLogo} imgClassName="logo-image" alt="logoImage"/>
           </Link>
+        </div>
+        <div className="appheader__account">
+          <AccountDropdown />
         </div>
         <div className="appheader__language">
           <LanguageDropdown />

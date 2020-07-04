@@ -9,13 +9,11 @@ $animLength: 0.2s;
 
   position: fixed;
   width: 100%;
-  height: $overlayHeight;
-  bottom: -$overlayHeight - 10px;
+  bottom: -100%;
   background-color: white;
   box-shadow: 0 0 10px hsla(0, 0, 0, 0.3);
   transition: bottom 0.1s ease-out;
-  padding-left: $maxScrollWidth;
-  padding-right: calc(#{$maxScrollWidth} - 100vw + 100%);
+  padding: 10px 15px;
   z-index: 10;
   display: flex;
   align-items: center;
@@ -30,13 +28,14 @@ $animLength: 0.2s;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    flex-wrap: wrap;
 
     #{$block}__product {
       display: flex;
       flex-direction: row;
-      margin-right: 20px;
+      margin: 5px 20px 5px 0;
       height: 50px;
-      width: 200px;
+      width: 175px;
       box-shadow: 0 0 2px hsla(0, 0, 0, 0.3);
 
       #{$block}__productimg {
@@ -89,5 +88,18 @@ $animLength: 0.2s;
         margin-bottom: 0;
       }
     }
+  }
+
+  @media (min-width: 576px) {
+    #{$block}__products {
+      #{$block}__product {
+        width: 200px;
+      }
+    }
+  }
+
+  @media (min-width: 768px) {
+    padding-left: $maxScrollWidth;
+    padding-right: calc(#{$maxScrollWidth} - 100vw + 100%);
   }
 }

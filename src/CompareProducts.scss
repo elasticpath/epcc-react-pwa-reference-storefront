@@ -1,4 +1,6 @@
 
+@import './theme/common';
+
 .compareproducts {
   $block: &;
 
@@ -78,12 +80,85 @@
       }
     }
 
+
+    #{$block}__datarowmobile {
+      display: none;
+
+      td {
+        text-align: left;
+      }
+
+      span {
+        font-weight: bold;
+      }
+    }
+
     #{$block}__removeitemrow {
       border-top: 1px solid hsl(0, 0%, 93%);
 
       td {
         padding: 16px 10px;
       }
+    }
+  }
+
+  #{$block}__deleteicon {
+    display: none;
+    fill: $firstComplimentColor;
+  }
+
+  @media (max-width: 575px) {
+    #{$block}__table {
+      display: block;
+
+      tbody {
+        display: grid;
+        grid-template-columns: 60px 1fr 1fr 50px;
+        border-top: 1px solid $firstBorderColor;
+        border-bottom: 1px solid $firstBorderColor;
+      }
+
+      tr {
+        display: block;
+      }
+
+      td {
+        display: block;
+        min-height: 190px;
+        width: auto;
+        padding: 10px 5px;
+        border-bottom: 1px solid $firstBorderColor;
+
+        &:first-child {
+          display: none;
+        }
+      }
+
+      #{$block}__mainrow {
+        td {
+          padding: 10px 5px
+        }
+      }
+
+      #{$block}__datarow {
+        display: none;
+      }
+
+      #{$block}__datarowmobile {
+        display: block;
+      }
+
+      #{$block}__removeitemrow {
+        border: none;
+      }
+    }
+
+    #{$block}__deletetxt {
+      display: none;
+    }
+
+    #{$block}__deleteicon {
+      display: inline-block;
     }
   }
 }

@@ -2,15 +2,21 @@
 
 .appheader {
   height: 100%;
+
   &__container {
     display: flex;
     flex-direction: row;
     height: 100%;
     align-items: center;
   }
+
   &__logo {
     flex: 1;
     padding-left: 40px;
+  }
+
+  &__account {
+    margin-right: 20px;
   }
 
   &__language {
