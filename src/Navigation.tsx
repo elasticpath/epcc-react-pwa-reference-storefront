@@ -52,11 +52,11 @@ export const Navigation: React.FC = () => {
 
   function renderTopCategories(categories: Category[]): React.ReactElement {
     const topCategories = [
-      { name: 'home', displayName: 'Home', url: '/' },
-      { name: 'sale', displayName: 'Sale', url: '/shippingreturns' },
-      { name: 'products', displayName: 'Products', children: categories },
-      { name: 'guides', displayName: 'Guides', url: '/termsandconditions' },
-      { name: 'support', displayName: 'Support', url:'/contactus' },
+      { name: 'home', displayName: t('home'), url: '/' },
+      { name: 'sale', displayName: t('sale'), url: '/shippingreturns' },
+      { name: 'products', displayName: t('products'), children: categories },
+      { name: 'guides', displayName: t('guides'), url: '/termsandconditions' },
+      { name: 'support', displayName: t('support'), url:'/contactus' },
     ];
 
     return (

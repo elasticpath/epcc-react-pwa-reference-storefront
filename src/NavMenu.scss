@@ -7,18 +7,27 @@
     width: 290px;
   }
 
+  &__link {
+    &.has-children {
+      border-bottom: 1px solid $secondBorderColor;
+      text-transform: uppercase;
+    }
+  }
+
+
   &__sub {
     .navmenu {
       &__link {
         height: 48px;
         display: flex;
         align-items: center;
-        margin: 0 auto;
         font-size: 13px;
         font-weight: bold;
         text-decoration: none;
         text-align: center;
-        color: #777777;
+        color: $secondComplimentTextColor;
+        margin-left: 75px;
+        width: 76%;
       }
     }
 
@@ -34,7 +43,7 @@
     &--level-1, &--level-2, &--level-3 {
       .navmenu__link {
         height: 30px;
-        color: black;
+        color: $mainTextColor;
         margin-left: 60px;
         text-transform: none;
       }
@@ -47,7 +56,13 @@
     &__li {
       width: 100%;
       display: block;
-      border-bottom: 1px solid #EEEEEE;
+      border-bottom: 1px solid $fifthComplimentTextColor;
+    }
+
+    &__link {
+      &.has-children {
+        border: none;
+      }
     }
 
     &__sub {
@@ -96,7 +111,7 @@
         padding-left: 40px;
         font-size: 14px;
         font-weight: 500;
-        color: #167A92;
+        color: $thirdComplimentColor;
         text-transform: none;
 
         &.has-children {
