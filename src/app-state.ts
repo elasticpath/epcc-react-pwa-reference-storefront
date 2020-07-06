@@ -115,8 +115,10 @@ function useCustomerDataState() {
   useEffect(() => {
     if (customerToken) {
       getCustomer(customerId, customerToken).then(res => {
-        setCustomerEmail(res.data.email);
-        setCustomerName(res.data.name);
+        if (res.data.email) {
+          setCustomerEmail(res.data.email);
+          setCustomerName(res.data.name);
+        }
         setIsLoggedIn(true);
       });
     } else {
