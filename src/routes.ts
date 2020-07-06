@@ -2,10 +2,10 @@ import React from 'react';
 import { Home } from './Home';
 import { Category } from './Category';
 import { Product } from './Product';
-import AboutUsPage from './AboutUsPage';
-import ContactUsPage from './ContactUsPage';
-import ShippingReturnsPage from './ShippingReturns';
-import TermsAndConditionsPage from './TermsAndConditionsPage';
+import AboutUs from './AboutUs';
+import ContactUs from './ContactUs';
+import ShippingAndReturns from './ShippingAndReturns';
+import TermsAndConditions from './TermsAndConditions';
 import { CompareProducts } from './CompareProducts';
 import { RegistrationForm } from "./RegistrationForm";
 
@@ -19,10 +19,10 @@ export const routes: RouteConfig[] = [
   { exact: true, path: '/', component: Home, },
   { exact: true, path: '/category/:categorySlug/:pageNum?', component: Category, },
   { exact: true, path: '/product/:productSlug', component: Product, },
-  { exact: true, path: '/aboutus', component: AboutUsPage, },
-  { exact: true, path: '/contactus', component: ContactUsPage, },
-  { exact: true, path: '/shippingreturns', component: ShippingReturnsPage, },
-  { exact: true, path: '/termsandconditions', component: TermsAndConditionsPage, },
+  { exact: true, path: '/aboutus', component: AboutUs, },
+  { exact: true, path: '/contactus', component: ContactUs, },
+  { exact: true, path: '/shippingreturns', component: ShippingAndReturns, },
+  { exact: true, path: '/termsandconditions', component: TermsAndConditions, },
   { exact: true, path: '/compare-products', component: CompareProducts, },
   { exact: true, path: '/registration', component: RegistrationForm, }
 ];
