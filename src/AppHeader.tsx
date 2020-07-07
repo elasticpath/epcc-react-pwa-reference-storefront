@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+// @ts-ignore
+import { Offline } from 'react-detect-offline';
 import { ImageContainer } from './ImageContainer';
 import { useTranslation } from './app-state';
 import { LanguageDropdown } from './LanguageDropdown';
@@ -28,6 +30,13 @@ export const AppHeader: React.FC = () => {
       <div className="appheader__moltincartcontainer">
         <span className="moltin-cart-button"></span>
       </div>
+      <Offline>
+        <div className="appheader__networkoffline">
+          <strong>
+            {t('network-offline')}
+          </strong>
+        </div>
+      </Offline>
     </div>
   );
 };

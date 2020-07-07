@@ -1568,6 +1568,14 @@
     "@types/history" "*"
     "@types/react" "*"
 
+"@types/react-router@^5.1.8":
+  version "5.1.8"
+  resolved "https://registry.yarnpkg.com/@types/react-router/-/react-router-5.1.8.tgz#4614e5ba7559657438e17766bb95ef6ed6acc3fa"
+  integrity sha512-HzOyJb+wFmyEhyfp4D4NYrumi+LQgQL/68HvJO+q6XtuHSDvw6Aqov7sCAhjbNq3bUPgPqbdvjXC5HeB2oEAPg==
+  dependencies:
+    "@types/history" "*"
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^16.9.0":
   version "16.9.38"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.38.tgz#868405dace93a4095d3e054f4c4a1de7a1ac0680"
@@ -9203,6 +9211,11 @@ react-cool-onclickoutside@^1.5.2:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/react-cool-onclickoutside/-/react-cool-onclickoutside-1.5.2.tgz#4a1500b54f3933af2227032975841a5fe3f9a0e8"
   integrity sha512-aOJ3fH9fjQqQ3IASsfXdgH5dmujX/bX4Vj0K6sfsx2dKjBbJ+WmX3nGFfRc3V130onRV93zWjW6WQQrO1Huo6w==
+
+react-detect-offline@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/react-detect-offline/-/react-detect-offline-2.4.0.tgz#e40f5a588ffb0680bcbcfa33e4d9d39ad805c3ff"
+  integrity sha512-OHglQ8bpbM4x8m23RhRCm1e1cYtuCoLQ7NKHsC0zzm1z2vQIrNTq7MvhZTQ7TsbgK1XapMewLxGW9QEW3DXC9A==
 
 react-dev-utils@^10.2.1:
   version "10.2.1"

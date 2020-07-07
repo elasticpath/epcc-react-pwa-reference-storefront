@@ -17,6 +17,7 @@
     "react": "^16.13.1",
     "react-axe": "^3.5.2",
     "react-cool-onclickoutside": "^1.5.2",
+    "react-detect-offline": "^2.4.0",
     "react-dom": "^16.13.1",
     "react-responsive-modal": "^4.0.1",
     "react-router-dom": "^5.2.0",
@@ -47,5 +48,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-router": "^5.1.8"
   }
 }
