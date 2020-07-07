@@ -2,10 +2,14 @@
 
 .appheader {
   position: relative;
-  display: flex;
-  flex-direction: row;
   height: 100%;
-  align-items: center;
+
+  &__container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    align-items: center;
+  }
 
   &__logo {
     flex: 1;
@@ -22,6 +26,26 @@
 
   &__moltincartcontainer {
     flex: 0 0 auto;
+    padding-right: calc(#{$maxScrollWidth} - 100vw + 100%);
+  }
+
+  .toggle-btn {
+    display: none;
+  }
+
+  &__navigation {
+    z-index: 1;
+    width: 100%
+  }
+
+  @media(max-width: $tabletWidth) {
+    .toggle-btn {
+      display: inline-block;
+    }
+
+    &__logo {
+      padding-left: 50px;
+    }
   }
 
   &__networkoffline {

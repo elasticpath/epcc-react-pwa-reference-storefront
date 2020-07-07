@@ -6,7 +6,6 @@ import { config } from './config';
 import { AppStateProvider } from './app-state';
 import { AppHeader } from './AppHeader';
 import { AppFooter } from './AppFooter';
-import { NavMenu } from './NavMenu';
 import { CompareOverlay } from './CompareOverlay';
 import './App.scss';
 
@@ -24,9 +23,6 @@ const App: React.FC = () => {
           <header className="app__header">
             <AppHeader />
           </header>
-          <nav className="app__navmenu">
-            <NavMenu />
-          </nav>
           <main className="app__main">
             <Switch>
               {routes.map(route => (
