@@ -85,5 +85,6 @@
   "email-slash-username": "Email/Username",
   "password-confirmation": "Password Confirmation",
   "submit": "Submit",
-  "required": "Required"
+  "required": "Required",
+  "network-offline": "Network Offline"
 }

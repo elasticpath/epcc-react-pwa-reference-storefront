@@ -1,5 +1,7 @@
+@import './theme/common';
 
 .appheader {
+  position: relative;
   display: flex;
   flex-direction: row;
   height: 100%;
@@ -20,5 +22,19 @@
 
   &__moltincartcontainer {
     flex: 0 0 auto;
+  }
+
+  &__networkoffline {
+    width: 50%;
+    padding: 15px;
+    position: absolute;
+    top: 100%;
+    left: 25%;
+    text-align: center;
+    z-index: 1;
+    border-radius: 3px;
+    color: $secondAccentColor;
+    background-color: adjust-color($color: $secondAccentColor, $lightness: 65%);
+    border: 1px solid adjust-color($color: $secondAccentColor, $lightness: 60%);
   }
 }
