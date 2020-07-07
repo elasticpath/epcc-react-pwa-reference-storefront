@@ -1,7 +1,7 @@
 
 export const config = {
-  clientId: 'c3spv7g7tlSmxIjkHCT7SElPSU7R0qcEJJBJRMYEXg',
-  stripeKey: 'pk_test_VrCftynqEAk3rDUGbpzpF0Fh00ttJqrHIw',
+  clientId: 'EdP3Gi1agyUF3yFS7Ngm8iyodLgbSR3wY4ceoJl0d2',
+  stripeKey: 'pk_test_JwRX4cevuCysIEQrpwcbn3j8',
   categoryPageSize: 8,
   maxCompareProducts: 4,
 };
