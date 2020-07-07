@@ -30,77 +30,75 @@ export const Home: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="home-page-b2c">
-      <section className="main-banner">
-        <ImageContainer imgUrl={bannerImage1} alt={bannerFileName1} imgClassName="main-banner-image" />
-        <div className="main-banner-title-wrap">
+    <div className="home">
+      <section className="home__banner">
+        <ImageContainer imgUrl={bannerImage1} alt={bannerFileName1} imgClassName="home__bannerimage" />
+        <div className="home__bannerwrap">
           <div className="container">
-            <h1 className="goods-heading">{t('home-1-heading')}</h1>
-            <div className="main-banner-txt">
-              <p className="goods-description">{t('home-1-content')}</p>
-              <div className="btn-wrap">
-                <button type="button" className="epbtn --primary learn-more-btn">{t('learn-more')}</button>
-              </div>
+            <h1 className="home__bannerheading">{t('home-1-heading')}</h1>
+            <div className="home__bannertxt">
+              <p>{t('home-1-content')}</p>
+              <button type="button" className="epbtn --primary">{t('learn-more')}</button>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="goods-section-1">
+      <section className="home__goodssection1">
         <div className="container">
-          <div className="main-goods ">
-            <ul className="main-goods__grid">
-              <li className="main-goods__cell">
-                <div className="main-goods-wrap">
-                  <div className="goods-info">
-                    <p className="goods-title-small">{t('home-2-subheading')}</p>
-                    <p className="goods-title">{t('home-2-heading')}</p>
-                    <div className="btn-wrap">
-                      <button type="button" className="epbtn --primary learn-more-btn">{t('learn-more')}</button>
+          <div className="home__maingoods">
+            <ul className="home__goodsgrid">
+              <li className="home__goodscell">
+                <div className="home__goodswrap">
+                  <div className="home__goodsinfo">
+                    <p className="home__titlesmall">{t('home-2-subheading')}</p>
+                    <p className="home__title">{t('home-2-heading')}</p>
+                    <div className="home__goodsbtns">
+                      <button type="button" className="epbtn --primary">{t('learn-more')}</button>
                     </div>
                   </div>
-                  <ImageContainer imgUrl={productImage1} alt={productFileName1} imgClassName="main-goods-image" />
+                  <ImageContainer imgUrl={productImage1} alt={productFileName1} imgClassName="home__goodsimage" />
                 </div>
               </li>
-              <li className="main-goods__cell">
-                <div className="main-goods-wrap">
-                  <div className="goods-info">
-                    <p className="goods-title-small">{t('home-3-subheading')}</p>
-                    <p className="goods-title">{t('home-3-heading')}</p>
-                    <p className="goods-description">{t('home-3-content')}</p>
-                    <button type="button" className="epbtn --primary learn-more-btn">{t('add-to-cart')}</button>
+              <li className="home__goodscell">
+                <div className="home__goodswrap">
+                  <div className="home__goodsinfo">
+                    <p className="home__titlesmall">{t('home-3-subheading')}</p>
+                    <p className="home__title">{t('home-3-heading')}</p>
+                    <p className="home__description">{t('home-3-content')}</p>
+                    <button type="button" className="epbtn --primary">{t('add-to-cart')}</button>
                   </div>
-                  <ImageContainer imgUrl={productImage2} alt={productFileName2} imgClassName="main-goods-image" />
+                  <ImageContainer imgUrl={productImage2} alt={productFileName2} imgClassName="home__goodsimage" />
                 </div>
               </li>
-              <li className="main-goods__cell">
-                <div className="main-goods-wrap">
-                  <div className="goods-info">
-                    <p className="goods-title-small">{t('home-4-subheading')}</p>
-                    <p className="goods-title">{t('home-4-heading')}</p>
-                    <p className="goods-description">{t('home-4-content')}</p>
-                    <button type="button" className="epbtn --primary learn-more-btn">{t('ice-cream-makers')}</button>
+              <li className="home__goodscell">
+                <div className="home__goodswrap">
+                  <div className="home__goodsinfo">
+                    <p className="home__titlesmall">{t('home-4-subheading')}</p>
+                    <p className="home__title">{t('home-4-heading')}</p>
+                    <p className="home__description">{t('home-4-content')}</p>
+                    <button type="button" className="epbtn">{t('ice-cream-makers')}</button>
                   </div>
-                  <ImageContainer imgUrl={productImage3} alt={productFileName3} imgClassName="main-goods-image" />
+                  <ImageContainer imgUrl={productImage3} alt={productFileName3} imgClassName="home__goodsimage" />
                 </div>
               </li>
-              <li className="main-goods__cell">
-                <div className="main-goods-wrap">
-                  <div className="goods-info">
-                    <p className="goods-title-small">{t('home-5-subheading')}</p>
-                    <p className="goods-title">{t('home-5-heading')}</p>
-                    <p className="goods-description">{t('home-5-content')}</p>
+              <li className="home__goodscell">
+                <div className="home__goodswrap">
+                  <div className="home__goodsinfo">
+                    <p className="home__titlesmall">{t('home-5-subheading')}</p>
+                    <p className="home__title">{t('home-5-heading')}</p>
+                    <p className="home__description">{t('home-5-content')}</p>
                   </div>
-                  <ImageContainer imgUrl={productImage4} alt={productFileName4} imgClassName="main-goods-image" />
+                  <ImageContainer imgUrl={productImage4} alt={productFileName4} imgClassName="home__goodsimage" />
                 </div>
               </li>
-              <li className="main-goods__cell">
-                <div className="main-goods-wrap">
-                  <div className="goods-info">
-                    <p className="goods-title-small">{t('home-6-subheading')}</p>
-                    <p className="goods-title">{t('home-6-heading')}</p>
+              <li className="home__goodscell">
+                <div className="home__goodswrap">
+                  <div className="home__goodsinfo">
+                    <p className="home__titlesmall">{t('home-6-subheading')}</p>
+                    <p className="home__title">{t('home-6-heading')}</p>
                   </div>
-                  <ImageContainer imgUrl={productImage5} alt={productFileName5} imgClassName="main-goods-image" />
+                  <ImageContainer imgUrl={productImage5} alt={productFileName5} imgClassName="home__goodsimage" />
                 </div>
               </li>
             </ul>
@@ -108,44 +106,42 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      <section className="main-banner banner-section-2">
-        <ImageContainer imgUrl={bannerImage2} alt={bannerFileName2} imgClassName="main-banner-image" />
-        <div className="main-banner-title-wrap">
+      <section className="home__banner home__banner2">
+        <ImageContainer imgUrl={bannerImage2} alt={bannerFileName2} imgClassName="home__bannerimage" />
+        <div className="home__bannerwrap">
           <div className="container">
-            <h2 className="goods-heading">{t('home-7-heading')}</h2>
-            <div className="main-banner-txt">
-              <p className="goods-description">{t('home-7-content')}</p>
-              <div className="btn-wrap">
-                <button type="button" className="epbtn --primary learn-more-btn">{t('learn-more')}</button>
-              </div>
+            <h2 className="home__bannerheading">{t('home-7-heading')}</h2>
+            <div className="home__bannertxt">
+              <p>{t('home-7-content')}</p>
+              <button type="button" className="epbtn --primary">{t('learn-more')}</button>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="goods-section-2">
+      <section className="home__goodssection2">
         <div className="container">
-          <h2 className="main-goods-title">{t('quality-blenders')}</h2>
-          <div className="main-goods">
-            <ul className="main-goods__grid">
-              <li className="main-goods__cell">
-                <div className="main-goods-wrap">
-                  <div className="goods-info">
-                    <p className="goods-title-small">{t('home-8-subheading')}</p>
-                    <p className="goods-title">{t('home-8-heading')}</p>
-                    <p className="goods-description">{t('home-8-content')}</p>
+          <h2 className="home__goodstitle">{t('quality-blenders')}</h2>
+          <div className="home__maingoods">
+            <ul className="home__goodsgrid">
+              <li className="home__goodscell">
+                <div className="home__goodswrap">
+                  <div className="home__goodsinfo">
+                    <p className="home__titlesmall">{t('home-8-subheading')}</p>
+                    <p className="home__title">{t('home-8-heading')}</p>
+                    <p className="home__description">{t('home-8-content')}</p>
                   </div>
-                  <ImageContainer imgUrl={productImage6} alt={productFileName6} imgClassName="main-goods-image" />
+                  <ImageContainer imgUrl={productImage6} alt={productFileName6} imgClassName="home__goodsimage" />
                 </div>
               </li>
-              <li className="main-goods__cell">
-                <div className="main-goods-wrap">
-                  <div className="goods-info">
-                    <p className="goods-title-small">{t('home-9-subheading')}</p>
-                    <p className="goods-title">{t('home-9-heading')}</p>
-                    <p className="goods-description">{t('home-9-content')}</p>
+              <li className="home__goodscell">
+                <div className="home__goodswrap">
+                  <div className="home__goodsinfo">
+                    <p className="home__titlesmall">{t('home-9-subheading')}</p>
+                    <p className="home__title">{t('home-9-heading')}</p>
+                    <p className="home__description">{t('home-9-content')}</p>
                   </div>
-                  <ImageContainer imgUrl={productImage7} alt={productFileName7} imgClassName="main-goods-image" />
+                  <ImageContainer imgUrl={productImage7} alt={productFileName7} imgClassName="home__goodsimage" />
                 </div>
               </li>
             </ul>
@@ -153,44 +149,44 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      <section className="main-banner banner-section-3">
-        <ImageContainer imgUrl={bannerImage3} alt={bannerFileName3} imgClassName="main-banner-image" />
-        <div className="main-banner-title-wrap">
+      <section className="home__banner">
+        <ImageContainer imgUrl={bannerImage3} alt={bannerFileName3} imgClassName="home__bannerimage" />
+        <div className="home__bannerwrap">
           <div className="container">
-            <h2 className="goods-heading">{t('home-10-heading')}</h2>
-            <div className="main-banner-txt">
-              <p className="goods-description">{t('home-10-content')}</p>
+            <h2 className="home__bannerheading">{t('home-10-heading')}</h2>
+            <div className="home__bannertxt">
+              <p>{t('home-10-content')}</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="goods-section-3">
+      <section className="home__goodssection3">
         <div className="container">
-          <div className="main-goods">
-            <ul className="main-goods__grid">
-              <li className="main-goods__cell">
-                <div className="main-goods-wrap">
-                  <div className="goods-info">
-                    <p className="goods-title-small">{t('home-11-subheading')}</p>
-                    <p className="goods-title">{t('home-11-heading')}</p>
-                    <p className="goods-description">{t('home-11-content-1')}</p>
-                    <p className="goods-description">{t('home-11-content-2')}</p>
-                    <div className="btn-wrap">
-                      <button type="button" className="epbtn --primary learn-more-btn">{t('bellvie-help')}</button>
+          <div className="home__maingoods">
+            <ul className="home__goodsgrid">
+              <li className="home__goodscell">
+                <div className="home__goodswrap">
+                  <div className="home__goodsinfo">
+                    <p className="home__titlesmall">{t('home-11-subheading')}</p>
+                    <p className="home__title">{t('home-11-heading')}</p>
+                    <p className="home__description">{t('home-11-content-1')}</p>
+                    <p className="home__description">{t('home-11-content-2')}</p>
+                    <div className="home__goodsbtns">
+                      <button type="button" className="epbtn --primary">{t('bellvie-help')}</button>
                     </div>
                   </div>
                 </div>
               </li>
-              <li className="main-goods__cell">
-                <div className="main-goods-wrap">
-                  <div className="goods-info">
-                    <p className="goods-title-small">{t('home-12-subheading')}</p>
-                    <p className="goods-title">{t('home-12-heading')}</p>
-                    <p className="goods-description">{t('home-12-content-1')}</p>
-                    <p className="goods-description">{t('home-12-content-2')}</p>
-                    <div className="btn-wrap">
-                      <button type="button" className="epbtn --primary learn-more-btn">{t('about')}</button>
+              <li className="home__goodscell">
+                <div className="home__goodswrap">
+                  <div className="home__goodsinfo">
+                    <p className="home__titlesmall">{t('home-12-subheading')}</p>
+                    <p className="home__title">{t('home-12-heading')}</p>
+                    <p className="home__description">{t('home-12-content-1')}</p>
+                    <p className="home__description">{t('home-12-content-2')}</p>
+                    <div className="home__goodsbtns">
+                      <button type="button" className="epbtn --primary">{t('about')}</button>
                     </div>
                   </div>
                 </div>
