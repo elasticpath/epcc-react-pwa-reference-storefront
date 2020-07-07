@@ -15,6 +15,10 @@
     &.--haschildren {
       border-bottom: 1px solid $secondBorderColor;
       text-transform: uppercase;
+
+      &:hover {
+        color: $firstComplimentColor;
+      }
     }
   }
 
