@@ -7,13 +7,16 @@
     width: 290px;
   }
 
+  &__nextbutton {
+    display: none;
+  }
+
   &__link {
-    &.has-children {
+    &.--haschildren {
       border-bottom: 1px solid $secondBorderColor;
       text-transform: uppercase;
     }
   }
-
 
   &__sub {
     .navmenu {
@@ -26,12 +29,13 @@
         text-decoration: none;
         text-align: center;
         color: $secondComplimentTextColor;
-        margin-left: 75px;
+        margin-left: 60px;
+        padding-left: 0;
         width: 76%;
       }
     }
 
-    &--level-0 {
+    &.--level-0 {
       display: flex;
       justify-content: center;
       padding-left: 0;
@@ -41,27 +45,37 @@
       width: 100%;
     }
 
-    &--level-1, &--level-2, &--level-3 {
+    &.--level-1, &.--level-2, &.--level-3 {
       .navmenu__link {
         height: 30px;
         color: $mainTextColor;
         margin-left: 60px;
         text-transform: none;
+
+        &:hover {
+          color: $firstComplimentColor
+        }
       }
     }
   }
-}
 
-@media (max-width: $tabletWidth) {
-  .navmenu {
+  @media (max-width: $tabletWidth) {
     &__li {
+      display: flex;
       width: 100%;
-      display: block;
       border-bottom: 1px solid $fifthComplimentTextColor;
     }
 
     &__link {
-      &.has-children {
+      &.--haschildren {
+        border: none;
+      }
+    }
+
+    &__nextbutton {
+      display: inline-block;
+
+      &.--haschildren {
         border: none;
       }
     }
@@ -76,7 +90,7 @@
       background-color: $mainBackgroundColor;
       transition: 0.5s;
 
-      &.show {
+      &.--show {
         transform: translateX(0);
         visibility: visible;
       }
@@ -86,49 +100,59 @@
       &__sub {
         overflow: hidden;
 
-        &--level-0 {
+        &.--level-0 {
           display: block;
         }
 
-        &--level-1 {
+        &.--level-1 {
           z-index: 1;
           visibility: hidden;
           transform: translateX(100%);
         }
 
-        &.show {
+        &.--show {
           visibility: visible;
           transform: translateX(0);
         }
-      }
 
-      &__link {
-        width: 100%;
-        cursor: pointer;
-        height: 48px;
-        display: flex;
-        align-items: center;
-        margin: 0;
-        padding-left: 40px;
-        font-size: 14px;
-        font-weight: 500;
-        color: $thirdComplimentColor;
-        text-transform: none;
+        .navmenu {
+          &__nextbutton {
+            &.--haschildren {
+              height: 48px;
+              position: relative;
+              flex: 1;
 
-        &.has-children {
-          &:after {
+
+              &:after {
+                display: inline-block;
+                position: absolute;
+                right: 28px;
+                content: ' ';
+                width: 8px;
+                height: 8px;
+                border: none;
+                border-left: 2px solid $firstComplimentColor;
+                border-bottom: 2px solid $firstComplimentColor;
+                transform-origin: center;
+                transform: rotate(-135deg);
+                vertical-align: middle;
+              }
+            }
+          }
+
+          &__link {
+            cursor: pointer;
+            height: 48px;
+            align-items: center;
+            margin: 0;
+            padding-left: 40px;
+            font-size: 14px;
+            font-weight: 500;
+            color: $thirdComplimentColor;
+            text-transform: none;
             display: inline-block;
-            position: absolute;
-            right: 28px;
-            content: ' ';
-            width: 8px;
-            height: 8px;
-            border: none;
-            border-left: 1.5px solid $firstComplimentColor;
-            border-bottom: 1.5px solid $firstComplimentColor;
-            transform-origin: center;
-            transform: rotate(-135deg);
-            vertical-align: middle;
+            text-align: left;
+            width: auto;
           }
         }
       }

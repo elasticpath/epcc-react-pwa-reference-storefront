@@ -24,8 +24,9 @@ export const Navigation: React.FC = () => {
     setCategoryName(categoryName);
   };
 
-  const showNavigation = () => {
+  const handleCloseNavigation = () => {
     setIsTopMenuOpen(!isTopMenuOpen);
+    setIsOpen(false);
     setCategoryName(t('categories'));
   };
 
@@ -56,22 +57,21 @@ export const Navigation: React.FC = () => {
       { name: 'sale', displayName: t('sale'), url: '/shippingreturns' },
       { name: 'products', displayName: t('products'), children: categories },
       { name: 'guides', displayName: t('guides'), url: '/termsandconditions' },
-      { name: 'support', displayName: t('support'), url:'/contactus' },
+      { name: 'support', displayName: t('products'), url:'/contactus' },
     ];
 
     return (
       <div className="navigation__categories">
-        <div className="navigation__categories--header" ref={reference}>
-          {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions,jsx-a11y/click-events-have-key-events */}
-          <div onClick={handleBack} className="navigation__categories--header--left-arrow">
+        <div className="navigation__categories --header" ref={reference}>
+          <button onClick={handleBack} className="navigation__categories --leftarrow">
             {t('back')}
-          </div>
-            <span className="navigation__title">
-              {categoryName}
-            </span>
-          <CloseIcon onClick={showNavigation} className="navigation__categories--header--close" />
+          </button>
+          <span className="navigation__title">
+            {categoryName}
+          </span>
+          <CloseIcon onClick={handleCloseNavigation} className="navigation__categories --close" />
         </div>
-        <ul className="navigation__sub navigation__sub">
+        <ul className="navigation__sub">
           {topCategories?.map(category => (
             <li key={category.name} className="navigation__list">
               {category.url ? (
@@ -79,19 +79,18 @@ export const Navigation: React.FC = () => {
                   className="navigation__link"
                   to={category.url}
                   title={category.displayName}
-                  onClick={showNavigation}
+                  onClick={handleCloseNavigation}
                 >
                   {category.displayName}
                 </Link>
               ) : (
-                <button className="navigation__link navigation__link--has-children dropbtn" ref={reference} onClick={() => handleSelectorClicked(category.displayName)}>{category.displayName}</button>
-              )
-              }
+                <button className="navigation__link --haschildren" ref={reference} onClick={() => handleSelectorClicked(category.displayName)}>{category.displayName}</button>
+              )}
             </li>
           ))}
         </ul>
-        <div ref={reference} className={`dropdown-content ${isOpen ? 'show' : ''}`}>
-          <NavMenu categoryHistory={categoryHistory} showNavigation={showNavigation} handleCategoryClick={handleCategoryClick} />
+        <div ref={reference} className={`navigation__dropdowncontent ${isOpen ? '--show' : ''}`}>
+          <NavMenu categoryHistory={categoryHistory} handleCloseNavigation={handleCloseNavigation} handleCategoryClick={handleCategoryClick} />
         </div>
       </div>
     );
@@ -103,12 +102,12 @@ export const Navigation: React.FC = () => {
         className="toggle-btn"
         type="button"
         aria-label="Toggle navigation"
-        onClick={showNavigation}
+        onClick={handleCloseNavigation}
       >
         <MenuIcon className="menu-icon" />
       </button>
-      <nav className={`navigation ${isTopMenuOpen ? 'show-modal' : 'hide-modal'}`}>
-        <div className="navigation--component">
+      <nav className={`navigation ${isTopMenuOpen ? '--showmodal' : '--hidemodal'}`}>
+        <div className="navigation__component">
           {categoriesTree && renderTopCategories(categoriesTree)}
         </div>
       </nav>
