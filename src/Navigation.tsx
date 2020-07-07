@@ -57,7 +57,7 @@ export const Navigation: React.FC = () => {
       { name: 'sale', displayName: t('sale'), url: '/shippingreturns' },
       { name: 'products', displayName: t('products'), children: categories },
       { name: 'guides', displayName: t('guides'), url: '/termsandconditions' },
-      { name: 'support', displayName: t('products'), url:'/contactus' },
+      { name: 'support', displayName: t('support'), url:'/contactus' },
     ];
 
     return (
