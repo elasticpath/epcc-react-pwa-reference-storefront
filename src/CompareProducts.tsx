@@ -2,6 +2,7 @@ import React from 'react';
 import { useCompareProducts, useTranslation } from './app-state';
 import { ProductMainImage } from './ProductMainImage';
 import { Product } from './service';
+import { isProductAvailable } from './helper';
 import { ReactComponent as RecycleBinIcon } from './images/icons/ic_trash.svg';
 
 import './CompareProducts.scss';
@@ -42,7 +43,7 @@ export const CompareProducts: React.FC = () => {
                 <td key={product.id}>
                   <div className="compareproducts__name">{product.name}</div>
                   <div className="compareproducts__price">{product.meta.display_price.without_tax.formatted}</div>
-                  <div className="compareproducts__availability">{product.meta.stock.availability === 'in-stock' ? t('available') : t('out-of-stock')}</div>
+                  <div className="compareproducts__availability">{isProductAvailable(product) ? t('available') : t('out-of-stock')}</div>
                   <div className="compareproducts__addtocart">
                     <span
                       className="moltin-buy-button"
