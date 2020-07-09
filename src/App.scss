@@ -38,3 +38,11 @@
     padding-right: calc(#{$maxScrollWidth} - 100vw + 100%);
   }
 }
+
+@media (max-width: $mobileWidth - 1px) {
+  .app {
+    &__header {
+      padding: 0;
+    }
+  }
+}

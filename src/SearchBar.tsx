@@ -6,55 +6,67 @@ import { createSearchUrl } from './routes';
 
 import { ReactComponent as MagnifyingGlassIcon } from './images/icons/magnifying_glass.svg';
 
-import './SearchContainer.scss';
+import './SearchBar.scss';
 
 interface SearchBoxProps {
 }
 
-export const SearchContainer: React.FC<SearchBoxProps> = () => {
+export const SearchBar: React.FC<SearchBoxProps> = () => {
+  const [ inputVisible, setInputVisible] = useState(false);
   const [ hitsVisible, setHitsVisible ] = useState(false);
   const history = useHistory();
 
-  const searchContainerRef = useOnclickOutside(() => {
+  const searchBarRef = useOnclickOutside(() => {
     setHitsVisible(false);
   });
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
     setHitsVisible(false);
-    const form = event.currentTarget;
-    const keywords = form?.getElementsByTagName('input')[0]?.value ?? '';
-    if (keywords) {
-      const searchUrl = createSearchUrl(keywords);
-      history.push(searchUrl);
-    }
+    const searchUrl = createSearchUrl();
+    history.push(searchUrl);
   };
 
   const handleFocus = () => {
     setHitsVisible(true);
+    setInputVisible(true);
   };
 
   const handleLinkClick = () => {
     setHitsVisible(false);
   };
 
+  const onInputShow = () => {
+    setInputVisible(!inputVisible);
+  };
+
+  const onCancel = () => {
+    setInputVisible(false);
+  };
+
   const Hit = ({ hit }: any) => {
     return (
-      <Link className="search-container__hint" to={`/product/${hit.slug}`} onClick={handleLinkClick}>
+      <Link className="searchbar__hint" to={`/product/${hit.slug}`} onClick={handleLinkClick}>
         <img
-          className="search-container__image"
+          className="searchbar__image"
           src={hit.imgUrl}
           alt={hit.name}
         />
-        <p className="search-container__hint-text">{hit.name}</p>
+        <p className="searchbar__hint-text">{hit.name}</p>
       </Link>
     );
   };
 
 
   return (
-    <div ref={searchContainerRef} className="search-container">
-      <div className="search-container__input">
+    <div ref={searchBarRef} className="searchbar">
+      <button
+        className="searchbar__open"
+        onClick={onInputShow}
+      >
+        <MagnifyingGlassIcon />
+      </button>
+      <div className={`searchbar__input ${inputVisible ? '--show' : ''}`}>
         {/*@ts-ignore*/}
         <SearchBox onFocus={handleFocus}
           searchAsYouType
@@ -62,8 +74,13 @@ export const SearchContainer: React.FC<SearchBoxProps> = () => {
           onSubmit={handleSubmit}
           submit={<MagnifyingGlassIcon />}
         />
+        <button
+          className="searchbar__close"
+          onClick={onCancel}>
+          Close
+        </button>
         { hitsVisible &&
-          <div className="search-container__hints">
+          <div className="searchbar__hints">
             <Hits
               hitComponent={Hit}
             />

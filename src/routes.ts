@@ -25,8 +25,8 @@ export const routes: RouteConfig[] = [
   { exact: true, path: '/shippingreturns', component: ShippingReturnsPage, },
   { exact: true, path: '/termsandconditions', component: TermsAndConditionsPage, },
   { exact: true, path: '/compare-products', component: CompareProducts, },
-  { exact: true, path: '/registration', component: RegistrationForm, }
-  { exact: true, path: '/search/:keywords', component: Search, }
+  { exact: true, path: '/registration', component: RegistrationForm, },
+  { exact: true, path: '/search', component: Search, }
 ];
 
 export function createHomeUrl(): string {
@@ -49,6 +49,6 @@ export function createRegistrationUrl(): string {
   return `/registration`;
 }
 
-export function createSearchUrl(keywords: string): string {
-  return `/search/${keywords}`;
+export function createSearchUrl(): string {
+  return `/search`;
 }

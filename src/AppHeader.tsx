@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ImageContainer } from './ImageContainer';
 import { useTranslation } from './app-state';
 import { LanguageDropdown } from './LanguageDropdown';
-import { SearchContainer } from './SearchContainer';
+import { SearchBar } from './SearchBar';
 
 import './AppHeader.scss';
 import { AccountDropdown } from './AccountDropdown';
@@ -20,19 +20,17 @@ export const AppHeader: React.FC = () => {
           <ImageContainer imgUrl={headerLogo} imgClassName="logo-image" alt="logoImage"/>
         </Link>
       </div>
-      <div className="appheader__account">
-        <AccountDropdown />
-      </div>
       <div className="appheader__search">
-        <div className="appheader__container">
-          <SearchContainer />
-        </div>
+        <SearchBar />
       </div>
       <div className="appheader__language">
         <LanguageDropdown />
       </div>
       <div className="appheader__moltincartcontainer">
         <span className="moltin-cart-button"></span>
+      </div>
+      <div className="appheader__account">
+        <AccountDropdown />
       </div>
     </div>
   );

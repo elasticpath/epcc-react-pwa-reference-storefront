@@ -115,7 +115,11 @@
     }
   }
 
-  #{$block}__facets-show {
+  #{$block}__facetstoggle {
+    display: none;
+  }
+
+  #{$block}__facetstoggleinput {
     display: none;
   }
 
@@ -172,7 +176,7 @@
     #{$block}__facets-toggle {
       grid-area: facets-toggle;
     }
-    #{$block}__facets-show {
+    #{$block}__facetstoggle{
       display: block;
     }
 
@@ -201,13 +205,5 @@
         }
       }
     }
-
-    #{$block}__facets-toggle-input {
-      display: none;
-    }
-  }
-
-  body {
-    //position: fixed;
   }
 }

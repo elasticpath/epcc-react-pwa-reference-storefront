@@ -12,7 +12,6 @@
 
   &__search {
     flex: 1;
-    padding-left: 40px;
   }
 
   &__account {
@@ -29,13 +28,27 @@
 
   &__moltincartcontainer {
     flex: 0 0 auto;
+    margin-right: 20px;
   }
 }
 
 @media (max-width: $mobileWidth - 1px) {
   .appheader {
+    &__logo {
+      padding:  0 10px 0 10px;
+      flex: 1;
+    }
+
     &__search {
-      display: none;
+      flex: 0;
+    }
+
+    &__accountm,
+    &__search,
+    &__language,
+    &__moltincartcontainer,
+    &__account {
+      margin-right: 10px;
     }
   }
 }

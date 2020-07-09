@@ -1,7 +1,11 @@
 @import './theme/common';
 
-.search-container {
-  &__hints {
+.searchbar {
+  $block: &;
+
+  max-width: 300px;
+
+  #{$block}__hints {
     margin-top: 10px;
     position: absolute;
     max-height: 200px;
@@ -13,19 +17,25 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
-  &__hint {
+  #{$block}__hint {
     border-bottom: 1px solid $firstBorderColor;
     display: flex;
     align-items: center;
     padding: 5px;
+    height: 60px;
   }
 
-  &__image {
+  #{$block}__image {
     width: 50px;
   }
 
-  &__input {
+  #{$block}__close, #{$block}__open {
+    display: none;
+  }
+
+  #{$block}__input {
     position: relative;
+    margin-left: 40px;
 
     input {
       height: 30px;
@@ -35,6 +45,10 @@
       border-radius: 4px;
       outline: none;
       border: 1px solid $firstBorderColor;
+    }
+
+    .ais-SearchBox-form {
+      position: relative;
     }
 
     .ais-SearchBox-submit, .ais-SearchBox-loadingIndicator, .ais-SearchBox-reset {
@@ -57,6 +71,46 @@
 
     .ais-SearchBox-loadingIndicator {
       padding-top: 3px;
+    }
+  }
+}
+
+@media (max-width: $mobileWidth - 1px) {
+  .searchbar {
+    $block: &;
+
+    #{$block}__close {
+      width: 20%;
+      height: 30px;
+      text-align: center;
+    }
+
+    #{$block}__open, #{$block}__close {
+      display: inline-block;
+    }
+
+    #{$block}__input {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      margin: 0;
+      padding: 10px 10px;
+      background-color: $secondBorderColor;
+      width: 100%;
+
+      &.--show {
+        display: inline-block;
+      }
+
+      .ais-SearchBox {
+        display: inline-block;
+        width: 80%;
+      }
+
+      input {
+        display: inline-block;
+      }
     }
   }
 }
