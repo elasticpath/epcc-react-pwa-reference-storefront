@@ -9,7 +9,6 @@ import { config } from './config';
 import { AppStateProvider } from './app-state';
 import { AppHeader } from './AppHeader';
 import { AppFooter } from './AppFooter';
-import { NavMenu } from './NavMenu';
 import { CompareOverlay } from './CompareOverlay';
 import './App.scss';
 
@@ -27,29 +26,26 @@ const App: React.FC = () => {
     <Router>
       <AppStateProvider>
         <InstantSearch searchClient={searchClient} indexName={config.algoliaIndexName}>
-          <div className="app">
-            <header className="app__header">
-              <AppHeader />
-            </header>
-            <nav className="app__navmenu">
-              <NavMenu />
-            </nav>
-            <main className="app__main">
-              <Switch>
-                {routes.map(route => (
-                  <Route key={route.path} {...route} />
-                ))}
-              </Switch>
-            </main>
-            <footer id="app-footer" role="contentinfo" aria-label="app-footer">
-              <div className="app__footer">
-                <AppFooter />
-              </div>
-            </footer>
-            <aside className="app__compareoverlay">
-              <CompareOverlay />
-            </aside>
-          </div>
+        <div className="app">
+          <header className="app__header">
+            <AppHeader />
+          </header>
+          <main className="app__main">
+            <Switch>
+              {routes.map(route => (
+                <Route key={route.path} {...route} />
+              ))}
+            </Switch>
+          </main>
+          <footer id="app-footer" role="contentinfo" aria-label="app-footer">
+            <div className="app__footer">
+              <AppFooter />
+            </div>
+          </footer>
+          <aside className="app__compareoverlay">
+            <CompareOverlay />
+          </aside>
+        </div>
         </InstantSearch>
       </AppStateProvider>
     </Router>

@@ -1,4 +1,5 @@
 import React from 'react';
+// @ts-ignore
 import { Hits, SortBy, Pagination } from 'react-instantsearch-dom'
 import { ProductHit } from './ProductHit';
 import { CustomRefinementList } from './CustomRefinementList';

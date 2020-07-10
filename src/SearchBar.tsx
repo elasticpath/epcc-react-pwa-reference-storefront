@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
+// @ts-ignore
 import { SearchBox, Hits } from 'react-instantsearch-dom';
 import { createSearchUrl } from './routes';
 

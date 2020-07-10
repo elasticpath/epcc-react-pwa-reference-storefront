@@ -4,7 +4,9 @@ import { createProductUrl } from './routes';
 import { Link } from 'react-router-dom';
 import { CompareCheck } from './CompareCheck';
 import { ProductMainImage } from './ProductMainImage';
+import { isProductAvailable } from './helper';
 import { Availability } from './Availability';
+
 
 import './ProductThumbnail.scss';
 
@@ -31,7 +33,7 @@ export const ProductThumbnail: React.FC<ProductThumbnailProps> = (props) => {
       <div className="productthumbnail__price">
         {props.product.meta.display_price.without_tax.formatted}
       </div>
-      <Availability available={props.product.meta.stock.availability === 'in-stock'}/>
+      <Availability available={isProductAvailable(props.product)}/>
       <div className={`productthumbnail__comparecheck`}>
         <CompareCheck product={props.product} />
       </div>

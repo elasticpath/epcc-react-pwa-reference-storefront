@@ -9,19 +9,7 @@
   &__header {
     height: 60px;
     flex: 0 0 auto;
-    background-color: white;
-    padding-right: calc(#{$maxScrollWidth} - 100vw + 100%);
-  }
-
-  &__navmenu {
-    flex: 0 0 48px;
-    background-color: black;
-    text-align: center;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding-left: $maxScrollWidth;
-    padding-right: calc(#{$maxScrollWidth} - 100vw + 100%);
+    background-color: $mainBackgroundColor;
   }
 
   &__main {
