@@ -93,5 +93,6 @@
   "password-confirmation": "Password Confirmation",
   "submit": "Submit",
   "required": "Required",
-  "network-offline": "Network Offline"
+  "network-offline": "Network Offline",
+  "my-account": "My Account"
 }

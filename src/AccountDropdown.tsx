@@ -1,8 +1,9 @@
 
 import React, { useState} from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { useCustomerData, useTranslation } from './app-state';
+import { createAccountUrl } from './routes';
 import { LoginDialog } from './LoginDialog';
 import { ReactComponent as AccountIcon } from './images/icons/ic_account.svg';
 
@@ -14,6 +15,8 @@ export const AccountDropdown: React.FC = (props) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const accountUrl = createAccountUrl();
 
   const handleSelectorClicked = () => {
     setIsOpen(true);
@@ -41,11 +44,11 @@ export const AccountDropdown: React.FC = (props) => {
                   <p className="accountdropdown__iteminfo">{customerName}</p>
                   <p className="accountdropdown__iteminfo accountdropdown__emailinfo">{customerEmail}</p>
                 </li>
-                {/*<li className="accountdropdown__listitem">*/}
-                {/*  <Link to="/profile" className="accountdropdown__link">*/}
-                {/*    My Account*/}
-                {/*  </Link>*/}
-                {/*</li>*/}
+                <li className="accountdropdown__listitem">
+                  <Link to={accountUrl} className="accountdropdown__link">
+                    {t('my-account')}
+                  </Link>
+                </li>
                 <li className="accountdropdown__listitem accountdropdown__itembtns">
                   <button className="epbtn --primary --fullwidth" type="button" onClick={logout}>
                     {t('logout')}
