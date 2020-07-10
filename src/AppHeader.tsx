@@ -6,11 +6,13 @@ import { ImageContainer } from './ImageContainer';
 import { useTranslation } from './app-state';
 import { LanguageDropdown } from './LanguageDropdown';
 import { SearchBar } from './SearchBar';
+import { AccountDropdown } from './AccountDropdown';
+import { Navigation } from "./Navigation";
+
+import headerLogo from './images/site-images/Company-Logo.svg';
 
 import './AppHeader.scss';
-import { AccountDropdown } from './AccountDropdown';
-import headerLogo from './images/site-images/Company-Logo.svg';
-import { Navigation } from "./Navigation";
+
 export const AppHeader: React.FC = () => {
   const { t } = useTranslation();
   return (

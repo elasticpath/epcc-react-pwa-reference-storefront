@@ -18,7 +18,7 @@ export const CustomRefinementList: React.FC<CustomRefinementListProps> = ({ titl
   return (
     <div className="refinementlist">
       <h2 className="refinementlist__title">
-        <FilterIcon className="refinement-list__filtericon" />
+        <FilterIcon className="refinementlist__filtericon" />
         {title}
       </h2>
       <RefinementList {...props} />

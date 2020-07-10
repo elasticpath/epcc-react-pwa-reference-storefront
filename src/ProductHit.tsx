@@ -25,23 +25,23 @@ export const ProductHit: React.FC<ProductThumbnailProps> = (props) => {
   const productUrl = createProductUrl(slug);
 
   return (
-    <div className="product-hit">
-      <div className="product-hit__imgcontainer">
-        <Link className="product-hit__imglink" to={productUrl} aria-label={name}>
+    <div className="producthit">
+      <div className="producthit__imgcontainer">
+        <Link className="producthit__imglink" to={productUrl} aria-label={name}>
           <img
-            className="product-hit__image"
+            className="producthit__image"
             src={imgUrl}
             style={{width: 160, height: 160, objectFit: 'fill' }}
             alt={name}
           />
         </Link>
       </div>
-      <div className="product-hit__name">
-        <Link className="product-hit__namelink" to={productUrl}>
+      <div className="producthit__name">
+        <Link className="producthit__namelink" to={productUrl}>
           {name}
         </Link>
       </div>
-      <div className="product-hit__price">
+      <div className="producthit__price">
         {price}
       </div>
       <Availability available={amount > 0} />
