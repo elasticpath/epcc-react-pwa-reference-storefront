@@ -1,5 +1,4 @@
 import React from 'react'
-// @ts-ignore
 import { RefinementList } from 'react-instantsearch-dom'
 import { ReactComponent as FilterIcon } from './images/icons/filter_list.svg';
 
@@ -17,11 +16,11 @@ interface CustomRefinementListProps {
 
 export const CustomRefinementList: React.FC<CustomRefinementListProps> = ({ title, ...props }) => {
   return (
-    <div className="refinement-list">
-      <h4 className="refinement-list__title">
-        <FilterIcon className="refinement-list__filter-icon" />
+    <div className="refinementlist">
+      <h2 className="refinementlist__title">
+        <FilterIcon className="refinement-list__filtericon" />
         {title}
-      </h4>
+      </h2>
       <RefinementList {...props} />
     </div>
   )

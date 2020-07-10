@@ -1,5 +1,4 @@
 import React from 'react';
-// @ts-ignore
 import { Hits, SortBy, Pagination } from 'react-instantsearch-dom'
 import { ProductHit } from './ProductHit';
 import { CustomRefinementList } from './CustomRefinementList';
@@ -8,10 +7,9 @@ import { config } from './config';
 import './Search.scss';
 
 interface SearchParams  {
-  keywords: '';
 }
 
-export const Search: React.FC<SearchParams> = (props) => {
+export const Search: React.FC<SearchParams> = () => {
 
   const Hit = ({ hit }: any) => (
     <div className="search__product">
@@ -22,7 +20,7 @@ export const Search: React.FC<SearchParams> = (props) => {
   const Facets = () => (
     <div className="search__facets">
       <div>
-        <h4 className="">Sort by:</h4>
+        <h2 className="">Sort by:</h2>
         <SortBy
           key="facets-SortBy"
           defaultRefinement={config.algoliaIndexName}

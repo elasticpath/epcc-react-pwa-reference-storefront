@@ -12,6 +12,7 @@
     overflow: scroll;
     z-index: 2;
     background-color: $mainBackgroundColor;
+    left: 0;
     width: 100%;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -85,6 +86,10 @@
       text-align: center;
     }
 
+    #{$block}__open {
+      padding: 10px 5px;
+    }
+
     #{$block}__open, #{$block}__close {
       display: inline-block;
     }
@@ -101,6 +106,7 @@
 
       &.--show {
         display: inline-block;
+        z-index: 1;
       }
 
       .ais-SearchBox {

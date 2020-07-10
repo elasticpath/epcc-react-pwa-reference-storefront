@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
-// @ts-ignore
 import { SearchBox, Hits } from 'react-instantsearch-dom';
 import { createSearchUrl } from './routes';
 
@@ -10,6 +9,12 @@ import { ReactComponent as MagnifyingGlassIcon } from './images/icons/magnifying
 import './SearchBar.scss';
 
 interface SearchBoxProps {
+}
+
+declare module 'react-instantsearch-dom' {
+  interface SearchBoxProps {
+    onFocus: () => void,
+  }
 }
 
 export const SearchBar: React.FC<SearchBoxProps> = () => {
@@ -51,7 +56,7 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
         <img
           className="searchbar__image"
           src={hit.imgUrl}
-          alt={hit.name}
+          alt=""
         />
         <p className="searchbar__hint-text">{hit.name}</p>
       </Link>
@@ -68,7 +73,6 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
         <MagnifyingGlassIcon />
       </button>
       <div className={`searchbar__input ${inputVisible ? '--show' : ''}`}>
-        {/*@ts-ignore*/}
         <SearchBox onFocus={handleFocus}
           searchAsYouType
           showLoadingIndicator

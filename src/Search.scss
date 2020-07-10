@@ -47,7 +47,7 @@
     height: fit-content;
     transition: translate 1s;
 
-    h4, .ais-RefinementList-item, .ais-SortBy {
+    h2, .ais-RefinementList-item, .ais-SortBy {
       padding: 12px 20px;
       margin-bottom: 0;
       background-color: rgba(0,0,0,.03);
@@ -72,7 +72,7 @@
       }
     }
 
-    .refinement-list__filter-icon {
+    .refinementlist__filtericon {
       vertical-align: sub;
       margin-right: 5px;
     }

@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import useScript from 'react-script-hook';
 import algoliasearch from 'algoliasearch/lite';
-// @ts-ignore
 import { InstantSearch } from 'react-instantsearch-dom';
 import { routes } from './routes';
 import { config } from './config';
