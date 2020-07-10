@@ -66,7 +66,7 @@ export const RegistrationForm: React.FC = (props) => {
         .then(() => {
           login(values.email.toLowerCase(), values.password).then((result) => {
             setIsLoading(false);
-            setCustomerData(result.token, result.id);
+            setCustomerData(result.token, result.customer_id);
             history.push('/');
           })
         })
