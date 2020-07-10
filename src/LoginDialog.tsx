@@ -55,7 +55,7 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
         .then((result) => {
           handleModalClose();
           setIsLoading(false);
-          setCustomerData(result.token, result.id);
+          setCustomerData(result.token, result.customer_id);
         })
         .catch(error => {
           setIsLoading(false);
