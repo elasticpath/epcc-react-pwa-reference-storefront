@@ -13,6 +13,8 @@
 
 The Elastic Path Commerce Cloud REACT PWA Reference Storefront is a flexible e-commerce website built on Elastic Path’s RESTful e-commerce API. The storefront uses the e-commerce capabilities provided by Elastic Path Commerce Cloud and gets data in a RESTful manner.
 
+The storefront uses the [Elastic Path Commerce Cloud JavaScript SDK](https://github.com/moltin/js-sdk) for all Elastic Path Commerce Cloud API requests, and [Elastic Path Commerce Cloud Embeddable Cart + Checkout](https://github.com/moltin/shopkit) for the Cart and Checkout experiences.
+
 > 💳 Use the test card 4242 4242 4242 4242, any future expiry date, and any CVC below to checkout.
 
 [Demo](http://epcc-reference.elasticpath.com/)
