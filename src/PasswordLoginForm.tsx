@@ -14,6 +14,7 @@ interface PasswordLoginFormProps {
   handleModalClose: (...args: any[]) => any,
   isLoading: boolean,
   setIsLoading: Dispatch<SetStateAction<boolean>>,
+  setFailedLogin: Dispatch<SetStateAction<boolean>>
 }
 
 interface FormValues {
@@ -22,7 +23,7 @@ interface FormValues {
 }
 
 export const PasswordLoginForm: React.FC<PasswordLoginFormProps> = (props) => {
-  const { handleModalClose, setIsLoading } = props;
+  const { handleModalClose, setIsLoading, setFailedLogin } = props;
   
   const { setCustomerData } = useCustomerData();
   const { t } = useTranslation();
@@ -60,6 +61,7 @@ export const PasswordLoginForm: React.FC<PasswordLoginFormProps> = (props) => {
         })
         .catch(error => {
           setIsLoading(false);
+          setFailedLogin(true)
           console.error(error);
         });
     },
@@ -75,7 +77,6 @@ export const PasswordLoginForm: React.FC<PasswordLoginFormProps> = (props) => {
   }
 
   return (
-    
         <form className="epform" id="login_modal_form" onSubmit={handleSubmit}>
         
         <div className={`epform__group ${errors.emailField ? '--error' : ''}`}>

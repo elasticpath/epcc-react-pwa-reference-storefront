@@ -29,8 +29,10 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
   const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [failedLogin, setFailedLogin] = useState(false);
   
   const handleClose = () => {
+    setFailedLogin(false);
     handleModalClose();
   }
 
@@ -48,14 +50,17 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
             <CloseIcon />
           </button>
         </div>
-        
-        <PasswordLoginForm handleModalClose={handleModalClose} isLoading={isLoading} setIsLoading={setIsLoading} />
+        <div className="logindialog__body">
+          <div className="logindialog__feedback">
+          {failedLogin ? t('invalid-email-or-password') : ('')}
+          </div>
+        <PasswordLoginForm handleModalClose={handleModalClose} isLoading={isLoading} setIsLoading={setIsLoading} setFailedLogin={setFailedLogin} />
         
         {// TODO:
           // Map through all the different login profiles here...
         }
 
-        
+      </div>
 
       </div>
     </Modal>
