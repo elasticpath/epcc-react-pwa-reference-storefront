@@ -65,6 +65,9 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
     );
   };
 
+  const translations = {
+    placeholder: t('search-here'),
+  };
 
   return (
     <div ref={searchBarRef} className="searchbar">
@@ -81,15 +84,8 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
           showLoadingIndicator
           onSubmit={handleSubmit}
           submit={<MagnifyingGlassIcon />}
-           translations={{
-             placeholder: t('search-here'),
-           }}
-        >
-          <form className="ais-SearchBox-form" noValidate>
-            <input className="ais-SearchBox-input" autoComplete="off" autoCorrect="off" autoCapitalize="off"
-                   placeholder="Search for products" spellCheck="false" maxLength={512} type="search" value=""/>
-          </form>
-        </SearchBox>
+          translations={translations}
+        />
         <button
           className="searchbar__close"
           onClick={onCancel}>
