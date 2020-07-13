@@ -19,7 +19,7 @@ export const AccountDropdown: React.FC = (props) => {
   const accountUrl = createAccountUrl();
 
   const handleSelectorClicked = () => {
-    setIsOpen(true);
+    setIsOpen(!isOpen);
   };
 
   const ref = useOnclickOutside(() => {
@@ -34,7 +34,7 @@ export const AccountDropdown: React.FC = (props) => {
     return (
       <div className="accountdropdown">
         <div className={`accountdropdown__dropdown ${isOpen ? 'accountdropdown__open' : ''}`}>
-          <button className="accountdropdown__btn" type="button" aria-label="toggle profile menu" onClick={handleSelectorClicked}>
+          <button ref={ref} className="accountdropdown__btn" type="button" aria-label="toggle profile menu" onClick={handleSelectorClicked}>
             <AccountIcon className="accountdropdown__btnicon" />
           </button>
           {isOpen && (

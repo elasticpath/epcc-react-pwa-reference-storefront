@@ -131,7 +131,7 @@
     }
 
     &.--showmodal {
-      display: inline-block;
+      position: fixed;
     }
 
     &__categories {

@@ -1,18 +1,21 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Modal from 'react-responsive-modal';
-import { useFormik } from 'formik';
-import { login } from './service';
-import { useCustomerData, useTranslation } from './app-state';
-import { createRegistrationUrl } from './routes';
-import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
+import { login} from './service';
 
-import './LoginDialog.scss';
+import { useCustomerData } from './app-state';
 
-interface AppModalLoginMainProps {
+import { useTranslation } from './app-state';
+
+import './AddressForm.scss';
+import {ReactComponent as CloseIcon} from "./images/icons/ic_close.svg";
+import Modal from "react-responsive-modal";
+import {useFormik} from "formik";
+import {createRegistrationUrl} from "./routes";
+
+
+interface AddressFormParams {
   handleModalClose: (...args: any[]) => any,
-  openModal: boolean,
+  openModal: boolean;
 }
 
 interface FormValues {
@@ -20,7 +23,7 @@ interface FormValues {
   passwordField: string,
 }
 
-export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
+export const AddressForm: React.FC<AddressFormParams> = (props) => {
   const { handleModalClose, openModal } = props;
   const { setCustomerData } = useCustomerData();
   const { t } = useTranslation();
@@ -44,7 +47,18 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
     }
 
     return errors;
-  }
+  };
+
+  const registerNewUser = () => {
+    handleModalClose();
+  };
+
+  const handleClose = () => {
+    setFailedLogin(false);
+    handleModalClose();
+    resetForm();
+  };
+
 
   const {handleSubmit, handleChange, resetForm, values, errors} = useFormik({
     initialValues,
@@ -65,31 +79,20 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
     },
   });
 
-  const registerNewUser = () => {
-    handleModalClose();
-  }
-
-  const handleClose = () => {
-    setFailedLogin(false);
-    handleModalClose();
-    resetForm();
-  }
-
   return (
-    <Modal open={openModal} onClose={handleClose} classNames={{ modal: 'logindialog' }} showCloseIcon={false}>
+    <Modal open={openModal} onClose={handleClose} classNames={{modal: 'logindialog'}} showCloseIcon={false}>
       {
-        (isLoading) ? <div className="epminiLoader --centered" /> : ('')
+        (isLoading) ? <div className="epminiLoader --centered"/> : ('')
       }
       <div className={`logindialog__content ${isLoading ? '--loading' : ''}`}>
         <div className="logindialog__header">
           <h2 className="logindialog__title">
-            {t('login')}
+            {t('address-form')}
           </h2>
           <button type="button" aria-label="close" onClick={handleModalClose}>
-            <CloseIcon />
+            <CloseIcon/>
           </button>
         </div>
-
         <div className="logindialog__body">
           <div className="logindialog__feedback">
             {failedLogin ? t('invalid-email-or-password') : ('')}
@@ -125,5 +128,5 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
         </div>
       </div>
     </Modal>
-  );
+  )
 };

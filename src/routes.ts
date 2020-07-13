@@ -10,6 +10,7 @@ import { CompareProducts } from './CompareProducts';
 import { RegistrationForm } from "./RegistrationForm";
 import { MyAccount } from "./MyAccount";
 import { Profile } from "./Profile";
+import { Address } from "./Address";
 
 interface RouteConfig {
   path: string;
@@ -27,11 +28,12 @@ export const routes: RouteConfig[] = [
   { exact: true, path: '/termsandconditions', component: TermsAndConditions, },
   { exact: true, path: '/compare-products', component: CompareProducts, },
   { exact: true, path: '/registration', component: RegistrationForm, },
-  { exact: true, path: '/account', component: MyAccount, }
+  { exact: false, path: '/account', component: MyAccount, }
 ];
 
 export const routesAccount: RouteConfig[] = [
-  { exact: true, path: '/account', component: Profile, }
+  { exact: true, path: '/account', component: Profile, },
+  { exact: true, path: '/account/address', component: Address, }
 ];
 
 export function createHomeUrl(): string {
@@ -56,4 +58,8 @@ export function createRegistrationUrl(): string {
 
 export function createAccountUrl(): string {
   return `/account`;
+}
+
+export function createAddressUrl(): string {
+  return `/account/address`;
 }
