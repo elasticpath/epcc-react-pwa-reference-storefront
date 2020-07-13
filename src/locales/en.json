@@ -94,5 +94,10 @@
   "submit": "Submit",
   "required": "Required",
   "network-offline": "Network Offline",
-  "my-account": "My Account"
+  "my-account": "My Account",
+  "my-profile": "My Profile",
+  "general": "General",
+  "personal-information": "Personal Information",
+  "username": "Username",
+  "edit": "Edit"
 }

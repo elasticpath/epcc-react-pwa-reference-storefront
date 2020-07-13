@@ -73,8 +73,14 @@
       border: 1px solid $mainBorderColor;
       z-index: 1;
 
-      .sidemenu__item {
+      &.sidemenu__hidden {
         display: none;
+      }
+
+      .sidemenu__link {
+        &.--selected {
+          display: none;
+        }
       }
     }
   }
