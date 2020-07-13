@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useResolve } from './hooks';
+import { useResolve, useProductImages } from './hooks';
 import { loadProductBySlug } from './service';
 import { CompareCheck } from './CompareCheck';
-import { ProductMainImage } from './ProductMainImage';
 import { useTranslation, useCurrency } from './app-state';
 import { isProductAvailable } from './helper';
 
@@ -18,17 +17,46 @@ export const Product: React.FC = () => {
   const { productSlug } = useParams<ProductParams>();
   const { t, selectedLanguage } = useTranslation();
   const { selectedCurrency } = useCurrency();
+
   const [product] = useResolve(
     async () => loadProductBySlug(productSlug, selectedLanguage, selectedCurrency),
     [productSlug, selectedLanguage, selectedCurrency]
   );
+
+  const productImageHrefs = useProductImages(product);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const isPrevImageVisible = currentImageIndex > 0;
+  const isNextImageVisible = currentImageIndex < (productImageHrefs?.length ?? 0) - 1;
+  const productBackground = product?.background_color ?? '';
+
+  const handlePrevImageClicked = () => {
+    setCurrentImageIndex(currentImageIndex - 1);
+  };
+
+  const handleNextImageClicked = () => {
+    setCurrentImageIndex(currentImageIndex + 1);
+  };
 
   return (
     <div className="product">
       {product && (
         <div className="product__maincontainer">
           <div className="product__imgcontainer">
-            <ProductMainImage product={product} size={400} />
+            {productImageHrefs.length > 0 && (
+              <>
+                <img className="product__img" src={productImageHrefs?.[currentImageIndex]} alt={product.name} style={{ backgroundColor: productBackground }} />
+                {isPrevImageVisible && (
+                  <button className="product__previmagebtn" onClick={handlePrevImageClicked}>
+                    <svg fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M15 19l-7-7 7-7"></path></svg>
+                  </button>
+                )}
+                {isNextImageVisible && (
+                  <button className="product__nextimagebtn" onClick={handleNextImageClicked}>
+                    <svg fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M9 5l7 7-7 7"></path></svg>
+                  </button>
+                )}
+              </>
+            )}
           </div>
           <div className="product__details">
             <h1 className="product__name">

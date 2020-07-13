@@ -63,6 +63,12 @@ export interface ProductBase {
         type: string;
       };
     };
+    files: {
+      data: {
+        type: 'file';
+        id: string;
+      }[];
+    };
     categories?: any;
     collections?: any;
     brands?: any;
@@ -182,11 +188,7 @@ export async function loadCategoryProducts(categoryId: string, pageNum: number, 
 
 const imageHrefCache: { [key: string]: string } = {};
 
-export async function loadImageHref(imageId: string): Promise<string | undefined> {
-  if (!imageId) {
-    return undefined;
-  }
-
+export async function loadImageHref(imageId: string): Promise<string> {
   if (imageHrefCache[imageId]) {
     return imageHrefCache[imageId];
   }
