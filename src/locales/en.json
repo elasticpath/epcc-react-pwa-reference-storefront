@@ -97,5 +97,10 @@
   "my-account": "My Account",
   "addresses": "Addresses",
   "address-form": "Address form",
-  "extended-address": "Extended Address"
+  "extended-address": "Extended Address",
+  "my-profile": "My Profile",
+  "general": "General",
+  "personal-information": "Personal Information",
+  "username": "Username",
+  "edit": "Edit"
 }
