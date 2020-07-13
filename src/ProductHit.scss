@@ -2,9 +2,14 @@
   $block: &;
 
   #{$block}__name, #{$block}__price {
-    text-align: center;
     margin-top: 10px;
     font-size: 14px;
     font-weight: bold;
+  }
+
+  #{$block}__image {
+    width: 160px;
+    height: 160px;
+    object-fit: fill;
   }
 }

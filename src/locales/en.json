@@ -93,5 +93,15 @@
   "password-confirmation": "Password Confirmation",
   "submit": "Submit",
   "required": "Required",
-  "network-offline": "Network Offline"
+  "network-offline": "Network Offline",
+  "sort-by": "Sort by:",
+  "search": "Search",
+  "filter": "Filter",
+  "featured": "Featured",
+  "price-asc": "Price asc.",
+  "price-desc": "Price desc.",
+  "category": "Category",
+  "collection": "Collection",
+  "brand":  "Brand",
+  "search-here":  "Search here..."
 }

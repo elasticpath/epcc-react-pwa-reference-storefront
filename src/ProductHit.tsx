@@ -3,6 +3,8 @@ import { createProductUrl } from './routes';
 import { Link } from 'react-router-dom';
 import { Availability } from './Availability';
 
+import './ProductHit.scss';
+
 
 interface Hit {
   amount: number,
@@ -31,7 +33,6 @@ export const ProductHit: React.FC<ProductThumbnailProps> = (props) => {
           <img
             className="producthit__image"
             src={imgUrl}
-            style={{width: 160, height: 160, objectFit: 'fill' }}
             alt={name}
           />
         </Link>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { SearchBox, Hits } from 'react-instantsearch-dom';
+import { useTranslation } from './app-state';
 import { createSearchUrl } from './routes';
 
 import { ReactComponent as MagnifyingGlassIcon } from './images/icons/magnifying_glass.svg';
@@ -18,6 +19,7 @@ declare module 'react-instantsearch-dom' {
 }
 
 export const SearchBar: React.FC<SearchBoxProps> = () => {
+  const { t } = useTranslation();
   const [ inputVisible, setInputVisible] = useState(false);
   const [ hitsVisible, setHitsVisible ] = useState(false);
   const history = useHistory();
@@ -73,12 +75,21 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
         <MagnifyingGlassIcon />
       </button>
       <div className={`searchbar__input ${inputVisible ? '--show' : ''}`}>
-        <SearchBox onFocus={handleFocus}
+        <SearchBox
+          onFocus={handleFocus}
           searchAsYouType
           showLoadingIndicator
           onSubmit={handleSubmit}
           submit={<MagnifyingGlassIcon />}
-        />
+           translations={{
+             placeholder: t('search-here'),
+           }}
+        >
+          <form className="ais-SearchBox-form" noValidate>
+            <input className="ais-SearchBox-input" autoComplete="off" autoCorrect="off" autoCapitalize="off"
+                   placeholder="Search for products" spellCheck="false" maxLength={512} type="search" value=""/>
+          </form>
+        </SearchBox>
         <button
           className="searchbar__close"
           onClick={onCancel}>
