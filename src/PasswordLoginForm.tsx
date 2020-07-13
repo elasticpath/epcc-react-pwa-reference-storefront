@@ -1,0 +1,110 @@
+
+import React, { useState, Dispatch, SetStateAction } from 'react';
+import { Link } from 'react-router-dom';
+import Modal from 'react-responsive-modal';
+import { useFormik } from 'formik';
+import { useCustomerData, useTranslation } from './app-state';
+import { createRegistrationUrl } from './routes';
+import { login } from './service';
+import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
+
+import './LoginDialog.scss';
+
+interface PasswordLoginFormProps {
+  handleModalClose: (...args: any[]) => any,
+  isLoading: boolean,
+  setIsLoading: Dispatch<SetStateAction<boolean>>,
+}
+
+interface FormValues {
+  emailField: string,
+  passwordField: string,
+}
+
+export const PasswordLoginForm: React.FC<PasswordLoginFormProps> = (props) => {
+  const { handleModalClose, setIsLoading } = props;
+  
+  const { setCustomerData } = useCustomerData();
+  const { t } = useTranslation();
+  const registrationUrl = createRegistrationUrl();
+
+  const initialValues:FormValues = {
+    emailField: '',
+    passwordField: '',
+  };
+
+  const validate = (values:any) => {
+    const errors:any = {};
+    if (!values.emailField) {
+      errors.emailField = t('required');
+    }
+    if (!values.passwordField) {
+      errors.passwordField = t('required');
+    }
+
+    return errors;
+  }
+
+  // We need to access this formik state in the upper component.
+  // We might not need to rest the form if the modal is closed... the state might be gone... when unmounted...
+  const {handleSubmit, handleChange, resetForm, values, errors} = useFormik({
+    initialValues,
+    validate,
+    onSubmit: (values) => {
+      setIsLoading(true);
+      login(values.emailField.toLowerCase(), values.passwordField)
+        .then((result) => {
+          handleModalClose();
+          setIsLoading(false);
+          setCustomerData(result.token, result.customer_id);
+        })
+        .catch(error => {
+          setIsLoading(false);
+          console.error(error);
+        });
+    },
+  });
+
+  const registerNewUser = () => {
+    handleModalClose();
+  }
+
+  const handleClose = () => {
+    handleModalClose();
+    resetForm()
+  }
+
+  return (
+    
+        <form className="epform" id="login_modal_form" onSubmit={handleSubmit}>
+        
+        <div className={`epform__group ${errors.emailField ? '--error' : ''}`}>
+            <label className="epform__label" htmlFor="emailField">
+            {t('email')}:
+            </label>
+            <input className="epform__input" id="emailField" type="text" onChange={handleChange} value={values.emailField} />
+            <div className="epform__error">
+            {errors.emailField ? errors.emailField : null}
+            </div>
+        </div>
+        <div className={`epform__group ${errors.passwordField ? '--error' : ''}`}>
+            <label className="epform__label" htmlFor="passwordField">
+            {t('password')}:
+            </label>
+            <input className="epform__input" id="passwordField" type="password" onChange={handleChange} value={values.passwordField} />
+            <div className="epform__error">
+            {errors.passwordField ? errors.passwordField : null}
+            </div>
+        </div>
+        
+        <div className="epform__group --btn-container">
+            <button className="epbtn --primary" id="login_modal_login_button" type="submit" disabled={props.isLoading}>
+            {t('login')}
+            </button>
+            <Link to={registrationUrl} className="epbtn --primary" id="login_modal_register_button" onClick={registerNewUser}>
+            {t('register')}
+            </Link>
+        </div>
+        </form>
+  );
+};
