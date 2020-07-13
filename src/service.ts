@@ -125,8 +125,12 @@ export interface CustomerToken {
 }
 
 // HAX - For now this can just be a non async function...
-export function loadAuthenticationOptions(): object {
+export function loadCustomerAuthenticationSettings(): object {
   // TODO: return the options in the authentication options...
+  // This should be moved into the SDK eventually... for now we will just make the request
+  // Outside of the SDK to simplify things.
+
+  
   return {
     "data": {
       "type": "customer-authentication-settings",
@@ -152,6 +156,31 @@ export function loadAuthenticationOptions(): object {
       }
     }
   }
+}
+
+// HAX - This is going to be part of the SDK eventually.
+export function loadAuthenticationProfiles(): object {
+  
+  return {
+    "data": [
+        {
+          "type": "Okta",
+          "id": "369ad4a4-ee67-48b0-x347-t50a6e61d83d",
+          "client_id": "foo",
+            "links": [{
+                "client-discovery-url": "MT-2741",
+                "server-discovery-url": "tbd"
+            }
+            ]
+        },
+        {
+          "type": "Keycloak",
+          "id": "369ad4a4-ee67-48b0-x347-t50a6e61d83d",
+          "...": {
+          }
+        }
+      ]
+    }
 }
 
 export async function loadEnabledCurrencies(): Promise<Currency[]> {

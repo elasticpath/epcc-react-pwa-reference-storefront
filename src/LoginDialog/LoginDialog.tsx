@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Modal from 'react-responsive-modal';
 import { useFormik } from 'formik';
-import { login, loadAuthenticationOptions } from './service';
-import { useCustomerData, useTranslation } from './app-state';
-import { PasswordLoginForm }from './PasswordLoginForm';
-import { createRegistrationUrl } from './routes';
-import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
+import { login, loadCustomerAuthenticationSettings, loadAuthenticationProfiles } from '../service';
+import { useCustomerData, useTranslation } from '../app-state';
+import { PasswordLoginForm } from './PasswordLoginForm';
+import { LoginDialogDivider } from './LoginDialogDivider'; 
+import { createRegistrationUrl } from '../routes';
+import { ReactComponent as CloseIcon } from '../images/icons/ic_close.svg';
 
 import './LoginDialog.scss';
 
@@ -24,8 +25,9 @@ interface FormValues {
 export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
   const { handleModalClose, openModal } = props;
   
+  const authenticationOptions = loadCustomerAuthenticationSettings();
+  const authenticationProfiles = loadAuthenticationProfiles();
   
-  const authenticationOptions = loadAuthenticationOptions();
   const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -54,11 +56,23 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
           <div className="logindialog__feedback">
           {failedLogin ? t('invalid-email-or-password') : ('')}
           </div>
+        
+        {/* TODO: Need to read authentication options and then choose if we show the password. */}
         <PasswordLoginForm handleModalClose={handleModalClose} isLoading={isLoading} setIsLoading={setIsLoading} setFailedLogin={setFailedLogin} />
         
         {// TODO:
           // Map through all the different login profiles here...
         }
+        <LoginDialogDivider/>
+
+        <div className="auth-opt">
+          <button className="epbtn --primary authbtn">
+            {'Okta'}
+          </button>
+          <button className="epbtn --primary authbtn">
+            {'Keycloak'}
+          </button>
+        </div>
 
       </div>
 

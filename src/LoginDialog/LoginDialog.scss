@@ -1,5 +1,5 @@
 
-@import './theme/common.scss';
+@import './../theme/common.scss';
 
 .logindialog {
   min-width: 500px;
@@ -51,8 +51,17 @@
     color: $mainErrorColor;
   }
 
-  .epbtn + .epbtn {
-    margin-left: 10px;
+  .registerbtn {
+    margin-left:10px
+  }
+}
+
+.auth-opt {
+  display: flex;
+  flex-direction: column;
+
+  .authbtn {
+    margin: 0 3% 3% 3%;
   }
 }
 

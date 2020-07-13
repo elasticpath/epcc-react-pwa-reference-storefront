@@ -3,7 +3,7 @@ import React, { useState} from 'react';
 // import { Link } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { useCustomerData, useTranslation } from './app-state';
-import { LoginDialog } from './LoginDialog';
+import { LoginDialog } from './LoginDialog/LoginDialog';
 import { ReactComponent as AccountIcon } from './images/icons/ic_account.svg';
 
 import './AccountDropdown.scss';
