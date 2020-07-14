@@ -1,40 +1,45 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { login} from './service';
-
-import { useCustomerData } from './app-state';
+import { updateAddress } from './service';
 
 import { useTranslation } from './app-state';
 
 import './AddressForm.scss';
-import {ReactComponent as CloseIcon} from "./images/icons/ic_close.svg";
-import Modal from "react-responsive-modal";
-import {useFormik} from "formik";
-import {createRegistrationUrl} from "./routes";
+import {ReactComponent as CloseIcon} from './images/icons/ic_close.svg';
+import Modal from 'react-responsive-modal';
+import { useFormik } from 'formik';
 
 
 interface AddressFormParams {
   handleModalClose: (...args: any[]) => any,
-  openModal: boolean;
+  isModalOpen: boolean;
 }
 
 interface FormValues {
-  emailField: string,
-  passwordField: string,
+  firstNameField: string,
+  lastNameField: string,
+  streetAddressField: string,
+  extendedAddressField: string,
+  phoneNumberField: string,
+  countyField: string,
+  countryField: string,
+  postalCodeField: string,
 }
 
 export const AddressForm: React.FC<AddressFormParams> = (props) => {
-  const { handleModalClose, openModal } = props;
-  const { setCustomerData } = useCustomerData();
+  const { handleModalClose, isModalOpen } = props;
   const { t } = useTranslation();
-  const registrationUrl = createRegistrationUrl();
-
   const [failedLogin, setFailedLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const initialValues:FormValues = {
-    emailField: '',
-    passwordField: '',
+    firstNameField: '',
+    lastNameField: '',
+    streetAddressField: '',
+    extendedAddressField: '',
+    phoneNumberField: '',
+    countyField: '',
+    countryField: '',
+    postalCodeField: '',
   };
 
   const validate = (values:any) => {
@@ -49,10 +54,6 @@ export const AddressForm: React.FC<AddressFormParams> = (props) => {
     return errors;
   };
 
-  const registerNewUser = () => {
-    handleModalClose();
-  };
-
   const handleClose = () => {
     setFailedLogin(false);
     handleModalClose();
@@ -65,11 +66,11 @@ export const AddressForm: React.FC<AddressFormParams> = (props) => {
     validate,
     onSubmit: (values) => {
       setIsLoading(true);
-      login(values.emailField.toLowerCase(), values.passwordField)
+      const data = values;
+      updateAddress(data)
         .then((result) => {
           handleModalClose();
           setIsLoading(false);
-          setCustomerData(result.token, result.customer_id);
         })
         .catch(error => {
           setIsLoading(false);
@@ -77,10 +78,11 @@ export const AddressForm: React.FC<AddressFormParams> = (props) => {
           console.error(error);
         });
     },
+
   });
 
   return (
-    <Modal open={openModal} onClose={handleClose} classNames={{modal: 'logindialog'}} showCloseIcon={false}>
+    <Modal open={isModalOpen} onClose={handleClose} classNames={{modal: 'logindialog'}} showCloseIcon={false}>
       {
         (isLoading) ? <div className="epminiLoader --centered"/> : ('')
       }
@@ -97,32 +99,86 @@ export const AddressForm: React.FC<AddressFormParams> = (props) => {
           <div className="logindialog__feedback">
             {failedLogin ? t('invalid-email-or-password') : ('')}
           </div>
-          <form className="epform" id="login_modal_form" onSubmit={handleSubmit}>
-            <div className={`epform__group ${errors.emailField ? '--error' : ''}`}>
-              <label className="epform__label" htmlFor="emailField">
-                {t('email')}:
+          <form className="epform" id="address_modal_form" onSubmit={handleSubmit}>
+            <div className={`epform__group ${errors.firstNameField ? '--error' : ''}`}>
+              <label className="epform__label" htmlFor="firstNameField">
+                {t('first-name')}:
               </label>
-              <input className="epform__input" id="emailField" type="text" onChange={handleChange} value={values.emailField} />
+              <input className="epform__input" id="firstNameField" type="text" onChange={handleChange} value={values.firstNameField} />
               <div className="epform__error">
-                {errors.emailField ? errors.emailField : null}
+                {errors.firstNameField ? errors.firstNameField : null}
               </div>
             </div>
-            <div className={`epform__group ${errors.passwordField ? '--error' : ''}`}>
-              <label className="epform__label" htmlFor="passwordField">
-                {t('password')}:
+            <div className={`epform__group ${errors.lastNameField ? '--error' : ''}`}>
+              <label className="epform__label" htmlFor="lastNameField">
+                {t('last-name')}:
               </label>
-              <input className="epform__input" id="passwordField" type="password" onChange={handleChange} value={values.passwordField} />
+              <input className="epform__input" id="lastNameField" type="text" onChange={handleChange} value={values.lastNameField} />
               <div className="epform__error">
-                {errors.passwordField ? errors.passwordField : null}
+                {errors.lastNameField ? errors.lastNameField : null}
+              </div>
+            </div>
+            <div className={`epform__group ${errors.streetAddressField ? '--error' : ''}`}>
+              <label className="epform__label" htmlFor="streetAddressField">
+                {t('street-address')}:
+              </label>
+              <input className="epform__input" id="streetAddressField" type="text" onChange={handleChange} value={values.streetAddressField} />
+              <div className="epform__error">
+                {errors.streetAddressField ? errors.streetAddressField : null}
+              </div>
+            </div>
+            <div className={`epform__group ${errors.extendedAddressField ? '--error' : ''}`}>
+              <label className="epform__label" htmlFor="extendedAddressField">
+                {t('extended-address')}:
+              </label>
+              <input className="epform__input" id="extendedAddressField" type="text" onChange={handleChange} value={values.extendedAddressField} />
+              <div className="epform__error">
+                {errors.extendedAddressField ? errors.extendedAddressField : null}
+              </div>
+            </div>
+            <div className={`epform__group ${errors.phoneNumberField ? '--error' : ''}`}>
+              <label className="epform__label" htmlFor="phoneNumberField">
+                {t('phone-number')}:
+              </label>
+              <input className="epform__input" id="phoneNumberField" type="text" onChange={handleChange} value={values.phoneNumberField} />
+              <div className="epform__error">
+                {errors.phoneNumberField ? errors.phoneNumberField : null}
+              </div>
+            </div>
+            <div className={`epform__group ${errors.countryField ? '--error' : ''}`}>
+              <label className="epform__label" htmlFor="countryField">
+                {t('country')}:
+              </label>
+              <input className="epform__input" id="countryField" type="text" onChange={handleChange} value={values.countryField} />
+              <div className="epform__error">
+                {errors.countryField ? errors.countryField : null}
+              </div>
+            </div>
+            <div className={`epform__group ${errors.countyField ? '--error' : ''}`}>
+              <label className="epform__label" htmlFor="countyField">
+                {t('county')}:
+              </label>
+              <input className="epform__input" id="countyField" type="text" onChange={handleChange} value={values.countyField} />
+              <div className="epform__error">
+                {errors.countyField ? errors.countyField : null}
+              </div>
+            </div>
+            <div className={`epform__group ${errors.postalCodeField ? '--error' : ''}`}>
+              <label className="epform__label" htmlFor="postalCodeField">
+                {t('postal-сode')}:
+              </label>
+              <input className="epform__input" id="postalCodeField" type="text" onChange={handleChange} value={values.postalCodeField} />
+              <div className="epform__error">
+                {errors.postalCodeField ? errors.postalCodeField : null}
               </div>
             </div>
             <div className="epform__group --btn-container">
-              <button className="epbtn --primary" id="login_modal_login_button" type="submit" disabled={isLoading}>
-                {t('login')}
+              <button className="epbtn --primary" type="button" id="login_modal_login_button" onClick={handleClose}>
+                {t('cancel')}
               </button>
-              <Link to={registrationUrl} className="epbtn --primary" id="login_modal_register_button" onClick={registerNewUser}>
-                {t('register')}
-              </Link>
+              <button className="epbtn --primary" type="submit" id="login_modal_register_button">
+                {t('save')}
+              </button>
             </div>
           </form>
         </div>

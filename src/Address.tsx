@@ -17,19 +17,16 @@ interface AddressParams {
 export const Address: React.FC = () => {
   const { productSlug } = useParams<AddressParams>();
   const { t, selectedLanguage } = useTranslation();
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const addressData = useAddressData();
 
-  const handleModalClose = (category: string) => {
-
-  };
   const handleDelete = (category: string) => {
 
   };
 
   const handleEdit = (category: string) => {
-    setIsOpenModal(!isOpenModal);
+    setIsModalOpen(!isModalOpen);
   };
 
   return (
@@ -72,20 +69,20 @@ export const Address: React.FC = () => {
                 </li>
               </ul>
               <button type="button" className="address__button --edit" onClick={() => handleEdit(address.line_2)}>
-                Edit
+                {t('edit')}
               </button>
               <button type="button" className="address__button --delete" onClick={() => handleDelete(address.line_2)}>
-                Delete
+                {t('delete')}
               </button>
             </div>
           ))}
         </div>
       ) : (
         <div>
-          You have no saved addresses
+          {t('no-addresses')}
         </div>
       )}
-        <AddressForm openModal={isOpenModal} handleModalClose={handleModalClose} />
+        <AddressForm isModalOpen={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} />
     </div>
   )
 };

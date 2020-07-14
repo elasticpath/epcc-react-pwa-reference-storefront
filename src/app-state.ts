@@ -160,8 +160,8 @@ function useAddressDataState() {
   const id = localStorage.getItem('mcustomer') || '';
 
   const [addressData, setAddressData] = useState<service.Address[]>([]);
-  const [customerToken, setCustomerToken] = useState(token);
-  const [customerId, setCustomerId] = useState(id);
+  const [customerToken] = useState(token);
+  const [customerId] = useState(id);
 
 
   useEffect(() => {

@@ -125,20 +125,20 @@ export interface CustomerToken {
 }
 
 export interface Address {
-    "id": string,
-    "type": string,
-    "name": string,
-    "first_name": string,
-    "last_name": string,
-    "company_name": string
-    "phone_number": string,
-    "line_1": string,
-    "line_2": string,
-    "city": string,
-    "postcode": string,
-    "county": string,
-    "country": string,
-    "instructions": string,
+    id: string,
+    type: string,
+    name: string,
+    first_name: string,
+    last_name: string,
+    company_name: string
+    phone_number: string,
+    line_1: string,
+    line_2: string,
+    city: string,
+    postcode: string,
+    county: string,
+    country: string,
+    instructions: string,
 }
 
 export async function loadEnabledCurrencies(): Promise<Currency[]> {
@@ -269,6 +269,21 @@ export async function getCustomer(id: string, token: string): Promise<Customer> 
 export async function getAddresses(customer: string, token: string): Promise<{ data: Address[] }> {
   const moltin = MoltinGateway({ client_id: config.clientId });
   const result = await moltin.Addresses.All({customer, token});
+
+  return result;
+}
+
+export async function updateAddress(
+  data: any,
+): Promise<{ data: Address[] }> {
+  const token = localStorage.getItem('mtoken') || '';
+  const customer = localStorage.getItem('mcustomer') || '';
+  const moltin = MoltinGateway({ client_id: config.clientId });
+  const address = data.id;
+  const body = data;
+  const result = await moltin.Addresses.Update(
+{ customer, address, body, token }
+  );
 
   return result;
 }

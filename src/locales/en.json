@@ -102,5 +102,14 @@
   "general": "General",
   "personal-information": "Personal Information",
   "username": "Username",
-  "edit": "Edit"
+  "no-addresses": "You have no saved addresses",
+  "edit": "Edit",
+  "phone-number": "Phone Number",
+  "street-address": "Street Address",
+  "postal-сode": "Postal Code",
+  "county": "County",
+  "country": "Country",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete"
 }
