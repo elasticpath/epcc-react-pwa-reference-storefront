@@ -46,12 +46,12 @@ export const Product: React.FC = () => {
               <>
                 <img className="product__img" src={productImageHrefs?.[currentImageIndex]} alt={product.name} style={{ backgroundColor: productBackground }} />
                 {isPrevImageVisible && (
-                  <button className="product__previmagebtn" onClick={handlePrevImageClicked}>
+                  <button className="product__previmagebtn" aria-label={t('previous-image')} onClick={handlePrevImageClicked}>
                     <svg fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M15 19l-7-7 7-7"></path></svg>
                   </button>
                 )}
                 {isNextImageVisible && (
-                  <button className="product__nextimagebtn" onClick={handleNextImageClicked}>
+                  <button className="product__nextimagebtn" aria-label={t('next-image')} onClick={handleNextImageClicked}>
                     <svg fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor"><path d="M9 5l7 7-7 7"></path></svg>
                   </button>
                 )}
