@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Product, loadImageHref } from './service';
 
 type FetchHookResult<R> = [
   R | undefined,
@@ -33,4 +34,49 @@ export function useResolve<R>(promiseFn: () => Promise<R> | undefined, deps?: Re
   }, deps);
 
   return result;
+}
+
+export function useProductImages(product: Product | undefined) {
+  const [productImageHrefs, setProductImageHrefs] = useState<string[]>([]);
+
+  useEffect(() => {
+    let isCurrent = true;
+    setProductImageHrefs([]);
+
+    (async () => {
+      // Load main image first so it can be presented right away and then load additional files one by one
+      const result: string[] = [];
+      const mainImageId = product?.relationships?.main_image?.data?.id;
+      if (mainImageId) {
+        const mainImageHref = await loadImageHref(mainImageId);
+
+        if (!isCurrent) {
+          return;
+        }
+
+        if (mainImageHref) {
+          result.push(mainImageHref);
+          setProductImageHrefs(result);
+        }
+      }
+
+      const files = product?.relationships?.files?.data ?? [];
+      for (const file of files) {
+        const imageHref = await loadImageHref(file.id);
+
+        if (!isCurrent) {
+          return;
+        }
+
+        if (imageHref) {
+          result.push(imageHref);
+          setProductImageHrefs([...result]);
+        }
+      }
+    })();
+
+    return () => { isCurrent = false; };
+  }, [product]);
+
+  return productImageHrefs;
 }
