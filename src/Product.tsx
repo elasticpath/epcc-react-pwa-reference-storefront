@@ -16,6 +16,7 @@ interface ProductParams {
 
 export const Product: React.FC = () => {
   const { productSlug } = useParams<ProductParams>();
+  const { t } = useTranslation();
   const { selectedLanguage } = useTranslation();
   const { selectedCurrency } = useCurrency();
 

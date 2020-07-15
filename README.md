@@ -17,7 +17,7 @@ The storefront uses the [Elastic Path Commerce Cloud JavaScript SDK](https://git
 
 > 💳 Use the test card 4242 4242 4242 4242, any future expiry date, and any CVC below to checkout.
 
-[Demo](http://epcc-reference.elasticpath.com/)
+[Demo](https://epcc-reference.elasticpath.com/)
 
 ## Documentation 📖
 
