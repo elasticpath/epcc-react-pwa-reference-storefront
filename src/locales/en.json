@@ -103,5 +103,7 @@
   "category": "Category",
   "collection": "Collection",
   "brand":  "Brand",
-  "search-here":  "Search here..."
+  "search-here":  "Search here...",
+  "previous-image": "Previous image",
+  "next-image": "Next image"
 }

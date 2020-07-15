@@ -63,6 +63,12 @@ export interface ProductBase {
         type: string;
       };
     };
+    files: {
+      data: {
+        type: 'file';
+        id: string;
+      }[];
+    };
     categories?: any;
     collections?: any;
     brands?: any;
@@ -182,17 +188,25 @@ export async function loadCategoryProducts(categoryId: string, pageNum: number, 
 
 const imageHrefCache: { [key: string]: string } = {};
 
-export async function loadImageHref(imageId: string): Promise<string | undefined> {
-  if (!imageId) {
-    return undefined;
-  }
+const imageMimeTypes = [
+  'image/jpg',
+  'image/jpeg',
+  'image/png',
+  'image/gif',
+];
 
+// Loads a file with a provided id and returns its url if it's mime type is an image or undefined otherwise
+export async function loadImageHref(imageId: string): Promise<string | undefined> {
   if (imageHrefCache[imageId]) {
     return imageHrefCache[imageId];
   }
 
   const moltin = MoltinGateway({ client_id: config.clientId });
   const result = await moltin.Files.Get(imageId);
+
+  if (imageMimeTypes.indexOf(result.data.mime_type) === -1) {
+    return undefined;
+  }
 
   imageHrefCache[imageId] = result.data.link.href;
 
