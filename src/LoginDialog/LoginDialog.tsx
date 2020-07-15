@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import Modal from 'react-responsive-modal';
 import { useFormik } from 'formik';
 import { login, loadCustomerAuthenticationSettings, loadAuthenticationProfiles } from '../service';
@@ -27,7 +27,8 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
   
   const authenticationOptions = loadCustomerAuthenticationSettings();
   const authenticationProfiles = loadAuthenticationProfiles();
-
+  const location = useLocation();
+  
   const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -63,7 +64,7 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
       console.log('this is the token im setting into localStorage');
       console.log(stateToken);
       
-      localStorage.setItem('location', window.location.href); // Save the location on callback
+      localStorage.setItem('location', location.pathname); // Save the location on callback
       
       const responseMode = 'response_mode=fragment'
       const responseType = 'response_type=code'
@@ -105,21 +106,16 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
 
           
           <button className="epbtn --primary authbtn">
-            {'Okta'}
+            {'Auth0'}
           </button>
           
           {/* We should make this a button instead and have it set create and set local storage only when clicked... */}
           <button className="epbtn --primary authbtn" onClick={()=>{
-            console.log('redirecting as soon as the button is clicked and generating the url to move too.');
-            
             const url = generateKeycloakLoginRedirectUrl()
             window.location.href = url;
           }}>
             {'Keycloak'}
           </button>
-          {/* <a href={url} className="epbtn --primary authbtn">
-              
-          </a> */}
         </div>
 
       </div>

@@ -18,6 +18,8 @@ export const KeycloakComp: React.FC<any> = ()=> {
 
         async function setCustomerDataFromOidcCallback() {
             // Might need to support different ways of redirecting and different ways the url could be sent back...
+            const redirectInitialLocation:string = localStorage.getItem('location') || '/';
+            
             if(location.hash) {
                 const oidcRedirectInfo:any = queryString.parse(location.hash);
                 console.log('comparing');
@@ -37,17 +39,16 @@ export const KeycloakComp: React.FC<any> = ()=> {
                     console.log(result.data.customer_id);
                     
                     setCustomerData(result.data.token, result.data.customer_id);
-
-                    // After setting we should re-route...
-                    
                     // Do I have to use the history here... I could just use the history literally...
                     // Can think about this later...
-                    history.push('/') // Just have it come back to the homepage first..
+                    history.push(redirectInitialLocation);
                 } else {
-                    // We should make some sort of error handling in the reference store...
                     alert('Unable to validate identity');
-                    history.push('/');
+                    history.push(redirectInitialLocation);
                 }
+
+                localStorage.removeItem('location')
+                localStorage.removeItem('state')
 
                 // Now that we have 
                 // {
