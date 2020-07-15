@@ -22,8 +22,8 @@ export const Search: React.FC<SearchParams> = () => {
   const Facets = () => (
     <div className="search__facets">
       <div>
-        <h2 className="">
-          {t('sort-by')}
+        <h2 className="search__facetstitle">
+          {t('filter-by')}
         </h2>
         <SortBy
           key="facets-SortBy"

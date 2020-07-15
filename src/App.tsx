@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import useScript from 'react-script-hook';
 import algoliasearch from 'algoliasearch/lite';
-import { InstantSearch } from 'react-instantsearch-dom';
+import { Configure, InstantSearch } from 'react-instantsearch-dom';
 import { routes } from './routes';
 import { config } from './config';
 import { AppStateProvider } from './app-state';
@@ -17,15 +17,18 @@ const App: React.FC = () => {
     'data-moltin-client-id': config.clientId,
     'data-moltin-stripe-publishable-key': config.stripeKey
   });
+
   const searchClient = algoliasearch(
     config.algoliaAppId,
     config.algoliaApiKey
   );
+
   return (
     <Router>
       <AppStateProvider>
         <InstantSearch searchClient={searchClient} indexName={config.algoliaIndexName}>
-        <div className="app">
+          <Configure hitsPerPage={8}/>
+          <div className="app">
           <header className="app__header">
             <AppHeader />
           </header>

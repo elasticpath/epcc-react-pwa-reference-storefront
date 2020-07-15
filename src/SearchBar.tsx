@@ -6,16 +6,11 @@ import { useTranslation } from './app-state';
 import { createSearchUrl } from './routes';
 
 import { ReactComponent as MagnifyingGlassIcon } from './images/icons/magnifying_glass.svg';
+import { ReactComponent as ClearIcon } from './images/icons/ic_clear.svg';
 
 import './SearchBar.scss';
 
 interface SearchBoxProps {
-}
-
-declare module 'react-instantsearch-dom' {
-  interface SearchBoxProps {
-    onFocus: () => void,
-  }
 }
 
 export const SearchBar: React.FC<SearchBoxProps> = () => {
@@ -81,9 +76,9 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
         <SearchBox
           onFocus={handleFocus}
           searchAsYouType
-          showLoadingIndicator
           onSubmit={handleSubmit}
           submit={<MagnifyingGlassIcon />}
+          reset={<ClearIcon />}
           translations={translations}
         />
         <button

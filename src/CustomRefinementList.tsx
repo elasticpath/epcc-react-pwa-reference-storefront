@@ -1,6 +1,7 @@
 import React from 'react'
 import { RefinementList } from 'react-instantsearch-dom'
-import { ReactComponent as FilterIcon } from './images/icons/filter_list.svg';
+
+import './CustomRefinementList.scss';
 
 interface CustomRefinementListProps {
   title: string;
@@ -17,11 +18,13 @@ interface CustomRefinementListProps {
 export const CustomRefinementList: React.FC<CustomRefinementListProps> = ({ title, ...props }) => {
   return (
     <div className="refinementlist">
-      <h2 className="refinementlist__title">
-        <FilterIcon className="refinementlist__filtericon" />
+      <input type="checkbox" id={`checkbox-${title}`} className="refinementlist__toggleinput"/>
+      <label htmlFor={`checkbox-${title}`} className="refinementlist__title">
         {title}
-      </h2>
-      <RefinementList {...props} />
+      </label>
+      <div className="refinementlist__list">
+        <RefinementList {...props} />
+      </div>
     </div>
   )
 };

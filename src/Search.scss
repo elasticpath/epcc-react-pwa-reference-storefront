@@ -5,8 +5,8 @@
 
   display: grid;
   grid-template-columns: 2fr 6fr;
-  grid-gap: 10px;
-  width: 900px;
+  grid-gap: 50px;
+  width: 1000px;
   grid-template-areas:
           "title      title"
           "facets     productlist"
@@ -15,8 +15,7 @@
 
   #{$block}__title {
     text-align: center;
-    margin-top: 50px;
-    margin-bottom: 80px;
+    margin-top: 80px;
     grid-area: title;
     font-size: 26px;
     font-weight: bold;
@@ -42,53 +41,27 @@
 
   #{$block}__facets {
     grid-area: facets;
-    border: 1px solid rgba(0,0,0,.125);
-    margin: 10px;
-    height: fit-content;
-    transition: translate 1s;
-
-    h2, .ais-RefinementList-item, .ais-SortBy {
-      padding: 12px 20px;
-      margin-bottom: 0;
-      background-color: rgba(0,0,0,.03);
-      border-bottom: 1px solid rgba(0,0,0,.125);
-      color: $mainTextColor;
-    }
-
-    .ais-RefinementList-item, .ais-SortBy {
-      background-color: transparent;
-      vertical-align: center;
+    .ais-SortBy {
+      padding: 20px 0;
+      display: block;
+      border-bottom: 1px solid $firstComplimentColor;
+      margin-bottom: 10px;
     }
 
     .ais-SortBy-select {
       border: none;
       outline: none;
-      width: 100%
+      color: $firstComplimentColor;
+      font-weight: bold;
+      font-size: 13px;
+      width: 100%;
+      margin-left: -4px;
     }
+  }
 
-    & > div:last-child {
-      .ais-RefinementList-item {
-        border: none;
-      }
-    }
-
-    .refinementlist__filtericon {
-      vertical-align: sub;
-      margin-right: 5px;
-    }
-
-    .ais-RefinementList-checkbox {
-      margin-right: 10px;
-    }
-
-    .ais-RefinementList-count {
-      margin-left: 4px;
-    }
-
-    &-title {
-      display: none;
-      padding: 20px;
-    }
+  #{$block}__facetstitle {
+    padding: 20px 0;
+    font-size: 20px;
   }
 
   #{$block}__facetstoggle {
