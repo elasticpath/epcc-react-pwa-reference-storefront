@@ -168,7 +168,7 @@ export function loadAuthenticationProfiles(): object {
           "id": "369ad4a4-ee67-48b0-x347-t50a6e61d83d",
           "client_id": "foo",
             "links": [{
-                "client-discovery-url": "MT-2741",
+                "client-discovery-url": "https://accounts.google.com/.well-known/openid-configuration",
                 "server-discovery-url": "tbd"
             }
             ]
@@ -299,6 +299,23 @@ export async function login(email: string, password: string): Promise<CustomerTo
   const { data } = await moltin.Customers.Token(email, password).then();
 
   return data;
+}
+
+export async function oidcLogin(code: string) {
+  // This is the authorization code that is going to do the logging in...
+  return new Promise((res, rej)=>{
+    setTimeout(()=>{
+      res({
+          "data": {
+              "type": "token",
+              "id": "6567fa1c-7a21-4153-89fd-c05f272f4532",
+              "customer_id": "0408bdb2-91a4-481b-ba73-ff4ec0c8f667",
+              "token": "eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJzdWIiOiIwNDA4YmRiMi05MWE0LTQ4MWItYmE3My1mZjRlYzBjOGY2NjciLCJuYW1lIjoiVGVzdCIsImV4cCI6MTU5NDkyNDY4NCwiaWF0IjoxNTk0ODM4Mjg0LCJqdGkiOiJlOGFmZjNmNS1hZTg3LTRhNjktOGJhMS0zMWQ1ZGRiNGY2NmMifQ==.0ddbaa5554a8a6ae58cb1dfcc1fbea7b95936b269dfc95778c1b9000923f26a9",
+              "expires": 1594913825
+          }
+      });
+    }, 5)
+  })
 }
 
 export async function getCustomer(id: string, token: string): Promise<Customer> {
