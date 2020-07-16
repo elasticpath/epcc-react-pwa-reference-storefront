@@ -8,10 +8,12 @@ import { useResolve } from '../hooks';
 import { useCustomerData, useTranslation, useCustomerAuthenticationSettings } from '../app-state';
 import { PasswordLoginForm } from './PasswordLoginForm';
 import { LoginDialogDivider } from './LoginDialogDivider'; 
+
 import { createRegistrationUrl } from '../routes';
 import { ReactComponent as CloseIcon } from '../images/icons/ic_close.svg';
 
 import './LoginDialog.scss';
+import { OidcLoginButtons } from './OidcLoginButtons';
 
 interface AppModalLoginMainProps {
   handleModalClose: (...args: any[]) => any,
@@ -37,11 +39,10 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
   //   return customerAuthenticationSettings;
   // }, []);
 
-  const { authenticationSettings } = useCustomerAuthenticationSettings()
-  console.log('printing out the authentication settings');
-  console.log(authenticationSettings);
+  const { authenticationSettings, authenticationProfiles }: any = useCustomerAuthenticationSettings()
+  console.log('printing out the authentication profiles');
+  console.log(authenticationProfiles);
   
-  const authenticationProfiles = loadAuthenticationProfiles();
   const location = useLocation();
   
   const { t } = useTranslation();
@@ -70,7 +71,8 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
     // keycloakLoginRedirectUrl = `http://localhost:24074/auth/realms/Sample/protocol/openid-connect/auth?client_id=epcc-reference-store&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fkeycloak&state=12g45e18-98f0-4c26-a96c-b3d9a0621a4e&response_mode=fragment&response_type=code&scope=openid&nonce=e2071a63-d81b-4cfe-87ee-991bda771bf0`;
     
     const baseRedirectUrl = `http://localhost:24074/auth/realms/Sample/protocol/openid-connect/auth?`
-    const clientId = `client_id=epcc-reference-store`
+    // const client_id = authenticationSettings?.data.meta.clientId
+    const clientId = `client_id=${authenticationSettings?.data.meta.clientId}` // Should be able to get this from the authentication-settings.
     const redirectUri = `redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fkeycloak` // TODO... We need to keep it logged in with the current uri
     const stateToken = generateStateToken();
     const state = `state=${stateToken}`
@@ -114,29 +116,22 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
         } */}
 
         { authenticationSettings ?
-          (authenticationSettings?.data.allow_password_authentication && [
-          <PasswordLoginForm handleModalClose={handleModalClose} isLoading={isLoading} setIsLoading={setIsLoading} setFailedLogin={setFailedLogin} />,
-          <LoginDialogDivider/>
-          ]) :
+          (authenticationSettings?.data.allow_password_authentication &&
+          <PasswordLoginForm handleModalClose={handleModalClose} isLoading={isLoading} setIsLoading={setIsLoading} setFailedLogin={setFailedLogin} />
+          /** We should place the OIDC buttons here... */
+          ) :
           <div className="epminiLoader --centered" />
         }
         
-        {/* the auth buttons are only going to show if profiles return  */}
-        <div className="auth-opt">
-  
-          <button className="epbtn --primary authbtn">
-            {'Auth0'}
-          </button>
-          
-          {/* We should make this a button instead and have it set create and set local storage only when clicked... */}
-          <button className="epbtn --primary authbtn" onClick={()=>{
-            const url = generateKeycloakLoginRedirectUrl()
-            window.location.href = url;
-          }}>
-            {'Keycloak'}
-          </button>
-        </div>
 
+        {/* the auth buttons are only going to show if profiles return  */}
+        {
+          authenticationProfiles ? 
+          [
+            <LoginDialogDivider />,
+            <OidcLoginButtons />
+          ]: <div className="epminiLoader --centered" />
+        }
       </div>
 
       </div>

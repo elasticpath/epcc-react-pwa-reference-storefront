@@ -158,7 +158,7 @@ export async function loadCustomerAuthenticationSettings(): Promise<any> {
           }
         }
       })
-    }, 10000);
+    }, 100);
   });
 }
 
@@ -171,7 +171,7 @@ export function loadAuthenticationProfiles(realm: string, storeId: string): Prom
         // We also need to add the meta value...
         "data": [
           {
-            "type": "Okta",
+            "name": "Auth0",
             "id": "369ad4a4-ee67-48b0-x347-t50a6e61d83d",
             "client_id": "foo",
               "links": [{
@@ -181,17 +181,150 @@ export function loadAuthenticationProfiles(realm: string, storeId: string): Prom
               ]
           },
           {
-            "type": "Keycloak",
+            "name": "Keycloak",
             "id": "369ad4a4-ee67-48b0-x347-t50a6e61d83d",
             "client_id": "epcc-reference-store",
+            "meta": {
+              "created_at": "2020-07-16T17:29:28.735Z",
+              "updated_at": "2020-07-16T17:29:28.735Z",
+              "discovery_document": {
+                  "issuer": "http://localhost:24074/auth/realms/Sample",
+                  "authorization_endpoint": "http://localhost:24074/auth/realms/Sample/protocol/openid-connect/auth",
+                  "token_endpoint": "http://localhost:24074/auth/realms/Sample/protocol/openid-connect/token",
+                  "token_introspection_endpoint": "http://localhost:24074/auth/realms/Sample/protocol/openid-connect/token/introspect",
+                  "userinfo_endpoint": "http://localhost:24074/auth/realms/Sample/protocol/openid-connect/userinfo",
+                  "end_session_endpoint": "http://localhost:24074/auth/realms/Sample/protocol/openid-connect/logout",
+                  "jwks_uri": "http://localhost:24074/auth/realms/Sample/protocol/openid-connect/certs",
+                  "check_session_iframe": "http://localhost:24074/auth/realms/Sample/protocol/openid-connect/login-status-iframe.html",
+                  "grant_types_supported": [
+                      "authorization_code",
+                      "implicit",
+                      "refresh_token",
+                      "password",
+                      "client_credentials"
+                  ],
+                  "response_types_supported": [
+                      "code",
+                      "none",
+                      "id_token",
+                      "token",
+                      "id_token token",
+                      "code id_token",
+                      "code token",
+                      "code id_token token"
+                  ],
+                  "subject_types_supported": [
+                      "public",
+                      "pairwise"
+                  ],
+                  "id_token_signing_alg_values_supported": [
+                      "PS384",
+                      "ES384",
+                      "RS384",
+                      "HS256",
+                      "HS512",
+                      "ES256",
+                      "RS256",
+                      "HS384",
+                      "ES512",
+                      "PS256",
+                      "PS512",
+                      "RS512"
+                  ],
+                  "id_token_encryption_alg_values_supported": [
+                      "RSA-OAEP",
+                      "RSA1_5"
+                  ],
+                  "id_token_encryption_enc_values_supported": [
+                      "A128GCM",
+                      "A128CBC-HS256"
+                  ],
+                  "userinfo_signing_alg_values_supported": [
+                      "PS384",
+                      "ES384",
+                      "RS384",
+                      "HS256",
+                      "HS512",
+                      "ES256",
+                      "RS256",
+                      "HS384",
+                      "ES512",
+                      "PS256",
+                      "PS512",
+                      "RS512",
+                      "none"
+                  ],
+                  "request_object_signing_alg_values_supported": [
+                      "PS384",
+                      "ES384",
+                      "RS384",
+                      "ES256",
+                      "RS256",
+                      "ES512",
+                      "PS256",
+                      "PS512",
+                      "RS512",
+                      "none"
+                  ],
+                  "response_modes_supported": [
+                      "query",
+                      "fragment",
+                      "form_post"
+                  ],
+                  "registration_endpoint": "http://localhost:24074/auth/realms/Sample/clients-registrations/openid-connect",
+                  "token_endpoint_auth_methods_supported": [
+                      "private_key_jwt",
+                      "client_secret_basic",
+                      "client_secret_post",
+                      "client_secret_jwt"
+                  ],
+                  "token_endpoint_auth_signing_alg_values_supported": [
+                      "RS256"
+                  ],
+                  "claims_supported": [
+                      "aud",
+                      "sub",
+                      "iss",
+                      "auth_time",
+                      "name",
+                      "given_name",
+                      "family_name",
+                      "preferred_username",
+                      "email"
+                  ],
+                  "claim_types_supported": [
+                      "normal"
+                  ],
+                  "claims_parameter_supported": false,
+                  "scopes_supported": [
+                      "openid",
+                      "address",
+                      "email",
+                      "microprofile-jwt",
+                      "offline_access",
+                      "phone",
+                      "profile",
+                      "roles",
+                      "web-origins"
+                  ],
+                  "request_parameter_supported": true,
+                  "request_uri_parameter_supported": true,
+                  "code_challenge_methods_supported": [
+                      "plain",
+                      "S256"
+                  ],
+                  "tls_client_certificate_bound_access_tokens": true,
+                  "introspection_endpoint": "http://localhost:24074/auth/realms/Sample/protocol/openid-connect/token/introspect"
+              }
+          },
             "links": [{
               "client-discovery-url": "https://accounts.google.com/.well-known/openid-configuration",
               "server-discovery-url": "local"
             }]
           }
         ]
-        })
-    }, 10000);
+      });
+    }, 100);
   });
 }
 
@@ -322,7 +455,7 @@ export async function oidcLogin(code: string) {
               "type": "token",
               "id": "6567fa1c-7a21-4153-89fd-c05f272f4532",
               "customer_id": "0408bdb2-91a4-481b-ba73-ff4ec0c8f667",
-              "token": "eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJzdWIiOiIwNDA4YmRiMi05MWE0LTQ4MWItYmE3My1mZjRlYzBjOGY2NjciLCJuYW1lIjoiVGVzdCIsImV4cCI6MTU5NDkyNDY4NCwiaWF0IjoxNTk0ODM4Mjg0LCJqdGkiOiJlOGFmZjNmNS1hZTg3LTRhNjktOGJhMS0zMWQ1ZGRiNGY2NmMifQ==.0ddbaa5554a8a6ae58cb1dfcc1fbea7b95936b269dfc95778c1b9000923f26a9",
+              "token": "eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJzdWIiOiIwNDA4YmRiMi05MWE0LTQ4MWItYmE3My1mZjRlYzBjOGY2NjciLCJuYW1lIjoiVGVzdCIsImV4cCI6MTU5NTAxNTA1MywiaWF0IjoxNTk0OTI4NjUzLCJqdGkiOiI5NDk0MGRiNC1kNDVjLTRiMWMtOTM0Yi1mODk5MzExYmE4YjYifQ==.bbb1ac80fdeedf3c848cf97d170232d90c50d06208d34ce39e6222fcb925ff43",
               "expires": 1594913825
           }
       });
