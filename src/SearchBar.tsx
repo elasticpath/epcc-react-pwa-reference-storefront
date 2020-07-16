@@ -17,11 +17,16 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
   const { t } = useTranslation();
   const [ inputVisible, setInputVisible] = useState(false);
   const [ hitsVisible, setHitsVisible ] = useState(false);
+  const [ searchValue, setsSearchValue ] = useState(false);
   const history = useHistory();
 
   const searchBarRef = useOnclickOutside(() => {
     setHitsVisible(false);
   });
+
+  const handleChange = (event: any) => {
+    setsSearchValue(event.target.value)
+  };
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -39,7 +44,7 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
     setHitsVisible(false);
   };
 
-  const onInputShow = () => {
+  const handleInputToggle = () => {
     setInputVisible(!inputVisible);
   };
 
@@ -68,13 +73,15 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
     <div ref={searchBarRef} className="searchbar">
       <button
         className="searchbar__open"
-        onClick={onInputShow}
+        onClick={handleInputToggle}
       >
         <MagnifyingGlassIcon />
       </button>
       <div className={`searchbar__input ${inputVisible ? '--show' : ''}`}>
         <SearchBox
           onFocus={handleFocus}
+          onChange={handleChange}
+          onReset={handleChange}
           searchAsYouType
           onSubmit={handleSubmit}
           submit={<MagnifyingGlassIcon />}
@@ -82,9 +89,9 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
           translations={translations}
         />
         <button
-          className="searchbar__close"
+          className={`searchbar__close ${searchValue && '--show'}`}
           onClick={onCancel}>
-          Close
+          {t('cancel')}
         </button>
         { hitsVisible &&
           <div className="searchbar__hints">

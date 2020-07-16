@@ -88,3 +88,23 @@
     margin-left: 4px;
   }
 }
+
+@media (max-width: $mobileWidth - 1px) {
+  .refinementlist {
+    $block: &;
+
+    #{$block}__title {
+      color: $mainTextColor;
+      border: none;
+      padding: 10px 0 0 20px;
+
+      &:after {
+        display: none;
+      }
+    }
+
+    #{$block}__toggleinput:checked ~ #{$block}__list {
+      height: 100%;
+    }
+  }
+}

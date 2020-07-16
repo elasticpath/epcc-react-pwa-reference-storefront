@@ -99,6 +99,7 @@
       width: 20%;
       height: 30px;
       text-align: center;
+      color: $fifthComplimentTextColor;
     }
 
     #{$block}__open {
@@ -120,17 +121,26 @@
       left: 0;
       margin: 0;
       padding: 10px 10px;
-      background-color: $secondBorderColor;
+      background-color: $mainColor;
       width: 100%;
 
       &.--show {
-        display: inline-block;
+        display: flex;
+        align-items: center;
         z-index: 1;
+
+        #{$block}__close {
+          display: none;
+
+          &.--show {
+            display: block;
+          }
+        }
       }
 
       .ais-SearchBox {
         display: inline-block;
-        width: 80%;
+        width: 100%;
       }
 
       input {

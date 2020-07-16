@@ -46,10 +46,10 @@ export const Search: React.FC<SearchParams> = () => {
       <h1 className="search__title">
         {t('search')}
       </h1>
+      <input type="checkbox" id="checkbox" className="search__facetstoggleinput"/>
       <label htmlFor="checkbox" className="search__facetstoggle epbtn --bordered">
         {t('filter')}
       </label>
-      <input type="checkbox" id="checkbox" className="search__facetstoggleinput"/>
       <Facets key="search-facets" />
       <div className="search__productlist">
         <Hits hitComponent={Hit} />
