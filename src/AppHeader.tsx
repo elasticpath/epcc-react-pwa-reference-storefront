@@ -5,10 +5,14 @@ import { Offline } from 'react-detect-offline';
 import { ImageContainer } from './ImageContainer';
 import { useTranslation } from './app-state';
 import { LanguageDropdown } from './LanguageDropdown';
-import './AppHeader.scss';
+import { SearchBar } from './SearchBar';
 import { AccountDropdown } from './AccountDropdown';
-import headerLogo from './images/site-images/Company-Logo.svg';
 import { Navigation } from "./Navigation";
+
+import headerLogo from './images/site-images/Company-Logo.svg';
+
+import './AppHeader.scss';
+
 export const AppHeader: React.FC = () => {
   const { t } = useTranslation();
   return (
@@ -19,14 +23,17 @@ export const AppHeader: React.FC = () => {
             <ImageContainer imgUrl={headerLogo} imgClassName="logo-image" alt="logoImage"/>
           </Link>
         </div>
-        <div className="appheader__account">
-          <AccountDropdown />
+        <div className="appheader__search">
+          <SearchBar />
         </div>
         <div className="appheader__language">
           <LanguageDropdown />
         </div>
         <div className="appheader__moltincartcontainer">
           <span className="moltin-cart-button"></span>
+        </div>
+        <div className="appheader__account">
+          <AccountDropdown />
         </div>
       </div>
       <div className="appheader__navigation">

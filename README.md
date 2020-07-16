@@ -13,9 +13,11 @@
 
 The Elastic Path Commerce Cloud REACT PWA Reference Storefront is a flexible e-commerce website built on Elastic Path’s RESTful e-commerce API. The storefront uses the e-commerce capabilities provided by Elastic Path Commerce Cloud and gets data in a RESTful manner.
 
+The storefront uses the [Elastic Path Commerce Cloud JavaScript SDK](https://github.com/moltin/js-sdk) for all Elastic Path Commerce Cloud API requests, and [Elastic Path Commerce Cloud Embeddable Cart + Checkout](https://github.com/moltin/shopkit) for the Cart and Checkout experiences.
+
 > 💳 Use the test card 4242 4242 4242 4242, any future expiry date, and any CVC below to checkout.
 
-[Demo](http://epcc-reference.elasticpath.com/)
+[Demo](https://epcc-reference.elasticpath.com/)
 
 ## Documentation 📖
 
@@ -24,7 +26,8 @@ The Elastic Path Commerce Cloud REACT PWA Reference Storefront is a flexible e-c
 Before you begin, ensure that you have the following accounts set up:
 
 - [Elastic Path Commerce Cloud account](https://dashboard.elasticpath.com/login)
-- [Stripe account](https://dashboard.stripe.com/) - Stripe is used as the payment gateway. From your [Dashboard](https://dashboard.elasticpath.com), configure Stripe as the payment gateway from your.
+- [Stripe account](https://dashboard.stripe.com/) - Stripe is used as the payment gateway. From your [Dashboard](https://dashboard.elasticpath.com), configure Stripe as the payment gateway.
+- [Algolia account](https://www.algolia.com/) - Algolia is used for search functionality to display search results, facets, and filtering.
 
 ### Start Building the Storefront
 
@@ -62,6 +65,9 @@ Parameters that require configuration are in the `./src/config.ts` file:
 |`stripeKey`| Required| String| Stripe publishable API key.|
 |`categoryPageSize`| Required| String| Maximum number of products to display on a category page.|
 |`maxCompareProducts`| Required| String| Maximum number of products to display in compare view.|
+|`algoliaAppId`| Required| String| Algolia application identifier.|
+|`algoliaApiKey`| Required| String| Algolia API key used to read records.|
+|`algoliaIndexName`| Required| String| Name of Algolia index used for search functions.|
 
 ## Contributors ✨
 

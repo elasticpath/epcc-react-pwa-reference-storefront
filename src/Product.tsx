@@ -6,6 +6,7 @@ import { CompareCheck } from './CompareCheck';
 import { SocialShare } from './SocialShare';
 import { useTranslation, useCurrency } from './app-state';
 import { isProductAvailable } from './helper';
+import { Availability } from './Availability';
 
 import './Product.scss';
 
@@ -16,7 +17,8 @@ interface ProductParams {
 
 export const Product: React.FC = () => {
   const { productSlug } = useParams<ProductParams>();
-  const { t, selectedLanguage } = useTranslation();
+  const { t } = useTranslation();
+  const { selectedLanguage } = useTranslation();
   const { selectedCurrency } = useCurrency();
 
   const [product] = useResolve(
@@ -66,9 +68,7 @@ export const Product: React.FC = () => {
             <div className="product__price">
               {product.meta.display_price.without_tax.formatted}
             </div>
-            <div className="product__availability">
-              {isProductAvailable(product) ? t('available') : t('out-of-stock')}
-            </div>
+            <Availability available={isProductAvailable(product)} />
             <div className="product__comparecheck">
               <CompareCheck product={product} />
             </div>
