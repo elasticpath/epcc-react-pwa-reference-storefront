@@ -42,7 +42,7 @@ export const SideMenu: React.FC = (props) => {
       </button>
       <div className={`sidemenu__dropdown ${!isOpen ? 'sidemenu__hidden' : ''}`}>
         {sideMenuItems.map(elem => (
-          <div className='sidemenu__item'>
+          <div className='sidemenu__item' key={elem.to}>
             <Link to={elem.to} className={`sidemenu__link ${location.pathname === elem.to ? '--selected' : ''}`} onClick={handleHideMenu}>{t(elem.children)}</Link>
           </div>
         ))}

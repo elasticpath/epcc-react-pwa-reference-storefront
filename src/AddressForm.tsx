@@ -9,8 +9,8 @@ import './AddressForm.scss';
 
 interface AddressFormParams {
   handleModalClose: (...args: any[]) => any,
-  isModalOpen: boolean;
-  addressData: any;
+  isModalOpen: boolean,
+  addressData: any,
 }
 
 interface FormValues {
@@ -36,7 +36,6 @@ export const AddressForm: React.FC<AddressFormParams> = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [addressErrors, setAddressErrors] = useState<any[]>([]);
   const { updateAddresses } = useAddressData();
-
 
   let initialValues:FormValues = {
     id: addressData?.id ?? '',
@@ -83,7 +82,6 @@ export const AddressForm: React.FC<AddressFormParams> = (props) => {
     resetForm({})
   };
 
-
   const {handleSubmit, handleChange, resetForm, values, errors} = useFormik({
     initialValues,
     validate,
@@ -106,16 +104,16 @@ export const AddressForm: React.FC<AddressFormParams> = (props) => {
           });
       } else {
         addNewAddress(customer, data, token)
-          .then(() => {
-            updateAddresses();
-            handleModalClose();
-            setIsLoading(false);
-          })
-          .catch(error => {
-            setIsLoading(false);
-            setAddressErrors(error.errors);
-            console.error(error);
-          });
+        .then(() => {
+          updateAddresses();
+          handleModalClose();
+          setIsLoading(false);
+        })
+        .catch(error => {
+          setIsLoading(false);
+          setAddressErrors(error.errors);
+          console.error(error);
+        });
       }
     },
   });

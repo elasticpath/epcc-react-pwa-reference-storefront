@@ -281,15 +281,8 @@ export async function getAddresses(customer: string, token: string): Promise<{ d
   return result;
 }
 
-export async function updateAddress(
-  customer: string,
-  addressId: string,
-  data: any,
-  token: string,
-): Promise<{ data: Address[] }> {
+export async function updateAddress(customer: string, address: string, body: any, token: string): Promise<{ data: Address[] }> {
   const moltin = MoltinGateway({ client_id: config.clientId });
-  const address = addressId;
-  const body = data;
   const result = await moltin.Addresses.Update(
 { customer, address, body, token }
   );
@@ -297,13 +290,8 @@ export async function updateAddress(
   return result;
 }
 
-export async function addNewAddress(
-  customer: string,
-  data: any,
-  token: string,
-): Promise<{ data: Address[] }> {
+export async function addNewAddress(customer: string, body: any, token: string): Promise<{ data: Address[] }> {
   const moltin = MoltinGateway({ client_id: config.clientId });
-  const body = data;
   const result = await moltin.Addresses.Create(
 { customer, body, token }
   );
@@ -311,11 +299,7 @@ export async function addNewAddress(
   return result;
 }
 
-export async function deleteAddress(
-  customer: string,
-  address: any,
-  token: string,
-): Promise<{ data: Address[] }> {
+export async function deleteAddress(customer: string, address: any, token: string): Promise<{ data: Address[] }> {
   const moltin = MoltinGateway({ client_id: config.clientId });
   const result = await moltin.Addresses.Delete(
 { customer, address, token }
