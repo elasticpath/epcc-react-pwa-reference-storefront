@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import constate from 'constate';
-import {Category, getCustomer, loadCategoryTree, Product} from './service';
+import {Address, Category, getAddresses, getCustomer, loadCategoryTree, Product} from './service';
 import * as service from './service';
 import { config } from './config';
 
@@ -145,14 +145,55 @@ function useCustomerDataState() {
     setCustomerEmail(email);
   };
 
+  const setName = (name:string) => {
+    setCustomerName(name);
+  };
+
   return {
+    token,
+    id,
     isLoggedIn,
     customerEmail,
     customerName,
     setEmail,
+    setName,
     setCustomerData,
     clearCustomerData
   }
+}
+
+function useAddressDataState() {
+  const token = localStorage.getItem('mtoken') || '';
+  const id = localStorage.getItem('mcustomer') || '';
+
+  const [addressData, setAddressData] = useState<service.Address[]>([]);
+
+  useEffect(() => {
+    if (token) {
+      getAddresses(id, token).then(res => {
+        setData(res.data);
+      });
+    }
+    else {
+      clearCustomerData();
+    }
+  }, [id, token]);
+
+  const updateAddresses = () => {
+    getAddresses(id, token).then(res => {
+      setData(res.data);
+    });
+  };
+
+  const setData = (data: any) => {
+    setAddressData(data);
+  };
+  const clearCustomerData = () => {
+    setAddressData([]);
+  };
+
+  return { addressData, updateAddresses }
+
 }
 
 const defaultCurrency = 'USD';
@@ -274,10 +315,12 @@ function useCompareProductsState() {
 function useGlobalState() {
   const translation = useTranslationState();
   const currency = useCurrencyState();
+  const addressData = useAddressDataState();
 
   return {
     translation,
     customerData: useCustomerDataState(),
+    addressData,
     currency,
     categories: useCategoriesState(translation.selectedLanguage),
     compareProducts: useCompareProductsState(),
@@ -288,6 +331,7 @@ export const [
   AppStateProvider,
   useTranslation,
   useCustomerData,
+  useAddressData,
   useCurrency,
   useCategories,
   useCompareProducts,
@@ -295,6 +339,7 @@ export const [
   useGlobalState,
   value => value.translation,
   value => value.customerData,
+  value => value.addressData,
   value => value.currency,
   value => value.categories,
   value => value.compareProducts

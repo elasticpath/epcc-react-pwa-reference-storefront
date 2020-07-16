@@ -130,6 +130,23 @@ export interface CustomerToken {
   expires: any;
 }
 
+export interface Address {
+    id: string,
+    type: string,
+    name: string,
+    first_name: string,
+    last_name: string,
+    company_name: string
+    phone_number: string,
+    line_1: string,
+    line_2: string,
+    city: string,
+    postcode: string,
+    county: string,
+    country: string,
+    instructions: string,
+}
+
 export async function loadEnabledCurrencies(): Promise<Currency[]> {
   const moltin = MoltinGateway({ client_id: config.clientId });
   const response = await moltin.Currencies.All();
@@ -251,14 +268,56 @@ export async function register(name: string, email: string, password: string): P
 
 export async function login(email: string, password: string): Promise<CustomerToken> {
   const moltin = MoltinGateway({ client_id: config.clientId });
-  const { data } = await moltin.Customers.Token(email, password).then();
+  const { data } = await moltin.Customers.Token(email, password);
 
   return data;
 }
 
-export async function getCustomer(id: string, token: string): Promise<Customer> {
+export async function getCustomer(id: string, token: any): Promise<Customer> {
   const moltin = MoltinGateway({ client_id: config.clientId });
   const result = await moltin.Customers.Get(id, token);
+
+  return result;
+}
+
+export async function updateCustomer(id: string, name: string, email: string, token: string): Promise<Customer> {
+  const moltin = MoltinGateway({ client_id: config.clientId });
+  // @ts-ignore
+  const result = await moltin.Customers.Update(id, {type: 'customer', name, email, password: '',}, token);
+
+  return result;
+}
+
+export async function getAddresses(customer: string, token: string): Promise<{ data: Address[] }> {
+  const moltin = MoltinGateway({ client_id: config.clientId });
+  const result = await moltin.Addresses.All({customer, token});
+
+  return result;
+}
+
+export async function updateAddress(customer: string, address: string, body: any, token: string): Promise<{ data: Address[] }> {
+  const moltin = MoltinGateway({ client_id: config.clientId });
+  const result = await moltin.Addresses.Update(
+{ customer, address, body, token }
+  );
+
+  return result;
+}
+
+export async function addNewAddress(customer: string, body: any, token: string): Promise<{ data: Address[] }> {
+  const moltin = MoltinGateway({ client_id: config.clientId });
+  const result = await moltin.Addresses.Create(
+{ customer, body, token }
+  );
+
+  return result;
+}
+
+export async function deleteAddress(customer: string, address: any, token: string): Promise<{ data: Address[] }> {
+  const moltin = MoltinGateway({ client_id: config.clientId });
+  const result = await moltin.Addresses.Delete(
+{ customer, address, token }
+  );
 
   return result;
 }

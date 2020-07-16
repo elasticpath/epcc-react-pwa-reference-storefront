@@ -1,0 +1,110 @@
+@import './theme/common';
+
+.addressform {
+  max-width: 600px;
+  margin: auto;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 5px 10px;
+    border-bottom: 1px solid $firstBorderColor;
+  }
+
+  &__title {
+    font-size: 15px;
+  }
+
+  &__content {
+    background-color: $mainBackgroundColor;
+    border: none;
+
+    &.--loading {
+
+      &:before {
+        content: '';
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: $mainBackgroundColor;
+        opacity: 0.5;
+        z-index: 1;
+      }
+    }
+  }
+
+  &__body {
+    position: relative;
+    padding: 25px 5px 5px;
+  }
+
+  &__feedback {
+    top: 0;
+    left: 0;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: $mainErrorColor;
+  }
+
+  .epbtn {
+    width: 100px;
+  }
+
+  .epbtn + .epbtn {
+    margin-left: 10px;
+  }
+
+  .required-label {
+    color: red;
+  }
+
+  .epform {
+    &.--addressform {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    &__label {
+      text-transform: capitalize;
+    }
+
+    &__group {
+      width: 50%;
+      padding-right: 25px;
+
+      &.--btncontainer {
+        width: 100%;
+        text-align: right;
+      }
+    }
+  }
+
+  .logindialog {
+    &__feedback {
+      position: relative;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+@media (max-width: $mobileWidth - 1) {
+  .logindialog {
+    height: 100%;
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 575px) {
+  .addressform {
+    .epform {
+      &__group {
+        width: 100%;
+      }
+    }
+  }
+}
+
+

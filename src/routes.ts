@@ -8,6 +8,9 @@ import ShippingAndReturns from './ShippingAndReturns';
 import TermsAndConditions from './TermsAndConditions';
 import { CompareProducts } from './CompareProducts';
 import { RegistrationForm } from "./RegistrationForm";
+import { MyAccount } from "./MyAccount";
+import { Profile } from "./Profile";
+import { Address } from "./Address";
 import { Search } from './Search';
 
 interface RouteConfig {
@@ -26,6 +29,13 @@ export const routes: RouteConfig[] = [
   { exact: true, path: '/termsandconditions', component: TermsAndConditions, },
   { exact: true, path: '/compare-products', component: CompareProducts, },
   { exact: true, path: '/registration', component: RegistrationForm, },
+  { exact: false, path: '/account', component: MyAccount, },
+  { exact: false, path: '/search', component: Search, }
+];
+
+export const routesAccount: RouteConfig[] = [
+  { exact: true, path: '/account', component: Profile, },
+  { exact: true, path: '/account/address', component: Address, },
   { exact: true, path: '/search', component: Search, }
 ];
 
@@ -47,6 +57,14 @@ export function createCompareProductsUrl(): string {
 
 export function createRegistrationUrl(): string {
   return `/registration`;
+}
+
+export function createAccountUrl(): string {
+  return `/account`;
+}
+
+export function createAddressUrl(): string {
+  return `/account/address`;
 }
 
 export function createSearchUrl(): string {
