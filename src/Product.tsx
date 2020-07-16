@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useResolve, useProductImages } from './hooks';
 import { loadProductBySlug } from './service';
 import { CompareCheck } from './CompareCheck';
+import { SocialShare } from './SocialShare';
 import { useTranslation, useCurrency } from './app-state';
 import { isProductAvailable } from './helper';
 import { Availability } from './Availability';
@@ -71,12 +72,17 @@ export const Product: React.FC = () => {
             <div className="product__comparecheck">
               <CompareCheck product={product} />
             </div>
-            <div className="product__separator"></div>
             <div className="product__moltinbtncontainer">
               <span
                 className="moltin-buy-button"
                 data-moltin-product-id={product.id}
               ></span>
+            </div>
+            <div className="product__description">
+              {product.description}
+            </div>
+            <div className="product__socialshare">
+              <SocialShare name={product.name} description={product.description} imageHref={productImageHrefs?.[0]} />
             </div>
           </div>
         </div>

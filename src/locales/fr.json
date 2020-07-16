@@ -105,5 +105,9 @@
   "brand": "ƁƁŕååñð",
   "search-here": "ŠŠéåŕŕçĥ ĥĥéŕéé···",
   "previous-image": "ÞÞŕéṽîîöûš îîɱååĝé",
-  "next-image": "ÑÑéẋţ îîɱååĝé"
+  "next-image": "ÑÑéẋţ îîɱååĝé",
+  "cancel": "ÇÇåñççéļ",
+  "social-share-title": "ÇÇĥééçķ ööûţ ţţĥîš þþŕöðûûçţ∶ {productName}",
+  "social-share-subject": "ÇÇĥééçķ ööûţ ţţĥîš þþŕöðûûçţ∶ {productName}",
+  "social-share-message": "{link}{productName}{description}"
 }
