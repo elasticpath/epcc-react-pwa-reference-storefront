@@ -97,5 +97,14 @@
   }
 }
 
+@media (max-width: 575px) {
+  .addressform {
+    .epform {
+      &__group {
+        width: 100%;
+      }
+    }
+  }
+}
 
 

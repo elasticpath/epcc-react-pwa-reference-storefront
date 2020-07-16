@@ -29,7 +29,8 @@ export const routes: RouteConfig[] = [
   { exact: true, path: '/termsandconditions', component: TermsAndConditions, },
   { exact: true, path: '/compare-products', component: CompareProducts, },
   { exact: true, path: '/registration', component: RegistrationForm, },
-  { exact: false, path: '/account', component: MyAccount, }
+  { exact: false, path: '/account', component: MyAccount, },
+  { exact: false, path: '/search', component: Search, }
 ];
 
 export const routesAccount: RouteConfig[] = [
