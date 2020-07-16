@@ -95,5 +95,8 @@
   "required": "Required",
   "network-offline": "Network Offline",
   "previous-image": "Previous image",
-  "next-image": "Next image"
+  "next-image": "Next image",
+  "social-share-title": "Check out this product: {productName}",
+  "social-share-subject": "Check out this product: {productName}",
+  "social-share-message": "{link}\n\n{productName}\n\n{description}"
 }

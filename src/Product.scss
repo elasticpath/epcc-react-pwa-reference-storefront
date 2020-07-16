@@ -88,17 +88,20 @@
         margin-top: 20px;
       }
 
-      #{$block}__separator {
-        margin-top: 20px;
-        border-top: 1px solid hsl(0, 0, 90%);
-      }
-
       #{$block}__addtocartbtn {
         margin-top: 20px;
         width: 200px;
       }
 
       #{$block}__moltinbtncontainer {
+        margin-top: 20px;
+      }
+
+      #{$block}__description {
+        margin-top: 20px;
+      }
+
+      #{$block}__socialshare {
         margin-top: 20px;
       }
     }
