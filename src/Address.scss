@@ -3,15 +3,16 @@
 .address {
 
   &__maincontainer {
+    position: relative;
     border: 1px solid $firstBorderColor;
     display: flex;
     flex-wrap: wrap;
+    padding: 30px 30px 100px 30px;
   }
 
   &__container {
     width: 50%;
-    padding: 20px;
-
+    margin-bottom: 20px;
     @media (max-width: 767px) {
       width: 100%;
     }
@@ -35,5 +36,17 @@
 
   &__list {
     padding: 5px 0;
+  }
+
+  &__addnewaddress {
+    position: absolute;
+    bottom: 40px;
+    left: 30px;
+    width: 280px;
+    height: 44px;
+    text-align: center;
+    border: 1px solid transparent;
+    color: $mainBackgroundColor;
+    background-color: $firstComplimentColor;
   }
 }

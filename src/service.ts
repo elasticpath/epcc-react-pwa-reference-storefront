@@ -274,12 +274,13 @@ export async function getAddresses(customer: string, token: string): Promise<{ d
 }
 
 export async function updateAddress(
+  customer: string,
+  addressId: string,
   data: any,
+  token: string,
 ): Promise<{ data: Address[] }> {
-  const token = localStorage.getItem('mtoken') || '';
-  const customer = localStorage.getItem('mcustomer') || '';
   const moltin = MoltinGateway({ client_id: config.clientId });
-  const address = data.id;
+  const address = addressId;
   const body = data;
   const result = await moltin.Addresses.Update(
 { customer, address, body, token }
@@ -298,4 +299,18 @@ export async function updateCustomer(id: string, name: string, email: string): P
   });
 
   return data;
+}
+
+export async function addNewAddress(
+  customer: string,
+  data: any,
+  token: string,
+): Promise<{ data: Address[] }> {
+  const moltin = MoltinGateway({ client_id: config.clientId });
+  const body = data;
+  const result = await moltin.Addresses.Create(
+{ customer, body, token }
+  );
+
+  return result;
 }

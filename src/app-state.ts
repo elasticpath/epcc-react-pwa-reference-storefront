@@ -160,19 +160,16 @@ function useAddressDataState() {
   const id = localStorage.getItem('mcustomer') || '';
 
   const [addressData, setAddressData] = useState<service.Address[]>([]);
-  const [customerToken] = useState(token);
-  const [customerId] = useState(id);
-
 
   useEffect(() => {
-    if (customerToken) {
-      getAddresses(customerId, customerToken).then(res => {
+    if (token) {
+      getAddresses(id, token).then(res => {
         setData(res.data);
       });
     } else {
       clearCustomerData();
     }
-  }, [customerId, customerToken]);
+  }, [id, token]);
 
   const setData = (data: any) => {
     setAddressData(data);
@@ -305,11 +302,12 @@ function useCompareProductsState() {
 function useGlobalState() {
   const translation = useTranslationState();
   const currency = useCurrencyState();
+  const addressData = useAddressDataState();
 
   return {
     translation,
     customerData: useCustomerDataState(),
-    addressData: useAddressDataState(),
+    addressData,
     currency,
     categories: useCategoriesState(translation.selectedLanguage),
     compareProducts: useCompareProductsState(),

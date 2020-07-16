@@ -1,6 +1,4 @@
-import React, {useState} from 'react';
-import { useParams } from 'react-router-dom';
-
+import React, { useState } from 'react';
 import { useAddressData } from './app-state';
 import { Address as IAddress } from './service';
 import { useTranslation } from './app-state';
@@ -8,16 +6,10 @@ import './Address.scss';
 
 import {AddressForm} from "./AddressForm";
 
-
-interface AddressParams {
-  productSlug: string;
-}
-
-
 export const Address: React.FC = () => {
-  const { productSlug } = useParams<AddressParams>();
-  const { t, selectedLanguage } = useTranslation();
+  const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState(false);
 
   const addressData = useAddressData();
 
@@ -25,13 +17,18 @@ export const Address: React.FC = () => {
 
   };
 
-  const handleEdit = (category: string) => {
+  const handleEdit = (address: any) => {
+    setSelectedAddress(address);
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const handleAddNewAddress = () => {
     setIsModalOpen(!isModalOpen);
   };
 
   return (
     <div className="address">
-      <h1>Address Book</h1>
+      <h1>{t("address-book")}</h1>
       {addressData && addressData.length > 0 ? (
         <div className="address__maincontainer">
           {addressData.map((address: IAddress) => (
@@ -68,7 +65,7 @@ export const Address: React.FC = () => {
                   {address.postcode}
                 </li>
               </ul>
-              <button type="button" className="address__button --edit" onClick={() => handleEdit(address.line_2)}>
+              <button type="button" className="address__button --edit" onClick={() => handleEdit(address)}>
                 {t('edit')}
               </button>
               <button type="button" className="address__button --delete" onClick={() => handleDelete(address.line_2)}>
@@ -76,13 +73,16 @@ export const Address: React.FC = () => {
               </button>
             </div>
           ))}
+          <button className="address__addnewaddress" onClick={handleAddNewAddress}>{t('add-new-address')}</button>
+          {isModalOpen && (
+            <AddressForm isModalOpen={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} addressData={selectedAddress} />
+          )}
         </div>
       ) : (
         <div>
           {t('no-addresses')}
         </div>
       )}
-        <AddressForm isModalOpen={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} />
     </div>
   )
 };
