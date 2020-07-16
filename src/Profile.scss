@@ -3,7 +3,7 @@
 
 .profile {
   &__title {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: bold;
     margin-bottom: 15px;
   }
@@ -16,7 +16,7 @@
   }
 
   &__container {
-    padding: 15px 10px 15px 20px;
+    padding: 15px 15px 15px 20px;
     border: 1px solid $secondBorderColor;
 
     h2 {
@@ -24,7 +24,9 @@
       font-weight: bold;
       margin-bottom: 10px;
     }
+  }
 
+  &__info {
     .epbtn {
       padding: 0;
 
@@ -43,5 +45,36 @@
     display: inline-block;
     font-weight: bold;
     margin-right: 5px;
+  }
+
+  &__form {
+    position: relative;
+    .epbtn + .epbtn {
+      margin-left: 15px;
+    }
+
+    &.--loading {
+      &:before {
+        content: '';
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: $mainBackgroundColor;
+        opacity: 0.5;
+        z-index: 1;
+      }
+    }
+  }
+
+  @media screen and (min-width: 992px) {
+    &__title {
+      font-size: 24px;
+    }
+
+    &__data {
+      width: 50%;
+    }
   }
 }

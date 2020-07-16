@@ -18,6 +18,10 @@ export const SideMenu: React.FC = (props) => {
     setIsOpen(!isOpen);
   };
 
+  const handleHideMenu = () => {
+    setIsOpen(false);
+  };
+
   const ref = useOnclickOutside(() => {
     setIsOpen(false);
   });
@@ -38,7 +42,7 @@ export const SideMenu: React.FC = (props) => {
       <div className={`sidemenu__dropdown ${!isOpen ? 'sidemenu__hidden' : ''}`}>
         {sideMenuItems.map(elem => (
           <div className='sidemenu__item'>
-            <Link to={elem.to} className={`sidemenu__link ${location.pathname === elem.to ? '--selected' : ''}`}>{t(elem.children)}</Link>
+            <Link to={elem.to} className={`sidemenu__link ${location.pathname === elem.to ? '--selected' : ''}`} onClick={handleHideMenu}>{t(elem.children)}</Link>
           </div>
         ))}
       </div>
