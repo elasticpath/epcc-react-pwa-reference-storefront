@@ -31,7 +31,7 @@ Before you begin, ensure that you have the following accounts set up:
 
 ### Development tools
 
-An Elastic Path Commerce development environment requires the following software:
+An Elastic Path Commerce Cloud REACT PWA Reference Storefront development environment requires the following software:
 
 - [Git](https://git-scm.com/downloads)
 - [Node.js](https://nodejs.org/en/download/)
