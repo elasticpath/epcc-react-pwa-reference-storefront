@@ -29,6 +29,26 @@ Before you begin, ensure that you have the following accounts set up:
 - [Stripe account](https://dashboard.stripe.com/) - Stripe is used as the payment gateway. From your [Dashboard](https://dashboard.elasticpath.com), configure Stripe as the payment gateway.
 - [Algolia account](https://www.algolia.com/) - Algolia is used for search functionality to display search results, facets, and filtering.
 
+### Development tools
+
+An Elastic Path Commerce development environment requires the following software:
+
+- [Git](https://git-scm.com/downloads)
+- [Node.js](https://nodejs.org/en/download/)
+- [Yarn](https://yarnpkg.com/en/)
+- [Visual Studio Code](https://code.visualstudio.com/) with the following extensions:
+    - [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)
+    - [ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- **Windows Only:** [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/about)
+
+### Knowledge Requirements
+
+To customize and extend the storefront, you need knowledge in the following technologies:
+
+- [React](https://reactjs.org/)
+- [CSS](https://en.wikipedia.org/wiki/Cascading_Style_Sheets)
+- [sass](https://sass-lang.com/)
+
 ### Start Building the Storefront
 
 **Note**: If you are running a Windows environment, launch the Windows Subsystem for Linux application and perform the following steps from the console window.
