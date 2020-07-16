@@ -1,12 +1,15 @@
 @import './theme/common';
 
-.app-footer {
-  position: relative;
-  background-color: $mainColor;
-  color: $mainNavigationColor;
-  padding: 30px 30px 40px;
+.appfooter {
 
-  .share-icon {
+  &__content {
+    position: relative;
+    background-color: $mainColor;
+    color: $mainNavigationColor;
+    padding: 30px 30px 40px;
+  }
+
+  &__icon {
     width: 16px;
     height: 18px;
     fill: $mainBackgroundColor;
@@ -14,55 +17,60 @@
     vertical-align: top;
   }
 
-  .title {
+  &__title {
     text-transform: uppercase;
     font-weight: bold;
     font-size: 16px;
     margin-bottom: 20px;
   }
 
-  .first-row {
+  &__firstrow {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+  }
 
-    .footer-column {
-      flex: 1;
-      max-width: 250px;
-      margin: 20px;
+  &__column {
+    flex: 1;
+    max-width: 250px;
+    margin: 20px;
+  }
 
-      .content {
-        opacity: 0.7;
-        color: $mainNavigationColor;
+  &__txt {
+    opacity: 0.7;
+    color: $mainNavigationColor;
 
-        a {
-          display: block;
-          color: inherit;
-        }
-      }
+    a {
+      display: block;
+      color: inherit;
     }
   }
 
-  .second-row {
+  &__secondrow {
     display: none;
   }
 
   @media (max-width: $mobileWidth - 1px) {
-    .footer-column.social {
+    &__content {
+      padding-right: 10px;
+      padding-left: 10px;
+    }
+
+    &__social {
       display: none;
     }
 
-    .second-row {
+    &__secondrow {
       display: block;
       text-align: center;
       padding-top: 20px;
+    }
 
-      .share-icon {
-        width: 21px;
-        height: 24px;
-        fill: $mainNavigationColor;
-        margin: 0 20px;
-      }
+    &__icon {
+      width: 21px;
+      height: 24px;
+      fill: $mainNavigationColor;
+      margin: 0 20px;
     }
   }
 }
