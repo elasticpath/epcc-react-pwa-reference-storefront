@@ -210,6 +210,9 @@ const imageMimeTypes = [
   'image/jpeg',
   'image/png',
   'image/gif',
+  'image/webp',
+  'image/jp2',
+  'image/jxr',
 ];
 
 // Loads a file with a provided id and returns its url if it's mime type is an image or undefined otherwise
