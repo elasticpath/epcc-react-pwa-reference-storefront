@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
-import { getCustomer, updateCustomer } from './service';
+import { updateCustomer } from './service';
 import { useCustomerData, useTranslation } from './app-state';
 
 import './Profile.scss';
@@ -12,10 +12,8 @@ interface FormValues {
 }
 
 export const Profile: React.FC = (props) => {
-  const { customerEmail, customerName } = useCustomerData();
+  const { id, token, customerEmail, customerName, setEmail, setName } = useCustomerData();
   const { t } = useTranslation();
-
-  const id = localStorage.getItem('mcustomer') || '';
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -29,6 +27,8 @@ export const Profile: React.FC = (props) => {
     const errors:any = {};
     if (!values.email) {
       errors.email = t('required');
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+      errors.email = t('invalid-email');
     }
 
     if (!values.username) {
@@ -43,10 +43,13 @@ export const Profile: React.FC = (props) => {
     validate,
     onSubmit: (values) => {
       setIsLoading(true);
-      updateCustomer(id, values.username, values.email)
+      // @ts-ignore
+      updateCustomer(id, values.username, values.email, token)
         .then((result) => {
-          console.log('result', result);
           setIsLoading(false);
+          setEmail(result.data.email);
+          setName(result.data.name);
+          setIsEditMode(false);
         })
         .catch(error => {
           console.error(error);

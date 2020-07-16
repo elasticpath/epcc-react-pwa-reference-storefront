@@ -145,11 +145,18 @@ function useCustomerDataState() {
     setCustomerEmail(email);
   };
 
+  const setName = (name:string) => {
+    setCustomerName(name);
+  };
+
   return {
+    token,
+    id,
     isLoggedIn,
     customerEmail,
     customerName,
     setEmail,
+    setName,
     setCustomerData,
     clearCustomerData
   }

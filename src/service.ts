@@ -254,7 +254,7 @@ export async function register(name: string, email: string, password: string): P
 
 export async function login(email: string, password: string): Promise<CustomerToken> {
   const moltin = MoltinGateway({ client_id: config.clientId });
-  const { data } = await moltin.Customers.Token(email, password).then();
+  const { data } = await moltin.Customers.Token(email, password);
 
   return data;
 }
@@ -262,6 +262,14 @@ export async function login(email: string, password: string): Promise<CustomerTo
 export async function getCustomer(id: string, token: any): Promise<Customer> {
   const moltin = MoltinGateway({ client_id: config.clientId });
   const result = await moltin.Customers.Get(id, token);
+
+  return result;
+}
+
+export async function updateCustomer(id: string, name: string, email: string, token: string): Promise<Customer> {
+  const moltin = MoltinGateway({ client_id: config.clientId });
+  // @ts-ignore
+  const result = await moltin.Customers.Update(id, {type: 'customer', name, email, password: '',}, token);
 
   return result;
 }
@@ -287,18 +295,6 @@ export async function updateAddress(
   );
 
   return result;
-}
-
-export async function updateCustomer(id: string, name: string, email: string): Promise<Customer> {
-  const moltin = MoltinGateway({ client_id: config.clientId });
-  const { data } = await moltin.Customers.Update(id, {
-    type: 'customer',
-    name,
-    email,
-    password: '',
-  });
-
-  return data;
 }
 
 export async function addNewAddress(

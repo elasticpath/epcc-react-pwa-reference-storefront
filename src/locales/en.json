@@ -117,5 +117,6 @@
   "add-new-address": "Add a New Address",
   "save": "Save",
   "cancel": "Cancel",
-  "delete": "Delete"
+  "delete": "Delete",
+  "invalid-email": "Invalid email address"
 }

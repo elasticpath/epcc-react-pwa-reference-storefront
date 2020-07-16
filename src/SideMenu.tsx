@@ -11,6 +11,7 @@ export const SideMenu: React.FC = (props) => {
   const { t } = useTranslation();
   const accountUrl = createAccountUrl();
   const addressUrl = createAddressUrl();
+  const location = useLocation();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -32,12 +33,12 @@ export const SideMenu: React.FC = (props) => {
   ];
 
   sideMenuItems.push();
+  const currentSideMenuItems = sideMenuItems.filter(el => el.to === location.pathname);
 
-  const location = useLocation();
   return (
     <div className="sidemenu" ref={ref}>
       <button className="sidemenu__btn" onClick={handleSelectorClicked}>
-        Test
+        {currentSideMenuItems.length > 0 && t(currentSideMenuItems[0].children)}
       </button>
       <div className={`sidemenu__dropdown ${!isOpen ? 'sidemenu__hidden' : ''}`}>
         {sideMenuItems.map(elem => (

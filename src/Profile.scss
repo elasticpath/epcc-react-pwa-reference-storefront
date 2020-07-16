@@ -39,6 +39,10 @@
 
   &__infoitem {
     margin-bottom: 5px;
+
+    &:last-of-type {
+      margin-bottom: 10px;
+    }
   }
 
   &__infolabel {
