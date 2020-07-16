@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import constate from 'constate';
-import {Category, getCustomer, loadCategoryTree, Product, loadCustomerAuthenticationSettings} from './service';
+import {Category, getCustomer, loadCategoryTree, Product, loadCustomerAuthenticationSettings, loadAuthenticationProfiles} from './service';
 import * as service from './service';
 import { config } from './config';
 import { useResolve } from './hooks';
@@ -272,15 +272,26 @@ function useCompareProductsState() {
   };
 }
 
+// We should hold all the state here??
 function useCustomerAuthenticationSettingsState() {
-  // TODO: Need to use the clientID most likely when calling this in the future...
-  const [authenticationSettings] = useResolve(async () => {
-    // during initial loading of categories categoryId might be undefined
-    const customerAuthenticationSettings = loadCustomerAuthenticationSettings()
-    return customerAuthenticationSettings;
-  }, []);
 
-  return { authenticationSettings }
+  // We need to make this state work for both...
+  const [ authenticationSettings, setAuthenticationSettings ] = useState<object>()
+  const [ authenticationProfiles, setAuthenticationProfiles ] = useState<object>();
+
+  useEffect(()=>{
+    loadCustomerAuthenticationSettings().then((authSettings) => {
+      setAuthenticationSettings(authSettings);
+      
+      const authenticationRealmId = authSettings.data.relationships['authentication-realms'].data[0].id
+      loadAuthenticationProfiles(authenticationRealmId, 'STORE-ID-PLACEHOLDER').then((profiles) => {
+        setAuthenticationProfiles(profiles);
+      })
+    });
+  },[])
+  
+
+  return { authenticationSettings, authenticationProfiles }
 }
 
 function useGlobalState() {

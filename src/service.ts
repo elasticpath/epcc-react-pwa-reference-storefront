@@ -154,37 +154,45 @@ export async function loadCustomerAuthenticationSettings(): Promise<any> {
               }
           },
           "meta": {
-              "clientId": "steveisthebest"
+              "clientId": "epcc-reference-store"
           }
         }
       })
-    },10000);
+    }, 10000);
   });
 }
 
+
 // HAX - This is going to be part of the SDK eventually.
-export function loadAuthenticationProfiles(): object {
-  
-  return {
-    "data": [
-        {
-          "type": "Okta",
-          "id": "369ad4a4-ee67-48b0-x347-t50a6e61d83d",
-          "client_id": "foo",
+export function loadAuthenticationProfiles(realm: string, storeId: string): Promise<any> {
+  return new Promise((res:any) => {
+    setTimeout(()=>{
+      res({
+        // We also need to add the meta value...
+        "data": [
+          {
+            "type": "Okta",
+            "id": "369ad4a4-ee67-48b0-x347-t50a6e61d83d",
+            "client_id": "foo",
+              "links": [{
+                  "client-discovery-url": "https://accounts.google.com/.well-known/openid-configuration",
+                  "server-discovery-url": "tbd"
+              }
+              ]
+          },
+          {
+            "type": "Keycloak",
+            "id": "369ad4a4-ee67-48b0-x347-t50a6e61d83d",
+            "client_id": "epcc-reference-store",
             "links": [{
-                "client-discovery-url": "https://accounts.google.com/.well-known/openid-configuration",
-                "server-discovery-url": "tbd"
-            }
-            ]
-        },
-        {
-          "type": "Keycloak",
-          "id": "369ad4a4-ee67-48b0-x347-t50a6e61d83d",
-          "...": {
+              "client-discovery-url": "https://accounts.google.com/.well-known/openid-configuration",
+              "server-discovery-url": "local"
+            }]
           }
-        }
-      ]
-    }
+        ]
+        })
+    }, 10000);
+  });
 }
 
 export async function loadEnabledCurrencies(): Promise<Currency[]> {
