@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import constate from 'constate';
-import {Category, getCustomer, loadCategoryTree, Product} from './service';
+import {Category, getCustomer, loadCategoryTree, Product, loadCustomerAuthenticationSettings} from './service';
 import * as service from './service';
 import { config } from './config';
+import { useResolve } from './hooks';
 
 import en from './locales/en.json';
 import fr from './locales/fr.json';
@@ -271,6 +272,17 @@ function useCompareProductsState() {
   };
 }
 
+function useCustomerAuthenticationSettingsState() {
+  // TODO: Need to use the clientID most likely when calling this in the future...
+  const [authenticationSettings] = useResolve(async () => {
+    // during initial loading of categories categoryId might be undefined
+    const customerAuthenticationSettings = loadCustomerAuthenticationSettings()
+    return customerAuthenticationSettings;
+  }, []);
+
+  return { authenticationSettings }
+}
+
 function useGlobalState() {
   const translation = useTranslationState();
   const currency = useCurrencyState();
@@ -281,6 +293,7 @@ function useGlobalState() {
     currency,
     categories: useCategoriesState(translation.selectedLanguage),
     compareProducts: useCompareProductsState(),
+    authenticationSettings: useCustomerAuthenticationSettingsState(),
   };
 }
 
@@ -291,11 +304,13 @@ export const [
   useCurrency,
   useCategories,
   useCompareProducts,
+  useCustomerAuthenticationSettings,
 ] = constate(
   useGlobalState,
-  value => value.translation,
+  value => value.translation,  
   value => value.customerData,
   value => value.currency,
   value => value.categories,
-  value => value.compareProducts
+  value => value.compareProducts,
+  value => value.authenticationSettings,
 );

@@ -125,37 +125,41 @@ export interface CustomerToken {
 }
 
 // HAX - For now this can just be a non async function...
-export function loadCustomerAuthenticationSettings(): object {
+// May need to pass into the function the clientID
+export async function loadCustomerAuthenticationSettings(): Promise<any> {
   // TODO: return the options in the authentication options...
   // This should be moved into the SDK eventually... for now we will just make the request
   // Outside of the SDK to simplify things.
 
-  
-  return {
-    "data": {
-      "type": "customer-authentication-settings",
-      "allow_password_authentication": true,
-      "links": {
-        "self": "https://api.moltin.com/v2/customer-authentication-settings"
-      },
-      "relationships": {
-          "authentication-realms": {
-              "data": [
-                  {
-                      "type": "authentication-realm",
-                      "id": "369ad4a4-ee67-48b0-x347-t50a6e61d83d",
-                      "links": [
-                          {"self": "https://api.moltin.com/v2/authentication-realm/{id}"},
-                      ],
-                  }
-                ]
+  return new Promise((res:any) => {
+    setTimeout(()=>{
+      res({
+        "data": {
+          "type": "customer-authentication-settings",
+          "allow_password_authentication": true,
+          "links": {
+            "self": "https://api.moltin.com/v2/customer-authentication-settings"
+          },
+          "relationships": {
+              "authentication-realms": {
+                  "data": [
+                      {
+                          "type": "authentication-realm",
+                          "id": "369ad4a4-ee67-48b0-x347-t50a6e61d83d",
+                          "links": [
+                              {"self": "https://api.moltin.com/v2/authentication-realm/{id}"},
+                          ],
+                      }
+                    ]
+              }
+          },
+          "meta": {
+              "clientId": "steveisthebest"
           }
-      },
-      "meta": {
-          "clientId": "steveisthebest"
-      }
-    }
-  }
+        }
+      })
+    },10000);
+  });
 }
 
 // HAX - This is going to be part of the SDK eventually.
