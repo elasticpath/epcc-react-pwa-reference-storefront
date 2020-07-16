@@ -382,3 +382,19 @@ $shopkitBtnOutlineText: $firstComplimentColor;
     $shopkitBtnOutlineText
   );
 }
+
+@media (max-width: $mobileWidth - 1px) {
+  .appheader .shopkit-cart-button {
+    border: none;
+    background-image: url(./images/icons/cart-icon.svg);
+    background-position: center;
+    background-clip: border-box;
+    background-repeat: no-repeat;
+    background-size: 22px;
+    padding: 0;
+    width: 34px;
+    color: transparent;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}

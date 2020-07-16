@@ -122,5 +122,20 @@
   "save": "ŠŠåṽé",
   "cancel": "ÇÇåñççéļ",
   "delete": "ÐÐéļééţé",
-  "invalid-email": "ÎÎñṽååļîð ééɱååîļ ååððŕŕéšš"
+  "invalid-email": "ÎÎñṽååļîð ééɱååîļ ååððŕŕéšš",
+  "filter-by": "ƑƑîļţţéŕ ƁƁý",
+  "search": "ŠŠéåŕŕçĥ",
+  "filter": "ƑƑîļţţéŕ",
+  "featured": "ƑƑéåţûûŕéð",
+  "price-asc": "ÞÞŕîîçé ååšç·",
+  "price-desc": "ÞÞŕîîçé ððéššç·",
+  "category": "ÇÇåţéĝĝöŕý",
+  "collection": "ÇÇöļļļéçţţîöñ",
+  "brand": "ƁƁŕååñð",
+  "search-here": "ŠŠéåŕŕçĥ ĥĥéŕéé···",
+  "previous-image": "ÞÞŕéṽîîöûš îîɱååĝé",
+  "next-image": "ÑÑéẋţ îîɱååĝé",
+  "social-share-title": "ÇÇĥééçķ ööûţ ţţĥîš þþŕöðûûçţ∶ {productName}",
+  "social-share-subject": "ÇÇĥééçķ ööûţ ţţĥîš þþŕöðûûçţ∶ {productName}",
+  "social-share-message": "{link}{productName}{description}"
 }

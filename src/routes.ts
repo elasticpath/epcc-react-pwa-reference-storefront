@@ -11,6 +11,7 @@ import { RegistrationForm } from "./RegistrationForm";
 import { MyAccount } from "./MyAccount";
 import { Profile } from "./Profile";
 import { Address } from "./Address";
+import { Search } from './Search';
 
 interface RouteConfig {
   path: string;
@@ -33,7 +34,8 @@ export const routes: RouteConfig[] = [
 
 export const routesAccount: RouteConfig[] = [
   { exact: true, path: '/account', component: Profile, },
-  { exact: true, path: '/account/address', component: Address, }
+  { exact: true, path: '/account/address', component: Address, },
+  { exact: true, path: '/search', component: Search, }
 ];
 
 export function createHomeUrl(): string {
@@ -62,4 +64,8 @@ export function createAccountUrl(): string {
 
 export function createAddressUrl(): string {
   return `/account/address`;
+}
+
+export function createSearchUrl(): string {
+  return `/search`;
 }
