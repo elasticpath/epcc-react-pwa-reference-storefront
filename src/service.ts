@@ -310,3 +310,16 @@ export async function addNewAddress(
 
   return result;
 }
+
+export async function deleteAddress(
+  customer: string,
+  address: any,
+  token: string,
+): Promise<{ data: Address[] }> {
+  const moltin = MoltinGateway({ client_id: config.clientId });
+  const result = await moltin.Addresses.Delete(
+{ customer, address, token }
+  );
+
+  return result;
+}

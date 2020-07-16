@@ -169,6 +169,10 @@ function useAddressDataState() {
   const [addressData, setAddressData] = useState<service.Address[]>([]);
 
   useEffect(() => {
+    updateAddresses();
+  }, [id, token]);
+
+  const updateAddresses = () => {
     if (token) {
       getAddresses(id, token).then(res => {
         setData(res.data);
@@ -176,17 +180,16 @@ function useAddressDataState() {
     } else {
       clearCustomerData();
     }
-  }, [id, token]);
+  };
 
   const setData = (data: any) => {
     setAddressData(data);
   };
-
   const clearCustomerData = () => {
     setAddressData([]);
   };
 
-  return addressData
+  return { addressData, updateAddresses }
 
 }
 

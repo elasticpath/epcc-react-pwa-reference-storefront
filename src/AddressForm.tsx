@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { updateAddress, addNewAddress } from './service';
-
-import { useTranslation } from './app-state';
+import { useFormik } from 'formik';
+import {useAddressData, useTranslation} from './app-state';
+import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
+import Modal from 'react-responsive-modal';
 
 import './AddressForm.scss';
-import {ReactComponent as CloseIcon} from './images/icons/ic_close.svg';
-import Modal from 'react-responsive-modal';
-import { useFormik } from 'formik';
-
 
 interface AddressFormParams {
   handleModalClose: (...args: any[]) => any,
@@ -35,11 +33,12 @@ interface FormValues {
 export const AddressForm: React.FC<AddressFormParams> = (props) => {
   const { handleModalClose, isModalOpen, addressData } = props;
   const { t } = useTranslation();
-  const [failedLogin, setFailedLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [addressErrors, setAddressErrors] = useState<any[]>([]);
+  const { updateAddresses } = useAddressData();
 
-  let  initialValues:FormValues = {
+
+  let initialValues:FormValues = {
     id: addressData?.id ?? '',
     type: addressData?.type ?? '',
     first_name: addressData?.first_name ?? '',
@@ -76,14 +75,12 @@ export const AddressForm: React.FC<AddressFormParams> = (props) => {
     if (!values.postcode) {
       errors.postcode = t('required');
     }
-
     return errors;
   };
 
   const handleClose = () => {
-    setFailedLogin(false);
     handleModalClose();
-    resetForm();
+    resetForm({})
   };
 
 
@@ -97,26 +94,26 @@ export const AddressForm: React.FC<AddressFormParams> = (props) => {
       const customer = localStorage.getItem('mcustomer') || '';
       if(values.id) {
         updateAddress(customer, values.id, data, token)
-          .then((result) => {
-            handleModalClose();
+          .then(() => {
+            updateAddresses();
+            handleClose();
             setIsLoading(false);
           })
           .catch(error => {
             setIsLoading(false);
             setAddressErrors(error.errors);
-            setFailedLogin(true);
             console.error(error);
           });
       } else {
         addNewAddress(customer, data, token)
-          .then((result) => {
+          .then(() => {
+            updateAddresses();
             handleModalClose();
             setIsLoading(false);
           })
           .catch(error => {
             setIsLoading(false);
             setAddressErrors(error.errors);
-            setFailedLogin(true);
             console.error(error);
           });
       }
@@ -131,14 +128,14 @@ export const AddressForm: React.FC<AddressFormParams> = (props) => {
       <div className={`addressform__content ${isLoading ? '--loading' : ''}`}>
         <div className="addressform__header">
           <h2 className="addressform__title">
-            {t('address-form')}
+            {values.id ? t('edit-address') : t('new-address')}
           </h2>
           <button type="button" aria-label="close" onClick={handleModalClose}>
             <CloseIcon/>
           </button>
         </div>
-        <div className="logindialog__body">
-          <div className="logindialog__feedback">
+        <div className="addressform__body">
+          <div className="addressform__feedback">
             {addressErrors.length ? (
               addressErrors.map(error => (
                 <div key={error.detail}>
@@ -281,10 +278,10 @@ export const AddressForm: React.FC<AddressFormParams> = (props) => {
               </div>
             </div>
             <div className="epform__group --btncontainer">
-              <button className="epbtn --bordered" type="button" id="login_modal_login_button" onClick={handleClose}>
+              <button className="epbtn --bordered" type="button" onClick={handleClose}>
                 {t('cancel')}
               </button>
-              <button className="epbtn --primary" type="submit" id="login_modal_register_button">
+              <button className="epbtn --primary" type="submit">
                 {t('save')}
               </button>
             </div>

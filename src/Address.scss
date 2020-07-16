@@ -2,12 +2,18 @@
 
 .address {
 
+  &__title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
   &__maincontainer {
     position: relative;
     border: 1px solid $firstBorderColor;
     display: flex;
     flex-wrap: wrap;
     padding: 30px 30px 100px 30px;
+    margin-top: 40px;
   }
 
   &__container {
@@ -42,11 +48,107 @@
     position: absolute;
     bottom: 40px;
     left: 30px;
-    width: 280px;
+    width: 260px;
     height: 44px;
     text-align: center;
     border: 1px solid transparent;
     color: $mainBackgroundColor;
     background-color: $firstComplimentColor;
+
+  &:hover {
+    cursor: pointer;
+  }
   }
 }
+
+.addressdelete {
+  max-width: 600px;
+  margin: auto;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 5px 10px;
+    border-bottom: 1px solid $firstBorderColor;
+  }
+
+  &__title {
+    font-size: 15px;
+  }
+
+  &__content {
+    background-color: $mainBackgroundColor;
+    border: none;
+    width: 400px;
+
+    &.--loading {
+
+      &:before {
+        content: '';
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: $mainBackgroundColor;
+        opacity: 0.5;
+        z-index: 1;
+      }
+    }
+  }
+
+  &__body {
+    position: relative;
+    padding: 30px 10px;
+  }
+
+  &__feedback {
+    top: 0;
+    left: 0;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: $mainErrorColor;
+  }
+
+  .epbtn {
+    width: 100px;
+  }
+
+  .epbtn + .epbtn {
+    margin-left: 10px;
+  }
+
+  .required-label {
+    color: red;
+  }
+
+  .epform {
+    &.--addressform {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    &__label {
+      text-transform: capitalize;
+    }
+
+    &__group {
+      width: 50%;
+      padding-right: 25px;
+
+      &.--btncontainer {
+        width: 100%;
+        text-align: right;
+      }
+    }
+  }
+
+  .logindialog {
+    &__feedback {
+      position: relative;
+      margin-bottom: 10px;
+    }
+  }
+}
+
