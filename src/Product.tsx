@@ -42,7 +42,7 @@ export const Product: React.FC = () => {
 
   return (
     <div className="product">
-      {product && (
+      {product ? (
         <div className="product__maincontainer">
           <div className="product__imgcontainer">
             {productImageHrefs.length > 0 && (
@@ -86,6 +86,8 @@ export const Product: React.FC = () => {
             </div>
           </div>
         </div>
+      ) : (
+        <div className="loader" />
       )}
     </div>
   );
