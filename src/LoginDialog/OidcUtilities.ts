@@ -15,7 +15,7 @@ export const generateKeycloakLoginRedirectUrl = (baseRedirectUrl: string, cId: s
     const clientId = `client_id=${cId}` // Should be able to get this from the authentication-settings.
     
     // ------ redirect
-    const redirectUri = `redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fkeycloak` // TODO... We need to keep it logged in with the current uri
+    const redirectUri = `redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Foidc` // TODO... We need to keep it logged in with the current uri
     
     //------- State Token...
     const stateToken = generateStateToken();

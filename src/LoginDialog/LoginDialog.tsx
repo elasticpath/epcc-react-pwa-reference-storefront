@@ -20,28 +20,10 @@ interface AppModalLoginMainProps {
   openModal: boolean,
 }
 
-interface FormValues {
-  emailField: string,
-  passwordField: string,
-}
-
 export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
   const { handleModalClose, openModal } = props;
-  
-  // We need to grab this with the clientId... and this only changes if the clientId changes...
-  // const authenticationSettings = loadCustomerAuthenticationSettings();
-  
-  // Should move this up into the appState...
-  // These authenticationSettings should be a global thing... They wont change...
-  // const [authenticationSettings] = useResolve(async () => {
-  //   // during initial loading of categories categoryId might be undefined
-  //   const customerAuthenticationSettings = loadCustomerAuthenticationSettings()
-  //   return customerAuthenticationSettings;
-  // }, []);
 
   const { authenticationSettings, authenticationProfiles }: any = useCustomerAuthenticationSettings()
-  console.log('printing out the authentication profiles');
-  console.log(authenticationProfiles);
   
   const { t } = useTranslation();
 
@@ -74,12 +56,6 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
           {failedLogin ? t('invalid-email-or-password') : ('')}
           </div>
         
-        {/* TODO: Need to read authentication options and then choose if we show the password. */}
-        {/* { authenticationSettings && authenticationSettings.data.allow_password_authentication && [
-          <PasswordLoginForm handleModalClose={handleModalClose} isLoading={isLoading} setIsLoading={setIsLoading} setFailedLogin={setFailedLogin} />,
-          <LoginDialogDivider/>]
-        } */}
-
         {
           authenticationSettings ? 
           authenticationSettings?.data.allow_password_authentication &&

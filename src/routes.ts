@@ -8,7 +8,7 @@ import ShippingAndReturns from './ShippingAndReturns';
 import TermsAndConditions from './TermsAndConditions';
 import { CompareProducts } from './CompareProducts';
 import { RegistrationForm } from "./RegistrationForm";
-import { KeycloakComp } from './LoginDialog/KeycloakComp';
+import { OidcHandler } from './LoginDialog/OidcHandler';
 
 interface RouteConfig {
   path: string;
@@ -26,7 +26,7 @@ export const routes: RouteConfig[] = [
   { exact: true, path: '/termsandconditions', component: TermsAndConditions, },
   { exact: true, path: '/compare-products', component: CompareProducts, },
   { exact: true, path: '/registration', component: RegistrationForm, },
-  { exact: true, path: '/keycloak', component: KeycloakComp, }
+  { exact: true, path: '/oidc', component: OidcHandler, }
 ];
 
 export function createHomeUrl(): string {
