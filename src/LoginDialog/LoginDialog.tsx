@@ -80,12 +80,12 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
           <LoginDialogDivider/>]
         } */}
 
-        { 
-          authenticationSettings?.data.allow_password_authentication ?
+        {
+          authenticationSettings ? 
+          authenticationSettings?.data.allow_password_authentication &&
           <PasswordLoginForm handleModalClose={handleModalClose} isLoading={isLoading} setIsLoading={setIsLoading} setFailedLogin={setFailedLogin} />
-          /** We should place the OIDC buttons here... */
-           :
-          <div className="epminiLoader --centered" />
+          :
+          <div className="epminiLoader" />
         }
         
 
@@ -93,9 +93,14 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
         {
           authenticationProfiles ? 
           [
-            <LoginDialogDivider />,
+            authenticationSettings?.data.allow_password_authentication && <LoginDialogDivider/>,
             <OidcLoginButtons />
-          ]: <div className="epminiLoader --centered" />
+          ]: (
+            authenticationSettings && 
+            [
+              authenticationSettings?.data.allow_password_authentication && <LoginDialogDivider/>,
+              <div className="epminiLoader" />   
+            ])
         }
       </div>
 
