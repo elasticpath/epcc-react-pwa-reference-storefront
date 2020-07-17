@@ -4,17 +4,10 @@
  */
 
 
-import React, { useState, useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import Modal from 'react-responsive-modal';
-import { useFormik } from 'formik';
-import { login, loadAuthenticationProfiles } from '../service';
-import { useResolve } from '../hooks';
-import { useCustomerData, useTranslation, useCustomerAuthenticationSettings } from '../app-state';
-import { PasswordLoginForm } from './PasswordLoginForm';
-import { LoginDialogDivider } from './LoginDialogDivider'; 
-import { createRegistrationUrl } from '../routes';
-import { ReactComponent as CloseIcon } from '../images/icons/ic_close.svg';
+import React from 'react';
+import { useLocation } from 'react-router-dom';
+import { useCustomerAuthenticationSettings } from '../app-state';
+
 import './OidcLoginButtons.scss';
 
 interface OidcLoginButtonsProps {
@@ -46,19 +39,34 @@ export const OidcLoginButtons: React.FC<OidcLoginButtonsProps> = (props) => {
         // keycloakLoginRedirectUrl = `http://localhost:24074/auth/realms/Sample/protocol/openid-connect/auth?client_id=epcc-reference-store&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fkeycloak&state=12g45e18-98f0-4c26-a96c-b3d9a0621a4e&response_mode=fragment&response_type=code&scope=openid&nonce=e2071a63-d81b-4cfe-87ee-991bda771bf0`;
         console.log('the profile');
         console.log(profile);
+        
         const baseRedirectUrl = `${profile.meta.discovery_document.authorization_endpoint}?`
         // const client_id = authenticationSettings?.data.meta.clientId
         const clientId = `client_id=${authenticationSettings?.data.meta.clientId}` // Should be able to get this from the authentication-settings.
+        
+        // ------ redirecf
         const redirectUri = `redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fkeycloak` // TODO... We need to keep it logged in with the current uri
+        
+        //------- State Token...
         const stateToken = generateStateToken();
         const state = `state=${stateToken}`
         localStorage.setItem('state', stateToken);
-        
         localStorage.setItem('location', location.pathname);
         
-        const responseMode = 'response_mode=fragment' // HAX -- This should not be hardcoded and we should grab the list from the redirection... We need the front-end to be smart enough to handle all different types of response modes
-        const responseType = 'response_type=code' // HAX - Should not be hardcoded and should be smart enough to handle different kinds of response modes...
+        //--------- RESPONSE_MODE-- Should maybe check if they are all available in the meta tag and then choose support for different ones...Might also want to place in localStorage for the return component...
+        const responseMode = 'response_mode=fragment' // HAX -- This should not be hardcoded and we should grab the list from the redirection... We need the front-end to be smart enough to handle all different types of response modes...
+
+        //-----------RESPONSE_TYPE
+        const responseType = 'response_type=code' // HAX - I think the response type should be hardcoded here actually
+        
+        
+        //----------SCOPE
+        // Might want to also check if this is indeed the scope that is wanted...
         const scope = 'scope=openid' // HAX -- Can also grab this from authentication profiles...
+
+
+        //---- NONCE generation
+        
         
         keycloakLoginRedirectUrl = `${baseRedirectUrl}${clientId}&${redirectUri}&${state}&${responseMode}&${responseType}&${scope}`
         console.log('redirect');
