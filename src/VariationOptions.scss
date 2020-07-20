@@ -1,0 +1,31 @@
+@import "./theme/common";
+
+.variationoptions {
+  &__input {
+    display: none;
+  }
+
+  &__button {
+    display: inline-block;
+    margin: 0 10px 12px 0;
+  }
+
+  &__label {
+    color: $mainTextColor;
+    padding: 10px 15px;
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+    border: solid 1px $mainBorderColor;
+    background-color: $mainBackgroundColor;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  &__input:checked + &__label {
+    color: $firstComplimentColor;
+    border-color: $firstComplimentColor;
+    font-weight: bold;
+  }
+}
