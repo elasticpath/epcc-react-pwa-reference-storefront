@@ -83,7 +83,7 @@ export const Product: React.FC = () => {
               <CompareCheck product={product} />
             </div>
             {
-              product.meta.variation_matrix
+              product.meta.variations
                 ? <VariationsSelector product={product} onChange={handleVariationChange} />
                 : ''
             }
