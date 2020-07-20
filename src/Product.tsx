@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useResolve, useProductImages } from './hooks';
 import { loadProductBySlug } from './service';
@@ -7,6 +7,7 @@ import { SocialShare } from './SocialShare';
 import { useTranslation, useCurrency } from './app-state';
 import { isProductAvailable } from './helper';
 import { Availability } from './Availability';
+import { VariationsSelector } from './VariationsSelector';
 
 import './Product.scss';
 
@@ -25,6 +26,11 @@ export const Product: React.FC = () => {
     async () => loadProductBySlug(productSlug, selectedLanguage, selectedCurrency),
     [productSlug, selectedLanguage, selectedCurrency]
   );
+  const [productId, setProductId] = useState('');
+
+  useEffect(() => {
+    product && setProductId(product.id);
+  }, [product])
 
   const productImageHrefs = useProductImages(product);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -39,6 +45,10 @@ export const Product: React.FC = () => {
   const handleNextImageClicked = () => {
     setCurrentImageIndex(currentImageIndex + 1);
   };
+
+  function handleVariationChange(childID: string) {
+    setProductId(childID);
+  }
 
   return (
     <div className="product">
@@ -72,11 +82,20 @@ export const Product: React.FC = () => {
             <div className="product__comparecheck">
               <CompareCheck product={product} />
             </div>
+            {
+              product.meta.variation_matrix
+                ? <VariationsSelector product={product} onChange={handleVariationChange} />
+                : ''
+            }
             <div className="product__moltinbtncontainer">
-              <span
-                className="moltin-buy-button"
-                data-moltin-product-id={product.id}
-              ></span>
+              {
+                productId &&
+                <span
+                  className="moltin-buy-button"
+                  data-moltin-product-id={productId}
+                  key={productId}
+                ></span>
+              }
             </div>
             <div className="product__description">
               {product.description}

@@ -36,7 +36,6 @@ export const routes: RouteConfig[] = [
 export const routesAccount: RouteConfig[] = [
   { exact: true, path: '/account', component: Profile, },
   { exact: true, path: '/account/address', component: Address, },
-  { exact: true, path: '/search', component: Search, }
 ];
 
 export function createHomeUrl(): string {

@@ -55,6 +55,7 @@ export interface ProductBase {
       without_tax: FormattedPrice;
     };
     variations?: any[];
+    variation_matrix?: any;
   };
   relationships: {
     main_image: {
@@ -242,7 +243,7 @@ export async function loadProductBySlug(productSlug: string, language: string, c
 
   const moltin = MoltinGateway({ client_id: config.clientId, currency: currency });
 
-  const result = await moltin.Products
+  const resultSlug = await moltin.Products
     .Limit(1)
     .Filter({
       eq: {
@@ -251,7 +252,10 @@ export async function loadProductBySlug(productSlug: string, language: string, c
     })
     .All();
 
-  const product = result.data[0];
+  const productId = resultSlug?.data[0]?.id;
+  const result = await moltin.Products.Get(productId);
+  const product = result.data;
+
   setProductCache(product.slug, language, currency, product);
 
   return product;
