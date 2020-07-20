@@ -66,7 +66,9 @@ export const Category: React.FC = () => {
           <h1 className="category__categoryname">{category?.name ?? ' '}</h1>
 
           <ul className="category__productlist">
-            {products && products.data.map(product => (
+            {products && products.data
+              .filter(product => !product.relationships.hasOwnProperty('parent'))
+              .map(product => (
               <li key={product.id} className="category__product">
                 <ProductThumbnail product={product} />
               </li>
