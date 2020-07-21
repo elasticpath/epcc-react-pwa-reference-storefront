@@ -1,0 +1,28 @@
+@import './theme/common';
+
+.purchasehistory {
+
+  &__title {
+    font-weight: bold;
+    font-size: 26px;
+  }
+
+  &__table {
+    table-layout: auto;
+    width: 100%;
+  }
+
+  &__tr {
+    background-color: $forthComplimentBackground;
+  }
+
+  &__th {
+    padding: 20px;
+    border: 1px solid $forthComplimentBackground;
+  }
+
+  &__td {
+    padding: 20px;
+    border: 1px solid $forthComplimentBackground;
+  }
+}
