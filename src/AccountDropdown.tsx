@@ -2,7 +2,7 @@
 import React, { useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
-import {useCustomerData, useOrdersData, useTranslation} from './app-state';
+import {useCustomerData, useTranslation} from './app-state';
 import { createAccountUrl } from './routes';
 import { LoginDialog } from './LoginDialog';
 import { ReactComponent as AccountIcon } from './images/icons/ic_account.svg';
@@ -13,7 +13,6 @@ export const AccountDropdown: React.FC = (props) => {
   const { isLoggedIn, customerEmail, customerName, clearCustomerData } = useCustomerData();
   const { t } = useTranslation();
   const history = useHistory();
-  const { ordersData } = useOrdersData();
 
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
