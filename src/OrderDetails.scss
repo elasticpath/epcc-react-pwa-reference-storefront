@@ -1,1 +1,61 @@
 @import './theme/common';
+
+.orderdetail {
+  width: 100%;
+  padding: 40px;
+
+  &__link {
+    text-decoration: none;
+    font-size: 16px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__title {
+    font-weight: bold;
+    font-size: 22px;
+    margin: 30px 0;
+
+    &.--main {
+      text-align: center;
+    }
+  }
+
+  &__details {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 40px 0;
+  }
+
+  &__body {
+    flex: auto;
+    color: #4C5666;
+  }
+
+  &__table {
+    width: 100%;
+  }
+
+  &__tr {
+    padding: 10px 0;
+
+    &:nth-child(2n-1) {
+      background-color: $firstComplimentBackground;
+    }
+  }
+
+  &__td {
+    padding: 10px;
+  }
+
+  &__block {
+    padding: 10px 0;
+  }
+
+  &__addresses {
+    margin-right: 40px;
+    display: inline-block;
+  }
+}

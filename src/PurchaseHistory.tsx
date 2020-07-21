@@ -1,17 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-import {useOrdersData, useTranslation} from './app-state';
-
-import './PurchaseHistory.scss';
+import { useOrdersData, useTranslation } from './app-state';
 import { Purchase as IPurchase } from './service';
 
-
+import './PurchaseHistory.scss';
 
 export const PurchaseHistory: React.FC = () => {
   const { t } = useTranslation();
   const { ordersData } = useOrdersData();
-
 
   return (
     <div className="purchasehistory">
@@ -33,7 +29,10 @@ export const PurchaseHistory: React.FC = () => {
               <tr key={order.id}>
                 <td className="purchasehistory__td">
                   <Link
-                    to={`/orderdetails/${order.id}`}
+                    to={{
+                      pathname: `/orderdetails/${order.id}`,
+                      state: { order }
+                    }}
                     className="purchasehistory__link"
                   >
                     {order.meta.timestamps.created_at}
