@@ -4,12 +4,13 @@ import { useCompareProducts, useTranslation } from './app-state';
 import { createCompareProductsUrl } from './routes';
 import { ProductMainImage } from './ProductMainImage';
 import { Product } from './service';
+import { ReactComponent as RemoveIcon } from './images/icons/ic_close.svg';
 
 import './CompareOverlay.scss';
 
 
 export const CompareOverlay: React.FC = (props) => {
-  const { compareProducts, removeFromCompare, removeAll } = useCompareProducts();
+  const { compareProducts, showCompareMenu, removeFromCompare, removeAll } = useCompareProducts();
   const compareEnabled = compareProducts.length >= 2;
   const history = useHistory();
   const compareUrl = createCompareProductsUrl();
@@ -30,30 +31,29 @@ export const CompareOverlay: React.FC = (props) => {
   };
 
   return (
-    <div className={`compareoverlay ${isShowingOverlay ? 'compareoverlay--visible' : ''}`}>
+    <div className={`compareoverlay ${isShowingOverlay ? 'compareoverlay--visible' : ''} ${!showCompareMenu ? 'compareoverlay--fadeout' : ''}`}>
       <div className="compareoverlay__products">
         {compareProducts.map(product => (
           <div key={product.id} className="compareoverlay__product">
             <div className="compareoverlay__productimg">
-              <ProductMainImage product={product} size={50} />
+              <ProductMainImage product={product} />
             </div>
             <div className="compareoverlay__productdetails">
               <div className="compareoverlay__productname">{product.name}</div>
-              <div className="compareoverlay__productprice">{product.meta.display_price.without_tax.formatted}</div>
             </div>
             <div className="compareoverlay__removeproduct">
               <button className="epbtn --small" aria-label={t('remove-from-comparison')} onClick={() => handleRemoveProduct(product)}>
-                <svg fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-                  <path d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
+                <RemoveIcon />
               </button>
             </div>
           </div>
         ))}
       </div>
       <div className="compareoverlay__btns">
-        <button className="epbtn --primary" disabled={!compareEnabled} onClick={handleCompareClicked}>{t('compare')}</button>
-        <button className="epbtn --shading" onClick={handleRemoveAllClicked}>{t('remove-all')}</button>
+        {compareProducts.length > 1 && (
+          <button className="epbtn --bordered compareoverlay__removebtn" onClick={handleRemoveAllClicked}>{t('remove-all')}</button>
+        )}
+        <button className="epbtn --secondary" disabled={!compareEnabled} onClick={handleCompareClicked}>{`${t('compare')} (${compareProducts.length})`}</button>
       </div>
     </div>
   );

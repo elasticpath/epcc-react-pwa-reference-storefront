@@ -60,6 +60,20 @@ img, svg {
     }
   }
 
+  &.--secondary {
+    background-color: $buttonActiveColor;
+    border-color: $buttonActiveColor;
+    color: $mainBackgroundColor;
+
+    &:hover {
+      background-color: adjust-color($color: $buttonActiveColor, $lightness: 5%);
+    }
+
+    &:active {
+      background-color: adjust-color($color: $buttonActiveColor, $lightness: -5%);
+    }
+  }
+
   &:hover {
     background-color: change-color($color: $btnColor, $saturation: 40%, $lightness: 95%);
   }
@@ -364,6 +378,7 @@ $shopkitBtnOutlineText: $firstComplimentColor;
       $shopkitBtnColor,
       $shopkitBtnColorBorder
   );
+  width: 100%;
 }
 
 .product .shopkit-buy-button {

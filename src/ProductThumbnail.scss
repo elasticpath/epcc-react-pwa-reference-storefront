@@ -1,3 +1,4 @@
+@import './theme/common';
 
 .productthumbnail {
   $block: &;
@@ -36,6 +37,24 @@
     label {
       display: flex;
       align-items: center;
+    }
+  }
+
+  .productmainimage {
+    height: 160px;
+    width: 160px;
+    border: 1px solid $secondBorderColor;
+  }
+
+  @media (min-width: 992px) {
+    #{$block}__imgcontainer {
+      width: 180px;
+      height: 180px;
+    }
+
+    .productmainimage {
+      height: 180px;
+      width: 180px;
     }
   }
 }

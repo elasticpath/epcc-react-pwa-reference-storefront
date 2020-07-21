@@ -284,6 +284,7 @@ function useCategoriesState(selectedLanguage: string) {
 
 function useCompareProductsState() {
   const [compareProducts, setCompareProducts] = useState<Product[]>([]);
+  const [showCompareMenu, setShowCompareMenu] = useState(false);
 
   const isComparing = (productId: string) => compareProducts.filter(p => p.id === productId).length > 0;
   const isCompareEnabled = (productId: string) => isComparing(productId) || compareProducts.length < config.maxCompareProducts;
@@ -291,6 +292,12 @@ function useCompareProductsState() {
   const addToCompare = (product: Product) => {
     if (!compareProducts.find(p => p.id === product.id)) {
       setCompareProducts([...compareProducts, product]);
+      if (!showCompareMenu) {
+        setShowCompareMenu(true);
+        setTimeout(() => {
+          setShowCompareMenu(false);
+        }, 3200);
+      }
     }
   };
 
@@ -304,6 +311,7 @@ function useCompareProductsState() {
 
   return {
     compareProducts,
+    showCompareMenu,
     isComparing,
     isCompareEnabled,
     addToCompare,

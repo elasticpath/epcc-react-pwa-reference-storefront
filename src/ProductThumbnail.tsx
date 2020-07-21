@@ -22,7 +22,7 @@ export const ProductThumbnail: React.FC<ProductThumbnailProps> = (props) => {
     <div className="productthumbnail">
       <div className="productthumbnail__imgcontainer">
         <Link className="productthumbnail__imglink" to={productUrl} aria-label={props.product.name}>
-          <ProductMainImage product={props.product} size={160} />
+          <ProductMainImage product={props.product} />
         </Link>
       </div>
       <div className="productthumbnail__name">
