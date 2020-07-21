@@ -13,10 +13,12 @@
   }
 
   &__tr {
-    background-color: $forthComplimentBackground;
+    background-color: $fourthComplimentBackground;
   }
 
   &__link {
+    font-weight: bold;
+
     &:hover {
       text-decoration: underline;
     }
@@ -25,13 +27,13 @@
   &__th {
     font-weight: bold;
     padding: 16px;
-    border: 1px solid $forthComplimentBackground;
+    border: 1px solid $fourthComplimentBackground;
     text-align: center;
   }
 
   &__td {
     text-align: center;
     padding: 20px;
-    border: 1px solid $forthComplimentBackground;
+    border: 1px solid $fourthComplimentBackground;
   }
 }
