@@ -14,14 +14,24 @@
 
   &__tr {
     background-color: $forthComplimentBackground;
+
+  }
+
+  &__link {
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   &__th {
-    padding: 20px;
+    font-weight: bold;
+    padding: 16px;
     border: 1px solid $forthComplimentBackground;
+    text-align: center;
   }
 
   &__td {
+    text-align: center;
     padding: 20px;
     border: 1px solid $forthComplimentBackground;
   }

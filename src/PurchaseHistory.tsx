@@ -22,10 +22,10 @@ export const PurchaseHistory: React.FC = () => {
           <table className="purchasehistory__table">
             <thead>
             <tr className="purchasehistory__tr">
-              <th className="purchasehistory__th">Date</th>
-              <th className="purchasehistory__th">Status</th>
-              <th className="purchasehistory__th">Total</th>
-              <th className="purchasehistory__th">Payment</th>
+              <th className="purchasehistory__th">{t('date')}</th>
+              <th className="purchasehistory__th">{t('status')}</th>
+              <th className="purchasehistory__th">{t('total')}</th>
+              <th className="purchasehistory__th">{t('payment')}</th>
             </tr>
             </thead>
             <tbody>
@@ -33,9 +33,8 @@ export const PurchaseHistory: React.FC = () => {
               <tr key={order.id}>
                 <td className="purchasehistory__td">
                   <Link
-                    to="/orderdetails"
-                    // state={{ data: element }}
-                    className="no-underline hover:underline text-black"
+                    to={`/orderdetails/${order.id}`}
+                    className="purchasehistory__link"
                   >
                     {order.meta.timestamps.created_at}
                   </Link>
@@ -54,7 +53,7 @@ export const PurchaseHistory: React.FC = () => {
             </tbody>
           </table>
         ) : (
-          <div className="purchasehistory">
+          <div>
             {t('no-purchase-message')}
           </div>
         )}

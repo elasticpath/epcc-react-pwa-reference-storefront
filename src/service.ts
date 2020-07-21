@@ -351,3 +351,10 @@ export async function getAllOrders(token: string): Promise<{ data: Purchase[] }>
   const result = await moltin.Orders.Limit(100).All(token);
   return result;
 }
+
+export async function getOrderById(id: string): Promise<{ data: Purchase[] }> {
+  const moltin = MoltinGateway({ client_id: config.clientId });
+  // const result = await moltin.Orders.Get(id);
+  const result = await moltin.Orders.With('items').Get(id);
+  return result;
+}

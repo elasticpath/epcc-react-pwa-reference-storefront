@@ -33,7 +33,7 @@ export const routes: RouteConfig[] = [
   { exact: true, path: '/registration', component: RegistrationForm, },
   { exact: false, path: '/account', component: MyAccount, },
   { exact: false, path: '/search', component: Search, },
-  { exact: false, path: '/orderdetails', component: OrderDetails, }
+  { exact: true, path: '/orderdetails/:orderId', component: OrderDetails, },
 ];
 
 export const routesAccount: RouteConfig[] = [
