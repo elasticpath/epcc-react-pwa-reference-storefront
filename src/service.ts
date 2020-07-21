@@ -1,27 +1,8 @@
-import { gateway as MoltinGateway } from '@moltin/sdk';
+import * as moltin from '@moltin/sdk';
 import { config } from './config';
 
-export interface Category {
-  id: string;
-  name: string;
-  description: string;
-  slug: string;
-  type: string;
-  status: 'live' | 'draft';
-  children?: Category[];
-}
+const MoltinGateway = moltin.gateway;
 
-export interface Price {
-  amount: number;
-  currency: string;
-  includes_tax: boolean;
-}
-
-export interface FormattedPrice {
-  amount: number;
-  currency: string;
-  formatted: string;
-}
 
 export interface Weight {
   g: number,
@@ -30,52 +11,7 @@ export interface Weight {
   oz: number,
 }
 
-export interface ProductBase {
-  id: string;
-  type: string;
-  name: string;
-  slug: string;
-  sku: string;
-  manage_stock: boolean;
-  description: string;
-  price: Price[];
-  status?: 'draft' | 'live';
-  commodity_type:	'physical' | 'digital';
-  meta: {
-    timestamps: {
-      created_at: string;
-      updated_at: string;
-    };
-    stock: {
-      level: number;
-      availability: 'in-stock' | 'out-stock';
-    };
-    display_price: {
-      with_tax: FormattedPrice;
-      without_tax: FormattedPrice;
-    };
-    variations?: any[];
-  };
-  relationships: {
-    main_image: {
-      data: {
-        id: string;
-        type: string;
-      };
-    };
-    files: {
-      data: {
-        type: 'file';
-        id: string;
-      }[];
-    };
-    categories?: any;
-    collections?: any;
-    brands?: any;
-  };
-}
-
-export interface Product extends ProductBase {
+export interface Product extends moltin.ProductBase {
   background_color: string;
   background_colour: string | null;
   bulb: string;
@@ -88,56 +24,14 @@ export interface Product extends ProductBase {
   weight: Weight;
 }
 
-export interface Pagination {
-  currentPage: number;
-  pageSize: number;
-  totalPages: number;
-  totalItems: number;
-}
-
-export interface Paginated<T> {
-  data: T[];
-  pagination: Pagination;
-}
-
-export interface Currency {
-  id: string;
-  code: string;
-  decimal_places: number;
-  decomal_point: string;
-  default: boolean;
-  enabled: boolean;
-  exchange_rate: number;
-  format: string;
-  thousand_separator: string;
-}
-
-export interface Customer {
-  data: {
-    type: string;
-    id: string;
-    name: string;
-    email: string;
-    password: boolean;
-  }
-}
-
-export interface CustomerToken {
-  type: string;
-  id: string;
-  customer_id: string;
-  token: string;
-  expires: any;
-}
-
-export async function loadEnabledCurrencies(): Promise<Currency[]> {
+export async function loadEnabledCurrencies(): Promise<moltin.CurrencyBase[]> {
   const moltin = MoltinGateway({ client_id: config.clientId });
   const response = await moltin.Currencies.All();
 
-  return response.data.filter((c: Currency) => c.enabled);
+  return response.data.filter(c => c.enabled);
 }
 
-export async function loadCategoryTree(): Promise<Category[]> {
+export async function loadCategoryTree(): Promise<moltin.CategoryBase[]> {
   const moltin = MoltinGateway({ client_id: config.clientId });
   const result = await moltin.Categories.Tree();
 
@@ -154,7 +48,7 @@ function getProductCache(key: string, language: string, currency: string): Produ
   return productCache[`${key}:${language}:${currency}`];
 }
 
-export async function loadCategoryProducts(categoryId: string, pageNum: number, language: string, currency: string): Promise<Paginated<Product>> {
+export async function loadCategoryProducts(categoryId: string, pageNum: number, language: string, currency: string): Promise<moltin.ResourcePage<Product>> {
   const moltin = MoltinGateway({ client_id: config.clientId, currency: currency });
 
   const result = await moltin.Products
@@ -167,23 +61,13 @@ export async function loadCategoryProducts(categoryId: string, pageNum: number, 
         }
       }
     })
-    .All();
-
-  const pagination: Pagination = {
-    currentPage: result.meta.page.current,
-    pageSize: result.meta.page.limit,
-    totalPages: result.meta.page.total,
-    totalItems: result.meta.results.total,
-  };
+    .All<Product>();
 
   for (const product of result.data) {
     setProductCache(product.id, language, currency, product);
   }
 
-  return {
-    data: result.data,
-    pagination,
-  };
+  return result;
 }
 
 const imageHrefCache: { [key: string]: string } = {};
@@ -229,7 +113,7 @@ export async function loadProductBySlug(productSlug: string, language: string, c
         slug: productSlug
       }
     })
-    .All();
+    .All<Product>();
 
   const product = result.data[0];
   setProductCache(product.slug, language, currency, product);
@@ -237,7 +121,7 @@ export async function loadProductBySlug(productSlug: string, language: string, c
   return product;
 }
 
-export async function register(name: string, email: string, password: string): Promise<Customer> {
+export async function register(name: string, email: string, password: string): Promise<moltin.CustomerBase> {
   const moltin = MoltinGateway({ client_id: config.clientId });
   const { data } = await moltin.Customers.Create({
     type: 'customer',
@@ -249,16 +133,16 @@ export async function register(name: string, email: string, password: string): P
   return data;
 }
 
-export async function login(email: string, password: string): Promise<CustomerToken> {
+export async function login(email: string, password: string): Promise<moltin.CustomerToken> {
   const moltin = MoltinGateway({ client_id: config.clientId });
   const { data } = await moltin.Customers.Token(email, password).then();
 
   return data;
 }
 
-export async function getCustomer(id: string, token: string): Promise<Customer> {
+export async function getCustomer(id: string, token: string): Promise<moltin.CustomerBase> {
   const moltin = MoltinGateway({ client_id: config.clientId });
-  const result = await moltin.Customers.Get(id, token);
+  const { data } = await moltin.Customers.Get(id, token);
 
-  return result;
+  return data;
 }

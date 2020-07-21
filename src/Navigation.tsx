@@ -1,9 +1,8 @@
 import React, { useState }  from 'react';
 import { Link } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
+import * as moltin from '@moltin/sdk';
 import { useTranslation } from './app-state';
-
-import { Category } from './service';
 import { useCategories } from './app-state';
 
 import './Navigation.scss';
@@ -51,7 +50,7 @@ export const Navigation: React.FC = () => {
     setIsOpen(false);
   });
 
-  function renderTopCategories(categories: Category[]): React.ReactElement {
+  function renderTopCategories(categories: moltin.CategoryBase[]): React.ReactElement {
     const topCategories = [
       { name: 'home', displayName: t('home'), url: '/' },
       { name: 'products', displayName: t('products'), children: categories },

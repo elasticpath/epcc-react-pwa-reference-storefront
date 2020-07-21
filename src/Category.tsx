@@ -24,7 +24,7 @@ function useCategoryProducts(categoryId: string | undefined, pageNum: number) {
     // during initial loading of categories categoryId might be undefined
     if (categoryId) {
       const result = await loadCategoryProducts(categoryId, pageNum, selectedLanguage, selectedCurrency);
-      setTotalPages(result.pagination.totalPages);
+      setTotalPages(result.meta.page.total);
       return result;
     }
   }, [categoryId, pageNum, selectedLanguage, selectedCurrency]);
@@ -77,7 +77,7 @@ export const Category: React.FC = () => {
             {totalPages && (
               <Pagination
                 totalPages={totalPages}
-                currentPage={products?.pagination?.currentPage ?? pageNum}
+                currentPage={products?.meta.page.current ?? pageNum}
                 formatUrl={(page) => createCategoryUrl(categorySlug, page)}
               />
             )}
