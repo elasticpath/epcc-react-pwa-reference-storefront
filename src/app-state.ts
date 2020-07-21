@@ -1,6 +1,15 @@
 import { useState, useEffect } from 'react';
 import constate from 'constate';
-import {Address, Category, getAddresses, getCustomer, loadCategoryTree, Product} from './service';
+import {
+  Category,
+  getAddresses,
+  getCustomer,
+  loadCategoryTree,
+  getAllOrders,
+  Product,
+  Address,
+  Purchase
+} from './service';
 import * as service from './service';
 import { config } from './config';
 
@@ -196,6 +205,34 @@ function useAddressDataState() {
 
 }
 
+function usePurchaseHistoryState() {
+  const token = localStorage.getItem('mtoken') || '';
+  const id = localStorage.getItem('mcustomer') || '';
+
+  const [ordersData, setOrdersData] = useState<service.Purchase[]>([]);
+
+  useEffect(() => {
+    if (token) {
+      getAllOrders(token).then(res => {
+        setData(res.data);
+      });
+    }
+    else {
+      clearCustomerData();
+    }
+  }, [id, token]);
+
+  const setData = (data: any) => {
+    setOrdersData(data);
+  };
+
+  const clearCustomerData = () => {
+    setOrdersData([]);
+  };
+
+  return { ordersData }
+}
+
 const defaultCurrency = 'USD';
 
 function useCurrencyState() {
@@ -316,11 +353,13 @@ function useGlobalState() {
   const translation = useTranslationState();
   const currency = useCurrencyState();
   const addressData = useAddressDataState();
+  const ordersData = usePurchaseHistoryState();
 
   return {
     translation,
     customerData: useCustomerDataState(),
     addressData,
+    ordersData,
     currency,
     categories: useCategoriesState(translation.selectedLanguage),
     compareProducts: useCompareProductsState(),
@@ -332,6 +371,7 @@ export const [
   useTranslation,
   useCustomerData,
   useAddressData,
+  useOrdersData,
   useCurrency,
   useCategories,
   useCompareProducts,
@@ -340,6 +380,7 @@ export const [
   value => value.translation,
   value => value.customerData,
   value => value.addressData,
+  value => value.ordersData,
   value => value.currency,
   value => value.categories,
   value => value.compareProducts

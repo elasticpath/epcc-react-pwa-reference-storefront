@@ -148,6 +148,23 @@ export interface Address {
     instructions: string,
 }
 
+export interface Purchase {
+  id: string,
+  status: string,
+  payment: string,
+  meta: {
+    timestamps: {
+      created_at: string
+    },
+    display_price: {
+      with_tax: {
+        formatted: string
+      }
+    },
+  },
+
+}
+
 export async function loadEnabledCurrencies(): Promise<Currency[]> {
   const moltin = MoltinGateway({ client_id: config.clientId });
   const response = await moltin.Currencies.All();
@@ -326,5 +343,11 @@ export async function deleteAddress(customer: string, address: any, token: strin
 { customer, address, token }
   );
 
+  return result;
+}
+
+export async function getAllOrders(token: string): Promise<{ data: Purchase[] }> {
+  const moltin = MoltinGateway({ client_id: config.clientId });
+  const result = await moltin.Orders.Limit(100).All(token);
   return result;
 }

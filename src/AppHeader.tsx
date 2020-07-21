@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 // @ts-ignore
 import { Offline } from 'react-detect-offline';
 import { ImageContainer } from './ImageContainer';
-import { useTranslation } from './app-state';
+import {useCustomerData, useTranslation} from './app-state';
 import { LanguageDropdown } from './LanguageDropdown';
 import { SearchBar } from './SearchBar';
 import { AccountDropdown } from './AccountDropdown';
@@ -15,6 +15,8 @@ import './AppHeader.scss';
 
 export const AppHeader: React.FC = () => {
   const { t } = useTranslation();
+  const { id } = useCustomerData();
+
   return (
     <div className="appheader">
       <div className="appheader__container">
@@ -30,7 +32,10 @@ export const AppHeader: React.FC = () => {
           <LanguageDropdown />
         </div>
         <div className="appheader__moltincartcontainer">
-          <span className="moltin-cart-button"></span>
+          <span
+            className="moltin-cart-button"
+            key={id}
+          ></span>
         </div>
         <div className="appheader__account">
           <AccountDropdown />
