@@ -12,7 +12,7 @@
     flex: 1 0;
   }
 
-  @media screen and (min-width: 992px) {
+  @media screen and (min-width: $tabletSmallWidth) {
     &__wrap {
       display: flex;
     }

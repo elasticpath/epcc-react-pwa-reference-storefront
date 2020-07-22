@@ -1,7 +1,8 @@
+@import './theme/common';
 
 .pagination {
   &__link {
-    font-size: 18px;
+    font-size: $sizeMediumLarger;
     color: hsl(0, 0, 30%);
     padding: 12px;
     text-decoration: none;

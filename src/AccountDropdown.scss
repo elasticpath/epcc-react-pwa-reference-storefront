@@ -47,17 +47,17 @@
     display: inline-block;
     padding: 7px 0;
     color: $thirdComplimentColor;
-    font-size: 13px;
+    font-size: $sizeSmall;
     line-height: 19px;
   }
 
   &__iteminfo {
-    font-size: 13px;
+    font-size: $sizeSmall;
     font-weight: bold;
   }
 
   &__emailinfo {
-    font-size: 12px;
+    font-size: $sizeXSmall;
     font-style: italic;
     color: $firstComplimentTextColor;
   }

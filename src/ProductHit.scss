@@ -1,9 +1,11 @@
+@import './theme/common';
+
 .producthit {
   $block: &;
 
   #{$block}__name, #{$block}__price {
     margin-top: 10px;
-    font-size: 14px;
+    font-size: $sizeInitial;
     font-weight: bold;
   }
 

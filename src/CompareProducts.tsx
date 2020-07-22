@@ -4,6 +4,7 @@ import { ProductMainImage } from './ProductMainImage';
 import { Availability } from './Availability';
 import { Product } from './service';
 import { isProductAvailable } from './helper';
+import { config } from './config';
 import { ReactComponent as RemoveIcon } from './images/icons/ic_close.svg';
 
 import './CompareProducts.scss';
@@ -77,51 +78,18 @@ export const CompareProducts: React.FC = () => {
             </ul>
             <table className="compareproducts__table compareproducts__datatable">
               <tbody>
-                <tr className="compareproducts__datarow">
-                  <td>{t('bulb')}</td>
-                  {compareProducts.map((product, index) => (
-                    <td key={product.id} className={`${selectedTab === index ? '--selected' : ''}`}><div className="compareproducts__datawrap">{product.bulb}</div></td>
-                  ))}
-                  {tablePlaceholder.map(el => (
-                    <td key={`bulb_${el}`} className="compareproducts__placeholder" />
-                  ))}
-                </tr>
-                <tr className="compareproducts__datarow">
-                  <td>{t('wattage')}</td>
-                  {compareProducts.map((product, index) => (
-                    <td key={product.id} className={`${selectedTab === index ? '--selected' : ''}`}><div className="compareproducts__datawrap">{product.max_watt}</div></td>
-                  ))}
-                  {tablePlaceholder.map(el => (
-                    <td key={`wattage_${el}`} className="compareproducts__placeholder" />
-                  ))}
-                </tr>
-                <tr className="compareproducts__datarow">
-                  <td>{t('bulb-qty')}</td>
-                  {compareProducts.map((product, index) => (
-                    <td key={product.id} className={`${selectedTab === index ? '--selected' : ''}`}><div className="compareproducts__datawrap">{product.bulb_qty}</div></td>
-                  ))}
-                  {tablePlaceholder.map(el => (
-                    <td key={`quantity_${el}`} className="compareproducts__placeholder" />
-                  ))}
-                </tr>
-                <tr className="compareproducts__datarow">
-                  <td>{t('material')}</td>
-                  {compareProducts.map((product, index) => (
-                    <td key={product.id} className={`${selectedTab === index ? '--selected' : ''}`}><div className="compareproducts__datawrap">{product.material}</div></td>
-                  ))}
-                  {tablePlaceholder.map(el => (
-                    <td key={`material_${el}`} className="compareproducts__placeholder" />
-                  ))}
-                </tr>
-                <tr className="compareproducts__datarow">
-                  <td>{t('finish')}</td>
-                  {compareProducts.map((product, index) => (
-                    <td key={product.id} className={`${selectedTab === index ? '--selected' : ''}`}><div className="compareproducts__datawrap">{product.finish}</div></td>
-                  ))}
-                  {tablePlaceholder.map(el => (
-                    <td key={`finish_${el}`} className="compareproducts__placeholder" />
-                  ))}
-                </tr>
+                {config.compareKeys.map(key => (
+                  <tr className="compareproducts__datarow">
+                    <td>{t(key[1])}</td>
+                    {compareProducts.map((product, index) => (
+                      // @ts-ignore
+                      <td key={product.id} className={`${selectedTab === index ? '--selected' : ''}`}><div className="compareproducts__datawrap">{product[`${key[0]}`]}</div></td>
+                    ))}
+                    {tablePlaceholder.map(el => (
+                      <td key={`compare_${el}`} className="compareproducts__placeholder" />
+                    ))}
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

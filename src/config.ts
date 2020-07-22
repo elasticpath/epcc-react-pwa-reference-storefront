@@ -7,4 +7,5 @@ export const config = {
   algoliaAppId: 'L1TT97EBOE',
   algoliaApiKey: 'cca4a38de37dd5fd094eb47e8476c4d2',
   algoliaIndexName: 'product',
+  compareKeys: [['bulb', 'bulb'], ['max_watt', 'wattage'], ['bulb_qty', 'bulb-qty'], ['material', 'material'], ['finish', 'finish']],
 };

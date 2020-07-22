@@ -64,13 +64,13 @@
       margin-left: 40px;
 
       #{$block}__name {
-        font-size: 28px;
+        font-size: $sizeXXLarge;
         font-weight: bold;
       }
 
       #{$block}__price {
         margin-top: 14px;
-        font-size: 28px;
+        font-size: $sizeXXLarge;
         color: hsl(0, 0, 30%);
       }
 
@@ -97,19 +97,19 @@
     }
   }
 
-  @media (min-width: 576px) {
+  @media (min-width: $mobileSmallWidth) {
     #{$block}__maincontainer {
       width: 540px;
     }
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: $mobileWidth) {
     #{$block}__maincontainer {
       width: 720px;
     }
   }
 
-  @media (min-width: 992px) {
+  @media (min-width: $tabletSmallWidth) {
     padding-left: $maxScrollWidth;
     padding-right: calc(#{$maxScrollWidth} - 100vw + 100%);
 
@@ -118,7 +118,7 @@
     }
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: $mobileWidth - 1px) {
     &mainimage {
       height: auto !important;
       width: 100% !important;
@@ -131,7 +131,7 @@
     }
   }
 
-  @media (max-width: 575px) {
+  @media (max-width: $mobileSmallWidth - 1px) {
     #{$block}__maincontainer {
       flex-direction: column;
 

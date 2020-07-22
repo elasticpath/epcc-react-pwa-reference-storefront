@@ -10,19 +10,21 @@ $animLength: 0.2s;
   position: fixed;
   right: 0;
   bottom: -100%;
-  background-color: white;
-  box-shadow: 0 0 10px hsla(0, 0, 0, 0.3);
   transition: bottom 0.1s ease-out;
-  padding: 0 25px 25px;
   z-index: 10;
+
+  #{$block}__content {
+    background-color: white;
+    box-shadow: 0 0 10px hsla(0, 0, 0, 0.3);
+    padding: 0 25px 25px;
+  }
 
   &--visible {
     bottom: 0;
   }
 
   .productmainimage {
-    height: 160px;
-    width: 160px;
+    width: 100%;
   }
 
   #{$block}__products {
@@ -44,14 +46,15 @@ $animLength: 0.2s;
       }
 
       #{$block}__productimg {
-        min-height: 160px;
+        height: 160px;
+        width: 160px;
         margin-bottom: 10px;
       }
 
       #{$block}__productdetails {
         flex: 1;
         margin-left: 10px;
-        font-size: 14px;
+        font-size: $sizeInitial;
         align-self: center;
         margin-bottom: 10px;
 
@@ -92,9 +95,11 @@ $animLength: 0.2s;
   }
 
   #{$block}__btns {
+    min-height: 38px;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    padding-right: 160px;
 
     button {
       min-width: 160px;
@@ -105,28 +110,39 @@ $animLength: 0.2s;
     margin-right: 20px;
   }
 
+  #{$block}__comparebtn {
+    min-width: 160px;
+    position: fixed;
+    right: 25px;
+    bottom: -100%;
+  }
+
+  &--visible {
+    #{$block}__comparebtn {
+      bottom: 25px;
+    }
+  }
+
   &--fadeout {
     &:not(:hover) {
-      background-color: transparent;
-      box-shadow: none;
-
-      #{$block}__products {
+      #{$block}__content {
         display: none;
       }
 
-      #{$block}__removebtn {
+      #{$block}__btns {
         display: none;
       }
     }
   }
 
-  @media (min-width: 992px) {
+  @media (min-width: $tabletSmallWidth) {
     #{$block}__products {
       #{$block}__product {
         width: 180px;
 
         #{$block}__productimg {
-          min-height: 180px;
+          height: 180px;
+          width: 180px;
         }
 
         + #{$block}__product {
@@ -135,12 +151,9 @@ $animLength: 0.2s;
       }
     }
 
-    .productmainimage {
-      height: 180px;
-      width: 180px;
-    }
-
     #{$block}__btns {
+      padding-right: 180px;
+
       button {
         min-width: 180px;
       }
@@ -149,17 +162,18 @@ $animLength: 0.2s;
     #{$block}__removebtn {
       margin-right: 40px;
     }
+
+    #{$block}__comparebtn {
+      min-width: 180px;
+    }
   }
 
-  @media (max-width: 767px) {
-    background-color: transparent;
-    box-shadow: none;
-
-    #{$block}__products {
+  @media (max-width: $mobileWidth - 1px) {
+    #{$block}__content {
       display: none;
     }
 
-    #{$block}__removebtn {
+    #{$block}__btns {
       display: none;
     }
   }

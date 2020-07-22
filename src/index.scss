@@ -13,7 +13,7 @@ body {
   font-family: Montserrat, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  font-size: 14px;
+  font-size: $sizeInitial;
   line-height: 1.428571429;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -33,7 +33,7 @@ img, svg {
   display: inline-block;
   text-align: center;
   padding: 8px 10px;
-  font-size: 14px;
+  font-size: $sizeInitial;
   background-color: white;
   border: 1px solid transparent;
   color: $btnColor;
@@ -100,12 +100,12 @@ img, svg {
 
   &.--small {
     padding: 7px 8px;
-    font-size: 12px;
+    font-size: $sizeXSmall;
   }
 
   &.--large {
     padding: 12px 16px;
-    font-size: 16px;
+    font-size: $sizeMedium;
   }
 
   &.--fullwidth {
@@ -130,7 +130,7 @@ img, svg {
   }
 
   &__label {
-    font-size: 12px;
+    font-size: $sizeXSmall;
     display: inline-block;
     font-weight: 600;
     line-height: 15px;
@@ -144,7 +144,7 @@ img, svg {
     width: 100%;
     height: 34px;
     padding: 5px 8px;
-    font-size: 14px;
+    font-size: $sizeInitial;
     font-weight: 400;
     line-height: 17px;
     color: $mainTextColor;
@@ -159,7 +159,7 @@ img, svg {
   }
 
   &__error {
-    font-size: 12px;
+    font-size: $sizeXSmall;
     color: $mainErrorColor;
     position: absolute;
     top: 100%;
@@ -167,7 +167,7 @@ img, svg {
 }
 
 .eppagetitle {
-  font-size: 24px;
+  font-size: $sizeLarge;
   font-weight: 600;
   padding: 15px 0;
 }
@@ -179,19 +179,19 @@ img, svg {
   margin-right: auto;
   margin-left: auto;
 
-  @media (min-width: 576px) {
+  @media (min-width: $mobileSmallWidth) {
     max-width: 540px;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: $mobileWidth) {
     max-width: 720px;
   }
 
-  @media (min-width: 992px) {
+  @media (min-width: $tabletSmallWidth) {
     max-width: 960px;
   }
 
-  @media (min-width: 1200px) {
+  @media (min-width: $fullHDWidth) {
     max-width: 1140px;
   }
 }
@@ -205,7 +205,7 @@ img, svg {
   font-weight: bold;
   margin-top: 15px;
   margin-bottom: 15px;
-  font-size: 24px;
+  font-size: $sizeLarge;
   color: gray;
   border-bottom: 1px solid #D0D0D0;
 }
@@ -262,7 +262,7 @@ $shopkitBtnOutlineText: $firstComplimentColor;
   color: $color;
   border-radius: 0;
   padding: 10px 15px;
-  font-size: 13px;
+  font-size: $sizeSmall;
   font-family: inherit;
 }
 
@@ -285,7 +285,7 @@ $shopkitBtnOutlineText: $firstComplimentColor;
   h2[class^="typography__Heading"] {
     font-style: normal;
     font-weight: bold;
-    font-size: 28px;
+    font-size: $sizeXXLarge;
     line-height: 34px;
     padding-bottom: 50px;
   }
@@ -296,30 +296,30 @@ $shopkitBtnOutlineText: $firstComplimentColor;
 
   p[class^="CartItem__ProductName"] {
     font-weight: bold;
-    font-size: 14px;
+    font-size: $sizeInitial;
     margin-bottom: 8px;
   }
 
   button[class^="Button__TextButton"] {
     font-weight: bold;
-    font-size: 13px !important;
+    font-size: $sizeSmall !important;
     color: $shopkitBtnOutlineText;
     text-decoration: none;
   }
 
   label[class^="Label__StyledLabel"] {
     font-weight: bold;
-    font-size: 14px;
+    font-size: $sizeInitial;
   }
 
   span[class^="Cart__CartTotalTitle"] {
     font-weight: bold;
-    font-size: 16px;
+    font-size: $sizeMedium;
   }
 
   span[class^="Cart__CartTotalSubTotal"] {
     font-weight: bold;
-    font-size: 20px;
+    font-size: $sizeMediumLarge;
   }
 
   div[class^="QuantityStepper__Wrapper"] {
