@@ -85,6 +85,7 @@ Parameters that require configuration are in the `./src/config.ts` file:
 |`stripeKey`| Required| String| Stripe publishable API key.|
 |`categoryPageSize`| Required| String| Maximum number of products to display on a category page.|
 |`maxCompareProducts`| Required| String| Maximum number of products to display in compare view.|
+|`compareKeys`| Required| Array| An array of all product attributes to display in compare view.|
 |`algoliaAppId`| Required| String| Algolia application identifier.|
 |`algoliaApiKey`| Required| String| Algolia API key used to read records.|
 |`algoliaIndexName`| Required| String| Name of Algolia index used for search functions.|
