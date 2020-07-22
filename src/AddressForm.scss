@@ -13,7 +13,7 @@
   }
 
   &__title {
-    font-size: 15px;
+    font-size: $sizeInitialLarger;
   }
 
   &__content {
@@ -97,7 +97,7 @@
   }
 }
 
-@media (max-width: 575px) {
+@media (max-width: $mobileSmallWidth - 1px) {
   .addressform {
     .epform {
       &__group {

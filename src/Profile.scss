@@ -3,13 +3,13 @@
 
 .profile {
   &__title {
-    font-size: 20px;
+    font-size: $sizeMediumLarge;
     font-weight: bold;
     margin-bottom: 15px;
   }
 
   &__titlesmall {
-    font-size: 12px;
+    font-size: $sizeXSmall;
     font-weight: 500;
     text-transform: uppercase;
     margin-bottom: 10px;
@@ -20,7 +20,7 @@
     border: 1px solid $secondBorderColor;
 
     h2 {
-      font-size: 16px;
+      font-size: $sizeMedium;
       font-weight: bold;
       margin-bottom: 10px;
     }
@@ -72,9 +72,9 @@
     }
   }
 
-  @media screen and (min-width: 992px) {
+  @media screen and (min-width: $tabletSmallWidth) {
     &__title {
-      font-size: 24px;
+      font-size: $sizeLarge;
     }
 
     &__data {

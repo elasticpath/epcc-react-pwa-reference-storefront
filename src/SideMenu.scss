@@ -13,7 +13,7 @@
     display: flex;
     align-items: center;
     padding-left: 25px;
-    font-size: 13px;
+    font-size: $sizeSmall;
     border-left: 3px solid transparent;
     color: $firstComplimentColor;
     text-decoration: none;
@@ -25,7 +25,7 @@
       border: 1px solid $buttonFocusColor;
     }
 
-    @media screen and (min-width: 992px) {
+    @media screen and (min-width: $tabletSmallWidth) {
       padding-left: 15px;
     }
   }
@@ -59,12 +59,12 @@
       right: 20px;
     }
 
-    @media screen and (min-width: 992px) {
+    @media screen and (min-width: $tabletSmallWidth) {
       display: none;
     }
   }
 
-  @media screen and (max-width: 991px) {
+  @media screen and (max-width: $tabletSmallWidth - 1px) {
     &__dropdown {
       width: 100%;
       position: absolute;

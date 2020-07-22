@@ -18,7 +18,7 @@
     display: inline-block;
     border: solid 1px $mainBorderColor;
     background-color: $mainBackgroundColor;
-    font-size: 14px;
+    font-size: $sizeInitial;
     text-align: center;
     cursor: pointer;
   }
