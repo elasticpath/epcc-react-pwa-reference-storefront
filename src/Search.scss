@@ -8,10 +8,9 @@
   grid-gap: 50px;
   width: 1000px;
   grid-template-areas:
-          "title      title"
-          "facets     productlist"
-          "pagination pagination";
-
+    "title      title"
+    "facets     productlist"
+    "pagination pagination";
 
   #{$block}__title {
     text-align: center;
@@ -25,7 +24,7 @@
     grid-area: productlist;
   }
 
-  #{$block}__productlist .ais-Hits-list{
+  #{$block}__productlist .ais-Hits-list {
     grid-area: productlist;
     flex: 1 1 auto;
     display: flex;
@@ -72,7 +71,7 @@
     &:after {
       $size: 8px;
       $border: 2px;
-      content: '';
+      content: "";
       position: absolute;
       right: 15px;
       top: 12px;
@@ -94,7 +93,6 @@
     text-align: center;
     margin-bottom: 80px;
     margin-top: 20px;
-
 
     .ais-Pagination-item {
       display: inline-block;
@@ -128,25 +126,25 @@
 
     grid-template-columns: 1fr;
     grid-template-areas:
-            "title"
-            "facets-toggle"
-            "facets"
-            "productlist"
-            "pagination";
+      "title"
+      "facets-toggle"
+      "facets"
+      "productlist"
+      "pagination";
     grid-gap: 0;
 
     #{$block}__title {
       margin-bottom: 10px;
     }
 
-    #{$block}__facetstoggle{
+    #{$block}__facetstoggle {
       display: block;
     }
-    #{$block}__facetstoggleinput:checked ~  #{$block}__facetstoggle:after {
+    #{$block}__facetstoggleinput:checked ~ #{$block}__facetstoggle:after {
       transform: rotate(225deg);
     }
 
-    #{$block}__facetstoggleinput:checked ~  #{$block}__facets {
+    #{$block}__facetstoggleinput:checked ~ #{$block}__facets {
       max-height: 100%;
       border: 1px solid $firstComplimentColor;
     }

@@ -7,13 +7,30 @@
 
   #{$block}__hints {
     position: absolute;
-    max-height: 200px;
-    overflow: scroll;
     z-index: 2;
     background-color: $mainBackgroundColor;
     left: 0;
     width: 100%;
     border: 1px solid $secondComplimentTextColor;
+
+    .ais-Hits {
+      max-height: 200px;
+      overflow: scroll;
+    }
+
+    .ais-PoweredBy {
+      text-align: right;
+      padding: 4px 10px;
+      border-top: 1px solid $firstBorderColor;
+
+      &-text {
+        font-size: 13px;
+      }
+
+      &-logo {
+        width: 65px;
+      }
+    }
   }
 
   #{$block}__hint {
@@ -35,7 +52,8 @@
     background-color: $mainBackgroundColor;
   }
 
-  #{$block}__close, #{$block}__open {
+  #{$block}__close,
+  #{$block}__open {
     display: none;
   }
 
@@ -66,7 +84,8 @@
       position: relative;
     }
 
-    .ais-SearchBox-submit, .ais-SearchBox-reset {
+    .ais-SearchBox-submit,
+    .ais-SearchBox-reset {
       position: absolute;
       width: 30px;
       height: 40px;
@@ -106,7 +125,8 @@
       padding: 10px 5px;
     }
 
-    #{$block}__open, #{$block}__close {
+    #{$block}__open,
+    #{$block}__close {
       display: inline-block;
     }
 
