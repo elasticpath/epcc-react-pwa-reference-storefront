@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
-import { SearchBox, Hits } from 'react-instantsearch-dom';
+import { SearchBox, Hits, PoweredBy } from 'react-instantsearch-dom';
 import { useTranslation } from './app-state';
 import { createSearchUrl } from './routes';
 
@@ -98,6 +98,7 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
             <Hits
               hitComponent={Hit}
             />
+            <PoweredBy />
           </div>
         }
       </div>
