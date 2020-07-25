@@ -5,6 +5,7 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/174a486c-d1d9-4c2c-8434-94c30708c07d/deploy-status)](https://app.netlify.com/sites/epcc-ref-store/deploys)
 [![Stable Branch](https://img.shields.io/badge/stable%20branch-master-blue.svg)](https://github.com/elasticpath/epcc-react-pwa-reference-storefront)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![WCAG 2.0 AA](https://img.shields.io/badge/WCAG_2.0-AA-8ab80a.svg)](https://shields.io/)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/elasticpath/epcc-react-pwa-reference-storefront/issues)
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 [![follow on Twitter](https://img.shields.io/twitter/follow/elasticpath?style=social&logo=twitter)](https://twitter.com/intent/follow?screen_name=elasticpath)
@@ -13,82 +14,15 @@
 
 The Elastic Path Commerce Cloud REACT PWA Reference Storefront is a flexible e-commerce website built on Elastic Path’s RESTful e-commerce API. The storefront uses the e-commerce capabilities provided by Elastic Path Commerce Cloud and gets data in a RESTful manner.
 
-The storefront uses the [Elastic Path Commerce Cloud JavaScript SDK](https://github.com/moltin/js-sdk) for all Elastic Path Commerce Cloud API requests, and [Elastic Path Commerce Cloud Embeddable Cart + Checkout](https://github.com/moltin/shopkit) for the Cart and Checkout experiences.
+The storefront uses the [Elastic Path Commerce Cloud JavaScript SDK](https://github.com/moltin/js-sdk) for all Elastic Path Commerce Cloud API requests. For the cart and checkout experiences, the storefront uses [Elastic Path Commerce Cloud Embeddable Cart + Checkout](https://github.com/moltin/shopkit).
 
-> 💳 Use the test card 4242 4242 4242 4242, any future expiry date, and any CVC below to checkout.
+You can try out a [live instance of the Reference Storefront](https://epcc-reference.elasticpath.com/).
 
-[Demo](https://epcc-reference.elasticpath.com/)
+> 💳 To check out, use the test card number `4242 4242 4242 4242`, any future expiry date, and any three-digit Card Verification Code (CVC).
 
 ## Documentation 📖
 
-### Prerequisites
-
-Before you begin, ensure that you have the following accounts set up:
-
-- [Elastic Path Commerce Cloud account](https://dashboard.elasticpath.com/login)
-- [Stripe account](https://dashboard.stripe.com/) - Stripe is used as the payment gateway. From your [Dashboard](https://dashboard.elasticpath.com), configure Stripe as the payment gateway.
-- [Algolia account](https://www.algolia.com/) - Algolia is used for search functionality to display search results, facets, and filtering.
-
-### Development tools
-
-An Elastic Path Commerce Cloud REACT PWA Reference Storefront development environment requires the following software:
-
-- [Git](https://git-scm.com/downloads)
-- [Node.js](https://nodejs.org/en/download/)
-- [Yarn](https://yarnpkg.com/en/)
-- [Visual Studio Code](https://code.visualstudio.com/) with the following extensions:
-    - [Debugger for Chrome](https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome)
-    - [ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-- **Windows Only:** [Windows Subsystem for Linux (WSL)](https://docs.microsoft.com/en-us/windows/wsl/about)
-
-### Knowledge Requirements
-
-To customize and extend the storefront, you need knowledge in the following technologies:
-
-- [React](https://reactjs.org/)
-- [CSS](https://en.wikipedia.org/wiki/Cascading_Style_Sheets)
-- [sass](https://sass-lang.com/)
-
-### Start Building the Storefront
-
-**Note**: If you are running a Windows environment, launch the Windows Subsystem for Linux application and perform the following steps from the console window.
-
-```bash
-# Clone the Git repository
-git clone https://github.com/elasticpath/epcc-react-pwa-reference-storefront.git
-
-# Go into the cloned directory
-cd epcc-react-pwa-reference-storefront
-
-# Install all the dependencies for all sub-project and create necessary symlinks in-between them
-yarn
-
-# Configure the ./src/config.ts file.
-# For more information, see Configuration Parameter Descriptions.
-
-# Start the app in development mode
-
-# Run the main application:
-yarn start
-
-# Builds the app for production to the build folder:
-yarn build
-```
-
-## Configuration Parameter Descriptions ⚙️
-
-Parameters that require configuration are in the `./src/config.ts` file:
-
-|  Parameter| Importance|Type|Description|
-|--|--|--|--|
-|`clientId`| Required| String| The Client ID of your store.|
-|`stripeKey`| Required| String| Stripe publishable API key.|
-|`categoryPageSize`| Required| String| Maximum number of products to display on a category page.|
-|`maxCompareProducts`| Required| String| Maximum number of products to display in compare view.|
-|`compareKeys`| Required| Array| An array of all product attributes to display in compare view.|
-|`algoliaAppId`| Required| String| Algolia application identifier.|
-|`algoliaApiKey`| Required| String| Algolia API key used to read records.|
-|`algoliaIndexName`| Required| String| Name of Algolia index used for search functions.|
+- [REACT PWA Reference Storefront Documentation](https://documentation.elasticpath.com/commerce-cloud/docs/developer/get-started/reference-storefront.html)
 
 ## Contributors ✨
 
