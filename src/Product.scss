@@ -23,6 +23,40 @@
 
     #{$block}__imgcontainer {
       flex: 0 0 $imgSize;
+      position: relative;
+
+      #{$block}__img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      #{$block}__previmagebtn, #{$block}__nextimagebtn {
+        position: absolute;
+        color: hsl(0, 0, 30%);
+        background-color: hsla(0, 0, 100%, 0.3);
+        top: 50%;
+        margin-top: -22px;
+        width: 44px;
+        height: 44px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: hsla(0, 0, 100%, 0.6);
+        }
+
+        &:focus {
+          box-shadow: 0 0 0 1px hsl(0, 0, 80%);
+        }
+      }
+
+      #{$block}__previmagebtn {
+        left: 10px;
+      }
+
+      #{$block}__nextimagebtn {
+        right: 10px;
+      }
     }
 
     #{$block}__details {
@@ -54,17 +88,20 @@
         margin-top: 20px;
       }
 
-      #{$block}__separator {
-        margin-top: 20px;
-        border-top: 1px solid hsl(0, 0, 90%);
-      }
-
       #{$block}__addtocartbtn {
         margin-top: 20px;
         width: 200px;
       }
 
       #{$block}__moltinbtncontainer {
+        margin-top: 20px;
+      }
+
+      #{$block}__description {
+        margin-top: 20px;
+      }
+
+      #{$block}__socialshare {
         margin-top: 20px;
       }
     }

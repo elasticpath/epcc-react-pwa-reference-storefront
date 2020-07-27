@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { createCategoryUrl } from './routes';
-import { Category } from './service';
+import * as moltin from '@moltin/sdk';
 import { useCategories } from './app-state';
 
 import './NavMenu.scss';
@@ -20,11 +20,11 @@ export const NavMenu: React.FC<NavMenuProps> = (props) => {
     handleCloseNavigation();
   };
 
-  const handleShow = (category: Category) => {
+  const handleShow = (category: moltin.CategoryBase) => {
     handleCategoryClick(category.id, category.name);
   };
 
-  function renderCategories(categories: Category[], level: number = 0, isVisible: boolean = false): React.ReactElement {
+  function renderCategories(categories: moltin.CategoryBase[], level: number = 0, isVisible: boolean = false): React.ReactElement {
     return (
       <ul className={`navmenu__sub --level-${level} ${isVisible ? '--show' : ''}`}>
         {categories?.map(category => (

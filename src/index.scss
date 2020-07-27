@@ -60,6 +60,20 @@ img, svg {
     }
   }
 
+  &.--secondary {
+    background-color: white;
+    color: $btnColor;
+    border-color: $btnColor;
+
+    &:hover {
+      border-color: adjust-color($color: $btnColor, $lightness: 5%);
+    }
+
+    &:active {
+      border-color: adjust-color($color: $btnColor, $lightness: -5%);
+    }
+  }
+
   &:hover {
     background-color: change-color($color: $btnColor, $saturation: 40%, $lightness: 95%);
   }

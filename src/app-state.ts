@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import constate from 'constate';
-import {Category, getCustomer, loadCategoryTree, Product, loadCustomerAuthenticationSettings, loadAuthenticationProfiles} from './service';
+import * as moltin from '@moltin/sdk';
+import { getCustomer, loadCategoryTree, Product, loadCustomerAuthenticationSettings, loadAuthenticationProfiles} from './service';
 import * as service from './service';
 import { config } from './config';
 import { useResolve } from './hooks';
@@ -115,10 +116,10 @@ function useCustomerDataState() {
 
   useEffect(() => {
     if (customerToken) {
-      getCustomer(customerId, customerToken).then(res => {
-        if (res.data.email) {
-          setCustomerEmail(res.data.email);
-          setCustomerName(res.data.name);
+      getCustomer(customerId, customerToken).then(customer => {
+        if (customer.email) {
+          setCustomerEmail(customer.email);
+          setCustomerName(customer.name);
         }
         setIsLoggedIn(true);
       });
@@ -159,7 +160,7 @@ function useCustomerDataState() {
 const defaultCurrency = 'USD';
 
 function useCurrencyState() {
-  const [allCurrencies, setAllCurrencies] = useState<service.Currency[]>([]);
+  const [allCurrencies, setAllCurrencies] = useState<moltin.CurrencyBase[]>([]);
   // Set previously saved or defautlt currency before fetching the list of supported ones
   const [selectedCurrency, setSelectedCurrency] = useState(localStorage.getItem('selectedCurrency') ?? defaultCurrency);
 
@@ -198,10 +199,10 @@ function useCurrencyState() {
   }
 }
 
-function getCategoryPaths(categories: Category[]): { [categoryId: string]: Category[] } {
+function getCategoryPaths(categories: moltin.CategoryBase[]): { [categoryId: string]: moltin.CategoryBase[] } {
   const lastCat = categories[categories.length - 1];
 
-  let map: { [categoryId: string]: Category[] } = {
+  let map: { [categoryId: string]: moltin.CategoryBase[] } = {
     [lastCat.slug]: [...categories]
   };
 
@@ -214,13 +215,13 @@ function getCategoryPaths(categories: Category[]): { [categoryId: string]: Categ
   return map;
 }
 
-function mergeMaps(tree: Category[]): { [categoryId: string]: Category[] } {
+function mergeMaps(tree: moltin.CategoryBase[]): { [categoryId: string]: moltin.CategoryBase[] } {
   return tree.reduce((acc, c) => ({ ...acc, ...getCategoryPaths([c]) }), {});
 }
 
 function useCategoriesState(selectedLanguage: string) {
-  const [categoryPaths, setCategoryPaths] = useState<{ [categoryId: string]: Category[] }>();
-  const [categoriesTree, setCategoriesTree] = useState<Category[]>();
+  const [categoryPaths, setCategoryPaths] = useState<{ [categoryId: string]: moltin.CategoryBase[] }>();
+  const [categoriesTree, setCategoriesTree] = useState<moltin.CategoryBase[]>();
 
   useEffect(() => {
     setCategoryPaths(undefined);
@@ -284,7 +285,7 @@ function useCustomerAuthenticationSettingsState() {
       setAuthenticationSettings(authSettings);
       
       const authenticationRealmId = authSettings.data.relationships['authentication-realms'].data[0].id
-      loadAuthenticationProfiles(authenticationRealmId, 'STORE-ID-PLACEHOLDER').then((profiles) => {
+      loadAuthenticationProfiles(authenticationRealmId, 'STORE-ID-PLACEHOLDER').then((profiles: any) => {
         setAuthenticationProfiles(profiles);
       })
     });

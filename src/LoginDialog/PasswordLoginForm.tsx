@@ -81,7 +81,7 @@ export const PasswordLoginForm: React.FC<PasswordLoginFormProps> = (props) => {
         
         <div className={`epform__group ${errors.emailField ? '--error' : ''}`}>
             <label className="epform__label" htmlFor="emailField">
-            {t('email')}:
+            {t('email')}
             </label>
             <input className="epform__input" id="emailField" type="text" onChange={handleChange} value={values.emailField} />
             <div className="epform__error">
@@ -90,7 +90,7 @@ export const PasswordLoginForm: React.FC<PasswordLoginFormProps> = (props) => {
         </div>
         <div className={`epform__group ${errors.passwordField ? '--error' : ''}`}>
             <label className="epform__label" htmlFor="passwordField">
-            {t('password')}:
+            {t('password')}
             </label>
             <input className="epform__input" id="passwordField" type="password" onChange={handleChange} value={values.passwordField} />
             <div className="epform__error">
@@ -102,7 +102,7 @@ export const PasswordLoginForm: React.FC<PasswordLoginFormProps> = (props) => {
             <button className="epbtn --primary loginbtn" id="login_modal_login_button" type="submit" disabled={props.isLoading}>
             {t('login')}
             </button>
-            <Link to={registrationUrl} className="epbtn --primary registerbtn" id="login_modal_register_button" onClick={registerNewUser}>
+            <Link to={registrationUrl} className="epbtn --secondary registerbtn" id="login_modal_register_button" onClick={registerNewUser}>
             {t('register')}
             </Link>
         </div>

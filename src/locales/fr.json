@@ -93,5 +93,10 @@
   "password-confirmation": "ÞÞåššŵŵöŕð ÇÇöñƒƒîŕɱɱåţţîöñ",
   "submit": "ŠŠûƀɱɱîţ",
   "required": "ŔŔéǫûîîŕéð",
-  "network-offline": "ÑÑéţŵŵöŕķ ÖÖƒƒļļîñé"
+  "network-offline": "ÑÑéţŵŵöŕķ ÖÖƒƒļļîñé",
+  "previous-image": "ÞÞŕéṽîîöûš îîɱååĝé",
+  "next-image": "ÑÑéẋţ îîɱååĝé",
+  "social-share-title": "ÇÇĥééçķ ööûţ ţţĥîš þþŕöðûûçţ∶ {productName}",
+  "social-share-subject": "ÇÇĥééçķ ööûţ ţţĥîš þþŕöðûûçţ∶ {productName}",
+  "social-share-message": "{link}{productName}{description}"
 }
