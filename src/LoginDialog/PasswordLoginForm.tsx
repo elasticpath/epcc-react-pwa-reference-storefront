@@ -7,6 +7,7 @@ import { useCustomerData, useTranslation } from '../app-state';
 import { createRegistrationUrl } from '../routes';
 import { login } from '../service';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
+import './PasswordLoginForm.scss'
 
 import './LoginDialog.scss';
 
