@@ -1,6 +1,6 @@
 {
   "name": "epcc-ref-store",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "dependencies": {
     "@moltin/sdk": "^3.23.0",
