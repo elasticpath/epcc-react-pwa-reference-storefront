@@ -1,13 +1,13 @@
 import React from 'react';
+import * as moltin from '@moltin/sdk';
 import { useCompareProducts } from './app-state';
-import { Product } from './service';
 import { useTranslation } from './app-state';
 
 import './CompareCheck.scss';
 
 
 interface CompareCheckProps {
-  product: Product;
+  product: moltin.Product;
 }
 
 export const CompareCheck: React.FC<CompareCheckProps> = (props) => {

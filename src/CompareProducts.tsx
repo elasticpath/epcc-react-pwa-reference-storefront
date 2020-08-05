@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import * as moltin from '@moltin/sdk';
 import { useCompareProducts, useTranslation } from './app-state';
 import { ProductMainImage } from './ProductMainImage';
 import { Availability } from './Availability';
-import { Product } from './service';
 import { isProductAvailable } from './helper';
 import { config } from './config';
 import { ReactComponent as RemoveIcon } from './images/icons/ic_close.svg';
@@ -14,7 +14,7 @@ export const CompareProducts: React.FC = () => {
   const { compareProducts, removeFromCompare } =  useCompareProducts();
   const { t } = useTranslation();
 
-  const handleRemoveItem = (product: Product) => {
+  const handleRemoveItem = (product: moltin.Product) => {
     removeFromCompare(product.id);
   };
 

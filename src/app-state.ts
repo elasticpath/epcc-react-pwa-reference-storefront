@@ -1,15 +1,7 @@
 import { useState, useEffect } from 'react';
 import constate from 'constate';
-import {
-  Category,
-  getAddresses,
-  getCustomer,
-  loadCategoryTree,
-  getAllOrders,
-  Product,
-  Address,
-  Purchase
-} from './service';
+import * as moltin from '@moltin/sdk';
+import { getCustomer, getAddresses, getAllOrders, loadCategoryTree } from './service';
 import * as service from './service';
 import { config } from './config';
 
@@ -123,10 +115,10 @@ function useCustomerDataState() {
 
   useEffect(() => {
     if (customerToken) {
-      getCustomer(customerId, customerToken).then(res => {
-        if (res.data.email) {
-          setCustomerEmail(res.data.email);
-          setCustomerName(res.data.name);
+      getCustomer(customerId, customerToken).then(customer => {
+        if (customer.email) {
+          setCustomerEmail(customer.email);
+          setCustomerName(customer.name);
         }
         setIsLoggedIn(true);
       });
@@ -175,7 +167,7 @@ function useAddressDataState() {
   const token = localStorage.getItem('mtoken') || '';
   const id = localStorage.getItem('mcustomer') || '';
 
-  const [addressData, setAddressData] = useState<service.Address[]>([]);
+  const [addressData, setAddressData] = useState<moltin.Address[]>([]);
 
   useEffect(() => {
     if (token) {
@@ -209,7 +201,7 @@ function usePurchaseHistoryState() {
   const token = localStorage.getItem('mtoken') || '';
   const id = localStorage.getItem('mcustomer') || '';
 
-  const [ordersData, setOrdersData] = useState<service.Purchase[]>([]);
+  const [ordersData, setOrdersData] = useState<moltin.Order[]>([]);
 
   useEffect(() => {
     if (token) {
@@ -236,7 +228,7 @@ function usePurchaseHistoryState() {
 const defaultCurrency = 'USD';
 
 function useCurrencyState() {
-  const [allCurrencies, setAllCurrencies] = useState<service.Currency[]>([]);
+  const [allCurrencies, setAllCurrencies] = useState<moltin.Currency[]>([]);
   // Set previously saved or defautlt currency before fetching the list of supported ones
   const [selectedCurrency, setSelectedCurrency] = useState(localStorage.getItem('selectedCurrency') ?? defaultCurrency);
 
@@ -275,10 +267,10 @@ function useCurrencyState() {
   }
 }
 
-function getCategoryPaths(categories: Category[]): { [categoryId: string]: Category[] } {
+function getCategoryPaths(categories: moltin.Category[]): { [categoryId: string]: moltin.Category[] } {
   const lastCat = categories[categories.length - 1];
 
-  let map: { [categoryId: string]: Category[] } = {
+  let map: { [categoryId: string]: moltin.Category[] } = {
     [lastCat.slug]: [...categories]
   };
 
@@ -291,13 +283,13 @@ function getCategoryPaths(categories: Category[]): { [categoryId: string]: Categ
   return map;
 }
 
-function mergeMaps(tree: Category[]): { [categoryId: string]: Category[] } {
+function mergeMaps(tree: moltin.Category[]): { [categoryId: string]: moltin.Category[] } {
   return tree.reduce((acc, c) => ({ ...acc, ...getCategoryPaths([c]) }), {});
 }
 
 function useCategoriesState(selectedLanguage: string) {
-  const [categoryPaths, setCategoryPaths] = useState<{ [categoryId: string]: Category[] }>();
-  const [categoriesTree, setCategoriesTree] = useState<Category[]>();
+  const [categoryPaths, setCategoryPaths] = useState<{ [categoryId: string]: moltin.Category[] }>();
+  const [categoriesTree, setCategoriesTree] = useState<moltin.Category[]>();
 
   useEffect(() => {
     setCategoryPaths(undefined);
@@ -320,13 +312,13 @@ function useCategoriesState(selectedLanguage: string) {
 }
 
 function useCompareProductsState() {
-  const [compareProducts, setCompareProducts] = useState<Product[]>([]);
+  const [compareProducts, setCompareProducts] = useState<moltin.Product[]>([]);
   const [showCompareMenu, setShowCompareMenu] = useState(false);
 
   const isComparing = (productId: string) => compareProducts.filter(p => p.id === productId).length > 0;
   const isCompareEnabled = (productId: string) => isComparing(productId) || compareProducts.length < config.maxCompareProducts;
 
-  const addToCompare = (product: Product) => {
+  const addToCompare = (product: moltin.Product) => {
     if (!compareProducts.find(p => p.id === product.id)) {
       setCompareProducts([...compareProducts, product]);
       if (!showCompareMenu) {
