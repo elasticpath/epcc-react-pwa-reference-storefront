@@ -78,6 +78,10 @@
     }
   }
 
+  &__backbtn {
+    display: none;
+  }
+
   @media(max-width: $tabletWidth) {
     background-color: $mainBackgroundColor;
     text-align: center;
@@ -228,5 +232,24 @@
     top: 18px;
     left: 16px;
     position: absolute;
+  }
+}
+
+@media all and (display-mode: standalone) {
+  .toggle-btn {
+    left: 36px;
+  }
+
+  .navigation__backbtn {
+    display: inline-block;
+    position: absolute;
+    top: 14px;
+    left: 0;
+  }
+
+  .navigation__backicon {
+    height: 32px;
+    width: 32px;
+    fill: $mainColor;
   }
 }

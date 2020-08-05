@@ -85,4 +85,11 @@
       margin-right: 10px;
     }
   }
+
+  @media all and (display-mode: standalone) {
+    &__logo {
+      padding-left: 72px;
+      padding-right: 10px;
+    }
+  }
 }
