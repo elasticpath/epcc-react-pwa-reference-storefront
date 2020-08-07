@@ -116,14 +116,12 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
     isBrowserSupported ? (
       isListening ?
         <SearchButtonMic
-          defaultIcon  ={Icon_SearchMicActive}
-          isListening  = {isListening}
+          defaultIcon={Icon_SearchMicActive}
+          isListening={isListening}
         /> :
         <SearchButtonMic
-          isListening  = {isListening}
-          onClick={() => {
-            handleFocus()
-          }}
+          isListening={isListening}
+          onClick={() => handleFocus()}
         />
     ) : null
   )
@@ -165,8 +163,8 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
           translations={translations}
         />
         <VoiceSearch
-          searchAsYouSpeak
-          buttonTextComponent = {VoiceSearchButtonText}
+          searchAsYouSpeak={true}
+          buttonTextComponent={VoiceSearchButtonText}
         />
         <button
           className={`searchbar__close ${searchValue && '--show'}`}
