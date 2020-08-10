@@ -7,66 +7,17 @@ import { createSearchUrl } from './routes';
 
 import { ReactComponent as MagnifyingGlassIcon } from './images/icons/magnifying_glass.svg';
 import { ReactComponent as ClearIcon } from './images/icons/ic_clear.svg';
-import Icon_SearchMic from './images/icons/icon-search-mic.svg'
-import Icon_SearchMicHover from './images/icons/icon-search-mic-hover.svg'
-import Icon_SearchMicActive from './images/icons/icon-search-mic-active.svg'
 
 import './SearchBar.scss';
-import styled, { keyframes } from 'styled-components'
 
 interface SearchBoxProps {
 }
 
-interface VoiceSearchProps{
-  defaultIcon: any;
-  hoverIcon: any;
-  activeIcon: any;
-}
-
-const SearchButton = styled.button<VoiceSearchProps>`
-  all: unset;
-  display: block;
-  width: 36px;
-  height: 36px;
-  border-radius: 36px;
-  margin-left: 8px;
-  cursor: pointer;
-
-  background-image: url(${props => props.defaultIcon});
-  background-repeat: no-repeat;
-  background-position: center;
-
-  &:hover {
-    background-image: url(${props => props.hoverIcon});
-  }
-
-  &:active {
-    background-image: url(${props => props.activeIcon});
-  }
-`
-
-const breatheAnimation = keyframes`
-  100% { opacity: 1 }
-  50% { opacity: 0.65 }
-`
-
-const SearchButtonBreating = styled(SearchButton)`
-  animation-name: ${breatheAnimation};
-  animation-duration: 0.9s;
-  animation-iteration-count: infinite;
-`
-
 const SearchButtonMic = (props: any) => (
   props.isListening ?
-    <SearchButtonBreating as="span"
-      defaultIcon={Icon_SearchMic}
-      hoverIcon={Icon_SearchMicHover}
-      activeIcon={Icon_SearchMicActive}
+    <span className="VoiceSearchButtonBreating"
       {...props} /> :
-    <SearchButton as="span"
-      defaultIcon={Icon_SearchMic}
-      hoverIcon={Icon_SearchMicHover}
-      activeIcon={Icon_SearchMicActive}
+    <span className="VoiceSearchButton"
       {...props} />
 )
 
@@ -116,7 +67,6 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
     isBrowserSupported ? (
       isListening ?
         <SearchButtonMic
-          defaultIcon={Icon_SearchMicActive}
           isListening={isListening}
         /> :
         <SearchButtonMic
