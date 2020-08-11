@@ -15,7 +15,7 @@ interface SearchBoxProps {
 
 const SearchButtonMic = (props: any) => (
   props.isListening ?
-    <span className="VoiceSearchButtonBreating"
+    <span className="VoiceSearchButtonBreathing"
       {...props} /> :
     <span className="VoiceSearchButton"
       {...props} />
