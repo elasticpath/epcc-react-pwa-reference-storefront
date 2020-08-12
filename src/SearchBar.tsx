@@ -14,7 +14,7 @@ interface SearchBoxProps {
 }
 
 const SearchButtonMic = (props: any) => (
-  props.isListening ?
+  props.islistening==="true" ?
     <span className="VoiceSearchButtonBreathing"
       {...props} /> :
     <span className="VoiceSearchButton"
@@ -67,10 +67,10 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
     isBrowserSupported ? (
       isListening ?
         <SearchButtonMic
-          isListening={isListening}
+          islistening={isListening.toString()}
         /> :
         <SearchButtonMic
-          isListening={isListening}
+          islistening={isListening.toString()}
           onClick={() => handleFocus()}
         />
     ) : null
@@ -101,7 +101,8 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
       >
         <MagnifyingGlassIcon />
       </button>
-      <div className={`searchbar__input ${inputVisible ? '--show' : ''}`}>
+      <div id="search" className={`searchbar__input ${inputVisible ? '--show' : ''}`}>
+        <label htmlFor="search">
         <SearchBox
           onFocus={handleFocus}
           onChange={handleChange}
@@ -111,7 +112,9 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
           submit={<MagnifyingGlassIcon />}
           reset={<ClearIcon />}
           translations={translations}
+          aria-label="search"
         />
+       </label>
         <VoiceSearch
           searchAsYouSpeak={true}
           buttonTextComponent={VoiceSearchButtonText}
