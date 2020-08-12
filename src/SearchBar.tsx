@@ -101,8 +101,7 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
       >
         <MagnifyingGlassIcon />
       </button>
-      <div id="search" className={`searchbar__input ${inputVisible ? '--show' : ''}`}>
-        <label htmlFor="search">
+      <div className={`searchbar__input ${inputVisible ? '--show' : ''}`}>
         <SearchBox
           onFocus={handleFocus}
           onChange={handleChange}
@@ -112,9 +111,7 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
           submit={<MagnifyingGlassIcon />}
           reset={<ClearIcon />}
           translations={translations}
-          aria-label="search"
         />
-       </label>
         <VoiceSearch
           searchAsYouSpeak={true}
           buttonTextComponent={VoiceSearchButtonText}
