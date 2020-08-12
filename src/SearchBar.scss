@@ -6,6 +6,7 @@
   max-width: 500px;
 
   #{$block}__hints {
+    top: 50px;
     position: absolute;
     z-index: 2;
     background-color: $mainBackgroundColor;
@@ -60,6 +61,7 @@
   #{$block}__input {
     position: relative;
     margin-left: 40px;
+    display: flex;
 
     input {
       height: 40px;
@@ -78,6 +80,10 @@
       svg {
         fill: $firstComplimentColor;
       }
+    }
+
+    .ais-SearchBox{
+      width: 100%;
     }
 
     .ais-SearchBox-form {
@@ -107,7 +113,55 @@
     .ais-SearchBox-loadingIndicator {
       padding-top: 3px;
     }
+
+    .VoiceSearchButton {
+      all: unset;
+      display: block;
+      width: 36px;
+      height: 36px;
+      border-radius: 36px;
+      margin-left: 8px;
+      cursor: pointer;
+      background-image: url(./images/icons/icon-search-mic.svg);
+      background-repeat: no-repeat;
+      background-position: center;
+
+      &:hover {
+        background-image: url(./images/icons/icon-search-mic-hover.svg);
+      }
+
+      &:active {
+        background-image: url(./images/icons/icon-search-mic-active.svg);
+      }
+    }
+
+    @keyframes breatheAnimation {
+      100% { opacity: 1 }
+      50% { opacity: 0.65 }
+    }
+
+    .VoiceSearchButtonBreathing {
+      background-repeat: no-repeat;
+      background-position: center;
+      all: unset;
+      display: block;
+      width: 36px;
+      height: 36px;
+      border-radius: 36px;
+      margin-left: 8px;
+      cursor: pointer;
+      background-image: url(./images/icons/icon-search-mic-active.svg);
+      animation-name: breatheAnimation;
+      animation-duration: 0.9s;
+      animation-iteration-count: infinite;
+    }
+
   }
+
+  .ais-VoiceSearch-status {
+    display: none;
+  }
+
 }
 
 @media (max-width: $mobileWidth - 1px) {

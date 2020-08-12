@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
-import { SearchBox, Hits, PoweredBy } from 'react-instantsearch-dom';
+import { SearchBox, Hits, PoweredBy, VoiceSearch } from 'react-instantsearch-dom';
 import { useTranslation } from './app-state';
 import { createSearchUrl } from './routes';
 
@@ -12,6 +12,14 @@ import './SearchBar.scss';
 
 interface SearchBoxProps {
 }
+
+const SearchButtonMic = (props: any) => (
+  props.islistening==="true" ?
+    <span className="VoiceSearchButtonBreathing"
+      {...props} /> :
+    <span className="VoiceSearchButton"
+      {...props} />
+)
 
 export const SearchBar: React.FC<SearchBoxProps> = () => {
   const { t } = useTranslation();
@@ -52,6 +60,22 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
     setInputVisible(false);
   };
 
+  const VoiceSearchButtonText = ({
+    isListening,
+    isBrowserSupported
+  }: {isListening:any, isBrowserSupported:any}) => (
+    isBrowserSupported ? (
+      isListening ?
+        <SearchButtonMic
+          islistening={isListening.toString()}
+        /> :
+        <SearchButtonMic
+          islistening={isListening.toString()}
+          onClick={() => handleFocus()}
+        />
+    ) : null
+  )
+
   const Hit = ({ hit }: any) => {
     return (
       <Link className="searchbar__hint" to={`/product/${hit.slug}`} onClick={handleLinkClick}>
@@ -87,6 +111,10 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
           submit={<MagnifyingGlassIcon />}
           reset={<ClearIcon />}
           translations={translations}
+        />
+        <VoiceSearch
+          searchAsYouSpeak={true}
+          buttonTextComponent={VoiceSearchButtonText}
         />
         <button
           className={`searchbar__close ${searchValue && '--show'}`}
