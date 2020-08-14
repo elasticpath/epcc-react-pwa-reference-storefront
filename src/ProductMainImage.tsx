@@ -1,10 +1,11 @@
 import React from 'react';
-import { Product, loadImageHref } from './service';
+import * as moltin from '@moltin/sdk';
+import { loadImageHref } from './service';
 import { useResolve } from './hooks';
 import { ImageContainer } from './ImageContainer';
 
 interface ProductMainImageProps {
-  product: Product;
+  product: moltin.Product;
   size?: number;
 }
 

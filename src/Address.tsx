@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import * as moltin from '@moltin/sdk';
 import { useAddressData } from './app-state';
-import { Address as IAddress, deleteAddress } from './service';
+import { deleteAddress } from './service';
 import { useTranslation } from './app-state';
 import { AddressForm } from './AddressForm';
 import { DeleteAddressDialog } from './DeleteAddressDialog';
@@ -64,7 +65,7 @@ export const Address: React.FC = () => {
       <h1 className="address__title">{t("address-book")}</h1>
       {addressData && addressData.length > 0 ? (
         <div className="address__maincontainer">
-          {addressData.map((address: IAddress) => (
+          {addressData.map((address: moltin.Address) => (
             <div className="address__container" key={address.id}>
               <ul className="address__list">
                 <li className="">

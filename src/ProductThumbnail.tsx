@@ -1,5 +1,5 @@
 import React from 'react';
-import { Product } from './service';
+import * as moltin from '@moltin/sdk';
 import { createProductUrl } from './routes';
 import { Link } from 'react-router-dom';
 import { CompareCheck } from './CompareCheck';
@@ -12,7 +12,7 @@ import './ProductThumbnail.scss';
 
 
 interface ProductThumbnailProps {
-  product: Product;
+  product: moltin.Product;
 }
 
 export const ProductThumbnail: React.FC<ProductThumbnailProps> = (props) => {

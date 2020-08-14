@@ -1,7 +1,7 @@
 import React from 'react';
+import * as moltin from '@moltin/sdk';
 import { Link } from 'react-router-dom';
 import { useOrdersData, useTranslation } from './app-state';
-import { Purchase as IPurchase } from './service';
 
 import './PurchaseHistory.scss';
 
@@ -25,7 +25,7 @@ export const PurchaseHistory: React.FC = () => {
             </tr>
             </thead>
             <tbody>
-            {ordersData.map((order: IPurchase)=> (
+            {ordersData.map((order: moltin.Order)=> (
               <tr key={order.id}>
                 <td className="purchasehistory__td">
                   <Link

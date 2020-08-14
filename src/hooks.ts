@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Product, loadImageHref } from './service';
+import * as moltin from '@moltin/sdk';
+import { loadImageHref } from './service';
 
 type FetchHookResult<R> = [
   R | undefined,
@@ -36,7 +37,7 @@ export function useResolve<R>(promiseFn: () => Promise<R> | undefined, deps?: Re
   return result;
 }
 
-export function useProductImages(product: Product | undefined) {
+export function useProductImages(product: moltin.Product | undefined) {
   const [productImageHrefs, setProductImageHrefs] = useState<string[]>([]);
 
   useEffect(() => {

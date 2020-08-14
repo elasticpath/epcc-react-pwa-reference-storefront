@@ -1,9 +1,9 @@
 import React from 'react';
+import * as moltin from '@moltin/sdk';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { useCompareProducts, useTranslation } from './app-state';
 import { createCompareProductsUrl } from './routes';
 import { ProductMainImage } from './ProductMainImage';
-import { Product } from './service';
 import { ReactComponent as RemoveIcon } from './images/icons/ic_close.svg';
 
 import './CompareOverlay.scss';
@@ -22,7 +22,7 @@ export const CompareOverlay: React.FC = (props) => {
     history.push(compareUrl);
   };
 
-  const handleRemoveProduct = (product: Product) => {
+  const handleRemoveProduct = (product: moltin.Product) => {
     removeFromCompare(product.id);
   };
 
