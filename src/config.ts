@@ -1,11 +1,11 @@
 
 export const config = {
-  clientId: 'EdP3Gi1agyUF3yFS7Ngm8iyodLgbSR3wY4ceoJl0d2',
+  clientId: '1NgdZlkNCJ5miRkpQ0ly75HOZOFM0rKf2taUujquog',
   stripeKey: 'pk_test_JwRX4cevuCysIEQrpwcbn3j8',
   categoryPageSize: 8,
   maxCompareProducts: 4,
-  algoliaAppId: 'L1TT97EBOE',
-  algoliaApiKey: 'cca4a38de37dd5fd094eb47e8476c4d2',
+  algoliaAppId: '6MAFUOD23U',
+  algoliaApiKey: '7d829396bbf202b30bfe7ad52120bbac',
   algoliaIndexName: 'product',
-  compareKeys: [['bulb', 'bulb'], ['max_watt', 'wattage'], ['bulb_qty', 'bulb-qty'], ['material', 'material'], ['finish', 'finish']],
+  compareKeys: [],
 };
