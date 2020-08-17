@@ -8,4 +8,5 @@ export const config = {
   algoliaApiKey: '7d829396bbf202b30bfe7ad52120bbac',
   algoliaIndexName: 'product',
   compareKeys: [],
+  shopkitSrc: 'https://btn.moltin.com',
 };
