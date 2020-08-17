@@ -13,7 +13,7 @@ import './App.scss';
 
 const App: React.FC = () => {
   useScript({
-    src: 'https://btn.moltin.com',
+    src: config.shopkitSrc,
     'data-moltin-client-id': config.clientId,
     'data-moltin-stripe-publishable-key': config.stripeKey
   });
