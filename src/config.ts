@@ -9,4 +9,5 @@ export const config = {
   algoliaIndexName: 'product',
   compareKeys: [],
   shopkitSrc: 'https://btn.moltin.com',
+  endpointURL: 'api.moltin.com',
 };
