@@ -16,7 +16,7 @@ const App: React.FC = () => {
     src: config.shopkitSrc,
     'data-moltin-client-id': config.clientId,
     'data-moltin-stripe-publishable-key': config.stripeKey,
-    'data-moltin-endpoint-url': config.endpointURL
+    'data-moltin-endpoint-url': 'https://' + config.endpointURL
   });
 
   const searchClient = algoliasearch(
