@@ -4,14 +4,14 @@ import { config } from './config';
 const MoltinGateway = moltin.gateway;
 
 export async function loadEnabledCurrencies(): Promise<moltin.Currency[]> {
-  const moltin = MoltinGateway({ client_id: config.clientId });
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const response = await moltin.Currencies.All();
 
   return response.data.filter(c => c.enabled);
 }
 
 export async function loadCategoryTree(): Promise<moltin.Category[]> {
-  const moltin = MoltinGateway({ client_id: config.clientId });
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const result = await moltin.Categories.Tree();
 
   return result.data;
@@ -28,7 +28,7 @@ function getProductCache(key: string, language: string, currency: string): molti
 }
 
 export async function loadCategoryProducts(categoryId: string, pageNum: number, language: string, currency: string): Promise<moltin.ResourcePage<moltin.Product>> {
-  const moltin = MoltinGateway({ client_id: config.clientId, currency: currency });
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId, currency: currency });
 
   const result = await moltin.Products
     .Offset((pageNum - 1) * config.categoryPageSize)
@@ -67,7 +67,7 @@ export async function loadImageHref(imageId: string): Promise<string | undefined
     return imageHrefCache[imageId];
   }
 
-  const moltin = MoltinGateway({ client_id: config.clientId });
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const result = await moltin.Files.Get(imageId);
 
   if (imageMimeTypes.indexOf(result.data.mime_type) === -1) {
@@ -86,7 +86,7 @@ export async function loadProductBySlug(productSlug: string, language: string, c
     return cachedProduct;
   }
 
-  const moltin = MoltinGateway({ client_id: config.clientId, currency: currency });
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId, currency: currency });
 
   const resultSlug = await moltin.Products
     .Limit(1)
@@ -107,7 +107,7 @@ export async function loadProductBySlug(productSlug: string, language: string, c
 }
 
 export async function register(name: string, email: string, password: string): Promise<moltin.CustomerBase> {
-  const moltin = MoltinGateway({ client_id: config.clientId });
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const { data } = await moltin.Customers.Create({
     type: 'customer',
     name,
@@ -119,21 +119,21 @@ export async function register(name: string, email: string, password: string): P
 }
 
 export async function login(email: string, password: string): Promise<moltin.CustomerToken> {
-  const moltin = MoltinGateway({ client_id: config.clientId });
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const { data } = await moltin.Customers.Token(email, password);
 
   return data;
 }
 
 export async function getCustomer(id: string, token: string): Promise<moltin.CustomerBase> {
-  const moltin = MoltinGateway({ client_id: config.clientId });
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const { data } = await moltin.Customers.Get(id, token);
 
   return data;
 }
 
 export async function updateCustomer(id: string, name: string, email: string, token: string): Promise<{ data: moltin.Customer }> {
-  const moltin = MoltinGateway({ client_id: config.clientId });
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   // @ts-ignore
   const result = await moltin.Customers.Update(id, {type: 'customer', name, email, password: '',}, token);
 
@@ -141,31 +141,31 @@ export async function updateCustomer(id: string, name: string, email: string, to
 }
 
 export async function getAddresses(customer: string, token: string): Promise<{ data: moltin.Address[] }> {
-  const moltin = MoltinGateway({ client_id: config.clientId });
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const result = await moltin.Addresses.All({ customer, token });
 
   return result;
 }
 
 export async function updateAddress(customer: string, address: string, body: any, token: string): Promise<void> {
-  const moltin = MoltinGateway({ client_id: config.clientId });
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   await moltin.Addresses.Update({ customer, address, body, token });
 }
 
 export async function addNewAddress(customer: string, body: any, token: string): Promise<{ data: moltin.Address }> {
-  const moltin = MoltinGateway({ client_id: config.clientId });
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const result = await moltin.Addresses.Create({ customer, body, token });
 
   return result;
 }
 
 export async function deleteAddress(customer: string, address: any, token: string): Promise<void> {
-  const moltin = MoltinGateway({ client_id: config.clientId });
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   await moltin.Addresses.Delete({ customer, address, token });
 }
 
 export async function getAllOrders(token: string): Promise<{ data: moltin.Order[] }> {
-  const moltin = MoltinGateway({ client_id: config.clientId });
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const result = await moltin.Orders.Limit(100).All(token);
   return result;
 }
