@@ -281,13 +281,27 @@ function useCustomerAuthenticationSettingsState() {
   const [ authenticationProfiles, setAuthenticationProfiles ] = useState<object>();
 
   useEffect(()=>{
+    console.log('loading customer authentication settings');
     loadCustomerAuthenticationSettings().then((authSettings) => {
+      console.log('return from authSettings');
       setAuthenticationSettings(authSettings);
+      console.log(authSettings);
       
-      const authenticationRealmId = authSettings.data.relationships['authentication-realms'].data[0].id
+      const authenticationRealmId = authSettings?.data?.relationships['authentication-realm']?.data?.id
+      
+      console.log('authentication realm id');
+      console.log(authenticationRealmId);
+
       loadAuthenticationProfiles(authenticationRealmId, 'STORE-ID-PLACEHOLDER').then((profiles: any) => {
+        
+        console.log('the return from loading the authentication profiles');
+        console.log(profiles);
+        
         setAuthenticationProfiles(profiles);
       })
+    }).catch((err)=>{
+      console.log('beginning to consume');
+      console.log(err)
     });
   },[])
   

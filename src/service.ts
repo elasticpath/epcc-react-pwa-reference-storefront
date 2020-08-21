@@ -72,24 +72,47 @@ export async function loadCustomerAuthenticationSettings(): Promise<any> {
   // TODO: return the options in the authentication options...
   // This should be moved into the SDK eventually... for now we will just make the request
   // Outside of the SDK to simplify things.
-  const moltin = MoltinGateway({ client_id: config.clientId });
-  return moltin.AuthenticationSettings.Get()
+
+  // const Moltin = MoltinGateway({
+  //   client_id: 'XXX',
+  //   host: 'localhost:8080',
+  //   protocol: 'http'
+  // })
+  console.log('load customer authentication is running');
+  
+  const moltin = MoltinGateway({ 
+    client_id: config.clientId,
+    host: 'localhost:8000',
+    protocol: 'http'
+  });
+  
+  return moltin.AuthenticationSettings.Get({
+    headers: {'X-MOLTIN-AUTH-STORE': '88888888-4444-4333-8333-111111111111'}
+  })
 }
 
-
 // HAX - This is going to be part of the SDK eventually.
-export function loadAuthenticationProfiles(realm: string, storeId: string): any {
-  // TODO: Replace this with the SDK!
-  const moltin = MoltinGateway({ client_id: config.clientId });
-  return moltin.AuthenticationProfiles.All('19e7a80d-d5f9-48c6-916d-58e7c6f62311')
+export async function loadAuthenticationProfiles(realmId: string, storeId: string): Promise<any> {
+  const moltin = MoltinGateway({ 
+    client_id: config.clientId,
+    host: 'localhost:8080',
+    protocol: 'http'
+    // We need to send in the storeID
+  });
+  return moltin.AuthenticationProfiles.All(realmId, null, {'X-MOLTIN-AUTH-STORE': '88888888-4444-4333-8333-111111111111'})
 }
 
 export function getAuthenticationProfile(realmId: string, profileId: string) {
   // Get the authentication profile
-  const moltin = MoltinGateway({ client_id: config.clientId });
+  const moltin = MoltinGateway({ 
+    client_id: config.clientId,
+    host: 'localhost:8080',
+    protocol: 'http'
+  });
   return moltin.AuthenticationProfiles.Get({
       realmId,
-      profileId
+      profileId,
+      headers: {'X-MOLTIN-AUTH-STORE': '88888888-4444-4333-8333-111111111111'}
     }
   )
 }
@@ -203,17 +226,49 @@ export async function register(name: string, email: string, password: string): P
   return data;
 }
 
-export async function login(email: string, password: string): Promise<moltin.CustomerToken> {
-  console.log('logging in with Moltin Gateway!');
+export async function login(email?: string, password?: string, code?: string, redirectUri?: string): Promise<moltin.CustomerToken> {
+  
+
+  if (code && redirectUri) {
+    // Just make the request manually here...
+    console.log('we are fetching the token from the adjust customer token endpoint')
+    const body = {
+      "data":{
+      "type": "oidc",
+      "oauth_authorization_code": code,
+      "oauth_redirect_uri": redirectUri
+    }
+   }
+
+    const res = await fetch(
+      'http://localhost:8000/v2/customers/tokens', {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc
+        headers: {
+          'Content-Type': 'application/json',
+          'X-MOLTIN-AUTH-STORE': '88888888-4444-4333-8333-111111111111',
+        },
+        body: JSON.stringify(body)
+      }
+    )
+
+    const { data } = await res.json()
+
+    return data
+  }
   
   const moltin = MoltinGateway({ client_id: config.clientId });
-  const { data } = await moltin.Customers.Token(email, password).then();
+  const { data } = await moltin.Customers.Token(email!, password!).then();
 
   return data;
 }
 
-export async function oidcLogin(code: string) {
+export async function oidcLogin(code: string | null) {
   // This is the authorization code that is going to do the logging in...
+  // Here is where we have to make the call...
+  if (!code) {
+    // TODO: We need to make a request to fetch the token...
+    
+  }
   return new Promise((res, rej)=>{
     setTimeout(()=>{
       res({

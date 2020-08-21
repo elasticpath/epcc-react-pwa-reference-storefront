@@ -17,11 +17,17 @@ export const OidcLoginButtons: React.FC = () => {
     const { authenticationSettings, authenticationProfiles }: any = useCustomerAuthenticationSettings()
     const [ isLoading, setIsLoading ] = useState(false);
     const location = useLocation()
+
+    // I should need to disable everything when its loading...
     
     const handleOidcButtonClicked = async (profile:any, cId:any) => {
-        setIsLoading(true);
+        console.log('coming back from handle oidc button clicked')
+        console.log(profile)
+        console.log(cId)
+        // setIsLoading(true);
         // We should create a loading state here as well
-        const authenticationRealmId = authenticationSettings.data.relationships['authentication-realms'].data[0].id
+        console.log(authenticationSettings)
+        const authenticationRealmId = authenticationSettings.data.relationships['authentication-realm'].data.id
         
         const result = await getAuthenticationProfile(authenticationRealmId, profile.id)
         console.log(result);
@@ -32,7 +38,7 @@ export const OidcLoginButtons: React.FC = () => {
         // We should request to get the profile here, and then go to the location
         window.location.href = generateKeycloakLoginRedirectUrl(baseRedirectUrl, cId, location.pathname);
     }
-    
+    console.log(authenticationSettings)
     const clientId = `${authenticationSettings?.data.meta.clientId}`
 
     return (
