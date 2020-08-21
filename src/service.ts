@@ -262,28 +262,6 @@ export async function login(email?: string, password?: string, code?: string, re
   return data;
 }
 
-export async function oidcLogin(code: string | null) {
-  // This is the authorization code that is going to do the logging in...
-  // Here is where we have to make the call...
-  if (!code) {
-    // TODO: We need to make a request to fetch the token...
-    
-  }
-  return new Promise((res, rej)=>{
-    setTimeout(()=>{
-      res({
-          "data": {
-              "type": "token",
-              "id": "6567fa1c-7a21-4153-89fd-c05f272f4532",
-              "customer_id": "0408bdb2-91a4-481b-ba73-ff4ec0c8f667",
-              "token": "eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJzdWIiOiIwNDA4YmRiMi05MWE0LTQ4MWItYmE3My1mZjRlYzBjOGY2NjciLCJuYW1lIjoiVGVzdCIsImV4cCI6MTU5NTAxNTA1MywiaWF0IjoxNTk0OTI4NjUzLCJqdGkiOiI5NDk0MGRiNC1kNDVjLTRiMWMtOTM0Yi1mODk5MzExYmE4YjYifQ==.bbb1ac80fdeedf3c848cf97d170232d90c50d06208d34ce39e6222fcb925ff43",
-              "expires": 1594913825
-          }
-      });
-    }, 5)
-  })
-}
-
 export async function getCustomer(id: string, token: string): Promise<moltin.CustomerBase> {
 
   const moltin = MoltinGateway({ client_id: config.clientId });
