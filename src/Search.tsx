@@ -30,8 +30,8 @@ export const Search: React.FC<SearchParams> = () => {
           defaultRefinement={config.algoliaIndexName}
           items={[
             { value: config.algoliaIndexName, label: t('featured') },
-            { value: 'product_price_asc', label: t('price-asc') },
-            { value: 'product_price_desc', label: t('price-desc') }
+            { value: `${config.algoliaIndexName}_price_asc`, label: t('price-asc') },
+            { value: `${config.algoliaIndexName}_price_desc`, label: t('price-desc') }
           ]}
         />
       </div>
