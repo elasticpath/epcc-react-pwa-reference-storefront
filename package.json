@@ -28,15 +28,17 @@
     "react-scripts": "3.4.1",
     "serve": "^11.3.1",
     "sharethis-reactjs": "^1.5.0",
-    "typescript": "^3.7.3"
+    "typescript": "^3.7.3",
+    "workbox-build": "^4.3.1"
   },
   "scripts": {
     "start": "EXTEND_ESLINT=true BROWSER=none react-scripts start",
-    "build": "EXTEND_ESLINT=true GENERATE_SOURCEMAP=false INLINE_RUNTIME_CHUNK=true react-scripts build",
+    "build": "EXTEND_ESLINT=true GENERATE_SOURCEMAP=false INLINE_RUNTIME_CHUNK=true react-scripts build && yarn sw",
     "test": "EXTEND_ESLINT=true react-scripts test",
     "eject": "react-scripts eject",
     "serve": "serve -c serve.json",
-    "pseudo-translate": "node utils/pseudo-translate.js"
+    "pseudo-translate": "node utils/pseudo-translate.js",
+    "sw": "node build-sw.js"
   },
   "eslintConfig": {
     "extends": "react-app"
