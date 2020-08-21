@@ -35,7 +35,13 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
     handleModalClose();
   }
 
+  
+
   // TODO: We need to remember what page we were on before we left as well..
+
+  // console.log('the spinner should be:', isLoading)
+  // console.log(authenticationSettings)
+  // console.log(authenticationProfiles)
 
   return (
     <Modal open={openModal} onClose={handleClose} classNames={{ modal: 'logindialog' }} showCloseIcon={false}>
