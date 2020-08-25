@@ -1,4 +1,5 @@
 importScripts('/workbox-sw.js');
+importScripts('/config.js');
 
 workbox.core.skipWaiting();
 workbox.core.clientsClaim();
@@ -6,7 +7,6 @@ workbox.precaching.precacheAndRoute([]);
 
 // app-shell
 workbox.routing.registerRoute('/', new workbox.strategies.NetworkFirst());
-workbox.routing.registerRoute(/^\/$|category\/.*|product\/.*|compare-products|registration|account\/.*|search/, new workbox.strategies.NetworkFirst());
 
 // webfont-cache
 const webFontHandler = new workbox.strategies.CacheFirst({
@@ -18,11 +18,21 @@ const webFontHandler = new workbox.strategies.CacheFirst({
 });
 workbox.routing.registerRoute(/https:\/\/fonts.googleapis.com\/.*/, webFontHandler);
 workbox.routing.registerRoute(/https:\/\/fonts.gstatic.com\/.*/, webFontHandler);
-workbox.routing.registerRoute(/https:\/\/use.fontawesome.com\/.*/, webFontHandler);
 
 // get-urls-cache
-const API = /https:\/\/api.moltin.com\/.*/;
+const API = new RegExp('https:\/\/' + config.endpointURL + '\/.*');
 const apiHandler = new workbox.strategies.NetworkFirst({
   cacheName: 'get-urls-cache'
 });
 workbox.routing.registerRoute(API, apiHandler);
+
+// work-images-cache
+workbox.routing.registerRoute(/\.(?:jpg|png|json|ico|jpeg|svg)$/,
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: 'work-images-cache',
+    plugins: [
+      new workbox.expiration.Plugin({maxEntries: 60}),
+      new workbox.cacheableResponse.Plugin({statuses: [0, 200]}),
+    ],
+  })
+);
