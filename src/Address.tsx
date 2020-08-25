@@ -28,21 +28,21 @@ export const Address: React.FC = () => {
   };
 
   const onDeleteAddress = () => {
-  const token = localStorage.getItem('mtoken') || '';
-  const customer = localStorage.getItem('mcustomer') || '';
-  setIsLoading(true);
+    const token = localStorage.getItem('mtoken') || '';
+    const customer = localStorage.getItem('mcustomer') || '';
+    setIsLoading(true);
 
-  deleteAddress(customer, selectedDeleteAddress, token)
-    .then(() => {
-      updateAddresses();
-      setIsLoading(false);
-      setIsDeleteModalOpen(false);
-    })
-    .catch(error => {
-      setIsLoading(false);
-      setIsDeleteModalOpen(false);
-      console.error(error);
-    });
+    deleteAddress(customer, selectedDeleteAddress, token)
+      .then(() => {
+        updateAddresses();
+        setIsLoading(false);
+        setIsDeleteModalOpen(false);
+      })
+      .catch(error => {
+        setIsLoading(false);
+        setIsDeleteModalOpen(false);
+        console.error(error);
+      });
   };
 
   const handleEdit = (address: any) => {
