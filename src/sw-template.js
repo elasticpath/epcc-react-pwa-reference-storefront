@@ -3,17 +3,18 @@ importScripts('/config.js');
 
 workbox.core.skipWaiting();
 workbox.core.clientsClaim();
-workbox.precaching.precacheAndRoute([]);
+self.__WB_MANIFEST;
 
 // app-shell
 workbox.routing.registerRoute('/', new workbox.strategies.NetworkFirst());
+workbox.routing.registerRoute(/\.(?:js|css|html)$/, new workbox.strategies.NetworkFirst());
 
 // webfont-cache
 const webFontHandler = new workbox.strategies.CacheFirst({
   cacheName: 'webfont-cache',
   plugins: [
-    new workbox.expiration.Plugin({maxEntries: 20}),
-    new workbox.cacheableResponse.Plugin({statuses: [0, 200]}),
+    new workbox.expiration.ExpirationPlugin({maxEntries: 20}),
+    new workbox.cacheableResponse.CacheableResponsePlugin({statuses: [0, 200]}),
   ],
 });
 workbox.routing.registerRoute(/https:\/\/fonts.googleapis.com\/.*/, webFontHandler);
@@ -31,8 +32,8 @@ workbox.routing.registerRoute(/\.(?:jpg|png|json|ico|jpeg|svg)$/,
   new workbox.strategies.StaleWhileRevalidate({
     cacheName: 'work-images-cache',
     plugins: [
-      new workbox.expiration.Plugin({maxEntries: 60}),
-      new workbox.cacheableResponse.Plugin({statuses: [0, 200]}),
+      new workbox.expiration.ExpirationPlugin({maxEntries: 60}),
+      new workbox.cacheableResponse.CacheableResponsePlugin({statuses: [0, 200]}),
     ],
   })
 );
