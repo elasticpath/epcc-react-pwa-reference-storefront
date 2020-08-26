@@ -14,7 +14,7 @@ block-name__element-name--modifier-name
 Given that elements with a modifier are required to keep a separate class name with block and element only this can lead to a cumbersome markup:
 
 ``` html
-<div class="block-name__element-name block-name__element-name--modifier1 block-name__element-name--modifier1">
+<div class="block-name__element-name block-name__element-name--modifier1 block-name__element-name--modifier2">
 ```
 
 In order to simplify and improve readability, we made couple of changes to the original convention:
