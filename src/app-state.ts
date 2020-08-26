@@ -295,7 +295,7 @@ function useCategoriesState(selectedLanguage: string) {
     setCategoryPaths(undefined);
     setCategoriesTree(undefined);
 
-    loadCategoryTree().then(result => {
+    loadCategoryTree(selectedLanguage).then(result => {
       setCategoriesTree(result);
       setCategoryPaths(mergeMaps(result));
     });
