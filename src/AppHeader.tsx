@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 // @ts-ignore
 import { Offline } from 'react-detect-offline';
 import { ImageContainer } from './ImageContainer';
-import {useCustomerData, useTranslation} from './app-state';
+import { useCartData, useTranslation } from './app-state';
 import { LanguageDropdown } from './LanguageDropdown';
 import { SearchBar } from './SearchBar';
 import { AccountDropdown } from './AccountDropdown';
 import { Navigation } from "./Navigation";
+import { CartModal } from "./CartModal";
 
 import headerLogo from './images/site-images/Company-Logo.svg';
 
@@ -15,7 +16,18 @@ import './AppHeader.scss';
 
 export const AppHeader: React.FC = () => {
   const { t } = useTranslation();
-  const { id } = useCustomerData();
+  const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+  const { cartData } = useCartData();
+
+  const quantityItems = cartData.length;
+
+  const handleCloseCartModal = () => {
+    setIsCartModalOpen(false);
+  };
+
+  const handleCartModal = () => {
+    setIsCartModalOpen(true);
+  };
 
   return (
     <div className="appheader">
@@ -32,10 +44,11 @@ export const AppHeader: React.FC = () => {
           <LanguageDropdown />
         </div>
         <div className="appheader__moltincartcontainer">
-          <span
-            className="moltin-cart-button"
-            key={id}
-          ></span>
+          <button className="epbtn --secondary" onClick={handleCartModal}>
+            {quantityItems}
+            {' '}
+            {t('items-in-cart')}
+          </button>
         </div>
         <div className="appheader__account">
           <AccountDropdown />
@@ -51,6 +64,9 @@ export const AppHeader: React.FC = () => {
           </strong>
         </div>
       </Offline>
+      {isCartModalOpen && (
+        <CartModal isCartModalOpen={isCartModalOpen} handleCloseModal={handleCloseCartModal} />
+      )}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import constate from 'constate';
 import * as moltin from '@moltin/sdk';
-import { getCustomer, getAddresses, getAllOrders, loadCategoryTree } from './service';
+import { getCustomer, getAddresses, getAllOrders, loadCategoryTree, getCartItems } from './service';
 import * as service from './service';
 import { config } from './config';
 
@@ -349,17 +349,40 @@ function useCompareProductsState() {
   };
 }
 
+function useCartItemsState() {
+  const [cartData, setCartData] = useState<moltin.Cart[]>([]);
+  const mcart = localStorage.getItem('mcart') || '';
+
+  useEffect(() => {
+    if (mcart) {
+      getCartItems(mcart).then(res => {
+        setCartData(res.data)
+      });
+    }
+  }, [mcart]);
+
+  const updateCartItems = () => {
+    getCartItems(mcart).then(res => {
+      setCartData(res.data)
+    });
+  };
+
+  return { cartData, updateCartItems }
+}
+
 function useGlobalState() {
   const translation = useTranslationState();
   const currency = useCurrencyState();
   const addressData = useAddressDataState();
   const ordersData = usePurchaseHistoryState();
+  const cartData = useCartItemsState();
 
   return {
     translation,
     customerData: useCustomerDataState(),
     addressData,
     ordersData,
+    cartData,
     currency,
     categories: useCategoriesState(translation.selectedLanguage),
     compareProducts: useCompareProductsState(),
@@ -375,6 +398,7 @@ export const [
   useCurrency,
   useCategories,
   useCompareProducts,
+  useCartData,
 ] = constate(
   useGlobalState,
   value => value.translation,
@@ -383,5 +407,6 @@ export const [
   value => value.ordersData,
   value => value.currency,
   value => value.categories,
-  value => value.compareProducts
+  value => value.compareProducts,
+  value => value.cartData,
 );

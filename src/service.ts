@@ -169,3 +169,16 @@ export async function getAllOrders(token: string): Promise<{ data: moltin.Order[
   const result = await moltin.Orders.Limit(100).All(token);
   return result;
 }
+
+export async function getCartItems(reference: string): Promise<{ data: moltin.Cart[] }> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const CartItems = await moltin.Cart(reference).Items();
+
+  return CartItems;
+}
+
+export async function addToCart(reference: string, productId: string): Promise<void> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const quantity = 1;
+  await moltin.Cart(reference).AddProduct(productId, quantity);
+}

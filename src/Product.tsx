@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useResolve, useProductImages } from './hooks';
-import { loadProductBySlug } from './service';
+import { addToCart, loadProductBySlug } from './service';
 import { CompareCheck } from './CompareCheck';
 import { SocialShare } from './SocialShare';
-import { useTranslation, useCurrency } from './app-state';
+import { useTranslation, useCurrency, useCartData } from './app-state';
 import { isProductAvailable } from './helper';
 import { Availability } from './Availability';
 import { VariationsSelector } from './VariationsSelector';
@@ -21,6 +21,7 @@ export const Product: React.FC = () => {
   const { t } = useTranslation();
   const { selectedLanguage } = useTranslation();
   const { selectedCurrency } = useCurrency();
+  const { updateCartItems } = useCartData();
 
   const [product] = useResolve(
     async () => loadProductBySlug(productSlug, selectedLanguage, selectedCurrency),
@@ -40,6 +41,14 @@ export const Product: React.FC = () => {
 
   const handlePrevImageClicked = () => {
     setCurrentImageIndex(currentImageIndex - 1);
+  };
+
+  const handleAddToCart = () => {
+    const mcart = localStorage.getItem('mcart') || '';
+    addToCart(mcart, productId)
+      .then(() => {
+        updateCartItems()
+    })
   };
 
   const handleNextImageClicked = () => {
@@ -88,13 +97,11 @@ export const Product: React.FC = () => {
                 : ''
             }
             <div className="product__moltinbtncontainer">
-              {
-                productId &&
-                <span
-                  className="moltin-buy-button"
-                  data-moltin-product-id={productId}
-                  key={productId}
-                ></span>
+              {productId &&
+                <button
+                  className="epbtn --primary"
+                  onClick={handleAddToCart}
+                >{t('add-to-cart')}</button>
               }
             </div>
             <div className="product__description">

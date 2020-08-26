@@ -12,13 +12,6 @@ import { CompareOverlay } from './CompareOverlay';
 import './App.scss';
 
 const App: React.FC = () => {
-  useScript({
-    src: config.shopkitSrc,
-    'data-moltin-client-id': config.clientId,
-    'data-moltin-stripe-publishable-key': config.stripeKey,
-    'data-moltin-endpoint-url': 'https://' + config.endpointURL
-  });
-
   const searchClient = algoliasearch(
     config.algoliaAppId,
     config.algoliaApiKey
