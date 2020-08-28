@@ -3,6 +3,7 @@ import Modal from 'react-responsive-modal';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import { useTranslation } from './app-state';
 import { useCartData } from './app-state';
+import { CartItemList } from './CartItemList';
 
 import './CartModal.scss';
 
@@ -32,9 +33,9 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
         <h2 className="cartmodal__title">
           {t('your-shopping-cart')}
         </h2>
-        <div className="cartmodal__body">
-          {t('your-cart-is-empty')}
-        </div>
+        <CartItemList
+          items={cartData}
+        />
       </div>
     </Modal>
   )

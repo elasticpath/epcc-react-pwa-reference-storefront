@@ -1,0 +1,64 @@
+
+@import './theme/common';
+
+.cartitemlist {
+
+  &__product {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  &__image {
+    display: inline-block;
+    width: 75px;
+    border: 1px solid $secondBorderColor;
+    margin-right: 12px;
+  }
+
+  &__name {
+    display: inline-block;
+    position: absolute;
+    font-weight: bold;
+  }
+
+  &__price {
+    display: inline-block;
+    position: absolute;
+    margin-top: 30px;
+  }
+
+  &__removebutton {
+    position: absolute;
+    margin-top: 58px;
+    font-weight: bold;
+  }
+
+  &__quantity {
+    position: absolute;
+    right: 45px;
+    top: 20px;
+    width: 11px;
+  }
+
+  &__arrow {
+    display: inline-block;
+    height: 10px;
+    width: 10px;
+    border-bottom: 2px solid $fourthComplimentTextColor;
+    border-right: 2px solid $fourthComplimentTextColor;
+    margin-right: 6px;
+
+    &.--top {
+      display: block;
+      transform: rotate(225deg);
+    }
+
+    &.--bottom {
+      transform: rotate(45deg);
+    }
+  }
+
+  &__count {
+    text-align: center;
+  }
+}

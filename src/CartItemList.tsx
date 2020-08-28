@@ -1,0 +1,57 @@
+import React from 'react';
+import { useTranslation } from './app-state';
+
+import { ImageContainer } from "./ImageContainer";
+import './CartItemList.scss';
+
+interface CartItemListParams {
+  items: any,
+}
+
+export const CartItemList: React.FC<CartItemListParams> = (props) => {
+  const { items } = props;
+
+  const isLoading = false;
+  const { t } = useTranslation();
+  const imgSize = 73;
+
+  return (
+      <div className={`cartitemlist ${isLoading ? '--loading' : ''}`}>
+        {items && items.length > 0 ? ( items.map((item: any) => (
+          <div key={item.id} className="cartitemlist__product" >
+            <div className="cartitemlist__image">
+              {item.image && item.image.href && (
+                <ImageContainer
+                  imgClassName="productmainimage"
+                  imgUrl={item.image.href}
+                  alt={item.image.name}
+                  imageStyle={{ width: imgSize, height: imgSize, objectFit: 'fill', backgroundColor: '' }}
+                />
+              )}
+            </div>
+            <div className="cartitemlist__name">
+              {item.name}
+            </div>
+            <div className="cartitemlist__price">
+              {item.meta.display_price.without_tax.value.formatted}
+            </div>
+            <button className="cartitemlist__removebutton">
+              Remove
+            </button>
+            <div className="cartitemlist__quantity">
+              <div className="cartitemlist__arrow --top"/>
+              <p className='cartitemlist__count'>
+                {item.quantity}
+              </p>
+              <div className="cartitemlist__arrow --bottom"/>
+            </div>
+          </div>
+          ))
+        ) : (
+          <div className="cartmodal__body">
+            {t('your-cart-is-empty')}
+          </div>
+        )}
+      </div>
+  )
+};
