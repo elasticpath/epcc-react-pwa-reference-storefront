@@ -1,0 +1,60 @@
+
+@import './theme/common';
+
+.checkout {
+  &__title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 34px;
+    padding-bottom: 50px;
+    text-align: center;
+  }
+
+  &__main {
+    margin-bottom: 20px;
+  }
+
+  &__addressbutton {
+    margin-top: 10px;
+    text-decoration: underline;
+
+    &:hover {
+      cursor: pointer;
+      color: #0099DE;
+    }
+  }
+
+  &__field {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  &.--styledinput {
+    width: 50%;
+    padding: 0 12px;
+  }
+
+  .--addspace {
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
+  }
+
+  .epform {
+    &__label {
+      text-transform: none;
+    }
+
+    &__input {
+      height: 40px;
+    }
+  }
+  .epform {
+    &__error {
+      position: unset;
+    }
+  }
+}
+
+

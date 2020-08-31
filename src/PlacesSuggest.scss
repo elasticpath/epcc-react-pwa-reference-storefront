@@ -1,0 +1,122 @@
+
+@import './theme/common';
+
+.algoliasearch {
+
+  &__title {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .algolia-places-nostyle {
+    width: 100%;
+  }
+
+  .ap-nostyle-input {
+    background-color: $mainBackgroundColor;
+    border-radius: 0.25rem;
+    border: 1px solid $secondBorderColor;
+    color: $mainTextColor;
+    display: block;
+    font-family: inherit;
+    font-size: 100%;
+    font-weight: 400;
+    padding: 0.75rem 1rem;
+    margin: 0;
+    overflow: visible;
+    outline: none;
+    width: 100%;
+
+    &:hover {
+      cursor: text;
+    }
+  }
+
+  .ap-nostyle-icon-pin,
+  .ap-nostyle-input-icon,
+  .ap-nostyle-suggestion-icon,
+  .ap-suggestion-icon {
+    display: none;
+  }
+
+  .ap-nostyle-dropdown-menu {
+    background-color: $mainBackgroundColor;
+    border-radius: 0.25rem;
+    border: 1px solid $secondBorderColor;
+    margin-top: 0.5rem;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .ap-nostyle-suggestion,
+  .ap-suggestion {
+    padding: 0.75rem 1rem;
+    color: $mainTextColor;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    border-bottom: 1px solid $secondBorderColor;
+    line-height: 1.5;
+  }
+
+  .ap-nostyle-suggestion em,
+  .ap-suggestion em {
+    font-style: normal;
+    color: $secondComplimentColor;
+  }
+
+  .ap-nostyle-cursor,
+  .ap-cursor {
+    background-color: $mainBackgroundColor;
+  }
+
+  .ap-nostyle-name,
+  .ap-name {
+    color: $mainTextColor;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .ap-nostyle-address,
+  .ap-address {
+    color: $secondComplimentTextColor;
+    font-size: 14px;
+    margin-left: 0.5rem;
+  }
+
+  .ap-nostyle-input-icon.ap-nostyle-icon-clear {
+    background-color: $mainBackgroundColor;
+    appearance: none;
+    border: 0;
+    cursor: pointer;
+    outline: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 0.75rem;
+    margin-top: 0.5rem;
+    margin-right: 1px;
+    margin-bottom: 0.5rem;
+    color: $firstComplimentTextColor;
+    z-index: 5;
+
+    svg {
+      fill: currentColor;
+      width: 10px;
+      height: 10px;
+    }
+
+    &:hover,
+    &:focus {
+      outline: none;
+    }
+
+    &::-moz-focus-inner {
+      border-style: none;
+      padding: 0;
+    }
+  }
+}

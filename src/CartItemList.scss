@@ -3,6 +3,15 @@
 
 .cartitemlist {
 
+  &__title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 34px;
+    padding-bottom: 50px;
+    text-align: center;
+  }
+
   &__product {
     position: relative;
     margin-bottom: 20px;
@@ -59,6 +68,10 @@
   }
 
   &__count {
+    text-align: center;
+  }
+
+  &__checkoutbutton {
     text-align: center;
   }
 }

@@ -6,10 +6,11 @@ import './CartItemList.scss';
 
 interface CartItemListParams {
   items: any,
+  handlePage: any,
 }
 
 export const CartItemList: React.FC<CartItemListParams> = (props) => {
-  const { items } = props;
+  const { items, handlePage } = props;
 
   const isLoading = false;
   const { t } = useTranslation();
@@ -18,10 +19,14 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const quantityItems = items.length;
 
   const onCheckoutPage = () => {
+    handlePage(true)
   };
 
   return (
       <div className={`cartitemlist ${isLoading ? '--loading' : ''}`}>
+        <h2 className="cartitemlist__title">
+          {t('your-shopping-cart')}
+        </h2>
         {items && items.length > 0 ? (
           <div>
             {items.map((item: any) => (

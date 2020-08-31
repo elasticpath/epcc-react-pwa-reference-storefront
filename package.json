@@ -9,6 +9,7 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-instantsearch-dom": "^6.3.0",
     "@types/react-router-dom": "^5.1.5",
+    "algolia-places-react": "^1.6.0",
     "algoliasearch": "^4.3.0",
     "app-localizer": "^1.2.2",
     "constate": "^2.0.0",

@@ -102,6 +102,7 @@
   "addresses": "ÅÅððŕŕéšššéš",
   "address-book": "ÅÅððŕŕéšš ƁƁööķ",
   "address-form": "ÅÅððŕŕéšš ƒƒöŕɱ",
+  "enter-address-manually": "ÉÉñţţéŕ ååððŕŕéšš ɱɱåñûååļļý",
   "extended-address": "ÉÉẋţéññðéð ÅÅððŕŕéšš",
   "my-profile": "ṀṀý ÞÞŕöƒƒîļé",
   "general": "ĜĜéñééŕåļ",
@@ -121,6 +122,7 @@
   "street-address": "ŠŠţŕéééţ ÅÅððŕŕéšš",
   "billing-address": "ƁƁîļļļîñĝ ÅÅððŕŕéšš",
   "shipping-address": "ŠŠĥîþþþîñĝ ÅÅððŕŕéšš",
+  "shipping-information": "ŠŠĥîþþþîñĝ îîñƒööŕɱåţţîöñ",
   "postal-сode": "ÞÞöšţţåļ ÇÇöðé",
   "company-name": "ÇÇöɱþþåñý ÑÑåɱé",
   "county": "ÇÇöûññţý",
@@ -155,5 +157,6 @@
   "social-share-title": "ÇÇĥééçķ ööûţ ţţĥîš þþŕöðûûçţ∶ {productName}",
   "social-share-subject": "ÇÇĥééçķ ööûţ ţţĥîš þþŕöðûûçţ∶ {productName}",
   "social-share-message": "{link}{productName}{description}",
-  "overview": "ÖÖṽéŕṽṽîéŵ"
+  "overview": "ÖÖṽéŕṽṽîéŵ",
+  "checkout-with-items": "ÇÇĥéçķķöûţ ŵŵîţĥ {quantityItems} îîţééɱš"
 }
