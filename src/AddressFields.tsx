@@ -3,10 +3,12 @@ import { useTranslation } from './app-state';
 import { PlacesSuggest } from './PlacesSuggest';
 import { useFormik } from 'formik';
 
-import './ShippingInfo.scss';
+import './AddressFields.scss';
 
 interface CheckoutParams {
   items: any,
+  type: string,
+  handlePage: (route: string) => any,
 }
 
 interface FormValues {
@@ -23,7 +25,8 @@ interface FormValues {
   instructions: string,
 }
 
-export const ShippingInfo: React.FC<CheckoutParams> = (props) => {
+export const AddressFields: React.FC<CheckoutParams> = (props) => {
+  const { items, type, handlePage } = props;
   const [editing, setEditing] = useState(false);
 
   const { t } = useTranslation();
@@ -85,32 +88,28 @@ export const ShippingInfo: React.FC<CheckoutParams> = (props) => {
     }
     return errors;
   };
- const shortType = "shipping";
 
   const {handleSubmit, handleChange, resetForm, values, errors, setValues} = useFormik({
     initialValues,
     validate,
     onSubmit: (values) => {
+      handlePage('billing')
     },
   });
-  console.log('values1', values);
 
   return (
-    <div className="checkout">
+    <div className="address">
 
-      <div className="checkout__main">
-        <h2 className="checkout__title">
-          {t('shipping-information')}
-        </h2>
+      <div className="address__main">
         <PlacesSuggest
-          label={shortType}
+          label={type}
           onChange={({suggestion}: any) => {
             onPlacesChange(suggestion)
           }}
           onClear={() => resetForm({})}
         />
         {!editing && (
-          <button onClick={() => setEditing(true)} className="checkout__addressbutton">
+          <button onClick={() => setEditing(true)} className="address__addressbutton">
             {t('enter-address-manually')}
           </button>
         )}
@@ -118,8 +117,8 @@ export const ShippingInfo: React.FC<CheckoutParams> = (props) => {
 
       {editing && (
         <form onSubmit={handleSubmit}>
-          <div className="checkout__field --addspace">
-            <div className="checkout --styledinput">
+          <div className="address__field --addspace">
+            <div className="address --styledinput">
               <label className="epform__label" htmlFor="first_name">
                 <span className="required-label">
                   *
@@ -132,7 +131,7 @@ export const ShippingInfo: React.FC<CheckoutParams> = (props) => {
                 {errors.first_name ? errors.first_name : null}
               </div>
             </div>
-            <div className="checkout --styledinput">
+            <div className="address --styledinput">
               <label className="epform__label" htmlFor="last_name">
                 <span className="required-label">
                   *
@@ -146,7 +145,7 @@ export const ShippingInfo: React.FC<CheckoutParams> = (props) => {
               </div>
             </div>
           </div>
-          <div className="checkout__field">
+          <div className="address__field">
             <label className="epform__label" htmlFor="line_1">
               <span className="required-label">
                 *
@@ -159,14 +158,14 @@ export const ShippingInfo: React.FC<CheckoutParams> = (props) => {
               {errors.line_1 ? errors.line_1 : null}
             </div>
           </div>
-          <div className="checkout__field">
+          <div className="address__field">
             <label className="epform__label" htmlFor="line_2">
               {t('extended-address')}
             </label>
             <input className="epform__input" id="line_2" type="text" onChange={handleChange} value={values.line_2} />
           </div>
-          <div className="checkout__field --addspace">
-            <div className="checkout --styledinput">
+          <div className="address__field --addspace">
+            <div className="address --styledinput">
               <label className="epform__label" htmlFor="city">
                 <span className="required-label">
                   *
@@ -179,7 +178,7 @@ export const ShippingInfo: React.FC<CheckoutParams> = (props) => {
                 {errors.city ? errors.city : null}
               </div>
             </div>
-            <div className="checkout --styledinput">
+            <div className="address --styledinput">
               <label className="epform__label" htmlFor="county">
                     <span className="required-label">
                       *
@@ -193,8 +192,8 @@ export const ShippingInfo: React.FC<CheckoutParams> = (props) => {
               </div>
             </div>
           </div>
-          <div className="checkout__field --addspace">
-            <div className="checkout --styledinput">
+          <div className="address__field --addspace">
+            <div className="address --styledinput">
               <label className="epform__label" htmlFor="postcode">
                 <span className="required-label">
                   *
@@ -207,7 +206,7 @@ export const ShippingInfo: React.FC<CheckoutParams> = (props) => {
                 {errors.postcode ? errors.postcode : null}
               </div>
             </div>
-            <div className="checkout --styledinput">
+            <div className="address --styledinput">
               <label className="epform__label" htmlFor="country">
                 <span className="required-label">
                   *
@@ -221,13 +220,13 @@ export const ShippingInfo: React.FC<CheckoutParams> = (props) => {
               </div>
             </div>
           </div>
-          <div className="checkout__field">
+          <div className="address__field">
             <label className="epform__label" htmlFor="phone_number">
               {t('phone-number')}
             </label>
             <input className="epform__input" id="phone_number" type="text" onChange={handleChange} value={values.phone_number} />
           </div>
-          <div className="checkout__field">
+          <div className="address__field">
             <label className="epform__label" htmlFor="instructions">
               {t('instructions')}
             </label>

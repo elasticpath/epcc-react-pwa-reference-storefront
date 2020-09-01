@@ -123,6 +123,8 @@
   "billing-address": "Billing Address",
   "shipping-address": "Shipping Address",
   "shipping-information": "Shipping information",
+  "billing-information": "Billing information",
+  "same-as-shipping-address": "Same as shipping address",
   "postal-сode": "Postal Code",
   "company-name": "Company Name",
   "county": "County",

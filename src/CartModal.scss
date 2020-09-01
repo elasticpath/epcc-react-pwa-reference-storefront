@@ -1,3 +1,6 @@
+
+@import './theme/common';
+
 .cartmodal {
   position: absolute;
   min-height: 100vh;
@@ -5,6 +8,78 @@
   padding: 40px;
   right: 0;
   top: 0;
+
+  .checkbox-text {
+    margin-left: 10px;
+    display: inline;
+  }
+
+  .styledcheckbox {
+    display: none;
+    width: 20px;
+    height: 20px;
+
+    +label {
+      position: relative;
+      width: 18px;
+      height: 18px;
+      padding-left: 25px;
+      font-size: 13px;
+      line-height: 18px;
+      color: $firstComplimentTextColor;
+      display: inline-block;
+      vertical-align: top;
+      margin-bottom: 0;
+      &:before {
+        content: "";
+        width: 20px;
+        height: 20px;
+        border: 2px solid $buttonFocusColor;
+        border-radius: 2px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: $buttonActiveColor;
+      }
+    }
+
+    &:disabled {
+      +label {
+        opacity: 0.4;
+      }
+    }
+
+    &:checked {
+      + label {
+        &:before {
+          background-color: $buttonActiveColor;
+          border-color: $buttonActiveColor;
+        }
+
+        &:after {
+          content: "";
+          position: absolute;
+          top: 4px;
+          left: 2px;
+          width: 12px;
+          height: 7px;
+          border: solid 2px $mainBackgroundColor;
+          border-right: none;
+          border-top: none;
+          transform: translate(2px, 1px) rotate(-45deg);
+        }
+      }
+    }
+  }
+
+  &__title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 34px;
+    padding-bottom: 50px;
+    text-align: center;
+  }
 
   &__closebutton {
     &:hover {

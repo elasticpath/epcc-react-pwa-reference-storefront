@@ -18,6 +18,7 @@ export const AppHeader: React.FC = () => {
   const { t } = useTranslation();
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const { cartData } = useCartData();
+  const { updateCartItems } = useCartData();
 
   const quantityItems = cartData.length;
 
@@ -26,6 +27,7 @@ export const AppHeader: React.FC = () => {
   };
 
   const handleCartModal = () => {
+    updateCartItems();
     setIsCartModalOpen(true);
   };
 

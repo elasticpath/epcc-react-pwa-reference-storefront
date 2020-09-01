@@ -6,7 +6,7 @@ import './CartItemList.scss';
 
 interface CartItemListParams {
   items: any,
-  handlePage: any,
+  handlePage: (route: string) => any,
 }
 
 export const CartItemList: React.FC<CartItemListParams> = (props) => {
@@ -19,7 +19,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const quantityItems = items.length;
 
   const onCheckoutPage = () => {
-    handlePage(true)
+    handlePage('shipping')
   };
 
   return (
