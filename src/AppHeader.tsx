@@ -17,10 +17,7 @@ import './AppHeader.scss';
 export const AppHeader: React.FC = () => {
   const { t } = useTranslation();
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
-  const { cartData } = useCartData();
-  const { updateCartItems } = useCartData();
-
-  const quantityItems = cartData.length;
+  const { count, updateCartItems } = useCartData();
 
   const handleCloseCartModal = () => {
     setIsCartModalOpen(false);
@@ -47,7 +44,7 @@ export const AppHeader: React.FC = () => {
         </div>
         <div className="appheader__moltincartcontainer">
           <button className="epbtn --secondary" onClick={handleCartModal}>
-            {quantityItems}
+            {count}
             {' '}
             {t('items-in-cart')}
           </button>

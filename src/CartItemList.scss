@@ -14,7 +14,31 @@
 
   &__product {
     position: relative;
-    margin-bottom: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+
+    &.--removing {
+      &:before {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: $mainBackgroundColor;
+        opacity: 0.3;
+        z-index: 1;
+      }
+    }
+  }
+
+  &__wrap {
+    padding-bottom: 10px;
+  }
+
+  &__info {
+    flex-grow: 1;
   }
 
   &__image {
@@ -25,28 +49,33 @@
   }
 
   &__name {
-    display: inline-block;
-    position: absolute;
     font-weight: bold;
+    margin-bottom: 8px;
   }
 
   &__price {
-    display: inline-block;
-    position: absolute;
-    margin-top: 30px;
+    margin-bottom: 8px;
   }
 
   &__removebutton {
-    position: absolute;
-    margin-top: 58px;
     font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+      color: adjust-color($color: $secondAccentColor, $lightness: 25%);;
+    }
+  }
+
+  &__quantitywrap {
+    margin-right: 5px;
+    margin-top: 5px;
   }
 
   &__quantity {
-    position: absolute;
-    right: 45px;
-    top: 20px;
-    width: 11px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
   }
 
   &__arrow {
@@ -55,19 +84,24 @@
     width: 10px;
     border-bottom: 2px solid $fourthComplimentTextColor;
     border-right: 2px solid $fourthComplimentTextColor;
-    margin-right: 6px;
+    cursor: pointer;
 
     &.--top {
-      display: block;
       transform: rotate(225deg);
     }
 
     &.--bottom {
       transform: rotate(45deg);
     }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
 
   &__count {
+    padding: 4px 0;
     text-align: center;
   }
 

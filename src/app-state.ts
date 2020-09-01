@@ -352,6 +352,7 @@ function useCompareProductsState() {
 function useCartItemsState() {
   const [cartData, setCartData] = useState<moltin.Cart[]>([]);
   const [promotionItems, setPromotionItems] = useState<moltin.Cart[]>([]);
+  const [count, setCount] = useState(0);
   const mcart = localStorage.getItem('mcart') || '';
 
   useEffect(() => {
@@ -359,6 +360,8 @@ function useCartItemsState() {
       getCartItems(mcart).then(res => {
         setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'))
         setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'))
+        // @ts-ignore
+        setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0))
       });
     }
   }, [mcart]);
@@ -367,10 +370,12 @@ function useCartItemsState() {
     getCartItems(mcart).then(res => {
       setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'))
       setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'))
+      // @ts-ignore
+      setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0))
     });
   };
 
-  return { cartData, promotionItems, updateCartItems }
+  return { cartData, promotionItems, count, updateCartItems }
 }
 
 function useGlobalState() {
