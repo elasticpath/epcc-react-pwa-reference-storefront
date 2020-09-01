@@ -332,11 +332,11 @@ function useCompareProductsState() {
 
   const removeFromCompare = (productId: string) => {
     setCompareProducts(compareProducts.filter(p => p.id !== productId));
-  }
+  };
 
   const removeAll = () => {
     setCompareProducts([]);
-  }
+  };
 
   return {
     compareProducts,
@@ -351,23 +351,26 @@ function useCompareProductsState() {
 
 function useCartItemsState() {
   const [cartData, setCartData] = useState<moltin.Cart[]>([]);
+  const [promotionItems, setPromotionItems] = useState<moltin.Cart[]>([]);
   const mcart = localStorage.getItem('mcart') || '';
 
   useEffect(() => {
     if (mcart) {
       getCartItems(mcart).then(res => {
-        setCartData(res.data)
+        setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'))
+        setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'))
       });
     }
   }, [mcart]);
 
   const updateCartItems = () => {
     getCartItems(mcart).then(res => {
-      setCartData(res.data)
+      setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'))
+      setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'))
     });
   };
 
-  return { cartData, updateCartItems }
+  return { cartData, promotionItems, updateCartItems }
 }
 
 function useGlobalState() {

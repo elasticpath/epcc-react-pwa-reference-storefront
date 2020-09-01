@@ -2,15 +2,17 @@ import React from 'react';
 import { useTranslation } from './app-state';
 
 import { ImageContainer } from "./ImageContainer";
+import { Promotion } from "./Promotion";
 import './CartItemList.scss';
 
 interface CartItemListParams {
   items: any,
   handlePage: (route: string) => any,
+  promotionItems: any,
 }
 
 export const CartItemList: React.FC<CartItemListParams> = (props) => {
-  const { items, handlePage } = props;
+  const { items, handlePage, promotionItems } = props;
 
   const isLoading = false;
   const { t } = useTranslation();
@@ -59,6 +61,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
                 </div>
               </div>
             ))}
+            <Promotion promotionItems={promotionItems} />
             <div className="cartitemlist__checkoutbutton">
               <button className="epbtn --secondary" onClick={onCheckoutPage}>
                 {t('checkout-with-items', { quantityItems })}

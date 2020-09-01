@@ -15,7 +15,7 @@ interface CartModalParams {
 
 export const CartModal: React.FC<CartModalParams> = (props) => {
   const { handleCloseModal, isCartModalOpen } = props;
-  const { cartData } = useCartData();
+  const { cartData, promotionItems } = useCartData();
   const [route, setRoute] = useState<string>('itemList');
   const [isSameAddress, setIsSameAddress] = useState(true);
   const { t } = useTranslation();
@@ -63,6 +63,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
           <CartItemList
             items={cartData}
             handlePage={(e: string) => handlePage(e)}
+            promotionItems={promotionItems}
           />
         )}
         {route === 'shipping' && (

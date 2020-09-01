@@ -160,5 +160,9 @@
   "social-share-subject": "ÇÇĥééçķ ööûţ ţţĥîš þþŕöðûûçţ∶ {productName}",
   "social-share-message": "{link}{productName}{description}",
   "overview": "ÖÖṽéŕṽṽîéŵ",
-  "checkout-with-items": "ÇÇĥéçķķöûţ ŵŵîţĥ {quantityItems} îîţééɱš"
+  "checkout-with-items": "ÇÇĥéçķķöûţ ŵŵîţĥ {quantityItems} îîţééɱš",
+  "gift-card": "ĜĜîƒţ ççåŕð ööŕ ððîšçööûñţ ççöðé",
+  "apply": "ÅÅþþþļý",
+  "code-expired": "ÇÇöðé ééẋþîîŕéð ööŕ îîñṽååļîð",
+  "promo-code": "ÞÞŕööɱö ççöðé"
 }

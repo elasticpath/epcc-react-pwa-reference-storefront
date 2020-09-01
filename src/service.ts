@@ -182,3 +182,13 @@ export async function addToCart(reference: string, productId: string): Promise<v
   const quantity = 1;
   await moltin.Cart(reference).AddProduct(productId, quantity);
 }
+
+export async function addPromotion(reference: string, promoCode: string): Promise<void> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  await moltin.Cart(reference).AddPromotion(promoCode);
+}
+
+export async function removeCartItem(reference: string, itemId: string): Promise<void> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  await moltin.Cart(reference).RemoveItem(itemId);
+}
