@@ -6,13 +6,12 @@ import { useFormik } from 'formik';
 import './AddressFields.scss';
 
 interface CheckoutParams {
-  items: any,
   type: string,
   handlePage: (route: string) => any,
+  onSetAddress: (key: any) => any,
 }
 
 interface FormValues {
-  id: string,
   first_name: string,
   last_name: string,
   line_1: string,
@@ -26,13 +25,12 @@ interface FormValues {
 }
 
 export const AddressFields: React.FC<CheckoutParams> = (props) => {
-  const { items, type, handlePage } = props;
+  const { type, handlePage, onSetAddress } = props;
   const [editing, setEditing] = useState(false);
 
   const { t } = useTranslation();
 
   let initialValues: FormValues = {
-    id: '',
     first_name: '',
     last_name: '',
     line_1: '',
@@ -47,7 +45,6 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
 
   const onPlacesChange = (suggestion: any) => {
     const address = {
-      id: '',
       first_name: '',
       last_name: '',
       line_1: suggestion.name || '',
@@ -93,6 +90,7 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
     initialValues,
     validate,
     onSubmit: (values) => {
+      onSetAddress(values);
       handlePage('billing')
     },
   });
@@ -232,7 +230,7 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
             </label>
             <input className="epform__input" id="instructions" type="text" onChange={handleChange} value={values.instructions} />
           </div>
-          <button className="epbtn --secondary" type="submit">Continue to billing information</button>
+          <button className="epbtn --secondary --large --fullwidth" type="submit">Continue to billing information</button>
         </form>
       )}
     </div>

@@ -197,3 +197,8 @@ export async function updateCartItem(reference: string, productId: string, quant
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   await moltin.Cart(reference).UpdateItem(productId, quantity);
 }
+
+export async function checkout(reference: string, customer: any, billing: any, shipping: any): Promise<void> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  await moltin.Cart(reference).Checkout(customer, billing, shipping);
+}

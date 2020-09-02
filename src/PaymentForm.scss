@@ -1,0 +1,13 @@
+
+@import './theme/common';
+
+.card-title {
+  margin: 12px 0;
+}
+
+.payment-form {
+       background-color: $mainBackgroundColor;
+       border: 1px solid $buttonActiveColor;
+       border-radius: 0.25rem;
+       padding: 0.75rem 1rem;
+}

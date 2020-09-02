@@ -353,15 +353,18 @@ function useCartItemsState() {
   const [cartData, setCartData] = useState<moltin.Cart[]>([]);
   const [promotionItems, setPromotionItems] = useState<moltin.Cart[]>([]);
   const [count, setCount] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   const mcart = localStorage.getItem('mcart') || '';
 
   useEffect(() => {
     if (mcart) {
       getCartItems(mcart).then(res => {
         setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'))
-        setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'))
+        setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'));
         // @ts-ignore
-        setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0))
+        setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0));
+        // @ts-ignore
+        setTotalPrice(res.meta.display_price.without_tax.formatted);
       });
     }
   }, [mcart]);
@@ -369,13 +372,15 @@ function useCartItemsState() {
   const updateCartItems = () => {
     getCartItems(mcart).then(res => {
       setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'))
-      setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'))
+      setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'));
       // @ts-ignore
-      setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0))
+      setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0));
+      // @ts-ignore
+      setTotalPrice(res.meta.display_price.without_tax.formatted);
     });
   };
 
-  return { cartData, promotionItems, count, updateCartItems }
+  return { cartData, promotionItems, count, totalPrice, updateCartItems }
 }
 
 function useGlobalState() {
