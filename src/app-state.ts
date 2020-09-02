@@ -350,8 +350,8 @@ function useCompareProductsState() {
 }
 
 function useCartItemsState() {
-  const [cartData, setCartData] = useState<moltin.Cart[]>([]);
-  const [promotionItems, setPromotionItems] = useState<moltin.Cart[]>([]);
+  const [cartData, setCartData] = useState<moltin.CartItem[]>([]);
+  const [promotionItems, setPromotionItems] = useState<moltin.CartItem[]>([]);
   const [count, setCount] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const mcart = localStorage.getItem('mcart') || '';
@@ -360,11 +360,10 @@ function useCartItemsState() {
     if (mcart) {
       getCartItems(mcart).then(res => {
         setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'))
-        setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'));
+        setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'))
+        setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0))
         // @ts-ignore
-        setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0));
-        // @ts-ignore
-        setTotalPrice(res.meta.display_price.without_tax.formatted);
+        setTotalPrice(res.meta.display_price.without_tax.formatted)
       });
     }
   }, [mcart]);
@@ -372,11 +371,10 @@ function useCartItemsState() {
   const updateCartItems = () => {
     getCartItems(mcart).then(res => {
       setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'))
-      setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'));
+      setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'))
+      setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0))
       // @ts-ignore
-      setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0));
-      // @ts-ignore
-      setTotalPrice(res.meta.display_price.without_tax.formatted);
+      setTotalPrice(res.meta.display_price.without_tax.formatted)
     });
   };
 

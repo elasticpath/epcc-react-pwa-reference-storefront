@@ -43,7 +43,7 @@ export const AppHeader: React.FC = () => {
           <LanguageDropdown />
         </div>
         <div className="appheader__moltincartcontainer">
-          <button className="epbtn --secondary" onClick={handleCartModal}>
+          <button className="epbtn --bordered" onClick={handleCartModal}>
             {count}
             {' '}
             {t('items-in-cart')}
@@ -63,9 +63,7 @@ export const AppHeader: React.FC = () => {
           </strong>
         </div>
       </Offline>
-      {isCartModalOpen && (
-        <CartModal isCartModalOpen={isCartModalOpen} handleCloseModal={handleCloseCartModal} />
-      )}
+      <CartModal isCartModalOpen={isCartModalOpen} handleCloseModal={handleCloseCartModal} />
     </div>
   );
 };

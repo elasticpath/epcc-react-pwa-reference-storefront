@@ -2,12 +2,49 @@
 @import './theme/common';
 
 .cartmodal {
-  position: absolute;
-  min-height: 100vh;
-  width: 500px;
-  padding: 40px;
-  right: 0;
-  top: 0;
+
+  &__overlay {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background: $mainTextColor;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 2;
+    transition: all 0.3s ease 0s;
+  }
+
+  &__content {
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    overflow-y: scroll;
+    height: 100%;
+    width: 500px;
+    padding: 32px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(500px);
+    transition: all 0.3s ease 0s;
+    z-index: 3;
+    background: $mainBackgroundColor;
+  }
+
+  &.--open & {
+    &__overlay {
+      opacity: 0.3;
+      visibility: visible;
+    }
+
+    &__content {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0px);
+    }
+  }
 
   .checkbox-text {
     margin-left: 10px;
@@ -84,6 +121,12 @@
   &__closebutton {
     &:hover {
       cursor: pointer;
+    }
+
+    svg {
+      width: 22px;
+      height: 22px;
+      fill: $thirdComplimentTextColor;
     }
   }
 

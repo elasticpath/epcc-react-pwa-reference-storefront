@@ -80,10 +80,10 @@
 
   &__arrow {
     display: inline-block;
-    height: 10px;
-    width: 10px;
-    border-bottom: 2px solid $fourthComplimentTextColor;
-    border-right: 2px solid $fourthComplimentTextColor;
+    height: 7px;
+    width: 7px;
+    border-bottom: 1px solid $fourthComplimentTextColor;
+    border-right: 1px solid $fourthComplimentTextColor;
     cursor: pointer;
 
     &.--top {
@@ -95,7 +95,7 @@
     }
 
     &:disabled {
-      opacity: 0.5;
+      opacity: 0.4;
       cursor: not-allowed;
     }
   }

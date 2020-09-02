@@ -33,6 +33,10 @@
 
   &__moltincartcontainer {
     flex: 0 0 auto;
+
+    .epbtn {
+      padding: 10px 15px;
+    }
   }
 
   .toggle-btn {

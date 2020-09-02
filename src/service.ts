@@ -170,7 +170,7 @@ export async function getAllOrders(token: string): Promise<{ data: moltin.Order[
   return result;
 }
 
-export async function getCartItems(reference: string): Promise<{ data: moltin.Cart[] }> {
+export async function getCartItems(reference: string): Promise<{ data: moltin.CartItem[] }> {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const CartItems = await moltin.Cart(reference).Items();
 

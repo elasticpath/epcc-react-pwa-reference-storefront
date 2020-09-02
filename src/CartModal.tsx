@@ -1,16 +1,17 @@
 import React, {useState} from 'react';
-import Modal from 'react-responsive-modal';
-import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
-import { ReactComponent as BackArrovIcon } from './images/icons/arrow_back-black-24dp.svg';
-import {useCartData, useTranslation} from './app-state';
-import { CartItemList } from './CartItemList';
+import useOnclickOutside from 'react-cool-onclickoutside';
 import { StripeProvider } from 'react-stripe-elements';
+import {useCartData, useTranslation} from './app-state';
 import { config } from './config';
 import { checkout } from './service';
 
-import './CartModal.scss';
 import { AddressFields } from "./AddressFields";
 import { PaymentForm } from "./PaymentForm";
+import { CartItemList } from './CartItemList';
+import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
+import { ReactComponent as BackArrovIcon } from './images/icons/arrow_back-black-24dp.svg';
+
+import './CartModal.scss';
 
 interface CartModalParams {
   handleCloseModal: (...args: any[]) => any,
@@ -27,12 +28,6 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
   const [customerName, setCustomerName] = useState({});
   const [email, setEmail] = useState('');
   const { t } = useTranslation();
-
-  const isLoading = false;
-  const onCloseModal = () => {
-    handleCloseModal();
-    setRoute('itemList')
-  };
 
   const onSetShippingAddress = (address: any) => {
     setShippingAddress(address);
@@ -65,12 +60,13 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
     setRoute(page)
   };
 
+  const ref = useOnclickOutside(() => {
+    handleCloseModal();
+  });
+
   return (
-    <Modal open={isCartModalOpen} onClose={onCloseModal} classNames={{modal: 'cartmodal'}} showCloseIcon={false}>
-      {
-        (isLoading) ? <div className="epminiLoader --centered"/> : ('')
-      }
-      <div className={`cartmodal__content ${isLoading ? '--loading' : ''}`}>
+    <div className={`cartmodal ${isCartModalOpen ? '--open' : ''}`}>
+      <div className="cartmodal__content" ref={ref}>
         <div className="cartmodal__header">
           {route === 'itemList' ? (
             <button className="cartmodal__closebutton" type="button" aria-label="close" onClick={handleCloseModal}>
@@ -129,6 +125,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
           </div>
         )}
       </div>
-    </Modal>
+      <div className="cartmodal__overlay" />
+    </div>
   )
 };
