@@ -108,4 +108,21 @@
   &__checkoutbutton {
     text-align: center;
   }
+
+  &__total {
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__totaltitle {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  &__subtotal {
+    font-size: 20px;
+    font-weight: bold;
+  }
 }

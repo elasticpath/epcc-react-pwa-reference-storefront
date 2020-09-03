@@ -15,7 +15,7 @@ interface CartItemListParams {
 export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const { items, handlePage, promotionItems } = props;
   const { t } = useTranslation();
-  const { count, updateCartItems } = useCartData();
+  const { count, totalPrice, updateCartItems } = useCartData();
 
   const isLoading = false;
   const imgSize = 73;
@@ -92,7 +92,13 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
                 </div>
               ))}
             </div>
-            <Promotion promotionItems={promotionItems} />
+            <div className="cartitemlist__promotion">
+              <Promotion promotionItems={promotionItems} />
+            </div>
+            <div className="cartitemlist__total">
+              <span className="cartitemlist__totaltitle">{t('total')}</span>
+              <span className="cartitemlist__subtotal">{totalPrice}</span>
+            </div>
             <div className="cartitemlist__checkoutbutton">
               <button className="epbtn --secondary --large --fullwidth" onClick={onCheckoutPage}>
                 {t('checkout-with-items', { quantityItems })}
