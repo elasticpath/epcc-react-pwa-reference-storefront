@@ -215,6 +215,12 @@ function usePurchaseHistoryState() {
     }
   }, [id, token]);
 
+  const updatePurchaseHistory = () => {
+    getAllOrders(token).then(res => {
+      setData(res.data);
+    });
+  };
+
   const setData = (data: any) => {
     setOrdersData(data);
   };
@@ -223,7 +229,7 @@ function usePurchaseHistoryState() {
     setOrdersData([]);
   };
 
-  return { ordersData }
+  return { ordersData, updatePurchaseHistory }
 }
 
 const defaultCurrency = 'USD';

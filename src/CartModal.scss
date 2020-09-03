@@ -148,4 +148,47 @@
       display: block;
     }
   }
+
+  .shipping-preview {
+    height: 90px;
+    margin: 20px 0;
+    padding: 14px;
+    border: 1px solid $secondBorderColor;
+    border-radius: 8px;
+  }
+
+  .address-heading {
+    font-weight: bold;
+
+    .change-button {
+      text-decoration: underline;
+      color: $mainTextColor;
+      float: right;
+      padding: 0;
+
+      &:hover {
+        background-color: transparent;
+        color: $firstComplimentColor;
+      }
+    }
+  }
+  .shipping-info {
+    margin-top: 20px;
+  }
+}
+
+.completed {
+  text-align: center;
+
+  &__title {
+    font-weight: bold;
+    font-size: 26px;
+    margin: 70px 0;
+  }
+
+  &__body {
+    p {
+      margin: 20px;
+    }
+  }
 }

@@ -117,6 +117,7 @@
   "order-total": "Order Total",
   "order-purchase-date": "Order Purchase Date",
   "order-tax-total": "Order Tax Total",
+  "order-confirmed": "Order confirmed!",
   "summary": "Summary",
   "phone-number": "Phone Number",
   "street-address": "Street Address",
@@ -167,5 +168,8 @@
   "code-expired": "Code expired or invalid",
   "promo-code": "Promo code",
   "payment-card": "Payment card",
-  "continue-to-billing": "Continue to billing information"
+  "continue-to-billing": "Continue to billing information",
+  "change": "Change",
+  "continue-shopping": "Continue shopping",
+  "thank-you-for-your-order": "Thank you for your order."
 }

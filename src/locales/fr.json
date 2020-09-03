@@ -117,6 +117,7 @@
   "order-total": "ÖÖŕððéŕ ŢŢöţţåļ",
   "order-purchase-date": "ÖÖŕððéŕ ÞÞûŕçĥĥåšé ÐÐåţé",
   "order-tax-total": "ÖÖŕððéŕ ŢŢåẋ ŢŢöţţåļ",
+  "order-confirmed": "ÖÖŕððéŕ ççöñƒƒîŕɱɱéð¡",
   "summary": "ŠŠûɱɱɱåŕý",
   "phone-number": "ÞÞĥööñé ÑÑûɱƀƀéŕ",
   "street-address": "ŠŠţŕéééţ ÅÅððŕŕéšš",
@@ -167,5 +168,8 @@
   "code-expired": "ÇÇöðé ééẋþîîŕéð ööŕ îîñṽååļîð",
   "promo-code": "ÞÞŕööɱö ççöðé",
   "payment-card": "ÞÞåýɱɱéñţ ççåŕð",
-  "continue-to-billing": "ÇÇöñţîîñûé ţţö ƀƀîļļļîñĝ îîñƒööŕɱåţţîöñ"
+  "continue-to-billing": "ÇÇöñţîîñûé ţţö ƀƀîļļļîñĝ îîñƒööŕɱåţţîöñ",
+  "change": "ÇÇĥåññĝé",
+  "continue-shopping": "ÇÇöñţîîñûé ššĥöþþþîñĝ",
+  "thank-you-for-your-order": "ŢŢĥååñķ ýýöû ƒƒöŕ ýýöûŕ ööŕðééŕ·"
 }

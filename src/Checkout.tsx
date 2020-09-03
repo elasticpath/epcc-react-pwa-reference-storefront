@@ -7,10 +7,11 @@ interface CheckoutParams {
   onPayOrder: (...args: any) => any,
   shippingAddress: any,
   stripe: any,
+  payDisabled: boolean,
 }
 
 export const Checkout: React.FC<CheckoutParams> = (props) => {
-  const { shippingAddress, stripe, onPayOrder } = props;
+  const { shippingAddress, stripe, onPayOrder, payDisabled } = props;
   const { totalPrice } = useCartData();
   const { t } = useTranslation();
 
@@ -62,7 +63,7 @@ export const Checkout: React.FC<CheckoutParams> = (props) => {
              />
         </label>
       </div>
-      <button className="epbtn --secondary --large --fullwidth" type="button" onClick={onPayment}>{t('pay') + ' ' + totalPrice}</button>
+      <button className="epbtn --secondary --large --fullwidth" type="button" disabled={payDisabled} onClick={onPayment}>{t('pay') + ' ' + totalPrice}</button>
     </div>
   )
 };
