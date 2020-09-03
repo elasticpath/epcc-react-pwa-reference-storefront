@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import {Elements, StripeProvider} from 'react-stripe-elements';
-import {useCartData, useCustomerData, useTranslation} from './app-state';
+import {useCartData, useCustomerData, useOrdersData, useTranslation} from './app-state';
 import { config } from './config';
 import { checkout, payment, removeCartItems } from './service';
 
@@ -18,19 +18,46 @@ interface CartModalParams {
   isCartModalOpen: boolean,
 }
 
+interface FormValues {
+  first_name: string,
+  last_name: string,
+  line_1: string,
+  line_2: string,
+  city: string,
+  county: string,
+  country: string,
+  postcode: string,
+  phone_number: string,
+  instructions: string,
+}
+
+let initialValues: FormValues = {
+  first_name: '',
+  last_name: '',
+  line_1: '',
+  line_2: '',
+  city: '',
+  county: '',
+  country: '',
+  postcode: '',
+  phone_number: '',
+  instructions: '',
+};
+
 export const CartModal: React.FC<CartModalParams> = (props) => {
   const { handleCloseModal, isCartModalOpen } = props;
-  const { cartData, promotionItems } = useCartData();
+  const { cartData, promotionItems, updateCartItems } = useCartData();
   const { isLoggedIn, customerName } = useCustomerData();
-  const [route, setRoute] = useState<string>('itemList');
+  const { updatePurchaseHistory } = useOrdersData();
+  const [route, setRoute] = useState<string>('shipping');
   const [isSameAddress, setIsSameAddress] = useState(true);
-  const [billingAddress, setBillingAddress] = useState({});
-  const [shippingAddress, setShippingAddress] = useState({});
+  const [billingAddress, setBillingAddress] = useState<FormValues>(initialValues);
+  const [shippingAddress, setShippingAddress] = useState<FormValues>(initialValues);
+  const [payDisabled, setPayDisabled] = useState(true);
   const [email, setEmail] = useState('');
   const { t } = useTranslation();
 
   const onPayOrder = async (token: string) => {
-
     try {
       const mcart = localStorage.getItem('mcart') || '';
       const mcustomer = localStorage.getItem('mcustomer') || '';
@@ -44,7 +71,9 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
         payment: token,
       };
       await payment(paymentParams, orderRes.data.id);
+      await updatePurchaseHistory();
       await removeCartItems(mcart);
+      updateCartItems();
     } catch (err) {
       console.error(err)
     }
@@ -60,6 +89,22 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
       setRoute("itemList")
     } else if (route === "billing") {
       setRoute("shipping")
+    }
+  };
+
+  const validate = (email: string) => {
+    const expression = /\S+@\S+/;
+
+    return expression.test(String(email).toLowerCase())
+  };
+
+  const onUpdateEmail = (email: string) => {
+    const isValid = validate(email);
+    if(isValid) {
+      setEmail(email);
+      setPayDisabled(false);
+    } else {
+      setPayDisabled(true);
     }
   };
 
@@ -122,15 +167,26 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
             {!isLoggedIn && (
               <div className="email-field">
                 <label htmlFor="email">{t('email')}</label>
-                <input className="epform__input" type="email" id="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+                <input className="epform__input" type="email" id="email" placeholder="Email" onChange={(e) => onUpdateEmail(e.target.value)} />
               </div>
             )}
             <div className="cartmodal__body">
               <StripeProvider apiKey={config.stripeKey}>
                 <Elements>
-                  <Checkout shippingAddress={shippingAddress} onPayOrder={onPayOrder} />
+                  <Checkout shippingAddress={shippingAddress} onPayOrder={onPayOrder} payDisabled={payDisabled} />
                 </Elements>
               </StripeProvider>
+            </div>
+            <div className="shipping-preview">
+              <div className="address-heading">
+                <span>
+                {t('shipping-address')}
+                </span>
+                <button className="epbtn change-button" onClick={handleBackPage}>{t('change')}</button>
+              </div>
+              <div className="shipping-info">
+                {shippingAddress.line_1}, {shippingAddress.city}, {shippingAddress.county}, {shippingAddress.postcode}
+              </div>
             </div>
           </div>
         )}

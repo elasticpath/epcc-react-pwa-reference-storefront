@@ -166,5 +166,6 @@
   "apply": "Apply",
   "code-expired": "Code expired or invalid",
   "promo-code": "Promo code",
-  "payment-card": "Payment card"
+  "payment-card": "Payment card",
+  "change": "Change"
 }
