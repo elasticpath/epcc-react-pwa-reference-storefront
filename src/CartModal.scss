@@ -176,3 +176,19 @@
     margin-top: 20px;
   }
 }
+
+.completed {
+  text-align: center;
+
+  &__title {
+    font-weight: bold;
+    font-size: 26px;
+    margin: 70px 0;
+  }
+
+  &__body {
+    p {
+      margin: 20px;
+    }
+  }
+}

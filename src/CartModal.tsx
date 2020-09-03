@@ -49,7 +49,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
   const { cartData, promotionItems, updateCartItems } = useCartData();
   const { isLoggedIn, customerName } = useCustomerData();
   const { updatePurchaseHistory } = useOrdersData();
-  const [route, setRoute] = useState<string>('shipping');
+  const [route, setRoute] = useState<string>('itemList');
   const [isSameAddress, setIsSameAddress] = useState(true);
   const [billingAddress, setBillingAddress] = useState<FormValues>(initialValues);
   const [shippingAddress, setShippingAddress] = useState<FormValues>(initialValues);
@@ -74,6 +74,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
       await updatePurchaseHistory();
       await removeCartItems(mcart);
       updateCartItems();
+      handlePage('completed');
     } catch (err) {
       console.error(err)
     }
@@ -120,13 +121,13 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
     <div className={`cartmodal ${isCartModalOpen ? '--open' : ''}`}>
       <div className="cartmodal__content" ref={ref}>
         <div className="cartmodal__header">
-          {route === 'itemList' ? (
+          {route === 'itemList' || route === 'completed' ? (
             <button className="cartmodal__closebutton" type="button" aria-label="close" onClick={handleCloseModal}>
-            <CloseIcon/>
+              <CloseIcon/>
             </button>
           ) : (
             <button className="cartmodal__closebutton" type="button" aria-label="close" onClick={handleBackPage}>
-            <BackArrovIcon/>
+              <BackArrovIcon/>
             </button>
           )}
         </div>
@@ -187,6 +188,17 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
               <div className="shipping-info">
                 {shippingAddress.line_1}, {shippingAddress.city}, {shippingAddress.county}, {shippingAddress.postcode}
               </div>
+            </div>
+          </div>
+        )}
+        {route === 'completed' && (
+          <div className='completed'>
+            <div className="completed__title">
+              <h2>{t('order-confirmed')}</h2>
+            </div>
+            <div className="completed__body">
+              <p>{t('thank-you-for-your-order')}</p>
+              <button className="epbtn --secondary --large" onClick={handleCloseModal}>{t('continue-shopping')}</button>
             </div>
           </div>
         )}
