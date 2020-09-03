@@ -41,9 +41,28 @@
       height: 40px;
     }
   }
+
   .epform {
     &__error {
       position: unset;
+    }
+  }
+
+  &__wrap {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    border-top: 1px solid $firstBorderColor;
+    border-bottom: 1px solid $firstBorderColor;
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    .address__container {
+      display: flex;
+    }
+
+    .address__list {
+      padding: 0;
     }
   }
 }

@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import { useTranslation } from './app-state';
+import { useTranslation, useAddressData } from './app-state';
 import { PlacesSuggest } from './PlacesSuggest';
 import { useFormik } from 'formik';
 
 import './AddressFields.scss';
+import * as moltin from "@moltin/sdk";
 
 interface CheckoutParams {
   type: string,
@@ -27,6 +28,8 @@ interface FormValues {
 export const AddressFields: React.FC<CheckoutParams> = (props) => {
   const { type, handlePage, onSetAddress } = props;
   const [editing, setEditing] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const { addressData } = useAddressData();
 
   const { t } = useTranslation();
 
@@ -57,7 +60,7 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
       instructions: '',
     };
     setValues(address);
-    setEditing(true)
+    setEditing(true);
   };
 
   const validate = (values:any) => {
@@ -95,6 +98,11 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
     },
   });
 
+  const handleCheckAddress = (address:any) => {
+    onSetAddress(address);
+    setIsChecked(true);
+  };
+
   return (
     <div className="address">
 
@@ -106,10 +114,56 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
           }}
           onClear={() => resetForm({})}
         />
-        {!editing && (
+        {!editing && !(addressData && addressData.length > 0) && (
           <button onClick={() => setEditing(true)} className="address__addressbutton">
             {t('enter-address-manually')}
           </button>
+        )}
+        {addressData && addressData.length > 0 && (
+          <React.Fragment>
+            <div className="address__wrap">
+              {addressData.map((address: moltin.Address, index:number) => (
+                <div className="address__container" key={address.id}>
+                  <input type="radio" name="address" id={`address_${index}`} className="epradio" onChange={() => {handleCheckAddress(address)}} />
+                  <label htmlFor={`address_${index}`}>
+                    <ul className="address__list">
+                      <li className="">
+                        {address.first_name}
+                        &nbsp;
+                        {address.last_name}
+                      </li>
+                      <li className="">
+                        {address.line_1}
+                      </li>
+                      <li className="">
+                        {address.line_2}
+                      </li>
+                      <li>
+                        <span className="">
+                          {address.county}
+                          ,&nbsp;
+                        </span>
+                        <span className="">
+                          {(address.country)
+                            ? (
+                              `${address.country}, `
+                            ) : ('')}
+                        </span>
+                        <span className="">
+                          {address.city}
+                          &nbsp;
+                        </span>
+                      </li>
+                      <li className="">
+                        {address.postcode}
+                      </li>
+                    </ul>
+                  </label>
+                </div>
+              ))}
+            </div>
+            <button className="epbtn --secondary --large --fullwidth" type="button" disabled={!isChecked} onClick={() => {handlePage('billing')}}>{t('continue-to-billing')}</button>
+          </React.Fragment>
         )}
       </div>
 
@@ -230,7 +284,7 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
             </label>
             <input className="epform__input" id="instructions" type="text" onChange={handleChange} value={values.instructions} />
           </div>
-          <button className="epbtn --secondary --large --fullwidth" type="submit">Continue to billing information</button>
+          <button className="epbtn --secondary --large --fullwidth" type="submit">{t('continue-to-billing')}</button>
         </form>
       )}
     </div>
