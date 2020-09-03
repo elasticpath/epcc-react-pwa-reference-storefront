@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
-import { StripeProvider } from 'react-stripe-elements';
+import {Elements, StripeProvider} from 'react-stripe-elements';
 import {useCartData, useTranslation} from './app-state';
 import { config } from './config';
-import { checkout } from './service';
+import { checkout, payment } from './service';
 
 import { AddressFields } from "./AddressFields";
-import { PaymentForm } from "./PaymentForm";
+import Checkout from "./Checkout";
 import { CartItemList } from './CartItemList';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import { ReactComponent as BackArrovIcon } from './images/icons/arrow_back-black-24dp.svg';
@@ -20,7 +20,7 @@ interface CartModalParams {
 
 export const CartModal: React.FC<CartModalParams> = (props) => {
   const { handleCloseModal, isCartModalOpen } = props;
-  const { cartData, promotionItems, totalPrice } = useCartData();
+  const { cartData, promotionItems } = useCartData();
   const [route, setRoute] = useState<string>('itemList');
   const [isSameAddress, setIsSameAddress] = useState(true);
   const [billingAddress, setBillingAddress] = useState({});
@@ -36,11 +36,18 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
     })
   };
 
-  const onPayOrder = () => {
+  const onPayOrder = async (token: string) => {
     const mcart = localStorage.getItem('mcart') || '';
     const billing = isSameAddress ? shippingAddress : billingAddress;
     const customerData = {...customerName, email: email};
-    checkout(mcart, customerData, billing, shippingAddress)
+    const orderRes = await checkout(mcart, customerData, billing, shippingAddress);
+
+    const paymentParams = {
+      gateway: 'stripe',
+      method: 'purchase',
+      payment: token,
+    };
+    await payment(paymentParams, orderRes.data.id);
   };
 
   const handleCheckAsShipping = () => {
@@ -112,16 +119,17 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
                 onSetAddress={(address) => setBillingAddress(address)}
               />
             )}
-            <div className="emailInput">
+            <div className="email-field">
               <label htmlFor="email">{t('email')}</label>
               <input className="epform__input" type="email" id="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div className="cartmodal__body">
-              <StripeProvider apiKey={config.algoliaPlacesApiKey}>
-                <PaymentForm />
+              <StripeProvider apiKey={config.stripeKey}>
+                <Elements>
+                  <Checkout shippingAddress={shippingAddress} onPayOrder={onPayOrder} />
+                </Elements>
               </StripeProvider>
             </div>
-            <button type="button" className="epbtn --secondary --large --fullwidth" onClick={onPayOrder}>{t('pay') + ' ' + totalPrice}</button>
           </div>
         )}
       </div>

@@ -135,7 +135,17 @@
     margin-bottom: 40px;
   }
 
-  .emailInput {
+  .email-field {
     margin: 20px 0;
+    font-weight: bold;
+
+    input {
+      height: 40px;
+    }
+
+    label {
+      margin: 6px 0;
+      display: block;
+    }
   }
 }

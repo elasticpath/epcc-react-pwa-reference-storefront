@@ -1,8 +1,16 @@
 
 @import './theme/common';
 
+.checkout {
+  &__card {
+    margin: 20px 0;
+  }
+}
+
 .card-title {
-  margin: 12px 0;
+  margin: 6px 0;
+  text-align: left;
+  font-weight: bold;
 }
 
 .payment-form {
