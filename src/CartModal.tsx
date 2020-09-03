@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import {Elements, StripeProvider} from 'react-stripe-elements';
-import {useCartData, useTranslation} from './app-state';
+import {useCartData, useCustomerData, useTranslation} from './app-state';
 import { config } from './config';
-import { checkout, payment } from './service';
+import { checkout, payment, removeCartItems } from './service';
 
 import { AddressFields } from "./AddressFields";
 import Checkout from "./Checkout";
@@ -21,33 +21,33 @@ interface CartModalParams {
 export const CartModal: React.FC<CartModalParams> = (props) => {
   const { handleCloseModal, isCartModalOpen } = props;
   const { cartData, promotionItems } = useCartData();
+  const { isLoggedIn, customerName } = useCustomerData();
   const [route, setRoute] = useState<string>('itemList');
   const [isSameAddress, setIsSameAddress] = useState(true);
   const [billingAddress, setBillingAddress] = useState({});
   const [shippingAddress, setShippingAddress] = useState({});
-  const [customerName, setCustomerName] = useState({});
   const [email, setEmail] = useState('');
   const { t } = useTranslation();
 
-  const onSetShippingAddress = (address: any) => {
-    setShippingAddress(address);
-    setCustomerName({
-      name: `${address.first_name} ${address.last_name}`
-    })
-  };
-
   const onPayOrder = async (token: string) => {
-    const mcart = localStorage.getItem('mcart') || '';
-    const billing = isSameAddress ? shippingAddress : billingAddress;
-    const customerData = {...customerName, email: email};
-    const orderRes = await checkout(mcart, customerData, billing, shippingAddress);
 
-    const paymentParams = {
-      gateway: 'stripe',
-      method: 'purchase',
-      payment: token,
-    };
-    await payment(paymentParams, orderRes.data.id);
+    try {
+      const mcart = localStorage.getItem('mcart') || '';
+      const mcustomer = localStorage.getItem('mcustomer') || '';
+      const billing = isSameAddress ? shippingAddress : billingAddress;
+      const customerData = mcustomer && mcustomer.length ? {id: mcustomer} : {name: customerName, email: email};
+      const orderRes = await checkout(mcart, customerData, billing, shippingAddress);
+
+      const paymentParams = {
+        gateway: 'stripe',
+        method: 'purchase',
+        payment: token,
+      };
+      await payment(paymentParams, orderRes.data.id);
+      await removeCartItems(mcart);
+    } catch (err) {
+      console.error(err)
+    }
   };
 
   const handleCheckAsShipping = () => {
@@ -100,7 +100,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
           <AddressFields
             type='shipping'
             handlePage={(e: string) => handlePage(e)}
-            onSetAddress={(address) => onSetShippingAddress(address)}
+            onSetAddress={(address) => setShippingAddress(address)}
           />
           </div>
         )}
@@ -119,10 +119,12 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
                 onSetAddress={(address) => setBillingAddress(address)}
               />
             )}
-            <div className="email-field">
-              <label htmlFor="email">{t('email')}</label>
-              <input className="epform__input" type="email" id="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-            </div>
+            {!isLoggedIn && (
+              <div className="email-field">
+                <label htmlFor="email">{t('email')}</label>
+                <input className="epform__input" type="email" id="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+              </div>
+            )}
             <div className="cartmodal__body">
               <StripeProvider apiKey={config.stripeKey}>
                 <Elements>

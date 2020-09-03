@@ -29,7 +29,7 @@ export const Checkout: React.FC<CheckoutParams> = (props) => {
       await onPayOrder(payment.token.id)
     }
     catch (paymentError) {
-      console.log({ paymentError })
+      console.error({ paymentError })
     }
   };
 

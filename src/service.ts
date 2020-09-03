@@ -177,6 +177,11 @@ export async function getCartItems(reference: string): Promise<moltin.CartItemsR
   return CartItems;
 }
 
+export async function removeCartItems(reference: string) {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  await moltin.Cart(reference).Delete();
+}
+
 export async function addToCart(reference: string, productId: string): Promise<void> {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const quantity = 1;

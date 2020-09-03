@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Modal from 'react-responsive-modal';
 import { useFormik } from 'formik';
 import { login } from './service';
-import { useCustomerData, useTranslation } from './app-state';
+import {useCartData, useCustomerData, useTranslation} from './app-state';
 import { createRegistrationUrl } from './routes';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 
@@ -25,6 +25,7 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
   const { setCustomerData } = useCustomerData();
   const { t } = useTranslation();
   const registrationUrl = createRegistrationUrl();
+  const { updateCartItems } = useCartData();
 
   const [failedLogin, setFailedLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -44,7 +45,7 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
     }
 
     return errors;
-  }
+  };
 
   const {handleSubmit, handleChange, resetForm, values, errors} = useFormik({
     initialValues,
@@ -56,6 +57,7 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
           handleModalClose();
           setIsLoading(false);
           setCustomerData(result.token, result.customer_id);
+          updateCartItems()
         })
         .catch(error => {
           setIsLoading(false);
@@ -67,13 +69,13 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
 
   const registerNewUser = () => {
     handleModalClose();
-  }
+  };
 
   const handleClose = () => {
     setFailedLogin(false);
     handleModalClose();
     resetForm();
-  }
+  };
 
   return (
     <Modal open={openModal} onClose={handleClose} classNames={{ modal: 'logindialog' }} showCloseIcon={false}>
