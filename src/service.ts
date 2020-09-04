@@ -10,8 +10,8 @@ export async function loadEnabledCurrencies(): Promise<moltin.Currency[]> {
   return response.data.filter(c => c.enabled);
 }
 
-export async function loadCategoryTree(): Promise<moltin.Category[]> {
-  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+export async function loadCategoryTree(language: string): Promise<moltin.Category[]> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId, language });
   const result = await moltin.Categories.Tree();
 
   return result.data;
@@ -28,7 +28,7 @@ function getProductCache(key: string, language: string, currency: string): molti
 }
 
 export async function loadCategoryProducts(categoryId: string, pageNum: number, language: string, currency: string): Promise<moltin.ResourcePage<moltin.Product>> {
-  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId, currency: currency });
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId, language, currency });
 
   const result = await moltin.Products
     .Offset((pageNum - 1) * config.categoryPageSize)
@@ -86,7 +86,7 @@ export async function loadProductBySlug(productSlug: string, language: string, c
     return cachedProduct;
   }
 
-  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId, currency: currency });
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId, language, currency });
 
   const resultSlug = await moltin.Products
     .Limit(1)

@@ -44,6 +44,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/BonnieEP"><img src="https://avatars3.githubusercontent.com/u/49495842?v=4" width="100px;" alt=""/><br /><sub><b>Bonnie Bishop</b></sub></a><br /><a href="https://ui-components.elasticpath.com" title="Design">🎨</td>
     <td align="center"><a href="https://github.com/JenSmith-EP"><img src="https://avatars3.githubusercontent.com/u/58435007?v=4" width="100px;" alt=""/><br /><sub><b>Jen Smith</b></sub></a><br /><a href="https://documentation.elasticpath.com/storefront-react" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/mwan-ep"><img src="https://avatars3.githubusercontent.com/u/54115904?v=4" width="100px;" alt=""/><br /><sub><b>Michelle Wan</b></sub></a><br /><a href="https://github.com/elasticpath/epcc-react-pwa-reference-storefront/commits?author=mwan-ep" title="Code">💻</a></td>
   </tr>
 </table>
 
