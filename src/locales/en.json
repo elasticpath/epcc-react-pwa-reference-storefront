@@ -173,5 +173,7 @@
   "continue-shopping": "Continue shopping",
   "thank-you-for-your-order": "Thank you for your order.",
   "start-typing-an-address": "Start typing an address",
-  "search-for-your-shipping-address": "Search for your Shipping address"
+  "search-for-your-shipping-address": "Search for your Shipping address",
+  "item": "item",
+  "items": "items"
 }

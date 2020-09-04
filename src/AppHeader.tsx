@@ -46,9 +46,12 @@ export const AppHeader: React.FC = () => {
         <div className="appheader__moltincartcontainer">
           <button className="appheader__cartbtn epbtn --bordered" onClick={handleCartModal}>
             <span className="appheader__cartbtntxt">
+              {t('cart')}
+              {' ('}
               {count}
               {' '}
-              {t('items-in-cart')}
+              {count !== 1 ? t('items') : t('item')}
+              {')'}
             </span>
             <CartIcon className="appheader__carticon" />
           </button>
