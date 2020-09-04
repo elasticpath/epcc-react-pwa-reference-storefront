@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
+import moltin from "@moltin/sdk";
 import { useTranslation, useAddressData } from './app-state';
 import { PlacesSuggest } from './PlacesSuggest';
 import { useFormik } from 'formik';
 
 import './AddressFields.scss';
-import * as moltin from "@moltin/sdk";
 
 interface CheckoutParams {
   type: string,
@@ -284,7 +284,9 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
             </label>
             <input className="epform__input" id="instructions" type="text" onChange={handleChange} value={values.instructions} />
           </div>
-          <button className="epbtn --secondary --large --fullwidth" type="submit">{t('continue-to-billing')}</button>
+          {type === 'shipping' && (
+            <button className="epbtn --secondary --large --fullwidth" type="submit">{t('continue-to-billing')}</button>
+          )}
         </form>
       )}
     </div>

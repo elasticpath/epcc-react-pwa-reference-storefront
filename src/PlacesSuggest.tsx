@@ -28,7 +28,7 @@ export const PlacesSuggest: React.FC<PlacesSuggestParams> = (props) => {
         id="AlgoliaPlaces"
         options={options}
         placeholder={t('start-typing-an-address')}
-        name="new-password"
+        name="address"
         {...props}
       />
     </div>
