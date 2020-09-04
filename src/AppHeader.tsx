@@ -11,6 +11,7 @@ import { Navigation } from "./Navigation";
 import { CartModal } from "./CartModal";
 
 import headerLogo from './images/site-images/Company-Logo.svg';
+import { ReactComponent as CartIcon } from './images/icons/cart-icon.svg';
 
 import './AppHeader.scss';
 
@@ -43,10 +44,13 @@ export const AppHeader: React.FC = () => {
           <LanguageDropdown />
         </div>
         <div className="appheader__moltincartcontainer">
-          <button className="epbtn --bordered" onClick={handleCartModal}>
-            {count}
-            {' '}
-            {t('items-in-cart')}
+          <button className="appheader__cartbtn epbtn --bordered" onClick={handleCartModal}>
+            <span className="appheader__cartbtntxt">
+              {count}
+              {' '}
+              {t('items-in-cart')}
+            </span>
+            <CartIcon className="appheader__carticon" />
           </button>
         </div>
         <div className="appheader__account">

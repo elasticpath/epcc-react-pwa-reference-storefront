@@ -23,7 +23,8 @@
     right: 0px;
     overflow-y: scroll;
     height: 100%;
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
     padding: 32px;
     opacity: 0;
     visibility: hidden;
@@ -150,7 +151,6 @@
   }
 
   .shipping-preview {
-    height: 90px;
     margin: 20px 0;
     padding: 14px;
     border: 1px solid $secondBorderColor;
