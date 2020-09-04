@@ -24,7 +24,6 @@ export const PlacesSuggest: React.FC<PlacesSuggestParams> = (props) => {
   return (
     <div className="algoliasearch">
       <div className="algoliasearch__title">{t('search-for-your-shipping-address')}</div>
-
       <AlgoliaPlaces
         id="AlgoliaPlaces"
         options={options}

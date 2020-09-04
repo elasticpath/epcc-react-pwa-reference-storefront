@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import constate from 'constate';
 import * as moltin from '@moltin/sdk';
+import { createCartIdentifier } from '@moltin/request/dist/utils'
 import { getCustomer, getAddresses, getAllOrders, loadCategoryTree, getCartItems } from './service';
 import * as service from './service';
 import { config } from './config';
@@ -138,6 +139,7 @@ function useCustomerDataState() {
   const clearCustomerData = () => {
     localStorage.setItem('mtoken', '');
     localStorage.setItem('mcustomer', '');
+    localStorage.setItem('mcart', createCartIdentifier());
     setCustomerToken('');
     setCustomerId('');
     setIsLoggedIn(false);
