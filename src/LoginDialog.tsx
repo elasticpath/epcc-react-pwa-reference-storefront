@@ -1,10 +1,9 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Modal from 'react-responsive-modal';
 import { useFormik } from 'formik';
 import { login } from './service';
-import {useCartData, useCustomerData, useTranslation} from './app-state';
+import { useCartData, useCustomerData, useTranslation } from './app-state';
 import { createRegistrationUrl } from './routes';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 

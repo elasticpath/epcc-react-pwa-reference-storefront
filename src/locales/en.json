@@ -171,5 +171,7 @@
   "continue-to-billing": "Continue to billing information",
   "change": "Change",
   "continue-shopping": "Continue shopping",
-  "thank-you-for-your-order": "Thank you for your order."
+  "thank-you-for-your-order": "Thank you for your order.",
+  "start-typing-an-address": "Start typing an address",
+  "search-for-your-shipping-address": "Search for your Shipping address"
 }

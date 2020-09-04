@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
-import {Elements, StripeProvider} from 'react-stripe-elements';
-import {useCartData, useCustomerData, useOrdersData, useTranslation} from './app-state';
+import { Elements, StripeProvider } from 'react-stripe-elements';
+import { useCartData, useCustomerData, useOrdersData, useTranslation } from './app-state';
 import { config } from './config';
 import { checkout, payment, removeCartItems } from './service';
 
@@ -47,13 +47,12 @@ let initialValues: FormValues = {
 export const CartModal: React.FC<CartModalParams> = (props) => {
   const { handleCloseModal, isCartModalOpen } = props;
   const { cartData, promotionItems, updateCartItems } = useCartData();
-  const { isLoggedIn, customerName } = useCustomerData();
+  const { isLoggedIn } = useCustomerData();
   const { updatePurchaseHistory } = useOrdersData();
   const [route, setRoute] = useState<string>('itemList');
   const [isSameAddress, setIsSameAddress] = useState(true);
   const [billingAddress, setBillingAddress] = useState<FormValues>(initialValues);
   const [shippingAddress, setShippingAddress] = useState<FormValues>(initialValues);
-  const [payDisabled, setPayDisabled] = useState(true);
   const [email, setEmail] = useState('');
   const { t } = useTranslation();
 
@@ -62,7 +61,8 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
       const mcart = localStorage.getItem('mcart') || '';
       const mcustomer = localStorage.getItem('mcustomer') || '';
       const billing = isSameAddress ? shippingAddress : billingAddress;
-      const customerData = mcustomer && mcustomer.length ? {id: mcustomer} : {name: customerName, email: email};
+      const name = `${shippingAddress.first_name} ${shippingAddress.last_name}`;
+      const customerData = mcustomer && mcustomer.length ? {id: mcustomer} : {name: name, email: email};
       const orderRes = await checkout(mcart, customerData, billing, shippingAddress);
 
       const paymentParams = {
@@ -74,7 +74,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
       await updatePurchaseHistory();
       await removeCartItems(mcart);
       updateCartItems();
-      handlePage('completed');
+      setRoute('completed');
     } catch (err) {
       console.error(err)
     }
@@ -95,7 +95,6 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
 
   const validate = (email: string) => {
     const expression = /\S+@\S+/;
-
     return expression.test(String(email).toLowerCase())
   };
 
@@ -103,14 +102,12 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
     const isValid = validate(email);
     if(isValid) {
       setEmail(email);
-      setPayDisabled(false);
-    } else {
-      setPayDisabled(true);
     }
   };
 
-  const handlePage = (page: string) => {
-    setRoute(page)
+  const onCloseModal = () => {
+    handleCloseModal();
+    setRoute('itemList');
   };
 
   const ref = useOnclickOutside(() => {
@@ -122,7 +119,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
       <div className="cartmodal__content" ref={ref}>
         <div className="cartmodal__header">
           {route === 'itemList' || route === 'completed' ? (
-            <button className="cartmodal__closebutton" type="button" aria-label="close" onClick={handleCloseModal}>
+            <button className="cartmodal__closebutton" type="button" aria-label="close" onClick={onCloseModal}>
               <CloseIcon/>
             </button>
           ) : (
@@ -134,7 +131,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
         {route === 'itemList' && (
           <CartItemList
             items={cartData}
-            handlePage={(e: string) => handlePage(e)}
+            handlePage={(page: string) => setRoute(page)}
             promotionItems={promotionItems}
           />
         )}
@@ -145,7 +142,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
             </h2>
           <AddressFields
             type='shipping'
-            handlePage={(e: string) => handlePage(e)}
+            handlePage={(page: string) => setRoute(page)}
             onSetAddress={(address) => setShippingAddress(address)}
           />
           </div>
@@ -161,20 +158,20 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
             {!isSameAddress && (
               <AddressFields
                 type='billing'
-                handlePage={(e: string) => handlePage(e)}
+                handlePage={(page: string) => setRoute(page)}
                 onSetAddress={(address) => setBillingAddress(address)}
               />
             )}
             {!isLoggedIn && (
               <div className="email-field">
                 <label htmlFor="email">{t('email')}</label>
-                <input className="epform__input" type="email" id="email" placeholder="Email" onChange={(e) => onUpdateEmail(e.target.value)} />
+                <input className="epform__input" required={true} type="email" id="email" placeholder="Email" onChange={(e) => onUpdateEmail(e.target.value)} />
               </div>
             )}
             <div className="cartmodal__body">
               <StripeProvider apiKey={config.stripeKey}>
                 <Elements>
-                  <Checkout shippingAddress={shippingAddress} onPayOrder={onPayOrder} payDisabled={payDisabled} />
+                  <Checkout shippingAddress={shippingAddress} onPayOrder={onPayOrder} />
                 </Elements>
               </StripeProvider>
             </div>
@@ -198,7 +195,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
             </div>
             <div className="completed__body">
               <p>{t('thank-you-for-your-order')}</p>
-              <button className="epbtn --secondary --large" onClick={handleCloseModal}>{t('continue-shopping')}</button>
+              <button className="epbtn --secondary --large" onClick={onCloseModal}>{t('continue-shopping')}</button>
             </div>
           </div>
         )}
