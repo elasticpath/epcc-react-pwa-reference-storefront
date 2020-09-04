@@ -10,6 +10,5 @@ export const config = {
   algoliaPlacesApiKey: '4c9f0832a65f800e31b0d50f44670b1f',
   algoliaIndexName: 'product',
   compareKeys: [],
-  shopkitSrc: 'https://btn.moltin.com',
   endpointURL: 'api.moltin.com',
 };
