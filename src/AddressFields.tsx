@@ -170,8 +170,10 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
                 </div>
               ))}
             </div>
-            <button className="epbtn --secondary --large --fullwidth" type="button" disabled={!isChecked} onClick={() => {handlePage('billing')}}>{t('continue-to-billing')}</button>
-          </React.Fragment>
+            {type === 'shipping' && (
+              <button className="epbtn --secondary --large --fullwidth" type="button" disabled={!isChecked} onClick={() => {handlePage('billing')}}>{t('continue-to-billing')}</button>
+            )}
+            </React.Fragment>
         )}
       </div>
 

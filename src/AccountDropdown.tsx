@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import {createCartIdentifier} from "@moltin/request";
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { useCustomerData, useTranslation } from './app-state';
 import { createAccountUrl } from './routes';
@@ -32,6 +33,7 @@ export const AccountDropdown: React.FC = (props) => {
   });
 
   const logout = () => {
+    localStorage.setItem('mcart', createCartIdentifier());
     clearCustomerData();
     history.push('/');
   };
