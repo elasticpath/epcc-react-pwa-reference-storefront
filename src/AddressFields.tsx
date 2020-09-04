@@ -103,6 +103,14 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
     setIsChecked(true);
   };
 
+  const handleClearSearch = () => {
+    resetForm({});
+    if (addressData && addressData.length > 0) {
+      setEditing(false);
+      setIsChecked(false);
+    }
+  };
+
   return (
     <div className="address">
 
@@ -112,19 +120,19 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
           onChange={({suggestion}: any) => {
             onPlacesChange(suggestion)
           }}
-          onClear={() => resetForm({})}
+          onClear={handleClearSearch}
         />
         {!editing && !(addressData && addressData.length > 0) && (
           <button onClick={() => setEditing(true)} className="address__addressbutton">
             {t('enter-address-manually')}
           </button>
         )}
-        {addressData && addressData.length > 0 && (
+        {!editing && addressData && addressData.length > 0 && (
           <React.Fragment>
             <div className="address__wrap">
               {addressData.map((address: moltin.Address, index:number) => (
                 <div className="address__container" key={address.id}>
-                  <input type="radio" name="address" id={`address_${index}`} className="epradio" onChange={() => {handleCheckAddress(address)}} />
+                  <input type="radio" name="addressCheck" id={`address_${index}`} className="epradio" onChange={() => {handleCheckAddress(address)}} />
                   <label htmlFor={`address_${index}`}>
                     <ul className="address__list">
                       <li className="">
