@@ -28,7 +28,7 @@ interface FormValues {
 export const AddressFields: React.FC<CheckoutParams> = (props) => {
   const { type, handlePage, onSetAddress } = props;
   const [editing, setEditing] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
+  const [checkedItem, setCheckedItem] = useState(-1);
   const { addressData } = useAddressData();
 
   const { t } = useTranslation();
@@ -98,16 +98,15 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
     },
   });
 
-  const handleCheckAddress = (address:any) => {
+  const handleCheckAddress = (address:any, index:number) => {
     onSetAddress(address);
-    setIsChecked(true);
+    setCheckedItem(index);
   };
 
   const handleClearSearch = () => {
     resetForm({});
     if (addressData && addressData.length > 0) {
       setEditing(false);
-      setIsChecked(false);
     }
   };
 
@@ -132,7 +131,7 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
             <div className="address__wrap">
               {addressData.map((address: moltin.Address, index:number) => (
                 <div className="address__container" key={address.id}>
-                  <input type="radio" name="addressCheck" id={`address_${index}`} className="epradio" onChange={() => {handleCheckAddress(address)}} />
+                  <input type="radio" name="addressCheck" id={`address_${index}`} className="epradio" defaultChecked={checkedItem === index ? true : false} onChange={() => {handleCheckAddress(address, index)}} />
                   <label htmlFor={`address_${index}`}>
                     <ul className="address__list">
                       <li className="">
@@ -171,7 +170,7 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
               ))}
             </div>
             {type === 'shipping' && (
-              <button className="epbtn --secondary --large --fullwidth" type="button" disabled={!isChecked} onClick={() => {handlePage('billing')}}>{t('continue-to-billing')}</button>
+              <button className="epbtn --secondary --large --fullwidth" type="button" disabled={checkedItem === -1} onClick={() => {handlePage('billing')}}>{t('continue-to-billing')}</button>
             )}
             </React.Fragment>
         )}
