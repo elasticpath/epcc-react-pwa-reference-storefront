@@ -7,6 +7,7 @@ import { useFormik } from 'formik';
 import './AddressFields.scss';
 
 interface CheckoutParams {
+  route: string,
   type: string,
   handlePage: (route: string) => any,
   onSetAddress: (key: any) => any,
@@ -26,7 +27,7 @@ interface FormValues {
 }
 
 export const AddressFields: React.FC<CheckoutParams> = (props) => {
-  const { type, handlePage, onSetAddress } = props;
+  const { type, handlePage, onSetAddress, route } = props;
   const [editing, setEditing] = useState(false);
   const [checkedItem, setCheckedItem] = useState(-1);
   const { addressData } = useAddressData();
@@ -115,6 +116,7 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
 
       <div className="address__main">
         <PlacesSuggest
+          route={route}
           label={type}
           onChange={({suggestion}: any) => {
             onPlacesChange(suggestion)

@@ -147,6 +147,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
               {t('shipping-information')}
             </h2>
           <AddressFields
+            route={route}
             type='shipping'
             handlePage={(page: string) => setRoute(page)}
             onSetAddress={(address) => setShippingAddress(address)}
@@ -163,6 +164,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
             <span className="checkbox-text">{t('same-as-shipping-address')}</span>
             {!isSameAddress && (
               <AddressFields
+                route={route}
                 type='billing'
                 handlePage={(page: string) => setRoute(page)}
                 onSetAddress={(address) => setBillingAddress(address)}

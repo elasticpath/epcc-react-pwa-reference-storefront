@@ -5,6 +5,7 @@ import './PlacesSuggest.scss';
 import { useTranslation } from './app-state';
 
 interface PlacesSuggestParams {
+  route: string,
   onChange: any,
   label: any,
   onClear: any,
@@ -19,11 +20,12 @@ const options = {
 };
 
 export const PlacesSuggest: React.FC<PlacesSuggestParams> = (props) => {
+  const { route } = props;
   const { t } = useTranslation();
 
   return (
     <div className="algoliasearch">
-      <div className="algoliasearch__title">{t('search-for-your-shipping-address')}</div>
+      <div className="algoliasearch__title">{t('search-for-your-address', { route })}</div>
       <AlgoliaPlaces
         id="AlgoliaPlaces"
         options={options}
