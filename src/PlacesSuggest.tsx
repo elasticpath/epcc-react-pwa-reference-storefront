@@ -20,8 +20,8 @@ const options = {
 };
 
 export const PlacesSuggest: React.FC<PlacesSuggestParams> = (props) => {
-  const { route } = props;
   const { t } = useTranslation();
+  const route = props.route.charAt(0).toUpperCase() + props.route.slice(1);
 
   return (
     <div className="algoliasearch">
