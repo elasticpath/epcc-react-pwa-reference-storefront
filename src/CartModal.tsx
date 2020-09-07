@@ -75,6 +75,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
       await removeCartItems(mcart);
       updateCartItems();
       setRoute('completed');
+      setIsSameAddress(true);
     } catch (err) {
       console.error(err)
     }
@@ -107,11 +108,16 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
 
   const onCloseModal = () => {
     handleCloseModal();
+    setBillingAddress(initialValues);
+    setShippingAddress(initialValues);
     setRoute('itemList');
+    setIsSameAddress(true);
+    setEmail('');
   };
 
   const ref = useOnclickOutside(() => {
     handleCloseModal();
+    onCloseModal();
   });
 
   return (

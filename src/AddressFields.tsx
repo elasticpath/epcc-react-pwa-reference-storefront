@@ -177,7 +177,7 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
       </div>
 
       {editing && (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} onChange={onSetAddress(values)}>
           <div className="address__field --addspace">
             <div className="address --styledinput">
               <label className="epform__label" htmlFor="first_name">
