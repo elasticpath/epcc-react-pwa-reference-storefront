@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import {createCartIdentifier} from "@moltin/request";
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { useCustomerData, useTranslation } from './app-state';
 import { createAccountUrl } from './routes';
@@ -31,6 +30,12 @@ export const AccountDropdown: React.FC = (props) => {
   const ref = useOnclickOutside(() => {
     setIsOpen(false);
   });
+
+  const createCartIdentifier = () => {
+    return 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace(/[x]/g, () =>
+      ((Math.random() * 16) | 0).toString(16)
+    )
+  };
 
   const logout = () => {
     localStorage.setItem('mcart', createCartIdentifier());
