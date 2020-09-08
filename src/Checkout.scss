@@ -3,7 +3,14 @@
 
 .checkout {
   &__card {
+    position: relative;
     margin: 20px 0;
+  }
+
+  &__error {
+    padding-top: 5px;
+    text-align: left;
+    color: $mainErrorColor;
   }
 }
 
@@ -14,8 +21,8 @@
 }
 
 .payment-form {
-       background-color: $mainBackgroundColor;
-       border: 1px solid $buttonActiveColor;
-       border-radius: 0.25rem;
-       padding: 0.75rem 1rem;
+   background-color: $mainBackgroundColor;
+   border: 1px solid $buttonActiveColor;
+   border-radius: 0.25rem;
+   padding: 0.75rem 1rem;
 }

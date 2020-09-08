@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements'
 import { useCartData, useTranslation } from "./app-state";
 import './Checkout.scss';
@@ -13,6 +13,9 @@ export const Checkout: React.FC<CheckoutParams> = (props) => {
   const { shippingAddress, stripe, onPayOrder } = props;
   const { totalPrice } = useCartData();
   const { t } = useTranslation();
+
+  const [isComplete, setIsComplete] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const onPayment = async () => {
     let payment;
@@ -33,8 +36,13 @@ export const Checkout: React.FC<CheckoutParams> = (props) => {
     }
   };
 
+  const onStripeChange = (e:any) => {
+    e.complete ? setIsComplete(true) : setIsComplete(false);
+    e.error ? setErrorMsg(e.error.message) : setErrorMsg('');
+  };
+
   return (
-    <div>
+    <div className="checkout">
       <div className="checkout__card">
         <label htmlFor="CardElement">
           <p className="card-title">{t('payment-card')}</p>
@@ -42,6 +50,7 @@ export const Checkout: React.FC<CheckoutParams> = (props) => {
             className="payment-form"
             id="CardElement"
             hidePostalCode={true}
+            onChange={onStripeChange}
             style={{
               base: {
                 color: '#273142',
@@ -61,8 +70,11 @@ export const Checkout: React.FC<CheckoutParams> = (props) => {
             }}
              />
         </label>
+        {errorMsg && (
+          <div className="checkout__error">{errorMsg}</div>
+        )}
       </div>
-      <button className="epbtn --secondary --large --fullwidth" type="button" onClick={onPayment}>{t('pay') + ' ' + totalPrice}</button>
+      <button className="epbtn --secondary --large --fullwidth" type="button" onClick={onPayment} disabled={!isComplete}>{t('pay') + ' ' + totalPrice}</button>
     </div>
   )
 };
