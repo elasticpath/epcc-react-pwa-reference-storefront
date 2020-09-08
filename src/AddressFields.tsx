@@ -65,7 +65,6 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
   };
 
   const validate = (values:any) => {
-    // onSetAddress(values);
     const errors:any = {};
     if (!values.first_name) {
       errors.first_name = t('required');
@@ -88,7 +87,7 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
     if (!values.postcode) {
       errors.postcode = t('required');
     }
-    console.log('Object.keys(errors).length', Object.keys(errors).length);
+
     if (Object.keys(errors).length === 0  && route === 'billing') {
       onSetAddress(values);
     } else {
