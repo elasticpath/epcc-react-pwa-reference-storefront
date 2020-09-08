@@ -65,7 +65,7 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
   };
 
   const validate = (values:any) => {
-    onSetAddress(values);
+    // onSetAddress(values);
     const errors:any = {};
     if (!values.first_name) {
       errors.first_name = t('required');
@@ -88,10 +88,16 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
     if (!values.postcode) {
       errors.postcode = t('required');
     }
+    console.log('Object.keys(errors).length', Object.keys(errors).length);
+    if (Object.keys(errors).length === 0  && route === 'billing') {
+      onSetAddress(values);
+    } else {
+      onSetAddress(initialValues);
+    }
     return errors;
   };
 
-  const {handleSubmit, handleChange, resetForm, values, errors, setValues} = useFormik({
+  const {handleSubmit, handleChange, resetForm, values, errors, isValid, setValues} = useFormik({
     initialValues,
     validate,
     onSubmit: (values) => {
@@ -296,7 +302,7 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
             <input className="epform__input" id="instructions" type="text" onChange={handleChange} value={values.instructions} />
           </div>
           {type === 'shipping' && (
-            <button className="epbtn --secondary --large --fullwidth" type="submit">{t('continue-to-billing')}</button>
+            <button className="epbtn --secondary --large --fullwidth" type="submit" disabled={!isValid}>{t('continue-to-billing')}</button>
           )}
         </form>
       )}

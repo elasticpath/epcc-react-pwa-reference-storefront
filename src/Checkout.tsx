@@ -6,11 +6,12 @@ import './Checkout.scss';
 interface CheckoutParams {
   onPayOrder: (...args: any) => any,
   shippingAddress: any,
+  isDisabled: boolean,
   stripe: any,
 }
 
 export const Checkout: React.FC<CheckoutParams> = (props) => {
-  const { shippingAddress, stripe, onPayOrder } = props;
+  const { shippingAddress, stripe, onPayOrder, isDisabled } = props;
   const { totalPrice } = useCartData();
   const { t } = useTranslation();
 
@@ -74,7 +75,7 @@ export const Checkout: React.FC<CheckoutParams> = (props) => {
           <div className="checkout__error">{errorMsg}</div>
         )}
       </div>
-      <button className="epbtn --secondary --large --fullwidth" type="button" onClick={onPayment} disabled={!isComplete}>{t('pay') + ' ' + totalPrice}</button>
+      <button className="epbtn --secondary --large --fullwidth" type="button" onClick={onPayment} disabled={!isComplete || isDisabled}>{t('pay') + ' ' + totalPrice}</button>
     </div>
   )
 };

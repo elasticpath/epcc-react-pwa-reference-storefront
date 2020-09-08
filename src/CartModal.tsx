@@ -49,12 +49,14 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
   const { cartData, promotionItems, updateCartItems } = useCartData();
   const { isLoggedIn } = useCustomerData();
   const { updatePurchaseHistory } = useOrdersData();
+  const { t } = useTranslation();
+
   const [route, setRoute] = useState<string>('itemList');
   const [isSameAddress, setIsSameAddress] = useState(true);
   const [billingAddress, setBillingAddress] = useState<FormValues>(initialValues);
   const [shippingAddress, setShippingAddress] = useState<FormValues>(initialValues);
   const [email, setEmail] = useState('');
-  const { t } = useTranslation();
+  const [emailError, setEmailError] = useState('');
 
   const onPayOrder = async (token: string) => {
     try {
@@ -83,7 +85,11 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
 
   const handleCheckAsShipping = () => {
     setIsSameAddress(!isSameAddress);
-    setBillingAddress(shippingAddress);
+    if(!isSameAddress) {
+      setBillingAddress(shippingAddress);
+    } else {
+      setBillingAddress(initialValues);
+    }
   };
 
   const handleBackPage = () => {
@@ -94,15 +100,14 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
     }
   };
 
-  const validate = (email: string) => {
-    const expression = /\S+@\S+/;
-    return expression.test(String(email).toLowerCase())
-  };
-
   const onUpdateEmail = (email: string) => {
-    const isValid = validate(email);
-    if(isValid) {
-      setEmail(email);
+    setEmail(email);
+    if (!email) {
+      setEmailError(t('required'));
+    } else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+      setEmailError(t('invalid-email'));
+    } else {
+      setEmailError('');
     }
   };
 
@@ -113,6 +118,11 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
     setRoute('itemList');
     setIsSameAddress(true);
     setEmail('');
+  };
+
+  const handleSetAddress = (address:any) => {
+    setBillingAddress(address);
+    setShippingAddress(address);
   };
 
   const ref = useOnclickOutside(() => {
@@ -150,7 +160,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
             route={route}
             type='shipping'
             handlePage={(page: string) => setRoute(page)}
-            onSetAddress={(address) => setShippingAddress(address)}
+            onSetAddress={handleSetAddress}
           />
           </div>
         )}
@@ -159,7 +169,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
             <h2 className="cartmodal__title">
               {t('billing-information')}
             </h2>
-            <input id="sameAsShipping" className="styledcheckbox" type="checkbox" defaultChecked={isSameAddress} onClick={() => handleCheckAsShipping()} />
+            <input id="sameAsShipping" className="styledcheckbox" type="checkbox" defaultChecked={isSameAddress} onChange={() => handleCheckAsShipping()} />
             <label htmlFor="sameAsShipping"> </label>
             <span className="checkbox-text">{t('same-as-shipping-address')}</span>
             {!isSameAddress && (
@@ -171,15 +181,18 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
               />
             )}
             {!isLoggedIn && (
-              <div className="email-field">
+              <div className="email-field epform__group">
                 <label htmlFor="email">{t('email')}</label>
-                <input className="epform__input" required={true} type="email" id="email" placeholder="Email" onChange={(e) => onUpdateEmail(e.target.value)} />
+                <input className="epform__input" required={true} type="email" id="email" placeholder="Email" onChange={(e) => onUpdateEmail(e.target.value)} onBlur={(e) => onUpdateEmail(e.target.value)} />
+                {emailError && (
+                  <div className="epform__error">{emailError}</div>
+                )}
               </div>
             )}
             <div className="cartmodal__body">
               <StripeProvider apiKey={config.stripeKey}>
                 <Elements>
-                  <Checkout shippingAddress={shippingAddress} onPayOrder={onPayOrder} />
+                  <Checkout shippingAddress={shippingAddress} onPayOrder={onPayOrder} isDisabled={!billingAddress.last_name || !email || emailError !== ''} />
                 </Elements>
               </StripeProvider>
             </div>
