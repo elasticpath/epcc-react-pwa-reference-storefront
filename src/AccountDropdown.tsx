@@ -1,8 +1,8 @@
 
-import React, { useState} from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
-import {useCustomerData, useTranslation} from './app-state';
+import { useCustomerData, useTranslation } from './app-state';
 import { createAccountUrl } from './routes';
 import { LoginDialog } from './LoginDialog';
 import { ReactComponent as AccountIcon } from './images/icons/ic_account.svg';
@@ -31,7 +31,14 @@ export const AccountDropdown: React.FC = (props) => {
     setIsOpen(false);
   });
 
+  const createCartIdentifier = () => {
+    return 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace(/[x]/g, () =>
+      ((Math.random() * 16) | 0).toString(16)
+    )
+  };
+
   const logout = () => {
+    localStorage.setItem('mcart', createCartIdentifier());
     clearCustomerData();
     history.push('/');
   };

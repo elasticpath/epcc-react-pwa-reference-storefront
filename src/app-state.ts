@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import constate from 'constate';
 import * as moltin from '@moltin/sdk';
-import { getCustomer, getAddresses, getAllOrders, loadCategoryTree } from './service';
+import { getCustomer, getAddresses, getAllOrders, loadCategoryTree, getCartItems } from './service';
 import * as service from './service';
 import { config } from './config';
 
@@ -129,6 +129,7 @@ function useCustomerDataState() {
 
   const setCustomerData = (token: string, id: string) => {
     localStorage.setItem('mtoken', token);
+    localStorage.setItem('mcart', id);
     localStorage.setItem('mcustomer', id);
     setCustomerToken(token);
     setCustomerId(id);
@@ -214,6 +215,12 @@ function usePurchaseHistoryState() {
     }
   }, [id, token]);
 
+  const updatePurchaseHistory = () => {
+    getAllOrders(token).then(res => {
+      setData(res.data);
+    });
+  };
+
   const setData = (data: any) => {
     setOrdersData(data);
   };
@@ -222,7 +229,7 @@ function usePurchaseHistoryState() {
     setOrdersData([]);
   };
 
-  return { ordersData }
+  return { ordersData, updatePurchaseHistory }
 }
 
 const defaultCurrency = 'USD';
@@ -332,11 +339,11 @@ function useCompareProductsState() {
 
   const removeFromCompare = (productId: string) => {
     setCompareProducts(compareProducts.filter(p => p.id !== productId));
-  }
+  };
 
   const removeAll = () => {
     setCompareProducts([]);
-  }
+  };
 
   return {
     compareProducts,
@@ -349,17 +356,49 @@ function useCompareProductsState() {
   };
 }
 
+function useCartItemsState() {
+  const [cartData, setCartData] = useState<moltin.CartItem[]>([]);
+  const [promotionItems, setPromotionItems] = useState<moltin.CartItem[]>([]);
+  const [count, setCount] = useState(0);
+  const [totalPrice, setTotalPrice] = useState('');
+  const mcart = localStorage.getItem('mcart') || '';
+
+  useEffect(() => {
+    if (mcart) {
+      getCartItems(mcart).then(res => {
+        setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'));
+        setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'));
+        setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0));
+        setTotalPrice(res.meta.display_price.without_tax.formatted)
+      });
+    }
+  }, [mcart]);
+
+  const updateCartItems = () => {
+    getCartItems(mcart).then(res => {
+      setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'));
+      setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'));
+      setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0));
+      setTotalPrice(res.meta.display_price.without_tax.formatted)
+    });
+  };
+
+  return { cartData, promotionItems, count, totalPrice, updateCartItems }
+}
+
 function useGlobalState() {
   const translation = useTranslationState();
   const currency = useCurrencyState();
   const addressData = useAddressDataState();
   const ordersData = usePurchaseHistoryState();
+  const cartData = useCartItemsState();
 
   return {
     translation,
     customerData: useCustomerDataState(),
     addressData,
     ordersData,
+    cartData,
     currency,
     categories: useCategoriesState(translation.selectedLanguage),
     compareProducts: useCompareProductsState(),
@@ -375,6 +414,7 @@ export const [
   useCurrency,
   useCategories,
   useCompareProducts,
+  useCartData,
 ] = constate(
   useGlobalState,
   value => value.translation,
@@ -383,5 +423,6 @@ export const [
   value => value.ordersData,
   value => value.currency,
   value => value.categories,
-  value => value.compareProducts
+  value => value.compareProducts,
+  value => value.cartData,
 );

@@ -1,0 +1,194 @@
+
+@import './theme/common';
+
+.cartmodal {
+
+  &__overlay {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background: $mainTextColor;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 2;
+    transition: all 0.3s ease 0s;
+  }
+
+  &__content {
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    overflow-y: scroll;
+    height: 100%;
+    width: 100%;
+    max-width: 500px;
+    padding: 32px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(500px);
+    transition: all 0.3s ease 0s;
+    z-index: 3;
+    background: $mainBackgroundColor;
+  }
+
+  &.--open & {
+    &__overlay {
+      opacity: 0.3;
+      visibility: visible;
+    }
+
+    &__content {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0px);
+    }
+  }
+
+  .checkbox-text {
+    margin-left: 10px;
+    display: inline;
+  }
+
+  .styledcheckbox {
+    display: none;
+    width: 20px;
+    height: 20px;
+
+    +label {
+      position: relative;
+      width: 18px;
+      height: 18px;
+      padding-left: 25px;
+      font-size: 13px;
+      line-height: 18px;
+      color: $firstComplimentTextColor;
+      display: inline-block;
+      vertical-align: top;
+      margin-bottom: 0;
+      &:before {
+        content: "";
+        width: 20px;
+        height: 20px;
+        border: 2px solid $buttonFocusColor;
+        border-radius: 2px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: $buttonActiveColor;
+      }
+    }
+
+    &:disabled {
+      +label {
+        opacity: 0.4;
+      }
+    }
+
+    &:checked {
+      + label {
+        &:before {
+          background-color: $buttonActiveColor;
+          border-color: $buttonActiveColor;
+        }
+
+        &:after {
+          content: "";
+          position: absolute;
+          top: 4px;
+          left: 2px;
+          width: 12px;
+          height: 7px;
+          border: solid 2px $mainBackgroundColor;
+          border-right: none;
+          border-top: none;
+          transform: translate(2px, 1px) rotate(-45deg);
+        }
+      }
+    }
+  }
+
+  &__title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 34px;
+    padding-bottom: 50px;
+    text-align: center;
+  }
+
+  &__closebutton {
+    &:hover {
+      cursor: pointer;
+    }
+
+    svg {
+      width: 22px;
+      height: 22px;
+      fill: $thirdComplimentTextColor;
+    }
+  }
+
+  &__body {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .email-field {
+    margin: 20px 0;
+    font-weight: bold;
+
+    input {
+      height: 40px;
+    }
+
+    label {
+      margin: 6px 0;
+      display: block;
+    }
+  }
+
+  .shipping-preview {
+    margin: 20px 0;
+    padding: 14px;
+    border: 1px solid $secondBorderColor;
+    border-radius: 8px;
+  }
+
+  .address-heading {
+    font-weight: bold;
+
+    .change-button {
+      text-decoration: underline;
+      color: $mainTextColor;
+      float: right;
+      padding: 0;
+
+      &:hover {
+        background-color: transparent;
+        color: $firstComplimentColor;
+      }
+    }
+  }
+  .shipping-info {
+    margin-top: 20px;
+  }
+}
+
+.completed {
+  text-align: center;
+
+  &__title {
+    font-weight: bold;
+    font-size: 26px;
+    margin: 70px 0;
+  }
+
+  &__body {
+    p {
+      margin: 20px;
+    }
+  }
+}

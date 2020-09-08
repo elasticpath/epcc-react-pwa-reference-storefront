@@ -1,21 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 // @ts-ignore
 import { Offline } from 'react-detect-offline';
 import { ImageContainer } from './ImageContainer';
-import {useCustomerData, useTranslation} from './app-state';
+import { useCartData, useTranslation } from './app-state';
 import { LanguageDropdown } from './LanguageDropdown';
 import { SearchBar } from './SearchBar';
 import { AccountDropdown } from './AccountDropdown';
 import { Navigation } from "./Navigation";
+import { CartModal } from "./CartModal";
 
 import headerLogo from './images/site-images/Company-Logo.svg';
+import { ReactComponent as CartIcon } from './images/icons/cart-icon.svg';
 
 import './AppHeader.scss';
 
 export const AppHeader: React.FC = () => {
   const { t } = useTranslation();
-  const { id } = useCustomerData();
+  const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+  const { count, updateCartItems } = useCartData();
+
+  const handleCloseCartModal = () => {
+    setIsCartModalOpen(false);
+  };
+
+  const handleCartModal = () => {
+    updateCartItems();
+    setIsCartModalOpen(true);
+  };
 
   return (
     <div className="appheader">
@@ -32,10 +44,17 @@ export const AppHeader: React.FC = () => {
           <LanguageDropdown />
         </div>
         <div className="appheader__moltincartcontainer">
-          <span
-            className="moltin-cart-button"
-            key={id}
-          ></span>
+          <button className="appheader__cartbtn epbtn --bordered" onClick={handleCartModal}>
+            <span className="appheader__cartbtntxt">
+              {t('cart')}
+              {' ('}
+              {count}
+              {' '}
+              {count !== 1 ? t('items') : t('item')}
+              {')'}
+            </span>
+            <CartIcon className="appheader__carticon" />
+          </button>
         </div>
         <div className="appheader__account">
           <AccountDropdown />
@@ -51,6 +70,7 @@ export const AppHeader: React.FC = () => {
           </strong>
         </div>
       </Offline>
+      <CartModal isCartModalOpen={isCartModalOpen} handleCloseModal={handleCloseCartModal} />
     </div>
   );
 };

@@ -1,0 +1,70 @@
+
+@import './theme/common';
+
+.address {
+  &__main {
+    margin-bottom: 20px;
+  }
+
+  &__addressbutton {
+    margin-top: 10px;
+    text-decoration: underline;
+
+    &:hover {
+      cursor: pointer;
+      color: #0099DE;
+    }
+  }
+
+  &__field {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  &.--styledinput {
+    width: 50%;
+    padding: 0 12px;
+  }
+
+  .--addspace {
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
+  }
+
+  .epform {
+    &__label {
+      text-transform: none;
+    }
+
+    &__input {
+      height: 40px;
+    }
+  }
+
+  .epform {
+    &__error {
+      position: unset;
+    }
+  }
+
+  &__wrap {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    border-top: 1px solid $firstBorderColor;
+    border-bottom: 1px solid $firstBorderColor;
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    .address__container {
+      display: flex;
+    }
+
+    .address__list {
+      padding: 0;
+    }
+  }
+}
+
+

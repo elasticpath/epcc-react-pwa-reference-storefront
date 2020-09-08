@@ -169,3 +169,50 @@ export async function getAllOrders(token: string): Promise<{ data: moltin.Order[
   const result = await moltin.Orders.Limit(100).All(token);
   return result;
 }
+
+export async function getCartItems(reference: string): Promise<moltin.CartItemsResponse> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const CartItems = await moltin.Cart(reference).Items();
+
+  return CartItems;
+}
+
+export async function removeCartItems(reference: string) {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  await moltin.Cart(reference).Delete();
+}
+
+export async function addToCart(reference: string, productId: string): Promise<void> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const quantity = 1;
+  await moltin.Cart(reference).AddProduct(productId, quantity);
+}
+
+export async function addPromotion(reference: string, promoCode: string): Promise<void> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  await moltin.Cart(reference).AddPromotion(promoCode);
+}
+
+export async function removeCartItem(reference: string, itemId: string): Promise<void> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  await moltin.Cart(reference).RemoveItem(itemId);
+}
+
+export async function updateCartItem(reference: string, productId: string, quantity: number): Promise<void> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  await moltin.Cart(reference).UpdateItem(productId, quantity);
+}
+
+export async function checkout(reference: string, customer: any, billing: any, shipping: any): Promise<{ data: moltin.Order }> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const checkoutRes = await moltin.Cart(reference).Checkout(customer, billing, shipping);
+
+  return checkoutRes;
+}
+
+export async function payment(payment: object, orderId: string) {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  await moltin.Orders.Payment(orderId, payment)
+}
+
+

@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import useScript from 'react-script-hook';
 import algoliasearch from 'algoliasearch/lite';
 import { Configure, InstantSearch } from 'react-instantsearch-dom';
 import { routes } from './routes';
@@ -12,13 +11,6 @@ import { CompareOverlay } from './CompareOverlay';
 import './App.scss';
 
 const App: React.FC = () => {
-  useScript({
-    src: config.shopkitSrc,
-    'data-moltin-client-id': config.clientId,
-    'data-moltin-stripe-publishable-key': config.stripeKey,
-    'data-moltin-endpoint-url': 'https://' + config.endpointURL
-  });
-
   const searchClient = algoliasearch(
     config.algoliaAppId,
     config.algoliaApiKey

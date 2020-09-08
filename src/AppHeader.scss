@@ -84,12 +84,36 @@
     &__account {
       margin-right: 10px;
     }
+
+    &__moltincartcontainer & {
+      &__cartbtn.--bordered {
+        border: none;
+
+        &:hover {
+          background: transparent;
+        }
+      }
+    }
+
+    &__cartbtntxt {
+      display: none;
+    }
   }
 
   @media all and (display-mode: standalone) {
     &__logo {
       padding-left: 72px;
       padding-right: 10px;
+    }
+  }
+
+  @media (min-width: $mobileWidth - 1px) {
+    &__cartbtn {
+      padding: 10px 15px;
+    }
+
+    &__carticon {
+      display: none;
     }
   }
 }

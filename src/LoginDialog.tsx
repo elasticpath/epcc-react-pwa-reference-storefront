@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Modal from 'react-responsive-modal';
@@ -44,7 +43,7 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
     }
 
     return errors;
-  }
+  };
 
   const {handleSubmit, handleChange, resetForm, values, errors} = useFormik({
     initialValues,
@@ -67,13 +66,13 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
 
   const registerNewUser = () => {
     handleModalClose();
-  }
+  };
 
   const handleClose = () => {
     setFailedLogin(false);
     handleModalClose();
     resetForm();
-  }
+  };
 
   return (
     <Modal open={openModal} onClose={handleClose} classNames={{ modal: 'logindialog' }} showCloseIcon={false}>
