@@ -65,6 +65,7 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
   };
 
   const validate = (values:any) => {
+    onSetAddress(values);
     const errors:any = {};
     if (!values.first_name) {
       errors.first_name = t('required');
@@ -113,7 +114,6 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
 
   return (
     <div className="address">
-
       <div className="address__main">
         <PlacesSuggest
           route={route}
@@ -133,7 +133,7 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
             <div className="address__wrap">
               {addressData.map((address: moltin.Address, index:number) => (
                 <div className="address__container" key={address.id}>
-                  <input type="radio" name="addressCheck" id={`address_${index}`} className="epradio" defaultChecked={checkedItem === index ? true : false} onChange={() => {handleCheckAddress(address, index)}} />
+                  <input type="radio" name="addressCheck" id={`address_${index}`} className="epradio" defaultChecked={checkedItem === index} onChange={() => {handleCheckAddress(address, index)}} />
                   <label htmlFor={`address_${index}`}>
                     <ul className="address__list">
                       <li className="">
@@ -179,7 +179,7 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
       </div>
 
       {editing && (
-        <form onSubmit={handleSubmit} onChange={onSetAddress(values)}>
+        <form onSubmit={handleSubmit}>
           <div className="address__field --addspace">
             <div className="address --styledinput">
               <label className="epform__label" htmlFor="first_name">
