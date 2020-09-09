@@ -44,7 +44,7 @@ export const AppHeader: React.FC = () => {
           <LanguageDropdown />
         </div>
         <div className="appheader__moltincartcontainer">
-          <button className="appheader__cartbtn epbtn --bordered" onClick={handleCartModal}>
+          <button className="appheader__cartbtn epbtn --bordered" aria-label={t('cart')} onClick={handleCartModal}>
             <span className="appheader__cartbtntxt">
               {t('cart')}
               {' ('}
