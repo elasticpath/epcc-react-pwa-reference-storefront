@@ -82,11 +82,11 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
                   </div>
                   <div className="cartitemlist__quantitywrap">
                     <div className="cartitemlist__quantity">
-                      <button className="cartitemlist__arrow --top" onClick={() => {handleUpdate(item.id, item.quantity + 1)}} />
+                      <button className="cartitemlist__arrow --top" aria-label={t('add-item')} onClick={() => {handleUpdate(item.id, item.quantity + 1)}} />
                       <p className='cartitemlist__count'>
                         {item.quantity}
                       </p>
-                      <button className="cartitemlist__arrow --bottom" disabled={item.quantity === 1} onClick={() => {handleUpdate(item.id, item.quantity - 1)}} />
+                      <button className="cartitemlist__arrow --bottom" aria-label={t('remove-item')} disabled={item.quantity === 1} onClick={() => {handleUpdate(item.id, item.quantity - 1)}} />
                     </div>
                   </div>
                 </div>

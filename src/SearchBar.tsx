@@ -98,6 +98,7 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
       <button
         className="searchbar__open"
         onClick={handleInputToggle}
+        aria-label={t('search')}
       >
         <MagnifyingGlassIcon />
       </button>

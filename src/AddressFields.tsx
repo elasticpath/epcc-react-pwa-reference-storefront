@@ -112,6 +112,7 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
 
   const handleClearSearch = () => {
     resetForm({});
+    setCheckedItem(-1);
     if (addressData && addressData.length > 0) {
       setEditing(false);
     }

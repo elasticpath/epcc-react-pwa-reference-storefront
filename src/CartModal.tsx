@@ -192,7 +192,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
             <div className="cartmodal__body">
               <StripeProvider apiKey={config.stripeKey}>
                 <Elements>
-                  <Checkout shippingAddress={shippingAddress} onPayOrder={onPayOrder} isDisabled={!billingAddress.last_name || !email || emailError !== ''} />
+                  <Checkout shippingAddress={shippingAddress} onPayOrder={onPayOrder} isDisabled={!billingAddress.last_name || (!isLoggedIn && !email) || (!isLoggedIn && emailError !== '')} />
                 </Elements>
               </StripeProvider>
             </div>

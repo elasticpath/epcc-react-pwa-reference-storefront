@@ -175,5 +175,7 @@
   "start-typing-an-address": "Start typing an address",
   "search-for-your-address": "Search for your {route} address",
   "item": "item",
-  "items": "items"
+  "items": "items",
+  "add-item": "Add another item",
+  "remove-item": "Remove one item"
 }
