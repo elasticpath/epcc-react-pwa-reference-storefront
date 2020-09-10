@@ -68,7 +68,7 @@
     }
   }
 
-  @media (max-width: $mobileWidth) {
+  @media (max-width: $mobileWidth - 1px) {
     &__search {
       flex: 0;
     }
@@ -80,16 +80,20 @@
     &__accountm,
     &__search,
     &__language,
-    &__moltincartcontainer,
     &__account {
       margin-right: 10px;
     }
 
-    &__moltincartcontainer & {
+    &__moltincartcontainer {
+      margin: 0;
+    }
+
+      &__moltincartcontainer & {
       &__cartbtn.--bordered {
         border: none;
 
         &:hover {
+          border: none;
           background: transparent;
         }
       }
@@ -107,7 +111,7 @@
     }
   }
 
-  @media (min-width: $mobileWidth - 1px) {
+  @media (min-width: $mobileWidth) {
     &__cartbtn {
       padding: 10px 15px;
     }

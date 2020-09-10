@@ -66,7 +66,7 @@ export const Promotion: React.FC<PromotionProps> = (props) => {
             </div>
           </div>
           <div className="epform__group --btn-container">
-            <button className="epbtn --bordered" type="submit" disabled={!values.promoCode}>
+            <button className="epbtn --ghost" type="submit" disabled={!values.promoCode}>
               {t('apply')}
             </button>
           </div>

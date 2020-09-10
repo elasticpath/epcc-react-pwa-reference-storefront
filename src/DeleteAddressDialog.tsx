@@ -37,7 +37,7 @@ export const DeleteAddressDialog: React.FC<DeleteAddressDialogParams> = (props) 
         <button className="epbtn" type="button" onClick={handleCancelDelete}>
           {t('cancel')}
         </button>
-        <button className="epbtn --primary" type="button" onClick={onDeleteAddress}>
+        <button className="epbtn --secondary" type="button" onClick={onDeleteAddress}>
           {t('delete')}
         </button>
       </div>

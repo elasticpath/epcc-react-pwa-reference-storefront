@@ -113,10 +113,10 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
               </div>
             </div>
             <div className="epform__group --btn-container">
-              <button className="epbtn --primary" id="login_modal_login_button" type="submit" disabled={isLoading}>
+              <button className="epbtn --secondary" id="login_modal_login_button" type="submit" disabled={isLoading}>
                 {t('login')}
               </button>
-              <Link to={registrationUrl} className="epbtn --primary" id="login_modal_register_button" onClick={registerNewUser}>
+              <Link to={registrationUrl} className="epbtn --secondary" id="login_modal_register_button" onClick={registerNewUser}>
                 {t('register')}
               </Link>
             </div>

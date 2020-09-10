@@ -109,8 +109,8 @@ export const Profile: React.FC = (props) => {
                   </div>
                 </div>
                 <div className="epform__group">
-                  <button className="epbtn --primary" type="submit">{t('save')}</button>
-                  <button className="epbtn --primary" type="submit" onClick={handleHideForm}>{t('cancel')}</button>
+                  <button className="epbtn --secondary" type="submit">{t('save')}</button>
+                  <button className="epbtn --bordered" type="submit" onClick={handleHideForm}>{t('cancel')}</button>
                 </div>
               </form>
             </div>
