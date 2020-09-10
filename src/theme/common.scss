@@ -36,6 +36,9 @@ $mainErrorColor: #E00646;
 
 $btnColor: hsl(190, 70%, 34%);
 $btnFocusOutlineColor: change-color($color: $btnColor, $saturation: 35%, $lightness: 75%);
+$btnPrimaryHoverColor: #2E343D;
+$btnSecondaryHoverColor: #115666;
+$btnSecondaryActiveColor: #0C3D47;
 
 $maxScrollWidth: 34px;
 

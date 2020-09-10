@@ -32,12 +32,12 @@ img, svg {
   position: relative;
   display: inline-block;
   text-align: center;
-  padding: 8px 10px;
   font-size: $sizeInitial;
-  background-color: white;
-  border: 1px solid transparent;
+  background-color: $mainBackgroundColor;
+  border: 1px solid $mainBackgroundColor;
   color: $btnColor;
   cursor: pointer;
+  padding: 10px 15px;
 
   &.--bordered {
     border: 1px solid $btnColor;
@@ -48,29 +48,52 @@ img, svg {
   }
 
   &.--primary {
-    background-color: $btnColor;
-    color: white;
+    background-color: $buttonActiveColor;
+    color: $mainNavigationColor;
+    border: 1px solid $buttonActiveColor;
 
     &:hover {
-      background-color: adjust-color($color: $btnColor, $lightness: 5%);
+      background-color: $btnPrimaryHoverColor;
+      border: 1px solid $btnPrimaryHoverColor;
     }
 
     &:active {
-      background-color: adjust-color($color: $btnColor, $lightness: -5%);
+      background: $mainColor;
+      border: $mainColor;
     }
   }
 
   &.--secondary {
-    background-color: $buttonActiveColor;
-    border-color: $buttonActiveColor;
+    background-color: $firstComplimentColor;
+    border: 1px solid $firstComplimentColor;
     color: $mainBackgroundColor;
 
     &:hover {
-      background-color: adjust-color($color: $buttonActiveColor, $lightness: 5%);
+      background-color: $btnSecondaryHoverColor;
+      border: 1px solid $btnSecondaryHoverColor;
     }
 
     &:active {
-      background-color: adjust-color($color: $buttonActiveColor, $lightness: -5%);
+      background-color: $btnSecondaryActiveColor;
+      border: 1px solid $btnSecondaryActiveColor;
+    }
+  }
+
+
+  &.--ghost {
+    background-color: $mainBackgroundColor;
+    border: 1px solid $firstComplimentColor;
+    color: $firstComplimentColor;
+
+    &:hover {
+      background-color: $firstComplimentColor;
+      border: 1px solid $firstComplimentColor;
+      color: $mainBackgroundColor;
+    }
+
+    &:active {
+      background-color: $btnSecondaryHoverColor;
+      border: 1px solid $btnSecondaryHoverColor;
     }
   }
 
@@ -78,12 +101,7 @@ img, svg {
     background-color: change-color($color: $btnColor, $saturation: 40%, $lightness: 95%);
   }
 
-  &:focus {
-    box-shadow: 0 0 0px 2px btnFocusOutlineColor;
-  }
-
   &:active {
-    top: 1px;
     background-color: change-color($color: $btnColor, $saturation: 20%, $lightness: 85%);
   }
 

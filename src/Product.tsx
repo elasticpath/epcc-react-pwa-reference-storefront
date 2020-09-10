@@ -99,7 +99,7 @@ export const Product: React.FC = () => {
             <div className="product__moltinbtncontainer">
               {productId &&
                 <button
-                  className="epbtn --primary"
+                  className="epbtn --secondary"
                   onClick={handleAddToCart}
                 >{t('add-to-cart')}</button>
               }

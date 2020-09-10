@@ -279,7 +279,7 @@ export const AddressForm: React.FC<AddressFormParams> = (props) => {
               <button className="epbtn --bordered" type="button" onClick={handleClose}>
                 {t('cancel')}
               </button>
-              <button className="epbtn --primary" type="submit">
+              <button className="epbtn --secondary" type="submit">
                 {t('save')}
               </button>
             </div>

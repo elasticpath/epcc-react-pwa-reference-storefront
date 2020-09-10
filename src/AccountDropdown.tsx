@@ -63,7 +63,7 @@ export const AccountDropdown: React.FC = (props) => {
                   </Link>
                 </li>
                 <li className="accountdropdown__listitem accountdropdown__itembtns">
-                  <button className="epbtn --primary --fullwidth" type="button" onClick={logout}>
+                  <button className="epbtn --secondary --fullwidth" type="button" onClick={logout}>
                     {t('logout')}
                   </button>
                 </li>

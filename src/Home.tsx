@@ -38,7 +38,7 @@ export const Home: React.FC = () => {
             <h1 className="home__bannerheading">{t('home-1-heading')}</h1>
             <div className="home__bannertxt">
               <p>{t('home-1-content')}</p>
-              <button type="button" className="epbtn --primary">{t('learn-more')}</button>
+              <button type="button" className="epbtn --secondary">{t('learn-more')}</button>
             </div>
           </div>
         </div>
@@ -54,7 +54,7 @@ export const Home: React.FC = () => {
                     <p className="home__titlesmall">{t('home-2-subheading')}</p>
                     <p className="home__title">{t('home-2-heading')}</p>
                     <div className="home__goodsbtns">
-                      <button type="button" className="epbtn --primary">{t('learn-more')}</button>
+                      <button type="button" className="epbtn --secondary">{t('learn-more')}</button>
                     </div>
                   </div>
                   <ImageContainer imgUrl={productImage1} alt={productFileName1} imgClassName="home__goodsimage" />
@@ -66,7 +66,7 @@ export const Home: React.FC = () => {
                     <p className="home__titlesmall">{t('home-3-subheading')}</p>
                     <p className="home__title">{t('home-3-heading')}</p>
                     <p className="home__description">{t('home-3-content')}</p>
-                    <button type="button" className="epbtn --primary">{t('add-to-cart')}</button>
+                    <button type="button" className="epbtn --secondary">{t('add-to-cart')}</button>
                   </div>
                   <ImageContainer imgUrl={productImage2} alt={productFileName2} imgClassName="home__goodsimage" />
                 </div>
@@ -113,7 +113,7 @@ export const Home: React.FC = () => {
             <h2 className="home__bannerheading">{t('home-7-heading')}</h2>
             <div className="home__bannertxt">
               <p>{t('home-7-content')}</p>
-              <button type="button" className="epbtn --primary">{t('learn-more')}</button>
+              <button type="button" className="epbtn --secondary">{t('learn-more')}</button>
             </div>
           </div>
         </div>
@@ -173,7 +173,7 @@ export const Home: React.FC = () => {
                     <p className="home__description">{t('home-11-content-1')}</p>
                     <p className="home__description">{t('home-11-content-2')}</p>
                     <div className="home__goodsbtns">
-                      <button type="button" className="epbtn --primary">{t('bellvie-help')}</button>
+                      <button type="button" className="epbtn --secondary">{t('bellvie-help')}</button>
                     </div>
                   </div>
                 </div>
@@ -186,7 +186,7 @@ export const Home: React.FC = () => {
                     <p className="home__description">{t('home-12-content-1')}</p>
                     <p className="home__description">{t('home-12-content-2')}</p>
                     <div className="home__goodsbtns">
-                      <button type="button" className="epbtn --primary">{t('about')}</button>
+                      <button type="button" className="epbtn --secondary">{t('about')}</button>
                     </div>
                   </div>
                 </div>
