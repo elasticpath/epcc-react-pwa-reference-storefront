@@ -1,15 +1,10 @@
 
-import React, { useState, useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
 import Modal from 'react-responsive-modal';
-import { useFormik } from 'formik';
-import { login, loadAuthenticationProfiles } from '../service';
-import { useResolve } from '../hooks';
-import { useCustomerData, useTranslation, useCustomerAuthenticationSettings } from '../app-state';
+import { useTranslation, useCustomerAuthenticationSettings } from '../app-state';
 import { PasswordLoginForm } from './PasswordLoginForm';
 import { LoginDialogDivider } from './LoginDialogDivider'; 
 
-import { createRegistrationUrl } from '../routes';
 import { ReactComponent as CloseIcon } from '../images/icons/ic_close.svg';
 
 import './LoginDialog.scss';
@@ -34,14 +29,6 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
     setFailedLogin(false);
     handleModalClose();
   }
-
-  
-
-  // TODO: We need to remember what page we were on before we left as well..
-
-  // console.log('the spinner should be:', isLoading)
-  // console.log(authenticationSettings)
-  // console.log(authenticationProfiles)
 
   return (
     <Modal open={openModal} onClose={handleClose} classNames={{ modal: 'logindialog' }} showCloseIcon={false}>

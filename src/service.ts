@@ -82,21 +82,18 @@ export async function loadCustomerAuthenticationSettings(): Promise<any> {
   
   const moltin = MoltinGateway({ 
     client_id: config.clientId,
-    host: 'localhost:8000',
-    protocol: 'http'
+    // host: 'localhost:8000',
+    // protocol: 'http',
+    // store_id: '88888888-4444-4333-8333-111111111111',
   });
   
-  return moltin.AuthenticationSettings.Get({
-    headers: {'X-MOLTIN-AUTH-STORE': '88888888-4444-4333-8333-111111111111'}
-  })
+  return moltin.AuthenticationSettings.Get()
 }
 
 // HAX - This is going to be part of the SDK eventually.
 export async function loadAuthenticationProfiles(realmId: string, storeId: string): Promise<any> {
   const moltin = MoltinGateway({ 
     client_id: config.clientId,
-    host: 'localhost:8080',
-    protocol: 'http'
     // We need to send in the storeID
   });
   return moltin.AuthenticationProfiles.All(realmId, null, {'X-MOLTIN-AUTH-STORE': '88888888-4444-4333-8333-111111111111'})
@@ -106,8 +103,6 @@ export function getAuthenticationProfile(realmId: string, profileId: string) {
   // Get the authentication profile
   const moltin = MoltinGateway({ 
     client_id: config.clientId,
-    host: 'localhost:8080',
-    protocol: 'http'
   });
   return moltin.AuthenticationProfiles.Get({
       realmId,
@@ -226,35 +221,36 @@ export async function register(name: string, email: string, password: string): P
   return data;
 }
 
-export async function login(email?: string, password?: string, code?: string, redirectUri?: string): Promise<moltin.CustomerToken> {
-  
-
-  if (code && redirectUri) {
-    // Just make the request manually here...
-    console.log('we are fetching the token from the adjust customer token endpoint')
-    const body = {
-      "data":{
-      "type": "oidc",
-      "oauth_authorization_code": code,
-      "oauth_redirect_uri": redirectUri
+// TODO: We need to add this to the SDK... 
+export async function oidcLogin(code?: string, redirectUri?: string): Promise<moltin.CustomerToken> {
+  // Just make the request manually here...
+  console.log('we are fetching the token from the adjust customer token endpoint')
+  const body = {
+    "data":{
+    "type": "oidc",
+    "oauth_authorization_code": code,
+    "oauth_redirect_uri": redirectUri
     }
-   }
-
-    const res = await fetch(
-      'http://localhost:8000/v2/customers/tokens', {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc
-        headers: {
-          'Content-Type': 'application/json',
-          'X-MOLTIN-AUTH-STORE': '88888888-4444-4333-8333-111111111111',
-        },
-        body: JSON.stringify(body)
-      }
-    )
-
-    const { data } = await res.json()
-
-    return data
   }
+
+  const res = await fetch(
+    'http://localhost:8000/v2/customers/tokens', {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc
+      headers: {
+        'Content-Type': 'application/json',
+        'X-MOLTIN-AUTH-STORE': '88888888-4444-4333-8333-111111111111',
+      },
+      body: JSON.stringify(body)
+    }
+  )
+
+  const { data } = await res.json()
+
+  return data
+}
+
+// Revert what this login is and create a new oidcLogin
+export async function login(email?: string, password?: string): Promise<moltin.CustomerToken> {
   
   const moltin = MoltinGateway({ client_id: config.clientId });
   const { data } = await moltin.Customers.Token(email!, password!).then();

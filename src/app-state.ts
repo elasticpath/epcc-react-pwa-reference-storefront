@@ -4,7 +4,6 @@ import * as moltin from '@moltin/sdk';
 import { getCustomer, loadCategoryTree, Product, loadCustomerAuthenticationSettings, loadAuthenticationProfiles} from './service';
 import * as service from './service';
 import { config } from './config';
-import { useResolve } from './hooks';
 
 import en from './locales/en.json';
 import fr from './locales/fr.json';
@@ -105,6 +104,7 @@ function useTranslationState() {
 }
 
 function useCustomerDataState() {
+  console.log('useCustomerDataState is running')
   const token = localStorage.getItem('mtoken') || '';
   const id = localStorage.getItem('mcustomer') || '';
 
@@ -189,6 +189,8 @@ function useCurrencyState() {
       }
 
       setAllCurrencies(currencies);
+    }).catch((err) => {
+      console.error(err)
     });
   }, [allCurrencies.length, selectedCurrency]);
 
@@ -230,6 +232,8 @@ function useCategoriesState(selectedLanguage: string) {
     loadCategoryTree().then(result => {
       setCategoriesTree(result);
       setCategoryPaths(mergeMaps(result));
+    }).catch(err=>{
+
     });
   }, [selectedLanguage]);
 
@@ -275,32 +279,23 @@ function useCompareProductsState() {
 
 // We should hold all the state here??
 function useCustomerAuthenticationSettingsState() {
-
   // We need to make this state work for both...
   const [ authenticationSettings, setAuthenticationSettings ] = useState<object>()
   const [ authenticationProfiles, setAuthenticationProfiles ] = useState<object>();
 
   useEffect(()=>{
-    console.log('loading customer authentication settings');
     loadCustomerAuthenticationSettings().then((authSettings) => {
-      console.log('return from authSettings');
       setAuthenticationSettings(authSettings);
-      console.log(authSettings);
       
       const authenticationRealmId = authSettings?.data?.relationships['authentication-realm']?.data?.id
-      
-      console.log('authentication realm id');
-      console.log(authenticationRealmId);
-
-      loadAuthenticationProfiles(authenticationRealmId, 'STORE-ID-PLACEHOLDER').then((profiles: any) => {
-        
-        console.log('the return from loading the authentication profiles');
-        console.log(profiles);
-        
+      console.log('getting the authentication RealmId')
+      console.log(authenticationRealmId)
+      loadAuthenticationProfiles(authenticationRealmId, 'STORE-ID-PLACEHOLDER').then((profiles: any) => {  
+        console.log('loading the authentication profiles')
+        console.log(profiles)
         setAuthenticationProfiles(profiles);
       })
     }).catch((err)=>{
-      console.log('beginning to consume');
       console.log(err)
     });
   },[])

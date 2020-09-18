@@ -80,3 +80,7 @@ export function useProductImages(product: Product | undefined) {
 
   return productImageHrefs;
 }
+
+export function useMessages() {
+  
+}
