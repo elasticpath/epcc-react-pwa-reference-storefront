@@ -47,7 +47,7 @@ export const PasswordLoginForm: React.FC<PasswordLoginFormProps> = (props) => {
 
   // We need to access this formik state in the upper component.
   // We might not need to rest the form if the modal is closed... the state might be gone... when unmounted...
-  const {handleSubmit, handleChange, resetForm, values, errors} = useFormik({
+  const {handleSubmit, handleChange, values, errors} = useFormik({
     initialValues,
     validate,
     onSubmit: (values) => {
@@ -61,7 +61,6 @@ export const PasswordLoginForm: React.FC<PasswordLoginFormProps> = (props) => {
         .catch(error => {
           setIsLoading(false);
           setFailedLogin(true)
-          console.error(error);
         });
     },
   });

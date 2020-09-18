@@ -41,7 +41,7 @@ export const OidcHandler: React.FC<any> = ()=> {
         }
 
         setCustomerDataFromOidcCallback();
-    }, []);
+    });
 
     return( <div className="epminiLoader --center" />   )
 }
