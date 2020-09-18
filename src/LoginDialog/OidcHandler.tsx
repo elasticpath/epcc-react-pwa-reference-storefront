@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
-import { oidcLogin } from '../service';
+// import { oidcLogin } from '../service';
 import { useCustomerData } from '../app-state';
 
 export const OidcHandler: React.FC<any> = ()=> {
