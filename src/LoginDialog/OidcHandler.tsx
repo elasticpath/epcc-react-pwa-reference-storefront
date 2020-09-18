@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 // import { oidcLogin } from '../service';
-import { useCustomerData } from '../app-state';
 
 export const OidcHandler: React.FC<any> = ()=> {
 
-    const { setCustomerData } = useCustomerData();
     const history = useHistory()
     const location = useLocation()
 

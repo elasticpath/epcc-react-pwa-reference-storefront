@@ -1,12 +1,10 @@
 
-import React, { useState, Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
-import Modal from 'react-responsive-modal';
 import { useFormik } from 'formik';
 import { useCustomerData, useTranslation } from '../app-state';
 import { createRegistrationUrl } from '../routes';
 import { login } from '../service';
-import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import './PasswordLoginForm.scss'
 
 import './LoginDialog.scss';
@@ -70,11 +68,6 @@ export const PasswordLoginForm: React.FC<PasswordLoginFormProps> = (props) => {
 
   const registerNewUser = () => {
     handleModalClose();
-  }
-
-  const handleClose = () => {
-    handleModalClose();
-    resetForm()
   }
 
   return (
