@@ -1,6 +1,6 @@
 import React from 'react';
-import { InlineShareButtons } from 'sharethis-reactjs';
-import { useTranslation } from './app-state';
+// import { InlineShareButtons } from 'sharethis-reactjs';
+// import { useTranslation } from './app-state';
 
 import './SocialShare.scss';
 
