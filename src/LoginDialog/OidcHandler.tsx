@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
-// import { oidcLogin } from '../service';
+import { oidcLogin } from '../service';
+import { useCustomerData } from '../app-state';
 
 export const OidcHandler: React.FC<any> = ()=> {
 
     const history = useHistory()
     const location = useLocation()
+    const { setCustomerData } = useCustomerData();
 
     useEffect(() => {
         async function setCustomerDataFromOidcCallback() {
@@ -19,17 +21,17 @@ export const OidcHandler: React.FC<any> = ()=> {
             if(code !== undefined && state !== undefined) {
                 if (state === localStorage.getItem('state')) {
                     
-                    // const response: any = await oidcLogin(code!, 'http://localhost:3000/oidc')
+                    const response: any = await oidcLogin(code!, 'http://localhost:3000/oidc')
                     
-                    // const result = response; // HAX -- should be response.json()
+                    const result = response; // HAX -- should be response.json()
                     
-                    // console.log('the result')
-                    // console.log(result)
+                    console.log('the result')
+                    console.log(result)
                     
                     // May need to change how the authentication token is set...
-                    // setCustomerData(result.token, result.customer_id);
+                    setCustomerData(result.token, result.customer_id);
                     
-                    // history.push(redirectInitialLocation);
+                    history.push(redirectInitialLocation);
                 } else {
                     alert('Unable to validate identity');
                     history.push(redirectInitialLocation);

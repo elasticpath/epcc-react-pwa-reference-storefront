@@ -79,7 +79,7 @@ export async function loadCustomerAuthenticationSettings(): Promise<any> {
   //   protocol: 'http'
   // })
   console.log('load customer authentication is running');
-  
+
   const moltin = MoltinGateway({ 
     client_id: config.clientId,
     // host: 'localhost:8000',
@@ -224,29 +224,37 @@ export async function register(name: string, email: string, password: string): P
 // TODO: We need to add this to the SDK... 
 export async function oidcLogin(code?: string, redirectUri?: string): Promise<moltin.CustomerToken> {
   // Just make the request manually here...
-  console.log('we are fetching the token from the adjust customer token endpoint')
-  const body = {
-    "data":{
-    "type": "oidc",
-    "oauth_authorization_code": code,
-    "oauth_redirect_uri": redirectUri
-    }
-  }
+  // console.log('we are fetching the token from the adjust customer token endpoint')
+  // const body = {
+  //   "data":{
+  //   "type": "token",
+  //   "authentication_mechanism": "oidc",
+  //   "oauth_authorization_code": code,
+  //   "oauth_redirect_uri": redirectUri
+  //   }
+  // }
 
-  const res = await fetch(
-    'http://localhost:8000/v2/customers/tokens', {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc
-      headers: {
-        'Content-Type': 'application/json',
-        'X-MOLTIN-AUTH-STORE': '88888888-4444-4333-8333-111111111111',
-      },
-      body: JSON.stringify(body)
-    }
-  )
+  // const res = await fetch(
+  //   'https://epcc-integration.global.ssl.fastly.net/v2/customers/tokens', {
+  //     method: 'POST', // *GET, POST, PUT, DELETE, etc
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(body)
+  //   }
+  // )
 
-  const { data } = await res.json()
+  const moltin = MoltinGateway({ client_id: config.clientId });
 
-  return data
+  const { data } = await moltin.Customers.Token('', '', code, redirectUri, {}).then();
+
+  return data;
+
+  // const { data } = await res.json()
+
+
+
+  // return data
 }
 
 // Revert what this login is and create a new oidcLogin

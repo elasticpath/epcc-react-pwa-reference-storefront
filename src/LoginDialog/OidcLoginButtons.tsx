@@ -25,7 +25,7 @@ export const OidcLoginButtons: React.FC = () => {
         // We should request to get the profile here, and then go to the location
         window.location.href = generateKeycloakLoginRedirectUrl(baseRedirectUrl, cId, location.pathname);
     }
-    const clientId = `${authenticationSettings?.data.meta.clientId}`
+    const clientId = `${authenticationSettings?.data.meta.client_id}`
 
     return (
         <div className="auth-opt">
@@ -37,9 +37,8 @@ export const OidcLoginButtons: React.FC = () => {
                         {isLoading ? 'Loading' : `Login with ${profile.name}`}
                     </button>
                 );
-
             })
-        }  
+        }
         </div>
         );
 };
