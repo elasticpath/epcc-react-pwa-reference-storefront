@@ -19,7 +19,7 @@ const SearchButtonMic = (props: any) => (
       {...props} /> :
     <span className="VoiceSearchButton"
       {...props} />
-)
+);
 
 export const SearchBar: React.FC<SearchBoxProps> = () => {
   const { t } = useTranslation();
@@ -40,7 +40,9 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
     event.preventDefault();
     setHitsVisible(false);
     const searchUrl = createSearchUrl();
-    history.push(searchUrl);
+    if(searchUrl !== history.location.pathname) {
+      history.push(searchUrl);
+    }
   };
 
   const handleFocus = () => {
@@ -74,7 +76,7 @@ export const SearchBar: React.FC<SearchBoxProps> = () => {
           onClick={() => handleFocus()}
         />
     ) : null
-  )
+  );
 
   const Hit = ({ hit }: any) => {
     return (
