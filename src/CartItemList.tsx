@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useCartData, useTranslation } from './app-state';
+import { useCartData, useCustomerData, useTranslation } from './app-state';
 import { removeCartItem, updateCartItem } from './service';
 import { ImageContainer } from "./ImageContainer";
 import { Promotion } from "./Promotion";
@@ -16,6 +16,7 @@ interface CartItemListParams {
 export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const { items, handlePage, promotionItems } = props;
   const { t } = useTranslation();
+  const { isLoggedIn } = useCustomerData();
   const { count, totalPrice, updateCartItems } = useCartData();
 
   const isLoading = false;
@@ -52,12 +53,16 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
 
   return (
     <div className={`cartitemlist ${isLoading ? '--loading' : ''}`}>
-      <button className="cartitemlist__mycart" onClick={() => onHandlePage('')}>
-        {t('my-carts')}
-      </button>
+      {isLoggedIn && (
+        <button className="cartitemlist__mycart" onClick={() => onHandlePage('')}>
+          {t('my-carts')}
+        </button>
+      )}
       <h2 className="cartitemlist__title">
         {t('your-shopping-cart')}
-        <SettingsIcon onClick={() => onHandlePage('settings')} />
+        {isLoggedIn && (
+          <SettingsIcon onClick={() => onHandlePage('settings')} />
+          )}
       </h2>
       {items && items.length > 0 ? (
         <div>
