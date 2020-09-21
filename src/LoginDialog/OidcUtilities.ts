@@ -15,7 +15,7 @@ export const generateRedirectUri = () => {
     const oidcHandlerRoute = encodeURI(`${window.location.origin}/oidc`)
     console.log(window.location.origin)
     console.log(oidcHandlerRoute)
-    return `redirect_uri=${oidcHandlerRoute}`
+    return `${oidcHandlerRoute}`
 }
 
 // http://localhost:8080/oidc-idp/login/
@@ -30,7 +30,7 @@ export const generateKeycloakLoginRedirectUrl = (baseRedirectUrl: string, cId: s
     const clientId = `client_id=${cId}` // Should be able to get this from the authentication-settings.
     
     // ------ redirect
-    const redirectUri = generateRedirectUri()
+    const redirectUri = `redirect_uri=${generateRedirectUri()}`
     
     //------- State Token...
     const stateToken = generateStateToken();
