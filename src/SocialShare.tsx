@@ -1,6 +1,6 @@
 import React from 'react';
-// import { InlineShareButtons } from 'sharethis-reactjs';
-// import { useTranslation } from './app-state';
+import { InlineShareButtons } from 'sharethis-reactjs';
+import { useTranslation } from './app-state';
 
 import './SocialShare.scss';
 
@@ -11,11 +11,11 @@ interface SocialShareProps {
 }
 
 export const SocialShare: React.FC<SocialShareProps> = (props) => {
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <div className="socialshare">
-      {/* <InlineShareButtons
+      <InlineShareButtons
         config={{
           alignment: 'left', // alignment of buttons (left, center, right)
           color: 'social', // set the color of buttons (social, white)
@@ -38,7 +38,7 @@ export const SocialShare: React.FC<SocialShareProps> = (props) => {
           subject: t('social-share-subject', { productName: props.name }), // (defaults to og:title or twitter:title)
           message: t('social-share-message', { productName: props.name, description: props.description, link: window.location.href }), // (defaults to og:title or twitter:title)
         }}
-      /> */}
+      />
     </div>
   );
 };
