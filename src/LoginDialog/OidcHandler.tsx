@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { oidcLogin } from '../service';
 import { useCustomerData } from '../app-state';
+import { generateRedirectUri } from './OidcUtilities'
 
 export const OidcHandler: React.FC<any> = ()=> {
 
@@ -21,7 +22,7 @@ export const OidcHandler: React.FC<any> = ()=> {
             if(code !== undefined && state !== undefined) {
                 if (state === localStorage.getItem('state')) {
                     
-                    const response: any = await oidcLogin(code!, redirectInitialLocation)
+                    const response: any = await oidcLogin(code!, generateRedirectUri())
                     
                     const result = response; // HAX -- should be response.json()
 

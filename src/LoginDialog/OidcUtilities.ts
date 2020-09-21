@@ -10,8 +10,11 @@ const generateStateToken = () => {
     return Math.random().toString(36).substr(2) + Math.random().toString(36).substr(2);
 }
 
-const generateRedirectUri = () => {
+export const generateRedirectUri = () => {
+    console.log('generateRedirectUri being called')
     const oidcHandlerRoute = encodeURI(`${window.location.origin}/oidc`)
+    console.log(window.location.origin)
+    console.log(oidcHandlerRoute)
     return `redirect_uri=${oidcHandlerRoute}`
 }
 
@@ -51,7 +54,8 @@ export const generateKeycloakLoginRedirectUrl = (baseRedirectUrl: string, cId: s
 
 
     //---- NONCE generation
-    
+    console.log('printing out the entire redirection')
+    console.log(`${baseRedirectUrl}?${clientId}&${redirectUri}&${state}&${responseType}&${scope}`)
     
     return `${baseRedirectUrl}?${clientId}&${redirectUri}&${state}&${responseType}&${scope}`
 }

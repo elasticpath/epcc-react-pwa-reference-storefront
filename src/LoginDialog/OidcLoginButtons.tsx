@@ -23,6 +23,7 @@ export const OidcLoginButtons: React.FC = () => {
         const baseRedirectUrl = result.links['authentication-link']
         
         // We should request to get the profile here, and then go to the location
+        console.log(generateKeycloakLoginRedirectUrl(baseRedirectUrl, cId, location.pathname));
         window.location.href = generateKeycloakLoginRedirectUrl(baseRedirectUrl, cId, location.pathname);
     }
     const clientId = `${authenticationSettings?.data.meta.client_id}`
