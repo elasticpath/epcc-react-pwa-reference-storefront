@@ -17,6 +17,7 @@ export const SocialShare: React.FC<SocialShareProps> = (props) => {
     <div className="socialshare">
       <InlineShareButtons
         config={{
+          language: '',
           alignment: 'left', // alignment of buttons (left, center, right)
           color: 'social', // set the color of buttons (social, white)
           enabled: true, // show/hide buttons (true, false)
