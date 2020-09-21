@@ -10,6 +10,11 @@ const generateStateToken = () => {
     return Math.random().toString(36).substr(2) + Math.random().toString(36).substr(2);
 }
 
+const generateRedirectUri = () => {
+    const oidcHandlerRoute = encodeURI(`${window.location.origin}/oidc`)
+    return `redirect_uri=${oidcHandlerRoute}`
+}
+
 // http://localhost:8080/oidc-idp/login/
 // 88888888-4444-4333-8333-111111111111/
 // 6412396e-c7be-4b7b-a500-4f1bb76df352/
@@ -22,7 +27,7 @@ export const generateKeycloakLoginRedirectUrl = (baseRedirectUrl: string, cId: s
     const clientId = `client_id=${cId}` // Should be able to get this from the authentication-settings.
     
     // ------ redirect
-    const redirectUri = `redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Foidc` // TODO... We need to keep it logged in with the current uri
+    const redirectUri = generateRedirectUri()
     
     //------- State Token...
     const stateToken = generateStateToken();

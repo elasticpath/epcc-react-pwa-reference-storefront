@@ -21,7 +21,7 @@ export const OidcHandler: React.FC<any> = ()=> {
             if(code !== undefined && state !== undefined) {
                 if (state === localStorage.getItem('state')) {
                     
-                    const response: any = await oidcLogin(code!, 'http://localhost:3000/oidc')
+                    const response: any = await oidcLogin(code!, redirectInitialLocation)
                     
                     const result = response; // HAX -- should be response.json()
                     
