@@ -222,46 +222,15 @@ export async function register(name: string, email: string, password: string): P
 
 // TODO: We need to add this to the SDK... 
 export async function oidcLogin(code?: string, redirectUri?: string): Promise<moltin.CustomerToken> {
-  // Just make the request manually here...
-  // console.log('we are fetching the token from the adjust customer token endpoint')
-  // const body = {
-  //   "data":{
-  //   "type": "token",
-  //   "authentication_mechanism": "oidc",
-  //   "oauth_authorization_code": code,
-  //   "oauth_redirect_uri": redirectUri
-  //   }
-  // }
-
-  // const res = await fetch(
-  //   'https://epcc-integration.global.ssl.fastly.net/v2/customers/tokens', {
-  //     method: 'POST', // *GET, POST, PUT, DELETE, etc
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(body)
-  //   }
-  // )
-
   const moltin = MoltinGateway({ client_id: config.clientId });
-
   const { data } = await moltin.Customers.Token('', '', code, redirectUri, {}).then();
-
   return data;
-
-  // const { data } = await res.json()
-
-
-
-  // return data
 }
 
 // Revert what this login is and create a new oidcLogin
 export async function login(email?: string, password?: string): Promise<moltin.CustomerToken> {
-  
   const moltin = MoltinGateway({ client_id: config.clientId });
   const { data } = await moltin.Customers.Token(email!, password!).then();
-
   return data;
 }
 
