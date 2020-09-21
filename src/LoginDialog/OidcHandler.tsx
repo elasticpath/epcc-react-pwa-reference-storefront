@@ -24,10 +24,7 @@ export const OidcHandler: React.FC<any> = ()=> {
                     const response: any = await oidcLogin(code!, redirectInitialLocation)
                     
                     const result = response; // HAX -- should be response.json()
-                    
-                    console.log('the result')
-                    console.log(result)
-                    
+
                     // May need to change how the authentication token is set...
                     setCustomerData(result.token, result.customer_id);
                     

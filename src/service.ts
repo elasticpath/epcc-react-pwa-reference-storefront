@@ -78,7 +78,6 @@ export async function loadCustomerAuthenticationSettings(): Promise<any> {
   //   host: 'localhost:8080',
   //   protocol: 'http'
   // })
-  console.log('load customer authentication is running');
 
   const moltin = MoltinGateway({ 
     client_id: config.clientId,

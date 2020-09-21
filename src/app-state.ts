@@ -104,7 +104,6 @@ function useTranslationState() {
 }
 
 function useCustomerDataState() {
-  console.log('useCustomerDataState is running')
   const token = localStorage.getItem('mtoken') || '';
   const id = localStorage.getItem('mcustomer') || '';
 
@@ -288,11 +287,8 @@ function useCustomerAuthenticationSettingsState() {
       setAuthenticationSettings(authSettings);
       
       const authenticationRealmId = authSettings?.data?.relationships['authentication-realm']?.data?.id
-      console.log('getting the authentication RealmId')
-      console.log(authenticationRealmId)
-      loadAuthenticationProfiles(authenticationRealmId, 'STORE-ID-PLACEHOLDER').then((profiles: any) => {  
-        console.log('loading the authentication profiles')
-        console.log(profiles)
+      
+      loadAuthenticationProfiles(authenticationRealmId, 'STORE-ID-PLACEHOLDER').then((profiles: any) => {
         setAuthenticationProfiles(profiles);
       })
     }).catch((err)=>{
