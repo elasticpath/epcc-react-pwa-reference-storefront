@@ -288,7 +288,7 @@ function useCustomerAuthenticationSettingsState() {
       
       const authenticationRealmId = authSettings?.data?.relationships['authentication-realm']?.data?.id
       
-      loadAuthenticationProfiles(authenticationRealmId, 'STORE-ID-PLACEHOLDER').then((profiles: any) => {
+      loadAuthenticationProfiles(authenticationRealmId).then((profiles: any) => {
         setAuthenticationProfiles(profiles);
       })
     }).catch((err)=>{

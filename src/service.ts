@@ -66,47 +66,28 @@ export interface CustomerToken {
   expires: any;
 }
 
-// HAX - For now this can just be a non async function...
-// May need to pass into the function the clientID
 export async function loadCustomerAuthenticationSettings(): Promise<any> {
-  // TODO: return the options in the authentication options...
-  // This should be moved into the SDK eventually... for now we will just make the request
-  // Outside of the SDK to simplify things.
-
-  // const Moltin = MoltinGateway({
-  //   client_id: 'XXX',
-  //   host: 'localhost:8080',
-  //   protocol: 'http'
-  // })
-
   const moltin = MoltinGateway({ 
     client_id: config.clientId,
-    // host: 'localhost:8000',
-    // protocol: 'http',
-    // store_id: '88888888-4444-4333-8333-111111111111',
   });
   
   return moltin.AuthenticationSettings.Get()
 }
 
-// HAX - This is going to be part of the SDK eventually.
-export async function loadAuthenticationProfiles(realmId: string, storeId: string): Promise<any> {
+export async function loadAuthenticationProfiles(realmId: string): Promise<any> {
   const moltin = MoltinGateway({ 
     client_id: config.clientId,
-    // We need to send in the storeID
   });
-  return moltin.AuthenticationProfiles.All(realmId, null, {'X-MOLTIN-AUTH-STORE': '88888888-4444-4333-8333-111111111111'})
+  return moltin.AuthenticationProfiles.All(realmId, null)
 }
 
 export function getAuthenticationProfile(realmId: string, profileId: string) {
-  // Get the authentication profile
   const moltin = MoltinGateway({ 
     client_id: config.clientId,
   });
   return moltin.AuthenticationProfiles.Get({
       realmId,
-      profileId,
-      headers: {'X-MOLTIN-AUTH-STORE': '88888888-4444-4333-8333-111111111111'}
+      profileId
     }
   )
 }
