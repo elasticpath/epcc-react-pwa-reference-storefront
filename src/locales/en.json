@@ -177,5 +177,13 @@
   "item": "item",
   "items": "items",
   "add-item": "Add another item",
-  "remove-item": "Remove one item"
+  "remove-item": "Remove one item",
+  "new-cart": "New Cart",
+  "my-carts": "My Carts",
+  "you-have-no-carts": "You have no carts",
+  "create-cart": "Create cart",
+  "select-cart": "Select cart",
+  "cart-name": "Cart name",
+  "cart-description": "Cart description",
+  "last-edited": "Last edited"
 }

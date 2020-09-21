@@ -59,7 +59,7 @@ img, svg {
 
     &:active {
       background: $mainColor;
-      border: $mainColor;
+      border: 1px solid $mainColor;
     }
   }
 
@@ -153,7 +153,6 @@ img, svg {
     font-weight: 600;
     line-height: 15px;
     color: $secondComplimentTextColor;
-    text-transform: uppercase;
     margin-bottom: 5px;
   }
 

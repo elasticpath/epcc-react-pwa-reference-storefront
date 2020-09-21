@@ -1,0 +1,39 @@
+.cartselection {
+  text-align: center;
+
+  &__nocartmessage {
+    margin: 60px 0;
+    text-transform: uppercase;
+  }
+
+  &__title {
+    font-style: normal;
+    font-size: 28px;
+    line-height: 34px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  &__cartelement {
+    text-align: left;
+    margin: 20px 0;
+  }
+
+  &__description {
+    margin-left: 30px;
+    display: inline-block;
+  }
+
+  &__edited {
+    align-items: end;
+  }
+
+  .epradio {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+  }
+}
+
+

@@ -2,6 +2,18 @@
 @import './theme/common';
 
 .cartitemlist {
+position: relative;
+
+  &__mycart {
+    position: absolute;
+    right: 0;
+    top: -20px;
+
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
 
   &__title {
     font-style: normal;

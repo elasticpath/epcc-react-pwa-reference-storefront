@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 // @ts-ignore
 import { Offline } from 'react-detect-offline';
 import { ImageContainer } from './ImageContainer';
-import { useCartData, useTranslation } from './app-state';
+import { useCartData, useCustomerData, useTranslation } from './app-state';
 import { LanguageDropdown } from './LanguageDropdown';
 import { SearchBar } from './SearchBar';
 import { AccountDropdown } from './AccountDropdown';
@@ -19,6 +19,7 @@ export const AppHeader: React.FC = () => {
   const { t } = useTranslation();
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const { count, updateCartItems } = useCartData();
+  const { isLoggedIn } = useCustomerData();
 
   const handleCloseCartModal = () => {
     setIsCartModalOpen(false);
@@ -70,7 +71,7 @@ export const AppHeader: React.FC = () => {
           </strong>
         </div>
       </Offline>
-      <CartModal isCartModalOpen={isCartModalOpen} handleCloseModal={handleCloseCartModal} />
+      <CartModal isOpenCartSelection={isLoggedIn} isCartModalOpen={isCartModalOpen} handleCloseModal={handleCloseCartModal} />
     </div>
   );
 };

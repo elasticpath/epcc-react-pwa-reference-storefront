@@ -7,15 +7,18 @@ import { checkout, payment, removeCartItems } from './service';
 
 import { AddressFields } from "./AddressFields";
 import Checkout from "./Checkout";
+import { CartSelection } from './CartSelection';
 import { CartItemList } from './CartItemList';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import { ReactComponent as BackArrovIcon } from './images/icons/arrow_back-black-24dp.svg';
 
 import './CartModal.scss';
+import {SettingsCart} from "./SettingsCart";
 
 interface CartModalParams {
   handleCloseModal: (...args: any[]) => any,
   isCartModalOpen: boolean,
+  isOpenCartSelection: boolean,
 }
 
 interface FormValues {
@@ -45,13 +48,13 @@ let initialValues: FormValues = {
 };
 
 export const CartModal: React.FC<CartModalParams> = (props) => {
-  const { handleCloseModal, isCartModalOpen } = props;
+  const { handleCloseModal, isCartModalOpen, isOpenCartSelection } = props;
   const { cartData, promotionItems, updateCartItems } = useCartData();
   const { isLoggedIn } = useCustomerData();
   const { updatePurchaseHistory } = useOrdersData();
   const { t } = useTranslation();
 
-  const [route, setRoute] = useState<string>('itemList');
+  const [route, setRoute] = useState<string>('');
   const [isSameAddress, setIsSameAddress] = useState(true);
   const [billingAddress, setBillingAddress] = useState<FormValues>(initialValues);
   const [shippingAddress, setShippingAddress] = useState<FormValues>(initialValues);
@@ -93,7 +96,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
   };
 
   const handleBackPage = () => {
-    if(route === "shipping") {
+    if(route === "shipping" || route === "settings") {
       setRoute("itemList")
     } else if (route === "billing") {
       setRoute("shipping")
@@ -120,6 +123,10 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
     setEmail('');
   };
 
+  const handlePage = (page: string) => {
+    setRoute(page);
+  };
+
   const handleSetAddress = (address:any) => {
     setBillingAddress(address);
     setShippingAddress(address);
@@ -134,7 +141,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
     <div className={`cartmodal ${isCartModalOpen ? '--open' : ''}`}>
       <div className="cartmodal__content" ref={ref}>
         <div className="cartmodal__header">
-          {route === 'itemList' || route === 'completed' ? (
+          {route === 'itemList' || route === 'completed' || route === '' ? (
             <button className="cartmodal__closebutton" type="button" aria-label="close" onClick={onCloseModal}>
               <CloseIcon/>
             </button>
@@ -144,10 +151,18 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
             </button>
           )}
         </div>
-        {route === 'itemList' && (
+        {isOpenCartSelection && route === '' && (
+          <CartSelection
+            onSelectCart={(page: string) => handlePage(page)}
+          />
+        )}
+        {route === 'settings' && (
+          <SettingsCart />
+        )}
+        {(route === 'itemList' || !isOpenCartSelection) && (
           <CartItemList
             items={cartData}
-            handlePage={(page: string) => setRoute(page)}
+            handlePage={(page: string) => handlePage(page)}
             promotionItems={promotionItems}
           />
         )}

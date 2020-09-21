@@ -1,0 +1,36 @@
+.settingscart {
+  text-align: center;
+
+  &__field {
+    margin: 20px 0;
+
+    input {
+      height: 40px;
+      padding-left: 12px;
+    }
+
+    textarea {
+      height: 100px;
+      width: 80%;
+    }
+  }
+
+  &__cancelbutton {
+    margin: 30px 0;
+  }
+
+  &__addcartform {
+    text-align: left;
+    margin-bottom: 50px;
+  }
+
+  &__title {
+    font-style: normal;
+    font-size: 28px;
+    line-height: 34px;
+    text-align: center;
+    font-weight: bold;
+  }
+}
+
+
