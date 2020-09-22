@@ -30,27 +30,32 @@ export  const CartSelection: React.FC<CartSelectionParams> = (props) => {
         </h2>
         {myCarts && myCarts.length ? (
           <div>
-            {myCarts.map((cart: any, index:number) => (
-              <div className="cartselection__cartelement">
-                <input type="radio" name="cartCheck" id={`cart_${index}`} className="epradio" defaultChecked={checkedItem === index} onChange={() => {handleCheckCart(cart, index)}} />
-                <div className="cartselection__description">
-                  <label htmlFor={`cart_${index}`}>
-                  <span>
-                    {cart.name}
-                  </span>
-                  <span className="cartselection__edited">
-                    {t('last-edited')} {cart.edited}
-                  </span>
-                  <div>
-                    {cart.items} {t('items')}
-                  </div>
-                  <div>
-                    {cart.description}
-                  </div>
+            <h3 className="cartselection__listname">
+              {t('saved-carts')} ({myCarts.length})
+            </h3>
+            <div className="cartselection__cartlist">
+              {myCarts.map((cart: any, index:number) => (
+                <div className="cartselection__cartelement">
+                  <input type="radio" name="cartCheck" id={`cart_${index}`} className="epradio" defaultChecked={checkedItem === index} onChange={() => {handleCheckCart(cart, index)}} />
+                  <label htmlFor={`cart_${index}`} className="cartselection__description">
+                    <div className="cartselection__cartname">
+                      <strong className="cartselection__name">
+                        {cart.name}
+                      </strong>
+                      <span className="cartselection__edited">
+                      {t('last-edited')} {cart.edited}
+                    </span>
+                    </div>
+                    <p className="cartselection__quantity">
+                      {cart.items} {t('items')}
+                    </p>
+                    <p>
+                      {cart.description}
+                    </p>
                   </label>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
           ) : (
           <div className="cartselection__nocartmessage">

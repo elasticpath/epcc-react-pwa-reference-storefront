@@ -185,5 +185,6 @@
   "select-cart": "Select cart",
   "cart-name": "Cart name",
   "cart-description": "Cart description",
-  "last-edited": "Last edited"
+  "last-edited": "Last edited",
+  "saved-carts": "Saved carts"
 }
