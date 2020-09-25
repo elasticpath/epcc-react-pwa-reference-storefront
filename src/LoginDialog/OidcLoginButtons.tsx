@@ -32,7 +32,7 @@ export const OidcLoginButtons: React.FC = () => {
             authenticationProfiles.data.map((profile:any)=>{
 
                 return (
-                    <button className={`epbtn authbtn --primary ${profile.name}`} onClick={()=>handleOidcButtonClicked(profile, clientId)}>
+                    <button className={`authbtn ${profile.name}`} onClick={()=>handleOidcButtonClicked(profile, clientId)}>
                         {isLoading ? 'Loading' : `Login with ${profile.name}`}
                     </button>
                 );
