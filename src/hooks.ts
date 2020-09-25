@@ -81,7 +81,3 @@ export function useProductImages(product: moltin.Product | undefined) {
 
   return productImageHrefs;
 }
-
-export function useMessages() {
-  
-}

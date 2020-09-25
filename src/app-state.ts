@@ -307,9 +307,7 @@ function useCategoriesState(selectedLanguage: string) {
     loadCategoryTree(selectedLanguage).then(result => {
       setCategoriesTree(result);
       setCategoryPaths(mergeMaps(result));
-    }).catch(err=>{
-
-    });
+    }).catch(err=>console.error(err));
   }, [selectedLanguage]);
 
   const categoryPathBySlug = (slug: string) => {
@@ -360,9 +358,7 @@ function useCompareProductsState() {
   };
 }
 
-// We should hold all the state here??
 function useCustomerAuthenticationSettingsState() {
-  // We need to make this state work for both...
   const [ authenticationSettings, setAuthenticationSettings ] = useState<object>()
   const [ authenticationProfiles, setAuthenticationProfiles ] = useState<object>();
 
@@ -372,7 +368,7 @@ function useCustomerAuthenticationSettingsState() {
       
       const authenticationRealmId = authSettings?.data?.relationships['authentication-realm']?.data?.id
       
-      loadAuthenticationProfiles(authenticationRealmId).then((profiles: any) => {
+      loadAuthenticationProfiles(authenticationRealmId).then((profiles) => {
         setAuthenticationProfiles(profiles);
       })
     }).catch((err)=>{

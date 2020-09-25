@@ -160,9 +160,9 @@ export async function login(email: string, password: string): Promise<moltin.Cus
 }
 
 export async function getCustomer(id: string, token: string): Promise<moltin.CustomerBase> {
-
-  const moltin = MoltinGateway({ client_id: config.clientId });
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const { data } = await moltin.Customers.Get(id, token);
+  
   return data;
 }
 
@@ -171,7 +171,7 @@ export async function updateCustomer(id: string, name: string, email: string, to
   // @ts-ignore
   const result = await moltin.Customers.Update(id, {type: 'customer', name, email, password: '',}, token);
 
-  return result
+  return result;
 }
 
 export async function getAddresses(customer: string, token: string): Promise<{ data: moltin.Address[] }> {

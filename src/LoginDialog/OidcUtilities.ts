@@ -8,17 +8,22 @@ export const generateRedirectUri = () => {
 }
 
 export const generateKeycloakLoginRedirectUrl = (baseRedirectUrl: string, cId: string, prevLocation: string) => {
-    const clientId = `client_id=${cId}`
-    const redirectUri = `redirect_uri=${generateRedirectUri()}`
     const stateToken = generateStateToken();
-    const state = `state=${stateToken}`
-
+    
+    // Set state and prevLocation for when oidc redirects back to the application.
     localStorage.setItem('state', stateToken);
     localStorage.setItem('location', prevLocation);
-
-    const responseType = 'response_type=code'
-    const scope = 'scope=openid+email+profile'
-    return `${baseRedirectUrl}?${clientId}&${redirectUri}&${state}&${responseType}&${scope}`
+    
+    // String Build Oidc Redirect Url
+    const oidcParameters = [
+        `client_id=${cId}`,
+        `redirect_uri=${generateRedirectUri()}`,
+        `state=${stateToken}`,
+        'response_type=code',
+        'scope=openid+email+profile'
+    ].join('&');
+    
+    return `${baseRedirectUrl}?${oidcParameters}`
 }
 
 export const getAuthorizationEndpointFromProfile = (profile: any):string =>{
