@@ -5,6 +5,7 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/174a486c-d1d9-4c2c-8434-94c30708c07d/deploy-status)](https://app.netlify.com/sites/epcc-ref-store/deploys)
 [![Stable Branch](https://img.shields.io/badge/stable%20branch-master-blue.svg)](https://github.com/elasticpath/epcc-react-pwa-reference-storefront)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![WCAG 2.0 AA](https://img.shields.io/badge/WCAG_2.0-AA-8ab80a.svg)](https://shields.io/)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/elasticpath/epcc-react-pwa-reference-storefront/issues)
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 [![follow on Twitter](https://img.shields.io/twitter/follow/elasticpath?style=social&logo=twitter)](https://twitter.com/intent/follow?screen_name=elasticpath)
@@ -13,55 +14,15 @@
 
 The Elastic Path Commerce Cloud REACT PWA Reference Storefront is a flexible e-commerce website built on Elastic Path’s RESTful e-commerce API. The storefront uses the e-commerce capabilities provided by Elastic Path Commerce Cloud and gets data in a RESTful manner.
 
-> 💳 Use the test card 4242 4242 4242 4242, any future expiry date, and any CVC below to checkout.
+The storefront uses the [Elastic Path Commerce Cloud JavaScript SDK](https://github.com/moltin/js-sdk) for all Elastic Path Commerce Cloud API requests.
 
-[Demo](http://epcc-reference.elasticpath.com/)
+You can try out a [live instance of the Reference Storefront](https://epcc-reference.elasticpath.com/).
+
+> 💳 To check out, use the test card number `4242 4242 4242 4242`, any future expiry date, and any three-digit Card Verification Code (CVC).
 
 ## Documentation 📖
 
-### Prerequisites
-
-Before you begin, ensure that you have the following accounts set up:
-
-- [Elastic Path Commerce Cloud account](https://dashboard.elasticpath.com/login)
-- [Stripe account](https://dashboard.stripe.com/) - Stripe is used as the payment gateway. From your [Dashboard](https://dashboard.elasticpath.com), configure Stripe as the payment gateway from your.
-
-### Start Building the Storefront
-
-**Note**: If you are running a Windows environment, launch the Windows Subsystem for Linux application and perform the following steps from the console window.
-
-```bash
-# Clone the Git repository
-git clone https://github.com/elasticpath/epcc-react-pwa-reference-storefront.git
-
-# Go into the cloned directory
-cd epcc-react-pwa-reference-storefront
-
-# Install all the dependencies for all sub-project and create necessary symlinks in-between them
-yarn
-
-# Configure the ./src/config.ts file.
-# For more information, see Configuration Parameter Descriptions.
-
-# Start the app in development mode
-
-# Run the main application:
-yarn start
-
-# Builds the app for production to the build folder:
-yarn build
-```
-
-## Configuration Parameter Descriptions ⚙️
-
-Parameters that require configuration are in the `./src/config.ts` file:
-
-|  Parameter| Importance|Type|Description|
-|--|--|--|--|
-|`clientId`| Required| String| The Client ID of your store.|
-|`stripeKey`| Required| String| Stripe publishable API key.|
-|`categoryPageSize`| Required| String| Maximum number of products to display on a category page.|
-|`maxCompareProducts`| Required| String| Maximum number of products to display in compare view.|
+- [REACT PWA Reference Storefront Documentation](https://documentation.elasticpath.com/commerce-cloud/docs/developer/get-started/reference-storefront.html)
 
 ## Contributors ✨
 
@@ -83,6 +44,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/BonnieEP"><img src="https://avatars3.githubusercontent.com/u/49495842?v=4" width="100px;" alt=""/><br /><sub><b>Bonnie Bishop</b></sub></a><br /><a href="https://ui-components.elasticpath.com" title="Design">🎨</td>
     <td align="center"><a href="https://github.com/JenSmith-EP"><img src="https://avatars3.githubusercontent.com/u/58435007?v=4" width="100px;" alt=""/><br /><sub><b>Jen Smith</b></sub></a><br /><a href="https://documentation.elasticpath.com/storefront-react" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/mwan-ep"><img src="https://avatars3.githubusercontent.com/u/54115904?v=4" width="100px;" alt=""/><br /><sub><b>Michelle Wan</b></sub></a><br /><a href="https://github.com/elasticpath/epcc-react-pwa-reference-storefront/commits?author=mwan-ep" title="Code">💻</a></td>
   </tr>
 </table>
 

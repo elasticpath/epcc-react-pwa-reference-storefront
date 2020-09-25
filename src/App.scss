@@ -7,7 +7,6 @@
   flex-direction: column;
 
   &__header {
-    height: 60px;
     flex: 0 0 auto;
     background-color: $mainBackgroundColor;
   }
@@ -24,5 +23,13 @@
     background-color: black;
     padding-left: $maxScrollWidth;
     padding-right: calc(#{$maxScrollWidth} - 100vw + 100%);
+  }
+}
+
+@media (max-width: $mobileWidth - 1px) {
+  .app {
+    &__header {
+      padding: 0;
+    }
   }
 }

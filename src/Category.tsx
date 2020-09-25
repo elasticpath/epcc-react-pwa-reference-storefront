@@ -50,7 +50,7 @@ export const Category: React.FC = () => {
 
   return (
     <div className="category">
-      {category ? (
+      {category && products ? (
         <>
           <div className="category__breadcrumbs">
             {categoryPath?.map((category, index) => (

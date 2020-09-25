@@ -24,7 +24,7 @@ $mainBackgroundColor: #FFFFFF;
 $firstComplimentBackground: #F3F3F3;
 $secondComplimentBackground: #F7F7F7;
 $thirdComplimentBackground: #F2F6FA;
-$forthComplimentBackground: #DBDBDB;
+$fourthComplimentBackground: #DBDBDB;
 $fifthComplimentBackground: #C5C5C5;
 
 $accountTreeActive: #E1F0F7;
@@ -36,9 +36,29 @@ $mainErrorColor: #E00646;
 
 $btnColor: hsl(190, 70%, 34%);
 $btnFocusOutlineColor: change-color($color: $btnColor, $saturation: 35%, $lightness: 75%);
+$btnPrimaryHoverColor: #2E343D;
+$btnSecondaryHoverColor: #115666;
+$btnSecondaryActiveColor: #0C3D47;
 
 $maxScrollWidth: 34px;
 
+$mobileXSmallWidth: 481px;
+$mobileSmallWidth: 576px;
 $mobileWidth: 768px;
+$tabletSmallWidth: 992px;
 $tabletWidth: 1092px;
+$fullHDWidth: 1200px;
+
+$sizeXXSmall: 10px;
+$sizeXSmall: 12px;
+$sizeSmall: 13px;
+$sizeInitial: 14px;
+$sizeInitialLarger: 15px;
+$sizeMedium: 16px;
+$sizeMediumLarger: 18px;
+$sizeMediumLarge: 20px;
+$sizeLarge: 24px;
+$sizeXLarge: 26px;
+$sizeXXLarge: 28px;
+$sizeXXXLarge: 36px;
 

@@ -1,0 +1,11 @@
+@import "./theme/common";
+
+.variationsselector {
+  &__title {
+    color: $mainTextColor;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: $sizeXSmall;
+    padding: 10px 0;
+  }
+}

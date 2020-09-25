@@ -1,0 +1,70 @@
+@import './theme/common';
+
+.address {
+  position: relative;
+
+  &__title {
+    font-size: $sizeLarge;
+    font-weight: bold;
+  }
+
+  &__maincontainer {
+    position: relative;
+    border: 1px solid $firstBorderColor;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 30px 30px 100px 30px;
+    margin-top: 40px;
+  }
+
+  &__container {
+    width: 50%;
+    margin-bottom: 20px;
+    @media (max-width: $mobileWidth - 1px) {
+      width: 100%;
+    }
+  }
+
+  &__button {
+    color: $firstComplimentColor;
+    height: 16px;
+
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    &.--edit {
+      padding-right: 10px;
+      margin-right: 10px;
+      border-right: 2px solid $secondBorderColor;
+    }
+  }
+
+  &__list {
+    padding: 5px 0;
+  }
+
+  &__addnewaddress {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    width: 260px;
+    height: 44px;
+    text-align: center;
+    border: 1px solid transparent;
+    color: $mainBackgroundColor;
+    background-color: $firstComplimentColor;
+
+    &.--noaddresses {
+      position: relative;
+      bottom: 0;
+      left: 0;
+      margin-top: 10px;
+    }
+
+  &:hover {
+    cursor: pointer;
+  }
+  }
+}

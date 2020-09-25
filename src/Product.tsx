@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useResolve, useProductImages } from './hooks';
-import { loadProductBySlug } from './service';
+import { addToCart, loadProductBySlug } from './service';
 import { CompareCheck } from './CompareCheck';
 import { SocialShare } from './SocialShare';
-import { useTranslation, useCurrency } from './app-state';
+import { useTranslation, useCurrency, useCartData } from './app-state';
 import { isProductAvailable } from './helper';
+import { Availability } from './Availability';
+import { VariationsSelector } from './VariationsSelector';
 
 import './Product.scss';
 
@@ -16,13 +18,20 @@ interface ProductParams {
 
 export const Product: React.FC = () => {
   const { productSlug } = useParams<ProductParams>();
-  const { t, selectedLanguage } = useTranslation();
+  const { t } = useTranslation();
+  const { selectedLanguage } = useTranslation();
   const { selectedCurrency } = useCurrency();
+  const { updateCartItems } = useCartData();
 
   const [product] = useResolve(
     async () => loadProductBySlug(productSlug, selectedLanguage, selectedCurrency),
     [productSlug, selectedLanguage, selectedCurrency]
   );
+  const [productId, setProductId] = useState('');
+
+  useEffect(() => {
+    product && setProductId(product.id);
+  }, [product])
 
   const productImageHrefs = useProductImages(product);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -34,13 +43,25 @@ export const Product: React.FC = () => {
     setCurrentImageIndex(currentImageIndex - 1);
   };
 
+  const handleAddToCart = () => {
+    const mcart = localStorage.getItem('mcart') || '';
+    addToCart(mcart, productId)
+      .then(() => {
+        updateCartItems()
+    })
+  };
+
   const handleNextImageClicked = () => {
     setCurrentImageIndex(currentImageIndex + 1);
   };
 
+  function handleVariationChange(childID: string) {
+    setProductId(childID);
+  }
+
   return (
     <div className="product">
-      {product && (
+      {product ? (
         <div className="product__maincontainer">
           <div className="product__imgcontainer">
             {productImageHrefs.length > 0 && (
@@ -66,17 +87,22 @@ export const Product: React.FC = () => {
             <div className="product__price">
               {product.meta.display_price.without_tax.formatted}
             </div>
-            <div className="product__availability">
-              {isProductAvailable(product) ? t('available') : t('out-of-stock')}
-            </div>
+            <Availability available={isProductAvailable(product)} />
             <div className="product__comparecheck">
               <CompareCheck product={product} />
             </div>
+            {
+              product.meta.variations
+                ? <VariationsSelector product={product} onChange={handleVariationChange} />
+                : ''
+            }
             <div className="product__moltinbtncontainer">
-              <span
-                className="moltin-buy-button"
-                data-moltin-product-id={product.id}
-              ></span>
+              {productId &&
+                <button
+                  className="epbtn --secondary"
+                  onClick={handleAddToCart}
+                >{t('add-to-cart')}</button>
+              }
             </div>
             <div className="product__description">
               {product.description}
@@ -86,6 +112,8 @@ export const Product: React.FC = () => {
             </div>
           </div>
         </div>
+      ) : (
+        <div className="loader" />
       )}
     </div>
   );

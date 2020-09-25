@@ -31,7 +31,7 @@
     display: inline-block;
     padding: 15px 20px;
     color: $mainNavigationColor;
-    font-size: 13px;
+    font-size: $sizeSmall;
     text-decoration: none;
 
     &.--haschildren {
@@ -78,6 +78,10 @@
     }
   }
 
+  &__backbtn {
+    display: none;
+  }
+
   @media(max-width: $tabletWidth) {
     background-color: $mainBackgroundColor;
     text-align: center;
@@ -100,7 +104,7 @@
       display: flex;
       align-items: center;
       margin: 0 20px;
-      font-size: 13px;
+      font-size: $sizeSmall;
       text-decoration: none;
       font-weight: 500;
       color: $thirdComplimentColor;
@@ -131,8 +135,8 @@
     }
 
     &.--showmodal {
+      position: fixed;
       display: inline-block;
-      position: absolute;
       overflow: auto;
     }
 
@@ -228,5 +232,24 @@
     top: 18px;
     left: 16px;
     position: absolute;
+  }
+}
+
+@media all and (display-mode: standalone) {
+  .toggle-btn {
+    left: 36px;
+  }
+
+  .navigation__backbtn {
+    display: inline-block;
+    position: absolute;
+    top: 14px;
+    left: 0;
+  }
+
+  .navigation__backicon {
+    height: 32px;
+    width: 32px;
+    fill: $mainColor;
   }
 }

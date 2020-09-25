@@ -1,0 +1,84 @@
+
+@import './theme/common.scss';
+
+.profile {
+  &__title {
+    font-size: $sizeMediumLarge;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  &__titlesmall {
+    font-size: $sizeXSmall;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  &__container {
+    padding: 15px 15px 15px 20px;
+    border: 1px solid $secondBorderColor;
+
+    h2 {
+      font-size: $sizeMedium;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+  }
+
+  &__info {
+    .epbtn {
+      padding: 0;
+
+      &:hover {
+        background-color: transparent;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__infoitem {
+    margin-bottom: 5px;
+
+    &:last-of-type {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__infolabel {
+    display: inline-block;
+    font-weight: bold;
+    margin-right: 5px;
+  }
+
+  &__form {
+    position: relative;
+    .epbtn + .epbtn {
+      margin-left: 15px;
+    }
+
+    &.--loading {
+      &:before {
+        content: '';
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: $mainBackgroundColor;
+        opacity: 0.5;
+        z-index: 1;
+      }
+    }
+  }
+
+  @media screen and (min-width: $tabletSmallWidth) {
+    &__title {
+      font-size: $sizeLarge;
+    }
+
+    &__data {
+      width: 50%;
+    }
+  }
+}

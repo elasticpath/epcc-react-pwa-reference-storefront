@@ -140,7 +140,7 @@ export const RegistrationForm: React.FC = (props) => {
             </div>
           </div>
           <div className="epform__group --btn-container">
-            <button className="epbtn --primary" id="registration_form_register_button" type="submit" disabled={isLoading}>
+            <button className="epbtn --secondary" id="registration_form_register_button" type="submit" disabled={isLoading}>
               {t('submit')}
             </button>
           </div>

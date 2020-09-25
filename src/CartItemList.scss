@@ -1,0 +1,128 @@
+
+@import './theme/common';
+
+.cartitemlist {
+
+  &__title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 34px;
+    padding-bottom: 50px;
+    text-align: center;
+  }
+
+  &__product {
+    position: relative;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+
+    &.--removing {
+      &:before {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: $mainBackgroundColor;
+        opacity: 0.3;
+        z-index: 1;
+      }
+    }
+  }
+
+  &__wrap {
+    padding-bottom: 10px;
+  }
+
+  &__info {
+    flex-grow: 1;
+  }
+
+  &__image {
+    display: inline-block;
+    width: 75px;
+    border: 1px solid $secondBorderColor;
+    margin-right: 12px;
+  }
+
+  &__name {
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+
+  &__price {
+    margin-bottom: 8px;
+  }
+
+  &__removebutton {
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+      color: adjust-color($color: $secondAccentColor, $lightness: 25%);;
+    }
+  }
+
+  &__quantitywrap {
+    margin-right: 5px;
+    margin-top: 5px;
+  }
+
+  &__quantity {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  &__arrow {
+    display: inline-block;
+    height: 7px;
+    width: 7px;
+    border-bottom: 1px solid $fourthComplimentTextColor;
+    border-right: 1px solid $fourthComplimentTextColor;
+    cursor: pointer;
+
+    &.--top {
+      transform: rotate(225deg);
+    }
+
+    &.--bottom {
+      transform: rotate(45deg);
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  }
+
+  &__count {
+    padding: 4px 0;
+    text-align: center;
+  }
+
+  &__checkoutbutton {
+    text-align: center;
+  }
+
+  &__total {
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__totaltitle {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  &__subtotal {
+    font-size: 20px;
+    font-weight: bold;
+  }
+}

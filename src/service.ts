@@ -3,121 +3,60 @@ import { config } from './config';
 
 const MoltinGateway = moltin.gateway;
 
-
-export interface Weight {
-  g: number,
-  kg: number,
-  lb: number,
-  oz: number,
-}
-
-export interface Product extends moltin.ProductBase {
-  background_color: string;
-  background_colour: string | null;
-  bulb: string;
-  bulb_qty: string;
-  finish: string;
-  material: string;
-  max_watt: string;
-  new: string | null;
-  on_sale: string | null;
-  weight: Weight;
-}
-
-export interface Pagination {
-  currentPage: number;
-  pageSize: number;
-  totalPages: number;
-  totalItems: number;
-}
-
-export interface Paginated<T> {
-  data: T[];
-  pagination: Pagination;
-}
-
-export interface Currency {
-  id: string;
-  code: string;
-  decimal_places: number;
-  decomal_point: string;
-  default: boolean;
-  enabled: boolean;
-  exchange_rate: number;
-  format: string;
-  thousand_separator: string;
-}
-
-export interface Customer {
-  data: {
-    type: string;
-    id: string;
-    name: string;
-    email: string;
-    password: boolean;
-  }
-}
-
-export interface CustomerToken {
-  type: string;
-  id: string;
-  customer_id: string;
-  token: string;
-  expires: any;
-}
-
 export async function loadCustomerAuthenticationSettings(): Promise<any> {
   const moltin = MoltinGateway({ 
     client_id: config.clientId,
+    host: config.endpointURL,
   });
-  
   return moltin.AuthenticationSettings.Get()
 }
 
 export async function loadAuthenticationProfiles(realmId: string): Promise<any> {
   const moltin = MoltinGateway({ 
     client_id: config.clientId,
+    host: config.endpointURL,
   });
-  return moltin.AuthenticationProfiles.All(realmId, null)
+  return moltin.AuthenticationProfile.All(realmId)
 }
 
 export function getAuthenticationProfile(realmId: string, profileId: string) {
   const moltin = MoltinGateway({ 
     client_id: config.clientId,
+    host: config.endpointURL,
   });
-  return moltin.AuthenticationProfiles.Get({
+  return moltin.AuthenticationProfile.Get({
       realmId,
       profileId
     }
   )
 }
 
-export async function loadEnabledCurrencies(): Promise<moltin.CurrencyBase[]> {
-  const moltin = MoltinGateway({ client_id: config.clientId });
+export async function loadEnabledCurrencies(): Promise<moltin.Currency[]> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const response = await moltin.Currencies.All();
 
   return response.data.filter(c => c.enabled);
 }
 
-export async function loadCategoryTree(): Promise<moltin.CategoryBase[]> {
-  const moltin = MoltinGateway({ client_id: config.clientId });
+export async function loadCategoryTree(language: string): Promise<moltin.Category[]> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId, language });
   const result = await moltin.Categories.Tree();
 
   return result.data;
 }
 
-const productCache: { [id: string]: Product } = {};
+const productCache: { [id: string]: moltin.Product } = {};
 
-function setProductCache(key: string, language: string, currency: string, product: Product) {
+function setProductCache(key: string, language: string, currency: string, product: moltin.Product) {
   productCache[`${key}:${language}:${currency}`] = product;
 }
 
-function getProductCache(key: string, language: string, currency: string): Product | undefined {
+function getProductCache(key: string, language: string, currency: string): moltin.Product | undefined {
   return productCache[`${key}:${language}:${currency}`];
 }
 
-export async function loadCategoryProducts(categoryId: string, pageNum: number, language: string, currency: string): Promise<moltin.ResourcePage<Product>> {
-  const moltin = MoltinGateway({ client_id: config.clientId, currency: currency });
+export async function loadCategoryProducts(categoryId: string, pageNum: number, language: string, currency: string): Promise<moltin.ResourcePage<moltin.Product>> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId, language, currency });
 
   const result = await moltin.Products
     .Offset((pageNum - 1) * config.categoryPageSize)
@@ -129,7 +68,7 @@ export async function loadCategoryProducts(categoryId: string, pageNum: number, 
         }
       }
     })
-    .All<Product>();
+    .All();
 
   for (const product of result.data) {
     setProductCache(product.id, language, currency, product);
@@ -145,6 +84,9 @@ const imageMimeTypes = [
   'image/jpeg',
   'image/png',
   'image/gif',
+  'image/webp',
+  'image/jp2',
+  'image/jxr',
 ];
 
 // Loads a file with a provided id and returns its url if it's mime type is an image or undefined otherwise
@@ -153,7 +95,7 @@ export async function loadImageHref(imageId: string): Promise<string | undefined
     return imageHrefCache[imageId];
   }
 
-  const moltin = MoltinGateway({ client_id: config.clientId });
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const result = await moltin.Files.Get(imageId);
 
   if (imageMimeTypes.indexOf(result.data.mime_type) === -1) {
@@ -165,32 +107,35 @@ export async function loadImageHref(imageId: string): Promise<string | undefined
   return result.data.link.href;
 }
 
-export async function loadProductBySlug(productSlug: string, language: string, currency: string): Promise<Product> {
+export async function loadProductBySlug(productSlug: string, language: string, currency: string): Promise<moltin.Product> {
   const cachedProduct = getProductCache(productSlug, language, currency);
 
   if (cachedProduct) {
     return cachedProduct;
   }
 
-  const moltin = MoltinGateway({ client_id: config.clientId, currency: currency });
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId, language, currency });
 
-  const result = await moltin.Products
+  const resultSlug = await moltin.Products
     .Limit(1)
     .Filter({
       eq: {
         slug: productSlug
       }
     })
-    .All<Product>();
+    .All();
 
-  const product = result.data[0];
+  const productId = resultSlug?.data[0]?.id;
+  const result = await moltin.Products.Get(productId);
+  const product = result.data;
+
   setProductCache(product.slug, language, currency, product);
 
   return product;
 }
 
 export async function register(name: string, email: string, password: string): Promise<moltin.CustomerBase> {
-  const moltin = MoltinGateway({ client_id: config.clientId });
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const { data } = await moltin.Customers.Create({
     type: 'customer',
     name,
@@ -201,17 +146,16 @@ export async function register(name: string, email: string, password: string): P
   return data;
 }
 
-// TODO: We need to add this to the SDK... 
 export async function oidcLogin(code?: string, redirectUri?: string): Promise<moltin.CustomerToken> {
-  const moltin = MoltinGateway({ client_id: config.clientId });
-  const { data } = await moltin.Customers.Token('', '', code, redirectUri, {}).then();
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const { data } = await moltin.Customers.Token('', '', code, redirectUri).then();
   return data;
 }
 
-// Revert what this login is and create a new oidcLogin
-export async function login(email?: string, password?: string): Promise<moltin.CustomerToken> {
-  const moltin = MoltinGateway({ client_id: config.clientId });
-  const { data } = await moltin.Customers.Token(email!, password!).then();
+export async function login(email: string, password: string): Promise<moltin.CustomerToken> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const { data } = await moltin.Customers.Token(email, password);
+
   return data;
 }
 
@@ -219,6 +163,90 @@ export async function getCustomer(id: string, token: string): Promise<moltin.Cus
 
   const moltin = MoltinGateway({ client_id: config.clientId });
   const { data } = await moltin.Customers.Get(id, token);
-
   return data;
 }
+
+export async function updateCustomer(id: string, name: string, email: string, token: string): Promise<{ data: moltin.Customer }> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  // @ts-ignore
+  const result = await moltin.Customers.Update(id, {type: 'customer', name, email, password: '',}, token);
+
+  return result
+}
+
+export async function getAddresses(customer: string, token: string): Promise<{ data: moltin.Address[] }> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const result = await moltin.Addresses.All({ customer, token });
+
+  return result;
+}
+
+export async function updateAddress(customer: string, address: string, body: any, token: string): Promise<void> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  await moltin.Addresses.Update({ customer, address, body, token });
+}
+
+export async function addNewAddress(customer: string, body: any, token: string): Promise<{ data: moltin.Address }> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const result = await moltin.Addresses.Create({ customer, body, token });
+
+  return result;
+}
+
+export async function deleteAddress(customer: string, address: any, token: string): Promise<void> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  await moltin.Addresses.Delete({ customer, address, token });
+}
+
+export async function getAllOrders(token: string): Promise<{ data: moltin.Order[] }> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const result = await moltin.Orders.Limit(100).All(token);
+  return result;
+}
+
+export async function getCartItems(reference: string): Promise<moltin.CartItemsResponse> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const CartItems = await moltin.Cart(reference).Items();
+
+  return CartItems;
+}
+
+export async function removeCartItems(reference: string) {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  await moltin.Cart(reference).Delete();
+}
+
+export async function addToCart(reference: string, productId: string): Promise<void> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const quantity = 1;
+  await moltin.Cart(reference).AddProduct(productId, quantity);
+}
+
+export async function addPromotion(reference: string, promoCode: string): Promise<void> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  await moltin.Cart(reference).AddPromotion(promoCode);
+}
+
+export async function removeCartItem(reference: string, itemId: string): Promise<void> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  await moltin.Cart(reference).RemoveItem(itemId);
+}
+
+export async function updateCartItem(reference: string, productId: string, quantity: number): Promise<void> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  await moltin.Cart(reference).UpdateItem(productId, quantity);
+}
+
+export async function checkout(reference: string, customer: any, billing: any, shipping: any): Promise<{ data: moltin.Order }> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const checkoutRes = await moltin.Cart(reference).Checkout(customer, billing, shipping);
+
+  return checkoutRes;
+}
+
+export async function payment(payment: object, orderId: string) {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  await moltin.Orders.Payment(orderId, payment)
+}
+
+

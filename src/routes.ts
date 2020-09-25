@@ -9,6 +9,12 @@ import TermsAndConditions from './TermsAndConditions';
 import { CompareProducts } from './CompareProducts';
 import { RegistrationForm } from "./RegistrationForm";
 import { OidcHandler } from './LoginDialog/OidcHandler';
+import { MyAccount } from './MyAccount';
+import { Profile } from './Profile';
+import { Address } from './Address';
+import { Search } from './Search';
+import { PurchaseHistory } from './PurchaseHistory';
+import { OrderDetails } from './OrderDetails';
 
 interface RouteConfig {
   path: string;
@@ -26,7 +32,16 @@ export const routes: RouteConfig[] = [
   { exact: true, path: '/termsandconditions', component: TermsAndConditions, },
   { exact: true, path: '/compare-products', component: CompareProducts, },
   { exact: true, path: '/registration', component: RegistrationForm, },
-  { exact: true, path: '/oidc', component: OidcHandler, }
+  { exact: true, path: '/oidc', component: OidcHandler, },
+  { exact: false, path: '/account', component: MyAccount, },
+  { exact: false, path: '/search', component: Search, },
+  { exact: true, path: '/orderdetails/:orderId', component: OrderDetails, },
+];
+
+export const routesAccount: RouteConfig[] = [
+  { exact: true, path: '/account', component: Profile, },
+  { exact: true, path: '/account/address', component: Address, },
+  { exact: true, path: '/account/purchase-history', component: PurchaseHistory, },
 ];
 
 export function createHomeUrl(): string {
@@ -47,4 +62,20 @@ export function createCompareProductsUrl(): string {
 
 export function createRegistrationUrl(): string {
   return `/registration`;
+}
+
+export function createAccountUrl(): string {
+  return `/account`;
+}
+
+export function createAddressUrl(): string {
+  return `/account/address`;
+}
+
+export function createPurchaseHistoryUrl(): string {
+  return `/account/purchase-history`;
+}
+
+export function createSearchUrl(): string {
+  return `/search`;
 }

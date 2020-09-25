@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import constate from 'constate';
 import * as moltin from '@moltin/sdk';
-import { getCustomer, loadCategoryTree, Product, loadCustomerAuthenticationSettings, loadAuthenticationProfiles} from './service';
+import { getCustomer, getAddresses, getAllOrders, loadCategoryTree, getCartItems, loadCustomerAuthenticationSettings, loadAuthenticationProfiles } from './service';
 import * as service from './service';
 import { config } from './config';
 
@@ -129,6 +129,7 @@ function useCustomerDataState() {
 
   const setCustomerData = (token: string, id: string) => {
     localStorage.setItem('mtoken', token);
+    localStorage.setItem('mcart', id);
     localStorage.setItem('mcustomer', id);
     setCustomerToken(token);
     setCustomerId(id);
@@ -146,20 +147,95 @@ function useCustomerDataState() {
     setCustomerEmail(email);
   };
 
+  const setName = (name:string) => {
+    setCustomerName(name);
+  };
+
   return {
+    token,
+    id,
     isLoggedIn,
     customerEmail,
     customerName,
     setEmail,
+    setName,
     setCustomerData,
     clearCustomerData
   }
 }
 
+function useAddressDataState() {
+  const token = localStorage.getItem('mtoken') || '';
+  const id = localStorage.getItem('mcustomer') || '';
+
+  const [addressData, setAddressData] = useState<moltin.Address[]>([]);
+
+  useEffect(() => {
+    if (token) {
+      getAddresses(id, token).then(res => {
+        setData(res.data);
+      });
+    }
+    else {
+      clearCustomerData();
+    }
+  }, [id, token]);
+
+  const updateAddresses = () => {
+    getAddresses(id, token).then(res => {
+      setData(res.data);
+    });
+  };
+
+  const setData = (data: any) => {
+    setAddressData(data);
+  };
+  const clearCustomerData = () => {
+    setAddressData([]);
+  };
+
+  return { addressData, updateAddresses }
+
+}
+
+function usePurchaseHistoryState() {
+  const token = localStorage.getItem('mtoken') || '';
+  const id = localStorage.getItem('mcustomer') || '';
+
+  const [ordersData, setOrdersData] = useState<moltin.Order[]>([]);
+
+  useEffect(() => {
+    if (token) {
+      getAllOrders(token).then(res => {
+        setData(res.data);
+      });
+    }
+    else {
+      clearCustomerData();
+    }
+  }, [id, token]);
+
+  const updatePurchaseHistory = () => {
+    getAllOrders(token).then(res => {
+      setData(res.data);
+    });
+  };
+
+  const setData = (data: any) => {
+    setOrdersData(data);
+  };
+
+  const clearCustomerData = () => {
+    setOrdersData([]);
+  };
+
+  return { ordersData, updatePurchaseHistory }
+}
+
 const defaultCurrency = 'USD';
 
 function useCurrencyState() {
-  const [allCurrencies, setAllCurrencies] = useState<moltin.CurrencyBase[]>([]);
+  const [allCurrencies, setAllCurrencies] = useState<moltin.Currency[]>([]);
   // Set previously saved or defautlt currency before fetching the list of supported ones
   const [selectedCurrency, setSelectedCurrency] = useState(localStorage.getItem('selectedCurrency') ?? defaultCurrency);
 
@@ -200,10 +276,10 @@ function useCurrencyState() {
   }
 }
 
-function getCategoryPaths(categories: moltin.CategoryBase[]): { [categoryId: string]: moltin.CategoryBase[] } {
+function getCategoryPaths(categories: moltin.Category[]): { [categoryId: string]: moltin.Category[] } {
   const lastCat = categories[categories.length - 1];
 
-  let map: { [categoryId: string]: moltin.CategoryBase[] } = {
+  let map: { [categoryId: string]: moltin.Category[] } = {
     [lastCat.slug]: [...categories]
   };
 
@@ -216,19 +292,19 @@ function getCategoryPaths(categories: moltin.CategoryBase[]): { [categoryId: str
   return map;
 }
 
-function mergeMaps(tree: moltin.CategoryBase[]): { [categoryId: string]: moltin.CategoryBase[] } {
+function mergeMaps(tree: moltin.Category[]): { [categoryId: string]: moltin.Category[] } {
   return tree.reduce((acc, c) => ({ ...acc, ...getCategoryPaths([c]) }), {});
 }
 
 function useCategoriesState(selectedLanguage: string) {
-  const [categoryPaths, setCategoryPaths] = useState<{ [categoryId: string]: moltin.CategoryBase[] }>();
-  const [categoriesTree, setCategoriesTree] = useState<moltin.CategoryBase[]>();
+  const [categoryPaths, setCategoryPaths] = useState<{ [categoryId: string]: moltin.Category[] }>();
+  const [categoriesTree, setCategoriesTree] = useState<moltin.Category[]>();
 
   useEffect(() => {
     setCategoryPaths(undefined);
     setCategoriesTree(undefined);
 
-    loadCategoryTree().then(result => {
+    loadCategoryTree(selectedLanguage).then(result => {
       setCategoriesTree(result);
       setCategoryPaths(mergeMaps(result));
     }).catch(err=>{
@@ -247,27 +323,35 @@ function useCategoriesState(selectedLanguage: string) {
 }
 
 function useCompareProductsState() {
-  const [compareProducts, setCompareProducts] = useState<Product[]>([]);
+  const [compareProducts, setCompareProducts] = useState<moltin.Product[]>([]);
+  const [showCompareMenu, setShowCompareMenu] = useState(false);
 
   const isComparing = (productId: string) => compareProducts.filter(p => p.id === productId).length > 0;
   const isCompareEnabled = (productId: string) => isComparing(productId) || compareProducts.length < config.maxCompareProducts;
 
-  const addToCompare = (product: Product) => {
+  const addToCompare = (product: moltin.Product) => {
     if (!compareProducts.find(p => p.id === product.id)) {
       setCompareProducts([...compareProducts, product]);
+      if (!showCompareMenu) {
+        setShowCompareMenu(true);
+        setTimeout(() => {
+          setShowCompareMenu(false);
+        }, 3200);
+      }
     }
   };
 
   const removeFromCompare = (productId: string) => {
     setCompareProducts(compareProducts.filter(p => p.id !== productId));
-  }
+  };
 
   const removeAll = () => {
     setCompareProducts([]);
-  }
+  };
 
   return {
     compareProducts,
+    showCompareMenu,
     isComparing,
     isCompareEnabled,
     addToCompare,
@@ -295,18 +379,53 @@ function useCustomerAuthenticationSettingsState() {
       console.log(err)
     });
   },[])
-  
-
+ 
   return { authenticationSettings, authenticationProfiles }
+}
+
+function useCartItemsState() {
+  const [cartData, setCartData] = useState<moltin.CartItem[]>([]);
+  const [promotionItems, setPromotionItems] = useState<moltin.CartItem[]>([]);
+  const [count, setCount] = useState(0);
+  const [totalPrice, setTotalPrice] = useState('');
+  const mcart = localStorage.getItem('mcart') || '';
+
+  useEffect(() => {
+    if (mcart) {
+      getCartItems(mcart).then(res => {
+        setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'));
+        setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'));
+        setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0));
+        setTotalPrice(res.meta.display_price.without_tax.formatted)
+      });
+    }
+  }, [mcart]);
+
+  const updateCartItems = () => {
+    getCartItems(mcart).then(res => {
+      setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'));
+      setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'));
+      setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0));
+      setTotalPrice(res.meta.display_price.without_tax.formatted)
+    });
+  };
+
+  return { cartData, promotionItems, count, totalPrice, updateCartItems }
 }
 
 function useGlobalState() {
   const translation = useTranslationState();
   const currency = useCurrencyState();
+  const addressData = useAddressDataState();
+  const ordersData = usePurchaseHistoryState();
+  const cartData = useCartItemsState();
 
   return {
     translation,
     customerData: useCustomerDataState(),
+    addressData,
+    ordersData,
+    cartData,
     currency,
     categories: useCategoriesState(translation.selectedLanguage),
     compareProducts: useCompareProductsState(),
@@ -318,16 +437,22 @@ export const [
   AppStateProvider,
   useTranslation,
   useCustomerData,
+  useAddressData,
+  useOrdersData,
   useCurrency,
   useCategories,
   useCompareProducts,
   useCustomerAuthenticationSettings,
+  useCartData,
 ] = constate(
   useGlobalState,
   value => value.translation,  
   value => value.customerData,
+  value => value.addressData,
+  value => value.ordersData,
   value => value.currency,
   value => value.categories,
   value => value.compareProducts,
   value => value.authenticationSettings,
+  value => value.cartData,
 );

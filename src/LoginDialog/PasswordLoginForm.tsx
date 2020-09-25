@@ -1,4 +1,3 @@
-
 import React, { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -45,8 +44,6 @@ export const PasswordLoginForm: React.FC<PasswordLoginFormProps> = (props) => {
     return errors;
   }
 
-  // We need to access this formik state in the upper component.
-  // We might not need to rest the form if the modal is closed... the state might be gone... when unmounted...
   const {handleSubmit, handleChange, values, errors} = useFormik({
     initialValues,
     validate,

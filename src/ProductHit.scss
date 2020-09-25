@@ -1,0 +1,17 @@
+@import './theme/common';
+
+.producthit {
+  $block: &;
+
+  #{$block}__name, #{$block}__price {
+    margin-top: 10px;
+    font-size: $sizeInitial;
+    font-weight: bold;
+  }
+
+  #{$block}__image {
+    width: 160px;
+    height: 160px;
+    object-fit: fill;
+  }
+}

@@ -1,0 +1,11 @@
+@import './theme/common';
+
+.availability {
+  display: inline-block;
+  margin-top: 10px;
+  text-transform: uppercase;
+  font-size: $sizeXXSmall;
+  padding: 5px 10px;
+  border: 1px solid hsl(0, 0, 80%);
+  border-radius: 16px;
+}

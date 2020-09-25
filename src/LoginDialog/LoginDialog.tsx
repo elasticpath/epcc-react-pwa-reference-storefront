@@ -49,30 +49,27 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
           {failedLogin ? t('invalid-email-or-password') : ('')}
           </div>
         
-        {
-          authenticationSettings ? 
-          authenticationSettings?.data.allow_password_authentication &&
-          <PasswordLoginForm handleModalClose={handleModalClose} isLoading={isLoading} setIsLoading={setIsLoading} setFailedLogin={setFailedLogin} />
-          :
-          <div className="epminiLoader" />
-        }
-        
-
-        {/* the auth buttons are only going to show if profiles return  */}
-        {
-          authenticationProfiles ? 
-          [
-            authenticationSettings?.data.allow_password_authentication && <LoginDialogDivider/>,
-            <OidcLoginButtons />
-          ]: (
-            authenticationSettings && 
+          {
+            authenticationSettings ? 
+            authenticationSettings?.data.allow_password_authentication &&
+            <PasswordLoginForm handleModalClose={handleModalClose} isLoading={isLoading} setIsLoading={setIsLoading} setFailedLogin={setFailedLogin} />
+            :
+            <div className="epminiLoader" />
+          }
+          
+          {
+            authenticationProfiles ? 
             [
               authenticationSettings?.data.allow_password_authentication && <LoginDialogDivider/>,
-              <div className="epminiLoader" />   
-            ])
-        }
-      </div>
-
+              <OidcLoginButtons />
+            ]: (
+              authenticationSettings && 
+              [
+                authenticationSettings?.data.allow_password_authentication && <LoginDialogDivider/>,
+                <div className="epminiLoader" />   
+              ])
+          }
+        </div>
       </div>
     </Modal>
   );

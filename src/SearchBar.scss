@@ -1,0 +1,227 @@
+@import './theme/common';
+
+.searchbar {
+  $block: &;
+
+  max-width: 500px;
+
+  #{$block}__hints {
+    top: 50px;
+    position: absolute;
+    z-index: 2;
+    background-color: $mainBackgroundColor;
+    left: 0;
+    width: 100%;
+    border: 1px solid $secondComplimentTextColor;
+
+    .ais-Hits {
+      max-height: 200px;
+      overflow: scroll;
+    }
+
+    .ais-PoweredBy {
+      text-align: right;
+      padding: 4px 10px;
+      border-top: 1px solid $firstBorderColor;
+
+      &-text {
+        font-size: 13px;
+      }
+
+      &-logo {
+        width: 65px;
+      }
+    }
+  }
+
+  #{$block}__hint {
+    border-bottom: 1px solid $firstBorderColor;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    height: 60px;
+
+    &:hover {
+      background-color: rgba($firstComplimentColor, 0.15);
+    }
+  }
+
+  #{$block}__image {
+    width: 40px;
+    margin-right: 8px;
+    border: 1px solid $firstBorderColor;
+    background-color: $mainBackgroundColor;
+  }
+
+  #{$block}__close,
+  #{$block}__open {
+    display: none;
+  }
+
+  #{$block}__input {
+    position: relative;
+    margin-left: 40px;
+    display: flex;
+
+    input {
+      height: 40px;
+      padding: 2px 35px;
+      width: 100%;
+      color: $mainTextColor;
+      outline: none;
+      border: 1px solid $secondComplimentTextColor;
+
+      &:focus {
+        border-color: $firstComplimentColor;
+      }
+    }
+
+    input:focus ~ .ais-SearchBox-submit {
+      svg {
+        fill: $firstComplimentColor;
+      }
+    }
+
+    .ais-SearchBox{
+      width: 100%;
+    }
+
+    .ais-SearchBox-form {
+      position: relative;
+    }
+
+    .ais-SearchBox-submit,
+    .ais-SearchBox-reset {
+      position: absolute;
+      width: 30px;
+      height: 40px;
+      text-align: center;
+      top: 0;
+    }
+    .ais-SearchBox-submit {
+      left: 5px;
+
+      svg {
+        fill: $firstComplimentTextColor;
+      }
+    }
+
+    .ais-SearchBox-reset {
+      right: 5px;
+    }
+
+    .ais-SearchBox-loadingIndicator {
+      padding-top: 3px;
+    }
+
+    .VoiceSearchButton {
+      all: unset;
+      display: block;
+      width: 36px;
+      height: 36px;
+      border-radius: 36px;
+      margin-left: 8px;
+      cursor: pointer;
+      background-image: url(./images/icons/icon-search-mic.svg);
+      background-repeat: no-repeat;
+      background-position: center;
+
+      &:hover {
+        background-image: url(./images/icons/icon-search-mic-hover.svg);
+      }
+
+      &:active {
+        background-image: url(./images/icons/icon-search-mic-active.svg);
+      }
+    }
+
+    @keyframes breatheAnimation {
+      100% { opacity: 1 }
+      50% { opacity: 0.65 }
+    }
+
+    .VoiceSearchButtonBreathing {
+      background-repeat: no-repeat;
+      background-position: center;
+      all: unset;
+      display: block;
+      width: 36px;
+      height: 36px;
+      border-radius: 36px;
+      margin-left: 8px;
+      cursor: pointer;
+      background-image: url(./images/icons/icon-search-mic-active.svg);
+      animation-name: breatheAnimation;
+      animation-duration: 0.9s;
+      animation-iteration-count: infinite;
+    }
+
+  }
+
+  .ais-VoiceSearch-status {
+    display: none;
+  }
+
+}
+
+@media (max-width: $mobileWidth - 1px) {
+  .searchbar {
+    $block: &;
+
+    #{$block}__close {
+      width: 20%;
+      height: 30px;
+      text-align: center;
+      color: $fifthComplimentTextColor;
+    }
+
+    #{$block}__open {
+      padding: 10px 5px;
+    }
+
+    #{$block}__open,
+    #{$block}__close {
+      display: inline-block;
+    }
+
+    #{$block}__hints {
+      top: 60px;
+    }
+
+    #{$block}__input {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      margin: 0;
+      padding: 10px 10px;
+      background-color: $mainColor;
+      width: 100%;
+
+      &.--show {
+        display: flex;
+        align-items: center;
+        z-index: 1;
+
+        #{$block}__close {
+          display: none;
+
+          &.--show {
+            display: block;
+          }
+        }
+      }
+
+      .ais-SearchBox {
+        display: inline-block;
+        width: 100%;
+      }
+
+      input {
+        border-color: transparent;
+        border-radius: 12px;
+        display: inline-block;
+      }
+    }
+  }
+}

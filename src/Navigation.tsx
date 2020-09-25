@@ -9,6 +9,7 @@ import './Navigation.scss';
 import { NavMenu } from './NavMenu';
 import { ReactComponent as MenuIcon } from './images/icons/ic_menu.svg';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
+import { ReactComponent as ArrowIcon } from './images/icons/arrow_left.svg';
 
 export const Navigation: React.FC = () => {
   const { t } = useTranslation();
@@ -50,7 +51,11 @@ export const Navigation: React.FC = () => {
     setIsOpen(false);
   });
 
-  function renderTopCategories(categories: moltin.CategoryBase[]): React.ReactElement {
+  const handleGoBack = () => {
+    window.history.back();
+  };
+
+  function renderTopCategories(categories: moltin.Category[]): React.ReactElement {
     const topCategories = [
       { name: 'home', displayName: t('home'), url: '/' },
       { name: 'products', displayName: t('products'), children: categories },
@@ -95,6 +100,11 @@ export const Navigation: React.FC = () => {
 
   return (
     <>
+      {window.matchMedia('(display-mode: standalone)').matches && (
+        <button className="navigation__backbtn" aria-label="back button" type="button" onClick={handleGoBack}>
+          <ArrowIcon className="navigation__backicon" />
+        </button>
+      )}
       <button
         className="toggle-btn"
         type="button"

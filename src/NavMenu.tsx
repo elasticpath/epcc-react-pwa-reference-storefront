@@ -20,11 +20,11 @@ export const NavMenu: React.FC<NavMenuProps> = (props) => {
     handleCloseNavigation();
   };
 
-  const handleShow = (category: moltin.CategoryBase) => {
+  const handleShow = (category: moltin.Category) => {
     handleCategoryClick(category.id, category.name);
   };
 
-  function renderCategories(categories: moltin.CategoryBase[], level: number = 0, isVisible: boolean = false): React.ReactElement {
+  function renderCategories(categories: moltin.Category[], level: number = 0, isVisible: boolean = false): React.ReactElement {
     return (
       <ul className={`navmenu__sub --level-${level} ${isVisible ? '--show' : ''}`}>
         {categories?.map(category => (

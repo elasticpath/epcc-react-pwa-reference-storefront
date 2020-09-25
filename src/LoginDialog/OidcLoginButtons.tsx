@@ -19,8 +19,8 @@ export const OidcLoginButtons: React.FC = () => {
     const handleOidcButtonClicked = async (profile:any, cId:any) => {
         const authenticationRealmId = authenticationSettings.data.relationships['authentication-realm'].data.id
         
-        const result = await getAuthenticationProfile(authenticationRealmId, profile.id)
-        const baseRedirectUrl = result.links['authentication-link']
+        const { links } = await getAuthenticationProfile(authenticationRealmId, profile.id)
+        const baseRedirectUrl = links['authentication-link']
         
         window.location.href = generateKeycloakLoginRedirectUrl(baseRedirectUrl, cId, location.pathname);
     }

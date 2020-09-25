@@ -39,6 +39,9 @@ export const LanguageDropdown: React.FC = () => {
       <button className="languagedropdown__selectorbtn" onClick={handleSelectorClicked}>
         {`${t(selectedLangName)}/${selectedCurrency}`}
       </button>
+      <button className="languagedropdown__selectorbtn --small" onClick={handleSelectorClicked}>
+        {selectedLanguage}
+      </button>
       {isOpen && (
         <div ref={ref} className="languagedropdown__dropdown">
           <div className="languagedropdown__section">

@@ -1,0 +1,44 @@
+@import './theme/common.scss';
+
+.promotion {
+  padding: 15px 0 5px;
+  border-top: 1px solid $firstBorderColor;
+  border-bottom: 1px solid $firstBorderColor;
+
+  &__txt {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+
+  &__code {
+    font-size: 15px;
+  }
+
+  .epform {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    &__input {
+      height: 38px;
+    }
+  }
+
+  .epform__group {
+    &:first-of-type {
+      flex-grow: 1;
+      margin-right: 10px;
+    }
+
+    &.--btn-container {
+      padding-top: 0;
+    }
+  }
+}
