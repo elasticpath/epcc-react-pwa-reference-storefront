@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from './app-state';
+
 import './SettingsCart.scss';
 
 interface SettingsCartParams {
@@ -8,7 +9,8 @@ interface SettingsCartParams {
 export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
   const { t } = useTranslation();
 
-  const handleSaveCart = () => {};
+  const handleSaveCart = () => {
+  };
 
   return (
     <div className={`settingscart`}>

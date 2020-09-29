@@ -129,7 +129,6 @@ function useCustomerDataState() {
 
   const setCustomerData = (token: string, id: string) => {
     localStorage.setItem('mtoken', token);
-    localStorage.setItem('mcart', id);
     localStorage.setItem('mcustomer', id);
     setCustomerToken(token);
     setCustomerId(id);

@@ -133,6 +133,14 @@ position: relative;
     font-weight: bold;
   }
 
+  &__settingsicon {
+    margin-left: 6px;
+
+    svg {
+      fill: $secondComplimentTextColor;
+    }
+  }
+
   &__subtotal {
     font-size: 20px;
     font-weight: bold;

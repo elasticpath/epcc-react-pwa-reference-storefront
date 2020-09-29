@@ -175,6 +175,12 @@
   .shipping-info {
     margin-top: 20px;
   }
+
+  @media (max-width: $mobileWidth - 1px) {
+    &__content {
+      padding: 20px;
+    }
+  }
 }
 
 .completed {

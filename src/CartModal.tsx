@@ -153,7 +153,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
         </div>
         {isOpenCartSelection && route === '' && (
           <CartSelection
-            onSelectCart={(page: string) => handlePage(page)}
+            onHandlePage={(page: string) => handlePage(page)}
           />
         )}
         {route === 'settings' && (

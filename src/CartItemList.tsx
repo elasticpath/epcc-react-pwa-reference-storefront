@@ -59,9 +59,17 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
         </button>
       )}
       <h2 className="cartitemlist__title">
-        {t('your-shopping-cart')}
-        {isLoggedIn && (
-          <SettingsIcon onClick={() => onHandlePage('settings')} />
+        {isLoggedIn ? (
+          <span>
+            {t('cart-name')}
+            <span className="cartitemlist__settingsicon">
+              <SettingsIcon onClick={() => onHandlePage('settings')} />
+            </span>
+          </span>
+        ) : (
+          <span>
+            {t('your-shopping-cart')}
+          </span>
           )}
       </h2>
       {items && items.length > 0 ? (
