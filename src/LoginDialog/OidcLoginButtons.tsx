@@ -20,7 +20,7 @@ export const OidcLoginButtons: React.FC = () => {
         const authenticationRealmId = authenticationSettings.data.relationships['authentication-realm'].data.id
         
         const { links } = await getAuthenticationProfile(authenticationRealmId, profile.id)
-        const baseRedirectUrl = links['authentication-link']
+        const baseRedirectUrl = links['authorization-endpoint']
         
         window.location.href = generateKeycloakLoginRedirectUrl(baseRedirectUrl, cId, location.pathname);
     }
@@ -32,7 +32,7 @@ export const OidcLoginButtons: React.FC = () => {
             authenticationProfiles.data.map((profile:any)=>{
 
                 return (
-                    <button className={`authbtn ${profile.name}`} onClick={()=>handleOidcButtonClicked(profile, clientId)}>
+                    <button key={`${profile.name}`} className={`authbtn ${profile.name}`} onClick={()=>handleOidcButtonClicked(profile, clientId)}>
                         {isLoading ? 'Loading' : `Login with ${profile.name}`}
                     </button>
                 );

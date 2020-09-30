@@ -1,5 +1,7 @@
 const generateStateToken = () => {
-    return Math.random().toString(36).substr(2) + Math.random().toString(36).substr(2);
+    var array = new Uint32Array(160);
+    const randomValues = window.crypto.getRandomValues(array)
+    return randomValues.join('');
 }
 
 export const generateRedirectUri = () => {

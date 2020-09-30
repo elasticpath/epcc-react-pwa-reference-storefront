@@ -61,12 +61,12 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
             authenticationProfiles ? 
             [
               authenticationSettings?.data.allow_password_authentication && <LoginDialogDivider/>,
-              <OidcLoginButtons />
+              <OidcLoginButtons key="OidcLoginButton"/>
             ]: (
               authenticationSettings && 
               [
                 authenticationSettings?.data.allow_password_authentication && <LoginDialogDivider/>,
-                <div className="epminiLoader" />   
+                <div key="oidcLoginButtonLoader" className="epminiLoader" />
               ])
           }
         </div>
