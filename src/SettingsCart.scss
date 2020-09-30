@@ -1,8 +1,12 @@
+
+@import './theme/common.scss';
+
 .settingscart {
   text-align: center;
 
   &__field {
-    margin: 20px 0;
+    position: relative;
+    margin: 30px 0;
 
     input {
       height: 40px;
@@ -10,7 +14,7 @@
     }
 
     textarea {
-      height: 100px;
+      height: 200px;
       width: 80%;
     }
   }
@@ -30,6 +34,14 @@
     line-height: 34px;
     text-align: center;
     font-weight: bold;
+  }
+
+  @media screen and (max-width: $mobileXSmallWidth) {
+    &__field {
+      textarea {
+        width: 100%;
+      }
+    }
   }
 }
 

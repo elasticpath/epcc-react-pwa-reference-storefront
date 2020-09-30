@@ -176,7 +176,7 @@
     margin-top: 20px;
   }
 
-  @media (max-width: $mobileWidth - 1px) {
+  @media (max-width: $mobileXSmallWidth) {
     &__content {
       padding: 20px;
     }

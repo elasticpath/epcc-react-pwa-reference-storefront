@@ -11,9 +11,9 @@ import { CartSelection } from './CartSelection';
 import { CartItemList } from './CartItemList';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import { ReactComponent as BackArrovIcon } from './images/icons/arrow_back-black-24dp.svg';
+import { SettingsCart } from "./SettingsCart";
 
 import './CartModal.scss';
-import {SettingsCart} from "./SettingsCart";
 
 interface CartModalParams {
   handleCloseModal: (...args: any[]) => any,
@@ -157,7 +157,9 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
           />
         )}
         {route === 'settings' && (
-          <SettingsCart />
+          <SettingsCart
+            toBackPage={(page: string) => setRoute(page)}
+          />
         )}
         {(route === 'itemList' || !isOpenCartSelection) && (
           <CartItemList

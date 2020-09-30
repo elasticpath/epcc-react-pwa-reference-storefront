@@ -178,13 +178,14 @@
   "items": "îîţééɱš",
   "add-item": "ÅÅðð ååñöţţĥéŕ îîţéɱ",
   "remove-item": "ŔŔéɱööṽé ööñé îîţéɱ",
-  "new-cart": "ÑÑéŵ ÇÇåŕţ",
+  "cart-settings": "ÇÇåŕţ ŠŠéţţîîñĝš",
+  "cart-name-is-required": "ÇÇåŕţ ññåɱé îîš ŕŕéǫûîîŕéð",
   "my-carts": "ṀṀý ÇÇåŕŕţš",
   "you-have-no-carts": "ÝÝöû ĥĥåṽé ññö ççåŕŕţš",
   "create-cart": "ÇÇŕéååţé ççåŕţ",
   "select-cart": "ŠŠéļééçţ ççåŕţ",
   "cart-name": "ÇÇåŕţ ññåɱé",
   "cart-description": "ÇÇåŕţ ððéšççŕîþţţîöñ",
-  "last-edited": "ĻĻåšţ ééðîţţéð",
+  "edited": "ÉÉðîţţéð",
   "saved-carts": "ŠŠåṽṽéð ççåŕŕţš"
 }
