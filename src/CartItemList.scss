@@ -139,6 +139,14 @@ position: relative;
     svg {
       fill: $secondComplimentTextColor;
     }
+
+    &:hover {
+      cursor: pointer;
+
+      svg {
+        fill: $firstComplimentColor;
+      }
+    }
   }
 
   &__subtotal {

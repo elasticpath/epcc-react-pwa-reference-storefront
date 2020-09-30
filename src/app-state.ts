@@ -1,7 +1,16 @@
 import { useState, useEffect } from 'react';
 import constate from 'constate';
 import * as moltin from '@moltin/sdk';
-import { getCustomer, getAddresses, getAllOrders, loadCategoryTree, getCartItems } from './service';
+import {
+  getCustomer,
+  getAddresses,
+  getAllOrders,
+  loadCategoryTree,
+  getCartItems,
+  getMultiCarts,
+  createNewCart,
+  addCustomerAssociation,
+} from './service';
 import * as service from './service';
 import { config } from './config';
 
@@ -385,12 +394,46 @@ function useCartItemsState() {
   return { cartData, promotionItems, count, totalPrice, updateCartItems }
 }
 
+function useMultiCartDataState() {
+  const token = localStorage.getItem('mtoken') || '';
+  const mcustomer = localStorage.getItem('mcustomer') || '';
+  const [multiCartData, setMultiCartData] = useState<moltin.CartItem[]>([]);
+
+  useEffect(() => {
+    if (token) {
+      getMultiCarts(token).then(res => {
+        setMultiCartData(res.data);
+      });
+    }
+    else {
+      clearCartData();
+    }
+  }, [mcustomer, token]);
+
+  const createCart = (data: any) => {
+    createNewCart(data, token).then((cartRes: any) => {
+      addCustomerAssociation(cartRes.data.id, mcustomer, token).then(() => {
+        getMultiCarts(token).then(res => {
+          setMultiCartData(res.data);
+        });
+      })
+    });
+  };
+
+  const clearCartData = () => {
+    setMultiCartData([]);
+  };
+
+    return { multiCartData, createCart }
+}
+
 function useGlobalState() {
   const translation = useTranslationState();
   const currency = useCurrencyState();
   const addressData = useAddressDataState();
   const ordersData = usePurchaseHistoryState();
   const cartData = useCartItemsState();
+  const multiCartData = useMultiCartDataState();
 
   return {
     translation,
@@ -398,6 +441,7 @@ function useGlobalState() {
     addressData,
     ordersData,
     cartData,
+    multiCartData,
     currency,
     categories: useCategoriesState(translation.selectedLanguage),
     compareProducts: useCompareProductsState(),
@@ -414,6 +458,7 @@ export const [
   useCategories,
   useCompareProducts,
   useCartData,
+  useMultiCartData,
 ] = constate(
   useGlobalState,
   value => value.translation,
@@ -424,4 +469,5 @@ export const [
   value => value.categories,
   value => value.compareProducts,
   value => value.cartData,
+  value => value.multiCartData,
 );

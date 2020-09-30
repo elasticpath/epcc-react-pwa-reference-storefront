@@ -215,4 +215,21 @@ export async function payment(payment: object, orderId: string) {
   await moltin.Orders.Payment(orderId, payment)
 }
 
+export async function createNewCart(data: any, token: string) {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const cartRes = await moltin.Cart().CreateCart(data, token);
+  return cartRes;
+}
+
+export async function getMultiCarts(token: string) {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const cartsList = await moltin.Cart().GetCartsList(token);
+  return cartsList;
+}
+
+export async function addCustomerAssociation(cartId: string, customerId: string, token: string) {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  await moltin.Cart(cartId).AddCustomerAssociation(customerId, token);
+}
+
 

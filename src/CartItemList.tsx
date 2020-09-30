@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useCartData, useCustomerData, useTranslation } from './app-state';
+import { useCartData, useCustomerData, useTranslation, useMultiCartData } from './app-state';
 import { removeCartItem, updateCartItem } from './service';
 import { ImageContainer } from "./ImageContainer";
 import { Promotion } from "./Promotion";
@@ -17,6 +17,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const { items, handlePage, promotionItems } = props;
   const { t } = useTranslation();
   const { isLoggedIn } = useCustomerData();
+  const { multiCartData } = useMultiCartData();
   const { count, totalPrice, updateCartItems } = useCartData();
 
   const isLoading = false;
