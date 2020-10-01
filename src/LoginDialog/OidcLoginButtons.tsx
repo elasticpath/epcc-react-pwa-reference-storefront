@@ -7,7 +7,7 @@ import React , { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getAuthenticationProfile } from './../service';
 import { useCustomerAuthenticationSettings } from '../app-state';
-import { generateKeycloakLoginRedirectUrl } from './OidcUtilities';
+import { generateOidcLoginRedirectUrl } from './OidcUtilities';
 
 import './OidcLoginButtons.scss';
 
@@ -22,7 +22,7 @@ export const OidcLoginButtons: React.FC = () => {
         const { links } = await getAuthenticationProfile(authenticationRealmId, profile.id)
         const baseRedirectUrl = links['authorization-endpoint']
         
-        window.location.href = generateKeycloakLoginRedirectUrl(baseRedirectUrl, cId, location.pathname);
+        window.location.href = generateOidcLoginRedirectUrl(baseRedirectUrl, cId, location.pathname);
     }
     const clientId = `${authenticationSettings?.data.meta.client_id}`
 
