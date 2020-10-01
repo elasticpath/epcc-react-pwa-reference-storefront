@@ -9,7 +9,7 @@ export const generateRedirectUri = () => {
     return `${oidcHandlerRoute}`
 }
 
-export const generateKeycloakLoginRedirectUrl = (baseRedirectUrl: string, cId: string, prevLocation: string) => {
+export const generateOidcLoginRedirectUrl = (baseRedirectUrl: string, cId: string, prevLocation: string) => {
     const stateToken = generateStateToken();
     
     // Set state and prevLocation for when oidc redirects back to the application.
