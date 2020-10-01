@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { Elements, StripeProvider } from 'react-stripe-elements';
-import { useCartData, useCustomerData, useOrdersData, useTranslation } from './app-state';
+import {useCartData, useCustomerData, useMultiCartData, useOrdersData, useTranslation} from './app-state';
 import { config } from './config';
 import { checkout, payment, removeCartItems } from './service';
 
@@ -14,11 +14,11 @@ import { ReactComponent as BackArrovIcon } from './images/icons/arrow_back-black
 import { SettingsCart } from "./SettingsCart";
 
 import './CartModal.scss';
+import {CartsList} from "./CartsList";
 
 interface CartModalParams {
   handleCloseModal: (...args: any[]) => any,
   isCartModalOpen: boolean,
-  isOpenCartSelection: boolean,
 }
 
 interface FormValues {
@@ -48,10 +48,11 @@ let initialValues: FormValues = {
 };
 
 export const CartModal: React.FC<CartModalParams> = (props) => {
-  const { handleCloseModal, isCartModalOpen, isOpenCartSelection } = props;
+  const { handleCloseModal, isCartModalOpen } = props;
   const { cartData, promotionItems, updateCartItems } = useCartData();
   const { isLoggedIn } = useCustomerData();
   const { updatePurchaseHistory } = useOrdersData();
+  const { isCartSelected } = useMultiCartData();
   const { t } = useTranslation();
 
   const [route, setRoute] = useState<string>('');
@@ -96,7 +97,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
   };
 
   const handleBackPage = () => {
-    if(route === "shipping" || route === "settings") {
+    if(route === "shipping" || route === "settings" || route === "cartsList") {
       setRoute("itemList")
     } else if (route === "billing") {
       setRoute("shipping")
@@ -151,21 +152,32 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
             </button>
           )}
         </div>
-        {isOpenCartSelection && route === '' && (
-          <CartSelection
-            onHandlePage={(page: string) => handlePage(page)}
+        {route === 'settings' && (
+          <SettingsCart
+            toBackPage={(page: string) => setRoute(page)}
+            isEditCart
           />
         )}
-        {route === 'settings' && (
+        {route === 'createCart' && (
           <SettingsCart
             toBackPage={(page: string) => setRoute(page)}
           />
         )}
-        {(route === 'itemList' || !isOpenCartSelection) && (
+        {((route === 'itemList' && isCartSelected) || !isLoggedIn) && (
           <CartItemList
             items={cartData}
             handlePage={(page: string) => handlePage(page)}
             promotionItems={promotionItems}
+          />
+        )}
+        {isLoggedIn && !isCartSelected && (
+          <CartSelection
+            onHandlePage={(page: string) => handlePage(page)}
+          />
+        )}
+        {isLoggedIn && route === 'cartsList' && (
+          <CartsList
+            onHandlePage={(page: string) => handlePage(page)}
           />
         )}
         {route === 'shipping' && (

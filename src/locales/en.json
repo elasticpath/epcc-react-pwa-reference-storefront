@@ -178,7 +178,7 @@
   "items": "items",
   "add-item": "Add another item",
   "remove-item": "Remove one item",
-  "cart-settings": "Cart Settings",
+  "settings": "Settings",
   "cart-name-is-required": "Cart name is required",
   "my-carts": "My Carts",
   "you-have-no-carts": "You have no carts",
@@ -186,6 +186,7 @@
   "select-cart": "Select cart",
   "cart-name": "Cart name",
   "cart-description": "Cart description",
+  "new-cart": "New Cart",
   "edited": "Edited",
   "saved-carts": "Saved carts"
 }

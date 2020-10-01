@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation, useMultiCartData } from './app-state';
-import './CartSelection.scss';
+import './CartsList.scss';
 
-interface CartSelectionParams {
+interface CartsListParams {
   onHandlePage: (route: string) => any,
 }
 
@@ -22,7 +22,7 @@ const initialValues: cartValues = {
   created: '',
 };
 
-export  const CartSelection: React.FC<CartSelectionParams> = (props) => {
+export  const CartsList: React.FC<CartsListParams> = (props) => {
   const { onHandlePage } = props;
   const mcart = localStorage.getItem('mcart');
   const [checkedItem, setCheckedItem] = useState(mcart);
@@ -44,30 +44,30 @@ export  const CartSelection: React.FC<CartSelectionParams> = (props) => {
   };
 
   return (
-    <div className={`cartselection`}>
+    <div className={`cartslist`}>
       <div>
-        <h2 className="cartselection__title">
+        <h2 className="cartslist__title">
           {t('my-carts')}
         </h2>
         {multiCartData && multiCartData.length ? (
           <div>
-            <h3 className="cartselection__listname">
+            <h3 className="cartslist__listname">
               {t('saved-carts')} ({multiCartData.length})
             </h3>
-            <div className="cartselection__cartlist">
+            <div className="cartslist__cartlist">
               {multiCartData.map((cart: any) => (
-                <div className="cartselection__cartelement" key={cart.id}>
-                  <input type="radio" name="cartCheck" id={`cart_${cart.id}`} className="epradio" defaultChecked={checkedItem === cart.id} onChange={() => {handleCheckCart(cart, cart.id)}} />
-                  <label htmlFor={`cart_${cart.id}`} className="cartselection__description">
-                    <div className="cartselection__cartname">
-                      <strong className="cartselection__name">
+                <div className="cartslist__cartelement" key={cart.id}>
+                  <input type="checkbox" name="cartCheck" id={`cart_${cart.id}`} className="epcheckbox" defaultChecked={checkedItem === cart.id} onChange={() => {handleCheckCart(cart, cart.id)}} />
+                  <label htmlFor={`cart_${cart.id}`} className="cartslist__description">
+                    <div className="cartslist__cartname">
+                      <strong className="cartslist__name">
                         {cart.name}
                       </strong>
-                      <span className="cartselection__edited">
+                      <span className="cartslist__edited">
                       {t('edited')} - {cart.meta.timestamps.updated_at}
                     </span>
                     </div>
-                    <p className="cartselection__quantity">
+                    <p className="cartslist__quantity">
                       {cart.relationships.items.data ? cart.relationships.items.data.length : 0} {t('items')}
                     </p>
                     <p>
@@ -78,12 +78,12 @@ export  const CartSelection: React.FC<CartSelectionParams> = (props) => {
               ))}
             </div>
           </div>
-          ) : (
-          <div className="cartselection__nocartmessage">
+        ) : (
+          <div className="cartslist__nocartmessage">
             {t('you-have-no-carts')}
           </div>
         )}
-        <button className="epbtn --primary --fullwidth --large" onClick={() => onHandleCart('itemList')} >{t('select-cart')}</button>
+        <button className="epbtn --primary --fullwidth --large" onClick={() => onHandleCart('createCart')} >{t('create-cart')}</button>
       </div>
     </div>
   )

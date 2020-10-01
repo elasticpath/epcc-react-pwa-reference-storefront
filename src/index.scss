@@ -183,6 +183,58 @@ img, svg {
   }
 }
 
+.epcheckbox {
+  display: none;
+
+  +label {
+    position: relative;
+    padding-left: 25px;
+    font-size: 13px;
+    line-height: 18px;
+    color: $firstComplimentTextColor;
+    vertical-align: top;
+    margin-bottom: 0;
+    &:before {
+      content: "";
+      width: 18px;
+      height: 18px;
+      border: 1px solid $secondBorderColor;
+      border-radius: 2px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: $mainBackgroundColor;
+    }
+  }
+
+  &:disabled {
+    +label {
+      opacity: 0.4;
+    }
+  }
+
+  &:checked {
+    +label {
+      &:before {
+        border-color: $firstComplimentColor;
+        background-color: $firstComplimentColor;
+      }
+      &:after {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 1px;
+        width: 12px;
+        height: 7px;
+        border: solid 2px $mainBackgroundColor;
+        border-right: none;
+        border-top: none;
+        transform: translate(2px, 1px) rotate(-45deg);
+      }
+    }
+  }
+}
+
 .epradio {
   display: none;
 

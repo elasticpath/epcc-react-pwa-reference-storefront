@@ -55,7 +55,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   return (
     <div className={`cartitemlist ${isLoading ? '--loading' : ''}`}>
       {isLoggedIn && (
-        <button className="cartitemlist__mycart" onClick={() => onHandlePage('')}>
+        <button className="cartitemlist__mycart" onClick={() => onHandlePage('cartsList')}>
           {t('my-carts')}
         </button>
       )}

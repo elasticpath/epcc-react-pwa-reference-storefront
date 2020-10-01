@@ -3,9 +3,11 @@ import {useMultiCartData, useTranslation} from './app-state';
 import { useFormik } from 'formik';
 
 import './SettingsCart.scss';
+import Modal from "react-responsive-modal";
 
 interface SettingsCartParams {
   toBackPage: (route: string) => any,
+  isEditCart?: boolean,
 }
 
 interface FormValues {
@@ -14,7 +16,7 @@ interface FormValues {
 }
 
 export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
-  const { toBackPage } = props;
+  const { toBackPage, isEditCart } = props;
   const { t } = useTranslation();
   const { createCart } = useMultiCartData();
   const [isLoading, setIsLoading] = useState(false);
@@ -46,7 +48,7 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
     <div className={`settingscart`}>
       <div className="settingscart__addcartform">
         <h2 className="settingscart__title">
-          {t('cart-settings')}
+          {isEditCart ? t('settings') : t('new-cart')}
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="settingscart__field">
@@ -61,7 +63,7 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
             <textarea className="epform__input" id="description" onChange={handleChange} value={values.description} />
           </div>
           <div className="settingscart__savebutton">
-            <button className={`epbtn --primary --fullwidth ${isLoading && 'epminiLoader'}`} type="submit" onClick={() => setIsLoading(true)}>{t('save')}</button>
+            <button className="epbtn --primary --fullwidth" type="submit" onClick={() => setIsLoading(true)}>{t('save')}</button>
           </div>
           <div className="settingscart__cancelbutton">
            <button className="epbtn --bordered --fullwidth" onClick={() => toBackPage('itemList')}>{t('cancel')}</button>
