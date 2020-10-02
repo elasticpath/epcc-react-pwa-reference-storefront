@@ -384,10 +384,15 @@ function useCartItemsState() {
 
   const updateCartItems = () => {
     getCartItems(mcart).then(res => {
-      setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'));
-      setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'));
-      setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0));
-      setTotalPrice(res.meta.display_price.without_tax.formatted)
+      console.log('res123', res);
+      const cartData = res.data.length ? res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item') : [];
+      setCartData(cartData);
+      const promotionItems = res.data.length ? res.data.filter(({ type }) => type === 'promotion_item') : [];
+      setPromotionItems(promotionItems);
+      const count = res.data.length ? res.data.reduce((sum, { quantity }) => sum + quantity, 0) : 0;
+      setCount(count);
+      const totalPrice = res.meta ? res.meta.display_price.without_tax.formatted : '';
+      setTotalPrice(totalPrice)
     });
   };
 
@@ -406,8 +411,10 @@ function useMultiCartDataState() {
     if (token) {
       getMultiCarts(token).then(res => {
         setMultiCartData(res.data);
-        updateSelectedCartName(res.data[0].name);
-        localStorage.setItem('mcart', res.data[0].id);
+        const cartName = res.data[0] ? res.data[0].name : '';
+        const cartId = res.data[0] ? res.data[0].id : '';
+        updateSelectedCartName(cartName);
+        localStorage.setItem('mcart', cartId);
       });
     }
     else {

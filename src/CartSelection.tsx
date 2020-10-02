@@ -37,8 +37,8 @@ export  const CartSelection: React.FC<CartSelectionParams> = (props) => {
     setIsCartSelected(true)
   };
 
-  const handleCheckCart = (cart:any, cariId:string) => {
-    setCheckedItem(cariId);
+  const handleCheckCart = (cart:any, cartId:string) => {
+    setCheckedItem(cartId);
     updateSelectedCartName(cart.name);
     setCheckedCart(cart);
   };
