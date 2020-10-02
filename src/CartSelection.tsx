@@ -83,7 +83,11 @@ export  const CartSelection: React.FC<CartSelectionParams> = (props) => {
             {t('you-have-no-carts')}
           </div>
         )}
-        <button className="epbtn --primary --fullwidth --large" onClick={() => onHandleCart('itemList')} >{t('select-cart')}</button>
+        {multiCartData.length ? (
+          <button className="epbtn --primary --fullwidth --large" onClick={() => onHandleCart('itemList')} >{t('select-cart')}</button>
+          ) : (
+          <button className="epbtn --primary --fullwidth --large" onClick={() => onHandlePage('createCart')} >{t('create-cart')}</button>
+        )}
       </div>
     </div>
   )

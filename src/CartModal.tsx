@@ -97,7 +97,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
   };
 
   const handleBackPage = () => {
-    if(route === "shipping" || route === "settings" || route === "cartsList") {
+    if(route === "shipping" || route === "settings" || route === "cartsList" || route === "createCart") {
       setRoute("itemList")
     } else if (route === "billing") {
       setRoute("shipping")
@@ -170,7 +170,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
             promotionItems={promotionItems}
           />
         )}
-        {isLoggedIn && !isCartSelected && (
+        {isLoggedIn && !isCartSelected && route === 'itemList' && (
           <CartSelection
             onHandlePage={(page: string) => handlePage(page)}
           />
