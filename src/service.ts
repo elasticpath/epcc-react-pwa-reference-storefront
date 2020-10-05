@@ -1,7 +1,5 @@
 import * as moltin from '@moltin/sdk';
 import { config } from './config';
-import {CartItemObject} from "@moltin/sdk";
-import {CartItemsResponse} from "@moltin/sdk";
 
 const MoltinGateway = moltin.gateway;
 
@@ -197,7 +195,7 @@ export async function addToCart(reference: string, productId: string): Promise<v
   await moltin.Cart(reference).AddProduct(productId, quantity);
 }
 
-export async function bulkAdd(reference: string, data: CartItemObject[]): Promise<moltin.CartItemsResponse> {
+export async function bulkAdd(reference: string, data: moltin.CartItemObject[]): Promise<moltin.CartItemsResponse> {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const result = await moltin.Cart(reference).BulkAdd(data);
 
