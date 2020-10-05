@@ -2,6 +2,18 @@
 
 .cartslist {
   text-align: center;
+  position: relative;
+
+  &__editbutton {
+    position: absolute;
+    top: -20px;
+    right: 0;
+
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
 
   &__nocartmessage {
     margin: 60px 0;
@@ -41,7 +53,7 @@
     }
   }
 
-  &__edited {
+  &.--date {
     font-size: 11px;
     text-transform: capitalize;
     color: $thirdComplimentTextColor;
@@ -57,6 +69,18 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 5px;
+    height: 18px;
+  }
+
+  &__selectcart {
+
+    svg {
+      fill: $fourthComplimentTextColor;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 

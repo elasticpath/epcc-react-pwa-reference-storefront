@@ -436,6 +436,9 @@ function useMultiCartDataState() {
     });
   };
 
+  const editCart = (data: any) => {
+  };
+
   const updateSelectedCartName = (cartName: string) => {
     setSelectedCartName(cartName)
   };
@@ -444,7 +447,15 @@ function useMultiCartDataState() {
     setMultiCartData([]);
   };
 
-  return { multiCartData, createCart, selectedCartName, updateSelectedCartName, isCartSelected, setIsCartSelected }
+  return {
+    multiCartData,
+    createCart,
+    selectedCartName,
+    updateSelectedCartName,
+    isCartSelected,
+    setIsCartSelected,
+    editCart
+  }
 }
 
 function useGlobalState() {

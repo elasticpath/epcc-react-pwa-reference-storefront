@@ -61,6 +61,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
   const [shippingAddress, setShippingAddress] = useState<FormValues>(initialValues);
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [selectedCartData, setSelectedCartData] = useState({});
 
   const onPayOrder = async (token: string) => {
     try {
@@ -156,6 +157,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
           <SettingsCart
             toBackPage={(page: string) => setRoute(page)}
             isEditCart
+            selectedCartData={selectedCartData}
           />
         )}
         {route === 'createCart' && (
@@ -163,7 +165,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
             toBackPage={(page: string) => setRoute(page)}
           />
         )}
-        {((route === 'itemList' && isCartSelected) || !isLoggedIn) && (
+        {(route === 'itemList' && (isCartSelected || !isLoggedIn)) && (
           <CartItemList
             items={cartData}
             handlePage={(page: string) => handlePage(page)}
@@ -173,11 +175,13 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
         {isLoggedIn && !isCartSelected && route === 'itemList' && (
           <CartSelection
             onHandlePage={(page: string) => handlePage(page)}
+            onSelectCart={(data) => setSelectedCartData(data)}
           />
         )}
         {isLoggedIn && route === 'cartsList' && (
           <CartsList
             onHandlePage={(page: string) => handlePage(page)}
+            onSelectCart={(data) => setSelectedCartData(data)}
           />
         )}
         {route === 'shipping' && (

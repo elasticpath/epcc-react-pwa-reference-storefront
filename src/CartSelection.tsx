@@ -4,6 +4,7 @@ import './CartSelection.scss';
 
 interface CartSelectionParams {
   onHandlePage: (route: string) => any,
+  onSelectCart: (route: string) => any,
 }
 
 interface cartValues {
@@ -23,24 +24,25 @@ const initialValues: cartValues = {
 };
 
 export  const CartSelection: React.FC<CartSelectionParams> = (props) => {
-  const { onHandlePage } = props;
+  const { onHandlePage, onSelectCart } = props;
   const mcart = localStorage.getItem('mcart');
-  const [checkedItem, setCheckedItem] = useState(mcart);
-  const [checkedCart, setCheckedCart] = useState<cartValues>(initialValues);
+  const [selectedItem, setSelectedItem] = useState(mcart);
+  const [selectedCart, setSelectedCart] = useState<cartValues>(initialValues);
   const { multiCartData, updateSelectedCartName, setIsCartSelected } = useMultiCartData();
 
   const { t } = useTranslation();
 
   const onHandleCart = (page:string) => {
     onHandlePage(page);
-    localStorage.setItem('mcart', checkedCart.id);
+    localStorage.setItem('mcart', selectedCart.id);
     setIsCartSelected(true)
   };
 
-  const handleCheckCart = (cart:any, cartId:string) => {
-    setCheckedItem(cartId);
+  const handleSelectCart = (cart:any) => {
+    setSelectedItem(cart.id);
     updateSelectedCartName(cart.name);
-    setCheckedCart(cart);
+    setSelectedCart(cart);
+    onSelectCart(cart)
   };
 
   return (
@@ -57,7 +59,7 @@ export  const CartSelection: React.FC<CartSelectionParams> = (props) => {
             <div className="cartselection__cartlist">
               {multiCartData.map((cart: any) => (
                 <div className="cartselection__cartelement" key={cart.id}>
-                  <input type="radio" name="cartCheck" id={`cart_${cart.id}`} className="epradio" defaultChecked={checkedItem === cart.id} onChange={() => {handleCheckCart(cart, cart.id)}} />
+                  <input type="radio" name="cartCheck" id={`cart_${cart.id}`} className="epradio" defaultChecked={selectedItem === cart.id} onChange={() => {handleSelectCart(cart)}} />
                   <label htmlFor={`cart_${cart.id}`} className="cartselection__description">
                     <div className="cartselection__cartname">
                       <strong className="cartselection__name">

@@ -188,5 +188,7 @@
   "cart-description": "Cart description",
   "new-cart": "New Cart",
   "edited": "Edited",
-  "saved-carts": "Saved carts"
+  "created": "Created",
+  "saved-carts": "Saved carts",
+  "done": "Done"
 }

@@ -3,11 +3,11 @@ import {useMultiCartData, useTranslation} from './app-state';
 import { useFormik } from 'formik';
 
 import './SettingsCart.scss';
-import Modal from "react-responsive-modal";
 
 interface SettingsCartParams {
   toBackPage: (route: string) => any,
   isEditCart?: boolean,
+  selectedCartData?: any,
 }
 
 interface FormValues {
@@ -16,14 +16,14 @@ interface FormValues {
 }
 
 export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
-  const { toBackPage, isEditCart } = props;
+  const { toBackPage, isEditCart, selectedCartData } = props;
   const { t } = useTranslation();
-  const { createCart } = useMultiCartData();
+  const { createCart, editCart } = useMultiCartData();
   const [isLoading, setIsLoading] = useState(false);
 
   let initialValues: FormValues = {
-    name: '',
-    description: '',
+    name: selectedCartData ? selectedCartData.name : '',
+    description: selectedCartData ? selectedCartData.description : '',
   };
 
   const validate = (values:any) => {
@@ -37,9 +37,13 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
   const {handleSubmit, handleChange, values, isValid, errors} = useFormik({
     initialValues,
     validate,
-    onSubmit: (values) => {
-      createCart(values);
-      setIsLoading(false);
+    onSubmit: async (values)  => {
+      if(isEditCart) {
+        await editCart(values);
+      } else {
+        await createCart(values);
+      }
+      await setIsLoading(false);
       toBackPage(('itemList'));
     },
   });

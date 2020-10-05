@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation, useMultiCartData } from './app-state';
 import './CartsList.scss';
+import {ReactComponent as ArrowRight} from "./images/icons/keyboard_arrow_right-black-24dp.svg";
 
 interface CartsListParams {
   onHandlePage: (route: string) => any,
+  onSelectCart: (route: string) => any,
 }
 
 interface cartValues {
@@ -23,28 +25,39 @@ const initialValues: cartValues = {
 };
 
 export  const CartsList: React.FC<CartsListParams> = (props) => {
-  const { onHandlePage } = props;
+  const { onHandlePage, onSelectCart } = props;
+  const { multiCartData, updateSelectedCartName, setIsCartSelected } = useMultiCartData();
   const mcart = localStorage.getItem('mcart');
   const [checkedItem, setCheckedItem] = useState(mcart);
   const [checkedCart, setCheckedCart] = useState<cartValues>(initialValues);
-  const { multiCartData, updateSelectedCartName, setIsCartSelected } = useMultiCartData();
+  const [isEdit, setIsEdit] = useState(false);
 
   const { t } = useTranslation();
 
   const onHandleCart = (page:string) => {
     onHandlePage(page);
-    localStorage.setItem('mcart', checkedCart.id);
-    setIsCartSelected(true)
   };
 
   const handleCheckCart = (cart:any, cariId:string) => {
     setCheckedItem(cariId);
-    updateSelectedCartName(cart.name);
     setCheckedCart(cart);
   };
 
+  const handleSelectCart = (cart:any) => {
+    updateSelectedCartName(cart.name);
+    onSelectCart(cart);
+    onHandlePage('itemList');
+    localStorage.setItem('mcart', cart.id);
+    setIsCartSelected(true)
+  };
+
   return (
-    <div className={`cartslist`}>
+    <div className="cartslist">
+      {multiCartData.length && (
+        <div role="presentation" className="cartslist__editbutton" onClick={() => setIsEdit(!isEdit)}>
+          {t(isEdit ? 'done' : 'edit')}
+        </div>
+      )}
       <div>
         <h2 className="cartslist__title">
           {t('my-carts')}
@@ -57,15 +70,26 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
             <div className="cartslist__cartlist">
               {multiCartData.map((cart: any) => (
                 <div className="cartslist__cartelement" key={cart.id}>
-                  <input type="checkbox" name="cartCheck" id={`cart_${cart.id}`} className="epcheckbox" defaultChecked={checkedItem === cart.id} onChange={() => {handleCheckCart(cart, cart.id)}} />
+                    {isEdit && (
+                      <input type="checkbox" name="cartCheck" id={`cart_${cart.id}`} className="cartslist__check epcheckbox" defaultChecked={checkedItem === cart.id} onChange={() => {handleCheckCart(cart, cart.id)}} />
+                    )}
                   <label htmlFor={`cart_${cart.id}`} className="cartslist__description">
                     <div className="cartslist__cartname">
                       <strong className="cartslist__name">
                         {cart.name}
                       </strong>
-                      <span className="cartslist__edited">
-                      {t('edited')} - {cart.meta.timestamps.updated_at}
-                    </span>
+                      <span className="cartslist__select">
+                        <span className="cartslist --date">
+                          {t('created')} - {cart.meta.timestamps.created_at}
+                        </span>
+                        <button className="cartslist__selectcart" onClick={() => handleSelectCart(cart)}>
+                          <ArrowRight />
+                        </button>
+                        <br />
+                        <span className="cartslist --date">
+                          {t('edited')} - {cart.meta.timestamps.updated_at}
+                        </span>
+                      </span>
                     </div>
                     <p className="cartslist__quantity">
                       {cart.relationships.items.data ? cart.relationships.items.data.length : 0} {t('items')}
