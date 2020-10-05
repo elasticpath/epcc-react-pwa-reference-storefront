@@ -17,6 +17,7 @@ export const BulkOrder: React.FC = (props) => {
   const { updateCartItems } = useCartData();
   const [bulkOrderItems, setBulkOrderItems] = useState([]);
   const [bulkError, setBulkError] = useState('');
+  const [showLoader, setShowLoader] = useState(false);
 
   const initialValues:FormValues = {
     productSKU: '',
@@ -26,14 +27,17 @@ export const BulkOrder: React.FC = (props) => {
     initialValues,
     onSubmit: (values) => {
       setBulkError('');
+      setShowLoader(true);
       const mcart = localStorage.getItem('mcart') || '';
       bulkAdd(mcart, bulkOrderItems)
         .then(() => {
           updateCartItems();
           resetForm();
+          setShowLoader(false);
         })
         .catch(error => {
           setBulkError(error.errors[0].detail);
+          setShowLoader(false);
           console.error(error);
         });
     }
@@ -70,9 +74,12 @@ export const BulkOrder: React.FC = (props) => {
         </div>
         <div className="bulkorder__btns">
           <button className="epbtn --primary" type="submit" disabled={!values.productSKU}>
-            {bulkOrderItems.length > 0 ? (
+            {!showLoader ?
+              (bulkOrderItems.length > 0 ? (
               bulkOrderItems.length === 1 ? t('add-item-to-cart') : t('add-items-to-cart', { quantity: bulkOrderItems.length.toString() })
-            ) : t('add-to-cart')}
+            ) : t('add-to-cart'))
+              : (<div className="circularLoader" />)
+            }
           </button>
         </div>
       </form>

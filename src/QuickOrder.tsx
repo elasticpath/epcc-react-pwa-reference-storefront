@@ -76,6 +76,7 @@ export const QuickOrder: React.FC = (props) => {
       })
       .catch(error => {
         setError(error.errors[0].detail);
+        setShowLoader(false);
         console.error(error);
       });
   };
