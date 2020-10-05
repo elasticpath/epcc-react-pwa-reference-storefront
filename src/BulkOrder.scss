@@ -1,0 +1,81 @@
+@import './theme/common';
+
+.bulkorder {
+  position: relative;
+
+  &__form {
+    max-width: 800px;
+  }
+
+  &__group {
+    position: relative;
+    margin-bottom: 25px;
+  }
+
+  &__label {
+    display: inline-block;
+    font-size: $sizeSmall;
+    margin-bottom: 5px;
+  }
+
+  &__textarea {
+    width: 100%;
+    min-height: 400px;
+    padding: 10px;
+    font-size: $sizeSmall;
+    border: 1px solid $secondBorderColor;
+    border-radius: 4px;
+    color: $secondComplimentTextColor;
+
+    &:focus {
+      border-color: $firstComplimentColor;
+      outline: 0 auto transparent;
+    }
+  }
+
+  &__info {
+    margin-bottom: 15px;
+
+    p {
+      font-size: $sizeSmall;
+      white-space: pre;
+    }
+  }
+
+  &__clearbtn {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    cursor: pointer;
+  }
+
+  &__clearicon {
+    fill: $thirdComplimentTextColor;
+  }
+
+  &__btns {
+    text-align: right;
+
+    .epbtn {
+      height: 42px;
+      min-width: 300px;
+    }
+  }
+
+  &__feedback {
+    position: absolute;
+    top: -25px;
+    left: 0;
+    margin-top: 5px;
+    font-weight: bold;
+    color: $mainErrorColor;
+  }
+
+  @media (max-width: $mobileXSmallWidth - 1px) {
+    &__btns {
+      .epbtn {
+        min-width: 100%;
+      }
+    }
+  }
+}
