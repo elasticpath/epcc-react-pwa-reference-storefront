@@ -31,6 +31,8 @@
     }
 
     .epform__input {
+      padding-right: 30px;
+
       &:focus {
         border-color: $firstComplimentColor;
         outline: 0 auto transparent;
@@ -99,17 +101,24 @@
 
       &.--primary {
         min-width: 300px;
+
+        .circularLoader {
+          border-top-color: $mainColor;
+        }
       }
     }
   }
 
   &__feedback {
+    width: 100%;
+    padding: 20px 60px;
     position: absolute;
-    top: -25px;
+    top: 0;
     left: 0;
-    margin-top: 5px;
-    font-weight: bold;
+    font-size: $sizeSmall;
     color: $mainErrorColor;
+    border: 1px solid $mainErrorColor;
+    background-color: $mainBackgroundColor;
   }
 
   @media (max-width: $mobileWidth - 1px) {
@@ -119,6 +128,10 @@
           min-width: 200px;
         }
       }
+    }
+
+    &__feedback {
+      padding: 15px;
     }
   }
 
