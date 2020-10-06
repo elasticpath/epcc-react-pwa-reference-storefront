@@ -31,10 +31,6 @@ export const QuickOrder: React.FC = (props) => {
   };
 
   const handleBlur = (index:number, code:string) => {
-    if (code === '') {
-      handleUpdate(index, [{'quantity': 0}]);
-      return false;
-    }
     getProductById(code)
       .then(() => {
         handleUpdate(index, [{'quantity': 1}]);
