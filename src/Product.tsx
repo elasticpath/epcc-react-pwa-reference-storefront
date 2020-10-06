@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import useOnclickOutside from 'react-cool-onclickoutside';
 import { useResolve, useProductImages } from './hooks';
 import { addToCart, loadProductBySlug } from './service';
 import { CompareCheck } from './CompareCheck';
 import { SocialShare } from './SocialShare';
-import { useTranslation, useCurrency, useCartData } from './app-state';
+import {
+  useTranslation,
+  useCurrency,
+  useCartData,
+  useMultiCartData,
+  useCustomerData,
+} from "./app-state";
 import { isProductAvailable } from './helper';
 import { Availability } from './Availability';
 import { VariationsSelector } from './VariationsSelector';
+import { SettingsCart } from './SettingsCart';
+import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 
 import './Product.scss';
 
@@ -22,6 +31,19 @@ export const Product: React.FC = () => {
   const { selectedLanguage } = useTranslation();
   const { selectedCurrency } = useCurrency();
   const { updateCartItems } = useCartData();
+  const { isLoggedIn } = useCustomerData();
+  const { multiCartData } = useMultiCartData();
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const modalRef = useOnclickOutside(() => {
+    setModalOpen(false)
+  });
+
+  const dropdownRef = useOnclickOutside(() => {
+    setDropdownOpen(false)
+  });
 
   const [product] = useResolve(
     async () => loadProductBySlug(productSlug, selectedLanguage, selectedCurrency),
@@ -43,9 +65,9 @@ export const Product: React.FC = () => {
     setCurrentImageIndex(currentImageIndex - 1);
   };
 
-  const handleAddToCart = () => {
-    const mcart = localStorage.getItem('mcart') || '';
-    addToCart(mcart, productId)
+  const handleAddToCart = (cartId?: string) => {
+    const mcart = cartId ? cartId : localStorage.getItem("mcart") || "" ;
+    return addToCart(mcart, productId)
       .then(() => {
         updateCartItems()
     })
@@ -55,9 +77,76 @@ export const Product: React.FC = () => {
     setCurrentImageIndex(currentImageIndex + 1);
   };
 
-  function handleVariationChange(childID: string) {
+  const handleVariationChange = (childID: string) => {
     setProductId(childID);
-  }
+  };
+
+  const onCartCreate = ({ data }: {data?: {id: string}}) => {
+    if (data) {
+      handleAddToCart(data.id).then(() => {
+        setModalOpen(false);
+      });
+    }
+  };
+
+  const CartButton = () => {
+    if (!productId) return null;
+    if (isLoggedIn) {
+      return (
+        <div className="product__addtocartdropdowncontainer">
+          <button
+            className={`epbtn --primary product__addtocartdropdowntoggle ${
+              dropdownOpen ? "--rotated" : ""
+              }`}
+            onClick={() => setDropdownOpen(!dropdownOpen)}
+          >
+            {t("add-to-cart")}
+          </button>
+          {dropdownOpen ? (
+            <div className="product__addtocartdropdowncontent">
+              {multiCartData.map((cart) => (
+                <button
+                  className="product__addtocartdropdownbtn"
+                  key={cart.id}
+                  onClick={() => {
+                    handleAddToCart(cart.id);
+                    setDropdownOpen(false);
+                  }}
+                >
+                  {cart.name}
+                </button>
+              ))}
+              <button
+                className="product__addtocartdropdownbtn"
+                key="create-cart-btn"
+                onClick={() => setModalOpen(true)}
+              >
+                Create cart
+              </button>
+            </div>
+          ) : null}
+        </div>
+      );
+    }
+
+    return (
+      <button className="epbtn --secondary" onClick={() => handleAddToCart()}>
+        {t("add-to-cart")}
+      </button>
+    );
+  };
+
+  const CreateCartHeader = (
+    <div className="product__createcardteader">
+      <span className="product__createcardteadertext">Create cart</span>
+      <button
+        className="product__createcardteaderbnt"
+        onClick={() => setModalOpen(false)}
+      >
+        <CloseIcon />
+      </button>
+    </div>
+  );
 
   return (
     <div className="product">
@@ -97,12 +186,9 @@ export const Product: React.FC = () => {
                 : ''
             }
             <div className="product__moltinbtncontainer">
-              {productId &&
-                <button
-                  className="epbtn --secondary"
-                  onClick={handleAddToCart}
-                >{t('add-to-cart')}</button>
-              }
+              <div ref={dropdownRef}>
+                <CartButton/>
+              </div>
             </div>
             <div className="product__description">
               {product.description}
@@ -115,6 +201,17 @@ export const Product: React.FC = () => {
       ) : (
         <div className="loader" />
       )}
+      {modalOpen ? (
+        <div className="product__createcartmodalbg">
+          <div className="product__createcartmodal" ref={modalRef}>
+            <SettingsCart
+              toBackPage={() => {}}
+              title={CreateCartHeader}
+              onCartCreate={onCartCreate}
+            />
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };

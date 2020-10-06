@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {useMultiCartData, useTranslation} from './app-state';
+import React, { useState } from "react";
+import { useMultiCartData, useTranslation } from "./app-state";
 import { useFormik } from 'formik';
 
 import './SettingsCart.scss';
@@ -8,6 +8,8 @@ interface SettingsCartParams {
   toBackPage: (route: string) => any,
   isEditCart?: boolean,
   selectedCartData?: any,
+  title?: JSX.Element,
+  onCartCreate?: (cartData: any) => void,
 }
 
 interface FormValues {
@@ -16,7 +18,7 @@ interface FormValues {
 }
 
 export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
-  const { toBackPage, isEditCart, selectedCartData } = props;
+  const { toBackPage, isEditCart, selectedCartData, title, onCartCreate } = props;
   const { t } = useTranslation();
   const { createCart, editCart } = useMultiCartData();
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +43,8 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
       if(isEditCart) {
         await editCart(values);
       } else {
-        await createCart(values);
+        const cartData = await createCart(values);
+        if (onCartCreate) onCartCreate(cartData);
       }
       await setIsLoading(false);
       toBackPage(('itemList'));
@@ -51,9 +54,11 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
   return (
     <div className={`settingscart`}>
       <div className="settingscart__addcartform">
-        <h2 className="settingscart__title">
-          {isEditCart ? t('settings') : t('new-cart')}
-        </h2>
+        {title ?? (
+          <h2 className="settingscart__title">
+            {isEditCart ? t("settings") : t("new-cart")}
+          </h2>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="settingscart__field">
             <label className="epform__label" htmlFor="name">{t('cart-name')}</label>
@@ -70,7 +75,7 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
             <button className="epbtn --primary --fullwidth" type="submit" onClick={() => setIsLoading(true)}>{t('save')}</button>
           </div>
           <div className="settingscart__cancelbutton">
-           <button className="epbtn --bordered --fullwidth" onClick={() => toBackPage('itemList')}>{t('cancel')}</button>
+           <button className="epbtn --bordered --fullwidth" type="button" onClick={() => toBackPage('itemList')}>{t('cancel')}</button>
           </div>
         </form>
       </div>

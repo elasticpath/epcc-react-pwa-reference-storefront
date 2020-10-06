@@ -384,7 +384,6 @@ function useCartItemsState() {
 
   const updateCartItems = () => {
     getCartItems(mcart).then(res => {
-      console.log('res123', res);
       const cartData = res.data.length ? res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item') : [];
       setCartData(cartData);
       const promotionItems = res.data.length ? res.data.filter(({ type }) => type === 'promotion_item') : [];
@@ -426,15 +425,16 @@ function useMultiCartDataState() {
     setSelectedCart(data)
   };
 
-  const createCart = (data: any) => {
-    createNewCart(data, token).then((cartRes: any) => {
-      addCustomerAssociation(cartRes.data.id, mcustomer, token).then(() => {
+  const createCart = (data: any) => (
+    createNewCart(data, token).then((cartRes: any) =>
+      addCustomerAssociation(cartRes.data.id, mcustomer, token).then(() =>
         getMultiCarts(token).then(res => {
           setMultiCartData(res.data);
-        });
-      })
-    });
-  };
+          return cartRes;
+        })
+      )
+    )
+  );
 
   const editCart = (data: any) => {
   };
