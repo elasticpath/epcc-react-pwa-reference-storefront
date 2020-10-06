@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useTranslation, useCartData } from './app-state';
-import { getProductById, bulkAdd } from './service';
+import { bulkAdd } from './service';
 import { ReactComponent as ClearIcon } from './images/icons/ic_clear.svg';
 
 import './QuickOrder.scss'
@@ -30,22 +30,19 @@ export const QuickOrder: React.FC = (props) => {
     setItems(itemsArr);
   };
 
-  const handleBlur = (index:number, code:string) => {
-    getProductById(code)
-      .then(() => {
-        handleUpdate(index, [{'quantity': 1}]);
-      })
-      .catch(error => {
-        console.error(error);
-        handleUpdate(index, [{'isInvalid': true}]);
-      });
-  };
-
   const handleDecrement = (index:number, key:string, value:number) => {
     if (value !== 1) {
       handleUpdate(index, [{'quantity': (value - 1)}]);
     } else {
       handleUpdate(index, [{'quantity': (value - 1)}, {'code': ''}]);
+    }
+  };
+
+  const handleChange = (index:number, value:string) => {
+    if (value !== '') {
+      handleUpdate(index, [{'code': value}, {'isInvalid': false}, {'quantity': 1}]);
+    } else {
+      handleUpdate(index, [{'code': ''}, {'quantity': 0}]);
     }
   };
 
@@ -96,11 +93,10 @@ export const QuickOrder: React.FC = (props) => {
                 id={item.key}
                 type="text"
                 value={item.code}
-                onChange={(e) => {handleUpdate(index, [{'code': e.target.value}, {'isInvalid': false}])}}
-                onBlur={() => {handleBlur(index, item.code)}}
+                onChange={(e) => {handleChange(index, e.target.value)}}
               />
               {item.code &&
-              <button className="quickorder__clearbtn" type="reset" onClick={() => {handleUpdate(index, [{'code': ''}, {'isInvalid': false}])}}>
+              <button className="quickorder__clearbtn" type="reset" onClick={() => {handleUpdate(index, [{'code': ''}, {'isInvalid': false}, {'quantity': 0}])}}>
                 <ClearIcon className="quickorder__clearicon" />
               </button>
               }

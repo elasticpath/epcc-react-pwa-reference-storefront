@@ -106,13 +106,6 @@ export async function loadProductBySlug(productSlug: string, language: string, c
   return product;
 }
 
-export async function getProductById(productId: string): Promise<{ data: moltin.Product }> {
-  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
-  const result = await moltin.Products.Get(productId);
-
-  return result;
-}
-
 export async function register(name: string, email: string, password: string): Promise<moltin.CustomerBase> {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const { data } = await moltin.Customers.Create({
