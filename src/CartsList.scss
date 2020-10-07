@@ -43,6 +43,10 @@
     text-align: left;
     padding: 20px 8px;
     border-bottom: 1px solid $secondBorderColor;
+
+    &.--selected {
+      background-color: #E5E9F2;
+    }
   }
 
   &__description {
@@ -55,7 +59,6 @@
 
   &.--date {
     font-size: 11px;
-    text-transform: capitalize;
     color: $thirdComplimentTextColor;
     text-transform: uppercase;
   }

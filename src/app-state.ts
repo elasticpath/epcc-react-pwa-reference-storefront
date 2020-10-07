@@ -404,7 +404,6 @@ function useMultiCartDataState() {
   const [multiCartData, setMultiCartData] = useState<moltin.CartItem[]>([]);
   const [selectedCartName, setSelectedCartName] = useState('');
   const [isCartSelected, setIsCartSelected] = useState(false);
-  const [selectedCart, setSelectedCart] = useState({});
 
   useEffect(() => {
     if (token) {
@@ -420,10 +419,6 @@ function useMultiCartDataState() {
       clearCartData();
     }
   }, [mcustomer, token]);
-
-  const selectCart = (data: any) => {
-    setSelectedCart(data)
-  };
 
   const createCart = (data: any) => (
     createNewCart(data, token).then((cartRes: any) =>

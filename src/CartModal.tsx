@@ -182,6 +182,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
           <CartsList
             onHandlePage={(page: string) => handlePage(page)}
             onSelectCart={(data) => setSelectedCartData(data)}
+            selectedCartData={selectedCartData}
           />
         )}
         {route === 'shipping' && (

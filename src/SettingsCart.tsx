@@ -83,7 +83,7 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
             )}
           </div>
           <div className="settingscart__savebutton">
-            <button className="epbtn --primary --fullwidth" type="submit" onClick={() => setIsLoading(true)}>{t('save')}</button>
+            <button className={`epbtn --primary --fullwidth cartitemlist ${isLoading ? '--loading' : ''}`} type="submit" onClick={() => setIsLoading(true)}>{t('save')}</button>
           </div>
           <div className="settingscart__cancelbutton">
            <button className="epbtn --bordered --fullwidth" type="button" onClick={() => toBackPage('itemList')}>{t('cancel')}</button>

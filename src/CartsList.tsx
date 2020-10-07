@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 import { useTranslation, useMultiCartData } from './app-state';
-import './CartsList.scss';
+import Modal from 'react-responsive-modal';
 import { ReactComponent as ArrowRightIcon } from "./images/icons/keyboard_arrow_right-black-24dp.svg";
 import { ReactComponent as DeleteIcon } from "./images/icons/delete-black-24dp.svg";
+
+import './CartsList.scss';
 
 interface CartsListParams {
   onHandlePage: (route: string) => any,
   onSelectCart: (route: string) => any,
+  selectedCartData: any,
 }
 
 export  const CartsList: React.FC<CartsListParams> = (props) => {
-  const { onHandlePage, onSelectCart } = props;
+  const { onHandlePage, onSelectCart, selectedCartData } = props;
   const { multiCartData, updateSelectedCartName, setIsCartSelected } = useMultiCartData();
   const [selectedCarts, setSelectedCarts] = useState<string[]>([]);
   const [isEdit, setIsEdit] = useState(false);
+  const [isShowModal, setIsShowModal] = useState(false);
 
   const { t } = useTranslation();
 
@@ -37,6 +41,10 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
       setSelectedCarts([])
     }
 
+  };
+
+  const handleShowModal = () => {
+    setIsShowModal(!isShowModal)
   };
 
   const handleCart = (cart:any) => {
@@ -70,12 +78,14 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
                     {t('selected')}
                   </label>
                 </span>
-                <DeleteIcon />
+                <button className="cartslist__deletebutton" onClick={() => handleShowModal()}>
+                  <DeleteIcon />
+                </button>
               </div>
             </div>
             <div className="cartslist__cartlist">
               {multiCartData.map((cart: any) => (
-                <div className="cartslist__cartelement" key={cart.id}>
+                <div className={`cartslist__cartelement ${cart.id.includes(selectedCartData.id) && "--selected"}`} key={cart.id}>
                   {isEdit && (
                     <input type="checkbox" name="cartCheck" id={`cart_${cart.id}`} className="cartslist__check epcheckbox" checked={selectedCarts.includes(cart.id)} onChange={() => {handleSelectCart(cart.id)}} />
                   )}
