@@ -49,10 +49,8 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
   });
 
   const onDeleteCart = () => {
-    const promises = selectedCarts.map(el => (new Promise(async () => {
-      await removeCartItems(el);
-    })));
-    Promise.all([promises])
+    const promises = selectedCarts.map(el => removeCartItems(el));
+    Promise.all(promises)
       .then(() => {
         updateCartData();
         setIsShowModal(false);
