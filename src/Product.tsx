@@ -157,7 +157,7 @@ export const Product: React.FC = () => {
 
   const CreateCartHeader = (
     <div className="product__createcardteader">
-      <span className="product__createcardteadertext">Create cart</span>
+      <span className="product__createcardteadertext">{t("create-cart")}</span>
       <button
         className="product__createcardteaderbnt"
         onClick={() => setModalOpen(false)}
