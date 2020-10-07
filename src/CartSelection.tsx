@@ -7,28 +7,12 @@ interface CartSelectionParams {
   onSelectCart: (route: string) => any,
 }
 
-interface cartValues {
-  id: string;
-  name: string;
-  item: string;
-  edited: string;
-  created: string;
-}
-
-const initialValues: cartValues = {
-  id: '',
-  name: '',
-  item: '',
-  edited: '',
-  created: '',
-};
-
 export  const CartSelection: React.FC<CartSelectionParams> = (props) => {
   const { onHandlePage, onSelectCart } = props;
   const mcart = localStorage.getItem('mcart');
   const [selectedItem, setSelectedItem] = useState(mcart);
-  const [selectedCart, setSelectedCart] = useState<cartValues>(initialValues);
   const { multiCartData, updateSelectedCartName, setIsCartSelected } = useMultiCartData();
+  const [selectedCart, setSelectedCart] = useState(multiCartData[0]);
 
   const { t } = useTranslation();
 

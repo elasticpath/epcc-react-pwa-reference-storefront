@@ -3,7 +3,6 @@ import { useCartData, useCustomerData, useTranslation, useMultiCartData } from '
 import { removeCartItem, updateCartItem } from './service';
 import { ImageContainer } from "./ImageContainer";
 import { Promotion } from "./Promotion";
-import { ReactComponent as SettingsIcon } from './images/icons/settings-black-24dp.svg';
 
 import './CartItemList.scss';
 

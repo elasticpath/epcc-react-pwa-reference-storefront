@@ -442,6 +442,16 @@ function useMultiCartDataState() {
     setMultiCartData([]);
   };
 
+  const updateCartData = () => {
+    getMultiCarts(token).then(res => {
+      setMultiCartData(res.data);
+      const cartName = res.data[0] ? res.data[0].name : '';
+      const cartId = res.data[0] ? res.data[0].id : '';
+      updateSelectedCartName(cartName);
+      localStorage.setItem('mcart', cartId);
+    });
+  };
+
   return {
     multiCartData,
     createCart,
@@ -449,7 +459,8 @@ function useMultiCartDataState() {
     updateSelectedCartName,
     isCartSelected,
     setIsCartSelected,
-    editCart
+    editCart,
+    updateCartData
   }
 }
 

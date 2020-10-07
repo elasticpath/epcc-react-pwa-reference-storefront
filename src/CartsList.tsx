@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { useTranslation, useMultiCartData } from './app-state';
+import { removeCartItems } from './service';
 import { ReactComponent as ArrowRightIcon } from "./images/icons/keyboard_arrow_right-black-24dp.svg";
 import { ReactComponent as DeleteIcon } from "./images/icons/delete-black-24dp.svg";
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
@@ -15,7 +16,7 @@ interface CartsListParams {
 
 export  const CartsList: React.FC<CartsListParams> = (props) => {
   const { onHandlePage, onSelectCart, selectedCartData } = props;
-  const { multiCartData, updateSelectedCartName, setIsCartSelected } = useMultiCartData();
+  const { multiCartData, updateSelectedCartName, setIsCartSelected, updateCartData } = useMultiCartData();
   const [selectedCarts, setSelectedCarts] = useState<string[]>([]);
   const [isEdit, setIsEdit] = useState(false);
   const [isShowModal, setIsShowModal] = useState(false);
@@ -44,11 +45,21 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
   };
 
   const modalRef = useOnclickOutside(() => {
-    setIsShowModal(false)
+    setIsShowModal(false);
   });
 
   const onDeleteCart = () => {
-
+    const promises = selectedCarts.map(el => (new Promise(async () => {
+      await removeCartItems(el);
+    })));
+    Promise.all([promises])
+      .then(() => {
+        updateCartData();
+        setIsShowModal(false);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   const handleCart = (cart:any) => {
