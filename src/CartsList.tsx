@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import useOnclickOutside from 'react-cool-onclickoutside';
 import { useTranslation, useMultiCartData } from './app-state';
 import { ReactComponent as ArrowRightIcon } from "./images/icons/keyboard_arrow_right-black-24dp.svg";
 import { ReactComponent as DeleteIcon } from "./images/icons/delete-black-24dp.svg";
@@ -40,15 +41,14 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
     } else {
       setSelectedCarts([])
     }
-
   };
+
+  const modalRef = useOnclickOutside(() => {
+    setIsShowModal(false)
+  });
 
   const onDeleteCart = () => {
 
-  };
-
-  const handleShowModal = () => {
-    setIsShowModal(!isShowModal)
   };
 
   const handleCart = (cart:any) => {
@@ -82,7 +82,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
                     {t('selected')}
                   </label>
                 </span>
-                <button className="cartslist__deletebutton" onClick={() => handleShowModal()}>
+                <button className="cartslist__deletebutton" disabled={selectedCarts.length === 0} onClick={() => setIsShowModal(true)}>
                   <DeleteIcon />
                 </button>
               </div>
@@ -129,21 +129,26 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
         )}
         <button className="epbtn --primary --fullwidth --large" onClick={() => onHandleCart('createCart')} >{t('create-cart')}</button>
       </div>
-      {isShowModal &&
-      <div className="cartslist__confirmation" role="presentation" onClick={() => handleShowModal()}>
-          <div className="tittle">
-            {t('confirmation')}
-              <CloseIcon />
-          </div>
-            <div className="message">
-              {t('are-you-sure-you-want-to-delete-your-cart')}
+      {isShowModal && (
+        <React.Fragment>
+          <div className="cartslist__confirmation" role="presentation" ref={modalRef}>
+            <div className="cartslist__confirmationtitle">
+              {selectedCarts.length !== multiCartData.length ? t('confirmation') : t('warning')}
+              <button className="cartslist__closebtn" onClick={() => setIsShowModal(false)}><CloseIcon /></button>
             </div>
-        <div className="controls">
-          <button>{t("cancel")}</button>
-          <button onClick={() => onDeleteCart()}>{t("delete")}</button>
-        </div>
-      </div>
-      }
+            <div className="cartslist__confirmationmsg">
+              {selectedCarts.length !== multiCartData.length ? (
+                selectedCarts.length === 1 ? t('are-you-sure-you-want-to-delete-your-cart') : t('are-you-sure-you-want-to-delete-your-carts')
+              ) : t('warning-msg')}
+            </div>
+            <div className="cartslist__confirmationbtns">
+              <button className="epbtn --ghost" onClick={() => setIsShowModal(false)}>{t("cancel")}</button>
+              <button className="epbtn --primary" onClick={() => onDeleteCart()} disabled={selectedCarts.length === multiCartData.length}>{t("delete")}</button>
+            </div>
+          </div>
+          <div className="cartslist__confirmationoverlay" />
+        </React.Fragment>
+      )}
     </div>
   )
 };

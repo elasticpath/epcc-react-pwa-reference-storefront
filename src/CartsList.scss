@@ -12,6 +12,12 @@
         fill: $firstComplimentColor
       }
     }
+
+    &:disabled {
+      svg {
+        fill: $secondComplimentTextColor;
+      }
+    }
   }
 
   &__editbutton {
@@ -80,7 +86,6 @@
 
   &__cartname {
     display: flex;
-    align-items: center;
     justify-content: space-between;
     margin-bottom: 5px;
     height: 18px;
@@ -110,7 +115,6 @@
     }
   }
 
-
   &__selectedtitle {
     width: 100%;
     height: 30px;
@@ -122,6 +126,7 @@
       display: flex;
       background-color: $fifthComplimentBackground;
       justify-content: space-between;
+      align-items: center;
       padding: 4px 8px;
 
     }
@@ -140,28 +145,66 @@
       visibility: visible;
     }
   }
+
+  &__confirmationoverlay {
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+
   &__confirmation {
-    max-width: 400px;
-    height: 200px;
+    width: calc(100% + 10px);
     position: absolute;
     top: 150px;
-    left: 10px;
-    background: $mainBackgroundColor;
+    left: -5px;
+    background: $secondComplimentBackground;
     border: 1px solid $mainBorderColor;
-    padding: 20px 30px;
+    padding: 20px 30px 30px;
+    z-index: 2;
+  }
 
-    .tittle {
-      display: flex;
-      justify-content: space-between;
-      font-size: 24px;
-      font-weight: bold;
+  &__closebtn {
+    cursor: pointer;
+  }
+
+  &__confirmationtitle {
+    display: flex;
+    justify-content: space-between;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  &__confirmationmsg {
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 40px;
+  }
+
+  &__confirmationbtns {
+    .epbtn {
+      min-width: 150px;
+
+      &.--primary {
+        margin-left: 15px;
+      }
+    }
+  }
+
+  @media (max-width: $mobileXSmallWidth - 1px) {
+    &__confirmation {
+      padding: 15px 20px 20px;
     }
 
-    .message {
-
-      margin: 20px auto;
+    &__confirmationbtns {
+      .epbtn {
+        min-width: 110px;
+      }
     }
   }
 }
-
 
