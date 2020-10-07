@@ -54,6 +54,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
       .then(() => {
         updateCartData();
         setIsShowModal(false);
+        setSelectedCarts([]);
       })
       .catch(error => {
         console.error(error);
