@@ -188,5 +188,6 @@
   "sku": "SKU",
   "add-more-fields": "Add more fields",
   "cart-popup-info": "{quantity} Items have been added to your cart",
+  "cart-popup-info-1": "1 Item has been added to your cart",
   "view-cart": "View cart"
 }

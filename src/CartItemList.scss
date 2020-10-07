@@ -60,9 +60,10 @@
   &__removebutton {
     font-weight: bold;
     cursor: pointer;
+    color: $thirdComplimentColor;
 
     &:hover {
-      color: adjust-color($color: $secondAccentColor, $lightness: 25%);;
+      text-decoration: underline;
     }
   }
 

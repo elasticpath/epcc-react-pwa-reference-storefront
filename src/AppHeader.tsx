@@ -58,7 +58,7 @@ export const AppHeader: React.FC = () => {
           </button>
           {showCartPopup && (
             <div className="appheader__cartpopup">
-              <p>{t('cart-popup-info', {quantity: quantity.toString()})}</p>
+              <p>{quantity === 1 ? t('cart-popup-info-1') : t('cart-popup-info', {quantity: quantity.toString()})}</p>
               <button className="epbtn" onClick={handleCartModal}>{t('view-cart')}</button>
             </div>
           )}

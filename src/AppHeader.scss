@@ -65,7 +65,7 @@
 
   &__cartpopup {
     min-width: 250px;
-    padding: 15px 15px 10px;
+    padding: 15px;
     position: absolute;
     top: 100%;
     right: 0;
@@ -79,6 +79,15 @@
     p {
       font-size: $sizeSmall;
       text-align: left;
+    }
+
+    .epbtn {
+      padding: 0;
+
+      &:hover, &:active {
+        background-color: transparent;
+        text-decoration: underline;
+      }
     }
 
     &:before {
