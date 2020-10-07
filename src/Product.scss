@@ -102,27 +102,34 @@
 
     #{$block}__addtocartdropdowntoggle {
       width: 270px;
+      text-align: left;
 
-      &:after {
-        content: '';
-        width: 9px;
-        height: 9px;
-        border-bottom: 2px solid $mainBackgroundColor;
-        border-right: 2px solid $mainBackgroundColor;
-        display: block;
-        position: absolute;
-        right: 17px;
-        top: 15px;
-        transform: rotate(45deg);
-        transform-origin: 6px 6px;
+      &.--open {
+        background-color: $mainColor;
       }
+    }
+    #{$block}__addtocartdropdowniscaret, #{$block}__addtocartdropdownicspinner {
+      float: right;
+    }
+
+    @keyframes rotating {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    #{$block}__addtocartdropdownicspinner {
+      animation: rotating 1s linear infinite;
+    }
+
+    #{$block}__addtocartdropdowniscaret {
+      margin: 3px 0;
 
       &.--rotated {
-        background-color: $mainColor;
-
-        &:after {
-          transform: rotate(-135deg);
-        }
+        transform: rotate(180deg);
       }
     }
 
@@ -236,6 +243,17 @@
       #{$block}__details {
         margin-left: 0;
       }
+    }
+  }
+
+  @media (max-width: $mobileSmallWidth - 1px) {
+    #{$block}__createcartmodalbg {
+      position: fixed;
+    }
+
+    #{$block}__createcartmodal {
+      height: 100%;
+      width: 100%;
     }
   }
 }

@@ -17,6 +17,8 @@ import { Availability } from './Availability';
 import { VariationsSelector } from './VariationsSelector';
 import { SettingsCart } from './SettingsCart';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
+import { ReactComponent as SpinnerIcon } from './images/icons/ic_spinner.svg';
+import { ReactComponent as CaretIcon } from './images/icons/ic_caret.svg';
 
 import './Product.scss';
 
@@ -36,6 +38,7 @@ export const Product: React.FC = () => {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [addToCartLoading, setAddToCartLoading] = useState(false);
 
   const modalRef = useOnclickOutside(() => {
     setModalOpen(false)
@@ -55,6 +58,10 @@ export const Product: React.FC = () => {
     product && setProductId(product.id);
   }, [product])
 
+  useEffect(() => {
+    document.body.style.overflow = modalOpen ? 'hidden' : 'unset';
+  }, [modalOpen])
+
   const productImageHrefs = useProductImages(product);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const isPrevImageVisible = currentImageIndex > 0;
@@ -67,10 +74,13 @@ export const Product: React.FC = () => {
 
   const handleAddToCart = (cartId?: string) => {
     const mcart = cartId ? cartId : localStorage.getItem("mcart") || "" ;
+    setAddToCartLoading(true);
     return addToCart(mcart, productId)
       .then(() => {
-        updateCartItems()
-    })
+        updateCartItems();
+      }).finally(() => {
+        setAddToCartLoading(false);
+      })
   };
 
   const handleNextImageClicked = () => {
@@ -96,11 +106,20 @@ export const Product: React.FC = () => {
         <div className="product__addtocartdropdowncontainer">
           <button
             className={`epbtn --primary product__addtocartdropdowntoggle ${
-              dropdownOpen ? "--rotated" : ""
-              }`}
+              dropdownOpen ? "--open" : ""
+            }`}
             onClick={() => setDropdownOpen(!dropdownOpen)}
           >
             {t("add-to-cart")}
+            {addToCartLoading ? (
+              <SpinnerIcon className="product__addtocartdropdownicspinner" />
+            ) : (
+              <CaretIcon
+                className={`product__addtocartdropdowniscaret ${
+                  dropdownOpen ? "--rotated" : ""
+                }`}
+              />
+            )}
           </button>
           {dropdownOpen ? (
             <div className="product__addtocartdropdowncontent">
@@ -205,7 +224,7 @@ export const Product: React.FC = () => {
         <div className="product__createcartmodalbg">
           <div className="product__createcartmodal" ref={modalRef}>
             <SettingsCart
-              toBackPage={() => {}}
+              toBackPage={() => {setModalOpen(false)}}
               title={CreateCartHeader}
               onCartCreate={onCartCreate}
             />
