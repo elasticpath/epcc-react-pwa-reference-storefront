@@ -63,9 +63,9 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
         {isLoggedIn && items.length ? (
           <span>
             {selectedCartName}
-            <span className="cartitemlist__settingsicon">
-              <SettingsIcon onClick={() => onHandlePage('settings')} />
-            </span>
+            {/*<span className="cartitemlist__settingsicon">*/}
+            {/*  <SettingsIcon onClick={() => onHandlePage('settings')} />*/}
+            {/*</span>*/}
           </span>
         ) : (
           <span>

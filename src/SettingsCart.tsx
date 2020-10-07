@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useMultiCartData, useTranslation } from "./app-state";
 import { useFormik } from 'formik';
+import {ReactComponent as ClearIcon} from "./images/icons/ic_clear.svg";
 
 import './SettingsCart.scss';
 
@@ -36,7 +37,7 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
     return errors;
   };
 
-  const {handleSubmit, handleChange, values, isValid, errors} = useFormik({
+  const {handleSubmit, handleChange, values, errors, setFieldValue} = useFormik({
     initialValues,
     validate,
     onSubmit: async (values)  => {
@@ -62,7 +63,12 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
         <form onSubmit={handleSubmit}>
           <div className="settingscart__field">
             <label className="epform__label" htmlFor="name">{t('cart-name')}</label>
-            <input className="epform__input" id="name" onChange={handleChange} value={values.name} />
+            <input className={`epform__input ${errors.name && "--errorborder"}`} id="name" onChange={handleChange} value={values.name} />
+            {(values.name && values.name.length > 0) && (
+              <button type="button" className={`nameclear ${errors.name && "--errorbutton"}`} onClick={() => setFieldValue('name', '')}>
+                <ClearIcon />
+              </button>
+            )}
             <div className="epform__error">
               {errors.name ? errors.name : null}
             </div>
@@ -70,6 +76,11 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
           <div className="settingscart__field">
             <label className="epform__label" htmlFor="description">{t('cart-description')}</label>
             <textarea className="epform__input" id="description" onChange={handleChange} value={values.description} />
+            {(values.description && values.description.length > 0) && (
+              <span role="presentation" className={`descriptionclear ${errors.name && "--errorbutton"}`} onClick={() => setFieldValue('description', '')}>
+                <ClearIcon />
+              </span>
+            )}
           </div>
           <div className="settingscart__savebutton">
             <button className="epbtn --primary --fullwidth" type="submit" onClick={() => setIsLoading(true)}>{t('save')}</button>

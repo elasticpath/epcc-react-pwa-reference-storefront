@@ -1,49 +1,45 @@
 import React, { useState } from 'react';
 import { useTranslation, useMultiCartData } from './app-state';
 import './CartsList.scss';
-import {ReactComponent as ArrowRight} from "./images/icons/keyboard_arrow_right-black-24dp.svg";
+import { ReactComponent as ArrowRightIcon } from "./images/icons/keyboard_arrow_right-black-24dp.svg";
+import { ReactComponent as DeleteIcon } from "./images/icons/delete-black-24dp.svg";
 
 interface CartsListParams {
   onHandlePage: (route: string) => any,
   onSelectCart: (route: string) => any,
 }
 
-interface cartValues {
-  id: string;
-  name: string;
-  item: string;
-  edited: string;
-  created: string;
-}
-
-const initialValues: cartValues = {
-  id: '',
-  name: '',
-  item: '',
-  edited: '',
-  created: '',
-};
-
 export  const CartsList: React.FC<CartsListParams> = (props) => {
   const { onHandlePage, onSelectCart } = props;
   const { multiCartData, updateSelectedCartName, setIsCartSelected } = useMultiCartData();
-  const mcart = localStorage.getItem('mcart');
-  const [checkedItem, setCheckedItem] = useState(mcart);
-  const [checkedCart, setCheckedCart] = useState<cartValues>(initialValues);
+  const [selectedCarts, setSelectedCarts] = useState<string[]>([]);
   const [isEdit, setIsEdit] = useState(false);
 
   const { t } = useTranslation();
 
-  const onHandleCart = (page:string) => {
+  const onHandleCart = (page: string) => {
     onHandlePage(page);
   };
 
-  const handleCheckCart = (cart:any, cariId:string) => {
-    setCheckedItem(cariId);
-    setCheckedCart(cart);
+  const handleSelectCart = (cartId: string) => {
+    if(!selectedCarts.find(c => c === cartId)) {
+      setSelectedCarts([...selectedCarts, cartId]);
+    } else {
+      setSelectedCarts(selectedCarts.filter(c => c !== cartId));
+    }
   };
 
-  const handleSelectCart = (cart:any) => {
+  const handleSelectAll = () => {
+    const allCarts = multiCartData.map(cart => cart.id);
+    if(selectedCarts.length < allCarts.length) {
+      setSelectedCarts(allCarts);
+    } else {
+      setSelectedCarts([])
+    }
+
+  };
+
+  const handleCart = (cart:any) => {
     updateSelectedCartName(cart.name);
     onSelectCart(cart);
     onHandlePage('itemList');
@@ -64,15 +60,25 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
         </h2>
         {multiCartData && multiCartData.length ? (
           <div>
-            <h3 className="cartslist__listname">
-              {t('saved-carts')} ({multiCartData.length})
-            </h3>
+            <div className="cartslist__selectedtitle">
+              <div className={`${isEdit && "isshow"}`}>
+                <span>
+                  <input type="checkbox" name="cartCheck" id="select-all" className="cartslist__checkall epcheckbox" onChange={() => {handleSelectAll()}} />
+                  <label htmlFor="select-all" className="">
+                    {selectedCarts.length}
+                    &nbsp;
+                    {t('selected')}
+                  </label>
+                </span>
+                <DeleteIcon />
+              </div>
+            </div>
             <div className="cartslist__cartlist">
               {multiCartData.map((cart: any) => (
                 <div className="cartslist__cartelement" key={cart.id}>
-                    {isEdit && (
-                      <input type="checkbox" name="cartCheck" id={`cart_${cart.id}`} className="cartslist__check epcheckbox" defaultChecked={checkedItem === cart.id} onChange={() => {handleCheckCart(cart, cart.id)}} />
-                    )}
+                  {isEdit && (
+                    <input type="checkbox" name="cartCheck" id={`cart_${cart.id}`} className="cartslist__check epcheckbox" checked={selectedCarts.includes(cart.id)} onChange={() => {handleSelectCart(cart.id)}} />
+                  )}
                   <label htmlFor={`cart_${cart.id}`} className="cartslist__description">
                     <div className="cartslist__cartname">
                       <strong className="cartslist__name">
@@ -82,8 +88,8 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
                         <span className="cartslist --date">
                           {t('created')} - {cart.meta.timestamps.created_at}
                         </span>
-                        <button className="cartslist__selectcart" onClick={() => handleSelectCart(cart)}>
-                          <ArrowRight />
+                        <button className="cartslist__selectcart" onClick={() => handleCart(cart)}>
+                          <ArrowRightIcon />
                         </button>
                         <br />
                         <span className="cartslist --date">

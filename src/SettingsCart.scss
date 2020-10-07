@@ -17,6 +17,40 @@
       height: 150px;
       width: 80%;
     }
+
+    path {
+      fill: $secondComplimentTextColor;
+    }
+
+    .nameclear {
+      position: absolute;
+      right: 5px;
+      top: 28px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .--errorborder {
+      border: 1px solid $mainErrorColor;
+    }
+
+    .--redbutton {
+      path {
+        fill: $mainErrorColor;
+      }
+    }
+
+    .descriptionclear {
+      position: absolute;
+      right: 92px;
+      bottom: 8px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 
   &__cancelbutton {
