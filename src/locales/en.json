@@ -191,5 +191,7 @@
   "created": "Created",
   "selected": "Selected",
   "saved-carts": "Saved carts",
-  "done": "Done"
+  "done": "Done",
+  "confirmation": "Confirmation",
+  "are-you-sure-you-want-to-delete-your-cart": "Are you sure you want to delete your cart?"
 }

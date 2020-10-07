@@ -4,6 +4,16 @@
   text-align: center;
   position: relative;
 
+  &__deletebutton {
+    &:hover {
+      cursor: pointer;
+
+      svg {
+        fill: $firstComplimentColor
+      }
+    }
+  }
+
   &__editbutton {
     position: absolute;
     top: -20px;
@@ -128,6 +138,28 @@
 
     &.isshow {
       visibility: visible;
+    }
+  }
+  &__confirmation {
+    max-width: 400px;
+    height: 200px;
+    position: absolute;
+    top: 150px;
+    left: 10px;
+    background: $mainBackgroundColor;
+    border: 1px solid $mainBorderColor;
+    padding: 20px 30px;
+
+    .tittle {
+      display: flex;
+      justify-content: space-between;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .message {
+
+      margin: 20px auto;
     }
   }
 }

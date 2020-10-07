@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation, useMultiCartData } from './app-state';
-import Modal from 'react-responsive-modal';
 import { ReactComponent as ArrowRightIcon } from "./images/icons/keyboard_arrow_right-black-24dp.svg";
 import { ReactComponent as DeleteIcon } from "./images/icons/delete-black-24dp.svg";
+import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 
 import './CartsList.scss';
 
@@ -40,6 +40,10 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
     } else {
       setSelectedCarts([])
     }
+
+  };
+
+  const onDeleteCart = () => {
 
   };
 
@@ -125,6 +129,21 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
         )}
         <button className="epbtn --primary --fullwidth --large" onClick={() => onHandleCart('createCart')} >{t('create-cart')}</button>
       </div>
+      {isShowModal &&
+      <div className="cartslist__confirmation" role="presentation" onClick={() => handleShowModal()}>
+          <div className="tittle">
+            {t('confirmation')}
+              <CloseIcon />
+          </div>
+            <div className="message">
+              {t('are-you-sure-you-want-to-delete-your-cart')}
+            </div>
+        <div className="controls">
+          <button>{t("cancel")}</button>
+          <button onClick={() => onDeleteCart()}>{t("delete")}</button>
+        </div>
+      </div>
+      }
     </div>
   )
 };
