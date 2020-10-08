@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Modal from 'react-responsive-modal';
 import { useFormik } from 'formik';
 import { login } from './service';
-import { useCustomerData, useTranslation } from './app-state';
+import {useCartData, useCustomerData, useMultiCartData, useTranslation} from './app-state';
 import { createRegistrationUrl } from './routes';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 
@@ -23,10 +23,14 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
   const { handleModalClose, openModal } = props;
   const { setCustomerData } = useCustomerData();
   const { t } = useTranslation();
+  const { cartData } = useCartData();
+  const { associateCart } = useMultiCartData();
+
   const registrationUrl = createRegistrationUrl();
 
   const [failedLogin, setFailedLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const mcart: string = localStorage.getItem('mcart') || '';
 
   const initialValues:FormValues = {
     emailField: '',
@@ -48,19 +52,22 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
   const {handleSubmit, handleChange, resetForm, values, errors} = useFormik({
     initialValues,
     validate,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       setIsLoading(true);
-      login(values.emailField.toLowerCase(), values.passwordField)
-        .then((result) => {
-          handleModalClose();
-          setIsLoading(false);
-          setCustomerData(result.token, result.customer_id);
-        })
-        .catch(error => {
-          setIsLoading(false);
-          setFailedLogin(true);
-          console.error(error);
-        });
+      try {
+        const result: any = await login(values.emailField.toLowerCase(), values.passwordField)
+        await setCustomerData(result.token, result.customer_id);
+        await handleModalClose();
+        await setIsLoading(false);
+        if (cartData.length) {
+          await associateCart(mcart, result.customer_id, result.token)
+        }
+      }
+      catch (error) {
+        setIsLoading(false);
+        setFailedLogin(true);
+        console.error(error);
+      }
     },
   });
 

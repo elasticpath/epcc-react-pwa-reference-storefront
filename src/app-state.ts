@@ -431,6 +431,15 @@ function useMultiCartDataState() {
     )
   );
 
+  const associateCart = (cartId: string, customerId: string, customerToken: string) => {
+    addCustomerAssociation(cartId, customerId, customerToken).then(() =>
+      getMultiCarts(customerToken).then(res => {
+        setMultiCartData(res.data);
+      })
+    )
+  };
+
+
   const editCart = (data: any) => {
   };
 
@@ -460,7 +469,8 @@ function useMultiCartDataState() {
     isCartSelected,
     setIsCartSelected,
     editCart,
-    updateCartData
+    updateCartData,
+    associateCart
   }
 }
 
