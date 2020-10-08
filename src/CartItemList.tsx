@@ -59,7 +59,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
         </button>
       )}
       <h2 className="cartitemlist__title">
-        {isLoggedIn && items.length ? (
+        {isLoggedIn && selectedCartName ? (
           <span>
             {selectedCartName}
             {/*<span className="cartitemlist__settingsicon">*/}

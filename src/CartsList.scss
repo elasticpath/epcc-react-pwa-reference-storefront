@@ -96,7 +96,7 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
-      max-width: 250px;
+      max-width: 240px;
 
       @media (max-width: $mobileXSmallWidth) {
         max-width: 150px;

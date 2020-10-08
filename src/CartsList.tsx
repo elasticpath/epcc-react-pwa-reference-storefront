@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
-import { useTranslation, useMultiCartData } from './app-state';
+import { useTranslation, useMultiCartData, useCartData } from './app-state';
 import { removeCartItems } from './service';
 import { ReactComponent as ArrowRightIcon } from "./images/icons/keyboard_arrow_right-black-24dp.svg";
 import { ReactComponent as DeleteIcon } from "./images/icons/delete-black-24dp.svg";
@@ -17,6 +17,7 @@ interface CartsListParams {
 export  const CartsList: React.FC<CartsListParams> = (props) => {
   const { onHandlePage, onSelectCart, selectedCartData } = props;
   const { multiCartData, updateSelectedCartName, setIsCartSelected, updateCartData } = useMultiCartData();
+  const { updateCartItems } = useCartData();
   const [selectedCarts, setSelectedCarts] = useState<string[]>([]);
   const [isEdit, setIsEdit] = useState(false);
   const [isShowModal, setIsShowModal] = useState(false);
@@ -62,11 +63,12 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
   };
 
   const handleCart = (cart:any) => {
-    updateSelectedCartName(cart.name);
-    onSelectCart(cart);
-    onHandlePage('itemList');
     localStorage.setItem('mcart', cart.id);
-    setIsCartSelected(true)
+    updateCartItems();
+    onSelectCart(cart);
+    updateSelectedCartName(cart.name);
+    setIsCartSelected(true);
+    onHandlePage('itemList');
   };
 
   return (

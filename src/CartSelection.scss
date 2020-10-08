@@ -46,12 +46,12 @@
 
   &__edited {
     font-size: 11px;
-    text-transform: capitalize;
+    text-transform: uppercase;
     color: $thirdComplimentTextColor;
   }
 
   &__quantity {
-    text-transform: capitalize;
+    text-transform: uppercase;
     margin-bottom: 5px;
   }
 
@@ -65,7 +65,7 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
-      max-width: 250px;
+      max-width: 240px;
 
       @media (max-width: $mobileXSmallWidth) {
         max-width: 150px;
