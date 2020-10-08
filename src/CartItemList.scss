@@ -7,7 +7,7 @@ position: relative;
   &__mycart {
     position: absolute;
     right: 0;
-    top: -20px;
+    top: -40px;
 
     &:hover {
       cursor: pointer;
@@ -21,7 +21,12 @@ position: relative;
     font-size: 28px;
     line-height: 34px;
     padding-bottom: 50px;
+    margin-top: 20px;
     text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 350px;
   }
 
   &__product {

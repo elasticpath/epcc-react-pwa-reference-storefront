@@ -183,17 +183,17 @@
     transform: translate(-50%, -50%);
   }
 
-  #{$block}__createcardteader {
+  #{$block}__createcartheader {
     display: flex;
     justify-content: space-between;
   }
 
-  #{$block}__createcardteadertext {
+  #{$block}__createcartheadertext {
     font-weight: bold;
     font-size: 24px;
   }
 
-  #{$block}__createcardteaderbnt {
+  #{$block}__createcartheaderbnt {
     cursor: pointer;
   }
 

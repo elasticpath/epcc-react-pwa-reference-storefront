@@ -105,19 +105,19 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
                   )}
                   <label htmlFor={`cart_${cart.id}`} className="cartslist__description">
                     <div className="cartslist__cartname">
-                      <strong className="cartslist__name">
+                      <strong className="--overflowtext">
                         {cart.name}
                       </strong>
                       <span className="cartslist__select">
                         <span className="cartslist --date">
-                          {t('created')} - {cart.meta.timestamps.created_at}
+                          {t('created')} - {(cart.meta.timestamps.created_at).substring(0, 10)}
                         </span>
                         <button className="cartslist__selectcart" onClick={() => handleCart(cart)}>
                           <ArrowRightIcon />
                         </button>
                         <br />
                         <span className="cartslist --date">
-                          {t('edited')} - {cart.meta.timestamps.updated_at}
+                          {t('edited')} - {(cart.meta.timestamps.updated_at).substring(0, 10)}
                         </span>
                       </span>
                     </div>

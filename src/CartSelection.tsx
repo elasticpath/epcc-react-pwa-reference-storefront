@@ -46,12 +46,12 @@ export  const CartSelection: React.FC<CartSelectionParams> = (props) => {
                   <input type="radio" name="cartCheck" id={`cart_${cart.id}`} className="epradio" defaultChecked={selectedItem === cart.id} onChange={() => {handleSelectCart(cart)}} />
                   <label htmlFor={`cart_${cart.id}`} className="cartselection__description">
                     <div className="cartselection__cartname">
-                      <strong className="cartselection__name">
+                      <strong className="--overflowtext">
                         {cart.name}
                       </strong>
                       <span className="cartselection__edited">
-                      {t('edited')} - {cart.meta.timestamps.updated_at}
-                    </span>
+                        {t('edited')} - {(cart.meta.timestamps.updated_at).substring(0, 10)}
+                      </span>
                     </div>
                     <p className="cartselection__quantity">
                       {cart.relationships.items.data ? cart.relationships.items.data.length : 0} {t('items')}

@@ -156,10 +156,10 @@ export const Product: React.FC = () => {
   };
 
   const CreateCartHeader = (
-    <div className="product__createcardteader">
-      <span className="product__createcardteadertext">{t("create-cart")}</span>
+    <div className="product__createcartheader">
+      <span className="product__createcartheadertext">{t("create-cart")}</span>
       <button
-        className="product__createcardteaderbnt"
+        className="product__createcartheaderbnt"
         onClick={() => setModalOpen(false)}
       >
         <CloseIcon />

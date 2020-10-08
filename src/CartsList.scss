@@ -91,6 +91,17 @@
     justify-content: space-between;
     margin-bottom: 5px;
     height: 18px;
+
+    .--overflowtext {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: 250px;
+
+      @media (max-width: $mobileXSmallWidth) {
+        max-width: 150px;
+      }
+    }
   }
 
   &__selectcart {
