@@ -47,7 +47,7 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
         const cartData = await createCart(values);
         if (onCartCreate) onCartCreate(cartData);
       }
-      await setIsLoading(false);
+      setIsLoading(false);
       toBackPage(('itemList'));
     },
   });
@@ -60,7 +60,7 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
             {isEditCart ? t("settings") : t("new-cart")}
           </h2>
         )}
-        <form onSubmit={handleSubmit}>
+        <form>
           <div className="settingscart__field">
             <label className="epform__label" htmlFor="name">{t('cart-name')}</label>
             <input className={`epform__input ${errors.name && "--errorborder"}`} id="name" onChange={handleChange} value={values.name} />
@@ -83,7 +83,19 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
             )}
           </div>
           <div className="settingscart__savebutton">
-            <button className={`epbtn --primary --fullwidth cartitemlist ${isLoading ? '--loading' : ''}`} type="submit" onClick={() => setIsLoading(true)}>{t('save')}</button>
+            <button
+              className={`epbtn --primary --fullwidth cartitemlist ${
+                isLoading ? "--loading" : ""
+                }`}
+              type="submit"
+              onClick={() => {
+                handleSubmit();
+                setIsLoading(true);
+              }}
+              disabled={isLoading}
+            >
+              {t("save")}
+            </button>
           </div>
           <div className="settingscart__cancelbutton">
            <button className="epbtn --bordered --fullwidth" type="button" onClick={() => toBackPage('itemList')}>{t('cancel')}</button>
