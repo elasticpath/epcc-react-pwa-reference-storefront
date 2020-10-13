@@ -403,7 +403,9 @@ function useMultiCartDataState() {
   const mcustomer = localStorage.getItem('mcustomer') || '';
   const [multiCartData, setMultiCartData] = useState<moltin.CartItem[]>([]);
   const [selectedCartName, setSelectedCartName] = useState('');
+  const [isCreateNewCart, setIsCreateNewCart] = useState(false);
   const [isCartSelected, setIsCartSelected] = useState(false);
+  const [guestCartId, setGuestCartId] = useState('');
 
   useEffect(() => {
     if (token) {
@@ -431,16 +433,25 @@ function useMultiCartDataState() {
     )
   );
 
-  const associateCart = (cartId: string, customerId: string, customerToken: string) => {
-    addCustomerAssociation(cartId, customerId, customerToken).then(() =>
-      getMultiCarts(customerToken).then(res => {
-        setMultiCartData(res.data);
-      })
-    )
+  const associateGuestCart = (cartName: string) => {
+    if(cartName) {
+      const data = {
+        id: guestCartId,
+        name: cartName
+      };
+      editCart(data)
+    } else {
+      addCustomerAssociation(guestCartId, mcustomer, token).then(() =>
+        getMultiCarts(token).then(res => {
+          setMultiCartData(res.data);
+        })
+      )
+    }
   };
 
 
   const editCart = (data: any) => {
+    return null;
   };
 
   const updateSelectedCartName = (cartName: string) => {
@@ -470,7 +481,10 @@ function useMultiCartDataState() {
     setIsCartSelected,
     editCart,
     updateCartData,
-    associateCart
+    associateGuestCart,
+    setIsCreateNewCart,
+    isCreateNewCart,
+    setGuestCartId
   }
 }
 

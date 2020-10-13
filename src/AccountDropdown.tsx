@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
@@ -43,44 +42,45 @@ export const AccountDropdown: React.FC = (props) => {
     history.push('/');
   };
 
-  if (isLoggedIn) {
     return (
-      <div className="accountdropdown">
-        <div className={`accountdropdown__dropdown ${isOpen ? 'accountdropdown__open' : ''}`} ref={ref}>
-          <button className="accountdropdown__btn" type="button" aria-label="toggle profile menu" onClick={handleSelectorClicked}>
-            <AccountIcon className="accountdropdown__btnicon" />
-          </button>
-          {isOpen && (
-            <div className="accountdropdown__menu">
-              <ul className="accountdropdown__list">
-                <li className="accountdropdown__listitem accountdropdown__itemtitle">
-                  <p className="accountdropdown__iteminfo">{customerName}</p>
-                  <p className="accountdropdown__iteminfo accountdropdown__emailinfo">{customerEmail}</p>
-                </li>
-                <li className="accountdropdown__listitem">
-                  <Link to={accountUrl} className="accountdropdown__link" onClick={handleHideDropdown}>
-                    {t('my-account')}
-                  </Link>
-                </li>
-                <li className="accountdropdown__listitem accountdropdown__itembtns">
-                  <button className="epbtn --secondary --fullwidth" type="button" onClick={logout}>
-                    {t('logout')}
-                  </button>
-                </li>
-              </ul>
-            </div>
-          )}
+      <div>
+      {isLoggedIn ? (
+        <div className="accountdropdown">
+          <div className={`accountdropdown__dropdown ${isOpen ? 'accountdropdown__open' : ''}`} ref={ref}>
+            <button className="accountdropdown__btn" type="button" aria-label="toggle profile menu"
+                    onClick={handleSelectorClicked}>
+              <AccountIcon className="accountdropdown__btnicon"/>
+            </button>
+            {isOpen && (
+              <div className="accountdropdown__menu">
+                <ul className="accountdropdown__list">
+                  <li className="accountdropdown__listitem accountdropdown__itemtitle">
+                    <p className="accountdropdown__iteminfo">{customerName}</p>
+                    <p className="accountdropdown__iteminfo accountdropdown__emailinfo">{customerEmail}</p>
+                  </li>
+                  <li className="accountdropdown__listitem">
+                    <Link to={accountUrl} className="accountdropdown__link" onClick={handleHideDropdown}>
+                      {t('my-account')}
+                    </Link>
+                  </li>
+                  <li className="accountdropdown__listitem accountdropdown__itembtns">
+                    <button className="epbtn --secondary --fullwidth" type="button" onClick={logout}>
+                      {t('logout')}
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
+      ) : (
+        <div className="accountdropdown">
+          <button className="accountdropdown__loginbtn" type="button" onClick={() => {setIsModalOpen(true)}}>
+            {t('login')}
+          </button>
+        </div>
+      )}
+        <LoginDialog openModal={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} />
       </div>
     );
-  }
-
-  return (
-    <div className="accountdropdown">
-      <button className="accountdropdown__loginbtn" type="button" onClick={() => {setIsModalOpen(true)}}>
-        {t('login')}
-      </button>
-      <LoginDialog openModal={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} />
-    </div>
-  );
 };

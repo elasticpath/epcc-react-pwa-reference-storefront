@@ -13,13 +13,35 @@
     border-bottom: 1px solid $firstBorderColor;
   }
 
+  &__cartnamefield {
+    margin: 30px 0;
+
+    label {
+      font-weight: bold;
+      font-size: $sizeSmall;
+    }
+
+    input {
+      &:disabled {
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  &__nextbutton {
+    right: 10px;
+    float: right;
+    width: 100px;
+  }
+
   &__title {
-    font-size: $sizeInitialLarger;
+    font-size: $sizeMediumLarger;
   }
 
   &__content {
     background-color: $mainBackgroundColor;
     border: none;
+    position: relative;
 
     &.--loading {
 

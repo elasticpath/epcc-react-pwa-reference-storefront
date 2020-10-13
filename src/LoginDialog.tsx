@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Modal from 'react-responsive-modal';
 import { useFormik } from 'formik';
 import { login } from './service';
-import {useCartData, useCustomerData, useMultiCartData, useTranslation} from './app-state';
+import { useCartData, useCustomerData, useMultiCartData, useTranslation } from './app-state';
 import { createRegistrationUrl } from './routes';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 
@@ -22,15 +22,17 @@ interface FormValues {
 export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
   const { handleModalClose, openModal } = props;
   const { setCustomerData } = useCustomerData();
+  const { isLoggedIn } = useCustomerData();
   const { t } = useTranslation();
   const { cartData } = useCartData();
-  const { associateCart } = useMultiCartData();
+  const { associateGuestCart, setGuestCartId } = useMultiCartData();
 
   const registrationUrl = createRegistrationUrl();
 
   const [failedLogin, setFailedLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const mcart: string = localStorage.getItem('mcart') || '';
+  const [isCreateNewCart, setIsCreateNewCart] = useState(false);
+  const [cartName, setCartName] = useState('');
 
   const initialValues:FormValues = {
     emailField: '',
@@ -53,14 +55,17 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
     initialValues,
     validate,
     onSubmit: async (values) => {
+      const cartId = localStorage.getItem('mcart') || '';
+      setGuestCartId(cartId);
       setIsLoading(true);
       try {
         const result: any = await login(values.emailField.toLowerCase(), values.passwordField)
         await setCustomerData(result.token, result.customer_id);
-        await handleModalClose();
         await setIsLoading(false);
         if (cartData.length) {
-          await associateCart(mcart, result.customer_id, result.token)
+          setIsCreateNewCart(true);
+        } else {
+          handleModalClose();
         }
       }
       catch (error) {
@@ -70,6 +75,11 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
       }
     },
   });
+
+  const createNewCart = () => {
+    associateGuestCart(cartName);
+    handleModalClose();
+  };
 
   const registerNewUser = () => {
     handleModalClose();
@@ -87,48 +97,72 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
         (isLoading) ? <div className="epminiLoader --centered" /> : ('')
       }
       <div className={`logindialog__content ${isLoading ? '--loading' : ''}`}>
-        <div className="logindialog__header">
-          <h2 className="logindialog__title">
-            {t('login')}
-          </h2>
-          <button type="button" aria-label="close" onClick={handleModalClose}>
-            <CloseIcon />
-          </button>
-        </div>
-
-        <div className="logindialog__body">
-          <div className="logindialog__feedback">
-            {failedLogin ? t('invalid-email-or-password') : ('')}
-          </div>
-          <form className="epform" id="login_modal_form" onSubmit={handleSubmit}>
-            <div className={`epform__group ${errors.emailField ? '--error' : ''}`}>
-              <label className="epform__label" htmlFor="emailField">
-                {t('email')}:
-              </label>
-              <input className="epform__input" id="emailField" type="text" onChange={handleChange} value={values.emailField} />
-              <div className="epform__error">
-                {errors.emailField ? errors.emailField : null}
-              </div>
-            </div>
-            <div className={`epform__group ${errors.passwordField ? '--error' : ''}`}>
-              <label className="epform__label" htmlFor="passwordField">
-                {t('password')}:
-              </label>
-              <input className="epform__input" id="passwordField" type="password" onChange={handleChange} value={values.passwordField} />
-              <div className="epform__error">
-                {errors.passwordField ? errors.passwordField : null}
-              </div>
-            </div>
-            <div className="epform__group --btn-container">
-              <button className="epbtn --secondary" id="login_modal_login_button" type="submit" disabled={isLoading}>
-                {t('login')}
+        {isCreateNewCart && isLoggedIn ? (
+          <div>
+            <div className="logindialog__header">
+              <h2 className="logindialog__title">
+                {t('name-your-cart')}
+              </h2>
+              <button type="button" aria-label="close" onClick={() => handleModalClose()}>
+                <CloseIcon />
               </button>
-              <Link to={registrationUrl} className="epbtn --secondary" id="login_modal_register_button" onClick={registerNewUser}>
-                {t('register')}
-              </Link>
             </div>
-          </form>
-        </div>
+            <div className="logindialog__body">
+              {t('please-provide-a-name-for-your-cart')}
+              <div className="logindialog__cartnamefield">
+                <label className="" htmlFor="cartName">{t('name')}</label>
+                <input className="epform__input" type="text" disabled id="cartName" onChange={(e) => {setCartName(e.target.value)}} />
+              </div>
+            </div>
+            <button className="logindialog__nextbutton epbtn  --secondary" onClick={() => createNewCart()} id="login_modal_login_button" type="submit" disabled={isLoading}>
+              {t('next')}
+            </button>
+          </div>
+        ) : (
+          <div>
+            <div className="logindialog__header">
+              <h2 className="logindialog__title">
+                {t('login')}
+              </h2>
+              <button type="button" aria-label="close" onClick={() => handleModalClose()}>
+                <CloseIcon />
+              </button>
+            </div>
+            <div className="logindialog__body">
+              <div className="logindialog__feedback">
+                {failedLogin ? t('invalid-email-or-password') : ('')}
+              </div>
+              <form className="epform" id="login_modal_form" onSubmit={handleSubmit}>
+                <div className={`epform__group ${errors.emailField ? '--error' : ''}`}>
+                  <label className="epform__label" htmlFor="emailField">
+                    {t('email')}:
+                  </label>
+                  <input className="epform__input" id="emailField" type="text" onChange={handleChange} value={values.emailField} />
+                  <div className="epform__error">
+                    {errors.emailField ? errors.emailField : null}
+                  </div>
+                </div>
+                <div className={`epform__group ${errors.passwordField ? '--error' : ''}`}>
+                  <label className="epform__label" htmlFor="passwordField">
+                    {t('password')}:
+                  </label>
+                  <input className="epform__input" id="passwordField" type="password" onChange={handleChange} value={values.passwordField} />
+                  <div className="epform__error">
+                    {errors.passwordField ? errors.passwordField : null}
+                  </div>
+                </div>
+                <div className="epform__group --btn-container">
+                  <button className="epbtn --secondary" id="login_modal_login_button" type="submit" disabled={isLoading}>
+                    {t('login')}
+                  </button>
+                  <Link to={registrationUrl} className="epbtn --secondary" id="login_modal_register_button" onClick={registerNewUser}>
+                    {t('register')}
+                  </Link>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     </Modal>
   );

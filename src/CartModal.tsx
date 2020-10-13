@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { Elements, StripeProvider } from 'react-stripe-elements';
-import {useCartData, useCustomerData, useMultiCartData, useOrdersData, useTranslation} from './app-state';
+import { useCartData, useCustomerData, useMultiCartData, useOrdersData, useTranslation } from './app-state';
 import { config } from './config';
 import { checkout, payment, removeCartItems } from './service';
 
