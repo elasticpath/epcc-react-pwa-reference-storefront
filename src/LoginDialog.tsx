@@ -113,10 +113,10 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
                 <label className="" htmlFor="cartName">{t('name')}</label>
                 <input className="epform__input" type="text" disabled id="cartName" onChange={(e) => {setCartName(e.target.value)}} />
               </div>
+              <button className="logindialog__nextbutton epbtn --secondary" onClick={() => createNewCart()} id="login_modal_login_button" type="submit" disabled={isLoading}>
+                {t('next')}
+              </button>
             </div>
-            <button className="logindialog__nextbutton epbtn  --secondary" onClick={() => createNewCart()} id="login_modal_login_button" type="submit" disabled={isLoading}>
-              {t('next')}
-            </button>
           </div>
         ) : (
           <div>
