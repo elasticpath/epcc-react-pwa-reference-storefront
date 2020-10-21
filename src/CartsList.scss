@@ -8,6 +8,8 @@
   }
 
   &__deletebutton {
+    min-height: 24px;
+
     &:hover {
       cursor: pointer;
 
@@ -58,6 +60,13 @@
   &__cartlist {
     border-top: 1px solid $secondBorderColor;
     margin-bottom: 30px;
+
+    &:not(.--editmode) {
+      .cartslist__cartelement,
+      .cartslist__description {
+        cursor: pointer;
+      }
+    }
   }
 
   &__cartelement {
@@ -203,6 +212,7 @@
   &__confirmationbtns {
     .epbtn {
       width: 100%;
+      height: 42px;
 
       &.--primary {
         margin-bottom: 15px;
@@ -212,13 +222,9 @@
 
   @media (max-width: $mobileXSmallWidth - 1px) {
     &__confirmation {
+      width: calc(100% - 40px);
       padding: 15px 20px 20px;
-    }
-
-    &__confirmationbtns {
-      .epbtn {
-        min-width: 110px;
-      }
+      right: 20px
     }
   }
 }

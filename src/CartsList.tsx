@@ -18,6 +18,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
   const [selectedCarts, setSelectedCarts] = useState<string[]>([]);
   const [isEdit, setIsEdit] = useState(false);
   const [isShowModal, setIsShowModal] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
 
   const { t } = useTranslation();
 
@@ -47,11 +48,13 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
   });
 
   const onDeleteCart = () => {
+    setShowLoader(true);
     const promises = selectedCarts.map(el => removeCartItems(el));
     Promise.all(promises)
       .then(() => {
         updateCartData();
         setIsShowModal(false);
+        setShowLoader(false);
         setSelectedCarts([]);
       })
       .catch(error => {
@@ -83,7 +86,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
         {multiCartData && multiCartData.length ? (
           <div>
             <div className="cartslist__selectedtitle">
-              <div className={`${isEdit && "isshow"}`}>
+              <div className={`${isEdit ? 'isshow' : ''}`}>
                 <span>
                   <input type="checkbox" name="cartCheck" id="select-all" className="cartslist__checkall epcheckbox" onChange={() => {handleSelectAll()}} />
                   <label htmlFor="select-all" className="">
@@ -93,11 +96,11 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
                   </label>
                 </span>
                 <button className="cartslist__deletebutton" disabled={selectedCarts.length === 0} onClick={() => setIsShowModal(true)}>
-                  <DeleteIcon />
+                  {!isShowModal ? <DeleteIcon /> : <span className="circularLoader" aria-label={t('loading')} />}
                 </button>
               </div>
             </div>
-            <div className="cartslist__cartlist">
+            <div className={`cartslist__cartlist${isEdit ? ' --editmode' : ''}`}>
               {multiCartData.map((cart: any) => (
                 <div role="presentation" className={`cartslist__cartelement${cart.id.includes(selectedCart && selectedCart.id) ? ' --selected' : ''}`} key={cart.id} onClick={() => handleCart(cart)}>
                   {isEdit && (
@@ -151,7 +154,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
               ) : t('warning-msg')}
             </div>
             <div className="cartslist__confirmationbtns">
-              <button className="epbtn --primary" onClick={() => onDeleteCart()} disabled={selectedCarts.length === multiCartData.length}>{t("delete")}</button>
+              <button className="epbtn --primary" onClick={() => onDeleteCart()} disabled={selectedCarts.length === multiCartData.length}>{!showLoader ? t('delete') : <span className="circularLoader" aria-label={t('loading')} />}</button>
               <button className="epbtn --ghost" onClick={() => setIsShowModal(false)}>{t("cancel")}</button>
             </div>
           </div>

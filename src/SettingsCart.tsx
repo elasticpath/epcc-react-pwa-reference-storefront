@@ -20,12 +20,12 @@ interface FormValues {
 export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
   const { toBackPage, isEditCart, title, onCartCreate } = props;
   const { t } = useTranslation();
-  const { createCart, selectedCart, editCart } = useMultiCartData();
+  const { createCart, editCart } = useMultiCartData();
   const [isLoading, setIsLoading] = useState(false);
 
   let initialValues: FormValues = {
-    name: selectedCart ? selectedCart.name : '',
-    description: selectedCart ? selectedCart.description : '',
+    name: '',
+    description: '',
   };
 
   const validate = (values:any) => {
