@@ -23,9 +23,9 @@
     right: 0px;
     overflow-y: scroll;
     height: 100%;
+    min-height: 100%;
     width: 100%;
     max-width: 500px;
-    padding: 32px;
     opacity: 0;
     visibility: hidden;
     transform: translateX(500px);
@@ -45,6 +45,12 @@
       visibility: visible;
       transform: translateX(0px);
     }
+  }
+
+  &__contentwrap {
+    position: relative;
+    min-height: inherit;
+    padding: 32px;
   }
 
   .checkbox-text {

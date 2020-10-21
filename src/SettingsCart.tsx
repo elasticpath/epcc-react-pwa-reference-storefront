@@ -8,7 +8,6 @@ import './SettingsCart.scss';
 interface SettingsCartParams {
   toBackPage: (route: string) => any,
   isEditCart?: boolean,
-  selectedCartData?: any,
   title?: JSX.Element,
   onCartCreate?: (cartData: any) => void,
 }
@@ -19,14 +18,14 @@ interface FormValues {
 }
 
 export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
-  const { toBackPage, isEditCart, selectedCartData, title, onCartCreate } = props;
+  const { toBackPage, isEditCart, title, onCartCreate } = props;
   const { t } = useTranslation();
-  const { createCart, editCart } = useMultiCartData();
+  const { createCart, selectedCart, editCart } = useMultiCartData();
   const [isLoading, setIsLoading] = useState(false);
 
   let initialValues: FormValues = {
-    name: selectedCartData ? selectedCartData.name : '',
-    description: selectedCartData ? selectedCartData.description : '',
+    name: selectedCart ? selectedCart.name : '',
+    description: selectedCart ? selectedCart.description : '',
   };
 
   const validate = (values:any) => {

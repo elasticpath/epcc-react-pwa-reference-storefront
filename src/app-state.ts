@@ -402,7 +402,7 @@ function useMultiCartDataState() {
   const token = localStorage.getItem('mtoken') || '';
   const mcustomer = localStorage.getItem('mcustomer') || '';
   const [multiCartData, setMultiCartData] = useState<moltin.CartItem[]>([]);
-  const [selectedCartName, setSelectedCartName] = useState('');
+  const [selectedCart, setSelectedCart] = useState<moltin.CartItem>();
   const [isCreateNewCart, setIsCreateNewCart] = useState(false);
   const [isCartSelected, setIsCartSelected] = useState(false);
   const [guestCartId, setGuestCartId] = useState('');
@@ -411,9 +411,8 @@ function useMultiCartDataState() {
     if (token) {
       getMultiCarts(token).then(res => {
         setMultiCartData(res.data);
-        const cartName = res.data[0] ? res.data[0].name : '';
         const cartId = res.data[0] ? res.data[0].id : '';
-        updateSelectedCartName(cartName);
+        updateSelectedCart(res.data[0]);
         localStorage.setItem('mcart', cartId);
       });
     }
@@ -449,13 +448,12 @@ function useMultiCartDataState() {
     }
   };
 
-
   const editCart = (data: any) => {
     return null;
   };
 
-  const updateSelectedCartName = (cartName: string) => {
-    setSelectedCartName(cartName)
+  const updateSelectedCart = (cart: any) => {
+    setSelectedCart(cart)
   };
 
   const clearCartData = () => {
@@ -465,9 +463,8 @@ function useMultiCartDataState() {
   const updateCartData = () => {
     getMultiCarts(token).then(res => {
       setMultiCartData(res.data);
-      const cartName = res.data[0] ? res.data[0].name : '';
       const cartId = res.data[0] ? res.data[0].id : '';
-      updateSelectedCartName(cartName);
+      updateSelectedCart(res.data[0]);
       localStorage.setItem('mcart', cartId);
     });
   };
@@ -475,8 +472,8 @@ function useMultiCartDataState() {
   return {
     multiCartData,
     createCart,
-    selectedCartName,
-    updateSelectedCartName,
+    selectedCart,
+    updateSelectedCart,
     isCartSelected,
     setIsCartSelected,
     editCart,

@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useTranslation, useMultiCartData } from './app-state';
 import './CartSelection.scss';
 
 interface CartSelectionParams {
   onHandlePage: (route: string) => any,
-  onSelectCart: (route: string) => any,
 }
 
 export  const CartSelection: React.FC<CartSelectionParams> = (props) => {
-  const { onHandlePage, onSelectCart } = props;
+  const { onHandlePage } = props;
   const mcart = localStorage.getItem('mcart');
   const [selectedItem, setSelectedItem] = useState(mcart);
-  const { multiCartData, updateSelectedCartName, setIsCartSelected } = useMultiCartData();
+  const { multiCartData, updateSelectedCart, setIsCartSelected } = useMultiCartData();
   const [selectedCart, setSelectedCart] = useState(multiCartData[0]);
 
   const { t } = useTranslation();
+
+  useEffect(() => {
+    multiCartData && setSelectedCart(multiCartData[0]);
+  }, [multiCartData]);
 
   const onHandleCart = (page:string) => {
     onHandlePage(page);
@@ -24,9 +27,8 @@ export  const CartSelection: React.FC<CartSelectionParams> = (props) => {
 
   const handleSelectCart = (cart:any) => {
     setSelectedItem(cart.id);
-    updateSelectedCartName(cart.name);
+    updateSelectedCart(cart);
     setSelectedCart(cart);
-    onSelectCart(cart)
   };
 
   return (

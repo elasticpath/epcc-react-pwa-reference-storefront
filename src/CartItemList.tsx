@@ -17,7 +17,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const { t } = useTranslation();
   const { isLoggedIn } = useCustomerData();
   const { count, totalPrice, updateCartItems } = useCartData();
-  const { selectedCartName } = useMultiCartData();
+  const { selectedCart } = useMultiCartData();
 
   const isLoading = false;
   const imgSize = 73;
@@ -59,9 +59,9 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
         </button>
       )}
       <h2 className="cartitemlist__title">
-        {isLoggedIn && selectedCartName ? (
+        {isLoggedIn && selectedCart ? (
           <span>
-            {selectedCartName}
+            {selectedCart.name || ''}
             {/*<span className="cartitemlist__settingsicon">*/}
             {/*  <SettingsIcon onClick={() => onHandlePage('settings')} />*/}
             {/*</span>*/}

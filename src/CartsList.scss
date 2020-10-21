@@ -2,7 +2,10 @@
 
 .cartslist {
   text-align: center;
-  position: relative;
+
+  &__content {
+    position: relative;
+  }
 
   &__deletebutton {
     &:hover {
@@ -17,7 +20,7 @@
       cursor: not-allowed;
 
       svg {
-        fill: $secondComplimentTextColor;
+        fill: $sixthComplimentTextColor;
       }
     }
   }
@@ -63,7 +66,7 @@
     border-bottom: 1px solid $secondBorderColor;
 
     &.--selected {
-      background-color: #E5E9F2;
+      background-color: $sixthComplimentBackground;
     }
   }
 
@@ -130,17 +133,15 @@
 
   &__selectedtitle {
     width: 100%;
-    height: 30px;
     visibility: hidden;
-    text-transform: uppercase;
 
     .isshow {
       visibility: visible;
       display: flex;
-      background-color: $fifthComplimentBackground;
+      background-color: $sixthComplimentBackground;
       justify-content: space-between;
       align-items: center;
-      padding: 4px 8px;
+      padding: 10px 8px;
 
     }
   }
@@ -160,24 +161,25 @@
   }
 
   &__confirmationoverlay {
-    background-color: transparent;
-    width: 100%;
+    background-color: $mainTextColor;
     height: 100%;
+    width: 100%;
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 0px;
+    left: 0px;
     z-index: 1;
+    opacity: 0.3;
   }
 
   &__confirmation {
-    width: calc(100% + 10px);
+    width: 350px;
     position: absolute;
-    top: 150px;
-    left: -5px;
+    top: 130px;
+    right: 50px;
     background: $secondComplimentBackground;
     border: 1px solid $mainBorderColor;
     padding: 20px 30px 30px;
-    z-index: 2;
+    z-index: 4;
   }
 
   &__closebtn {
@@ -187,23 +189,23 @@
   &__confirmationtitle {
     display: flex;
     justify-content: space-between;
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 20px;
     margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid $secondBorderColor;
   }
 
   &__confirmationmsg {
-    font-weight: bold;
     text-align: left;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
   }
 
   &__confirmationbtns {
     .epbtn {
-      min-width: 150px;
+      width: 100%;
 
       &.--primary {
-        margin-left: 15px;
+        margin-bottom: 15px;
       }
     }
   }

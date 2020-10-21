@@ -4,19 +4,16 @@ import { useTranslation, useMultiCartData, useCartData } from './app-state';
 import { removeCartItems } from './service';
 import { ReactComponent as ArrowRightIcon } from "./images/icons/keyboard_arrow_right-black-24dp.svg";
 import { ReactComponent as DeleteIcon } from "./images/icons/delete-black-24dp.svg";
-import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 
 import './CartsList.scss';
 
 interface CartsListParams {
   onHandlePage: (route: string) => any,
-  onSelectCart: (route: string) => any,
-  selectedCartData: any,
 }
 
 export  const CartsList: React.FC<CartsListParams> = (props) => {
-  const { onHandlePage, onSelectCart, selectedCartData } = props;
-  const { multiCartData, updateSelectedCartName, setIsCartSelected, updateCartData } = useMultiCartData();
+  const { onHandlePage } = props;
+  const { multiCartData, selectedCart, updateSelectedCart, setIsCartSelected, updateCartData } = useMultiCartData();
   const { updateCartItems } = useCartData();
   const [selectedCarts, setSelectedCarts] = useState<string[]>([]);
   const [isEdit, setIsEdit] = useState(false);
@@ -63,22 +60,23 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
   };
 
   const handleCart = (cart:any) => {
-    localStorage.setItem('mcart', cart.id);
-    updateCartItems();
-    onSelectCart(cart);
-    updateSelectedCartName(cart.name);
-    setIsCartSelected(true);
-    onHandlePage('itemList');
+    if (!isEdit) {
+      localStorage.setItem('mcart', cart.id);
+      updateCartItems();
+      updateSelectedCart(cart);
+      setIsCartSelected(true);
+      onHandlePage('itemList');
+    }
   };
 
   return (
     <div className="cartslist">
-      {multiCartData.length && (
-        <div role="presentation" className="cartslist__editbutton" onClick={() => setIsEdit(!isEdit)}>
-          {t(isEdit ? 'done' : 'edit')}
-        </div>
-      )}
-      <div>
+      <div className="cartslist__content">
+        {multiCartData.length && (
+          <button className="cartslist__editbutton" onClick={() => setIsEdit(!isEdit)}>
+            {t(isEdit ? 'done' : 'edit')}
+          </button>
+        )}
         <h2 className="cartslist__title">
           {t('my-carts')}
         </h2>
@@ -101,7 +99,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
             </div>
             <div className="cartslist__cartlist">
               {multiCartData.map((cart: any) => (
-                <div className={`cartslist__cartelement ${cart.id.includes(selectedCartData.id) && "--selected"}`} key={cart.id}>
+                <div role="presentation" className={`cartslist__cartelement${cart.id.includes(selectedCart && selectedCart.id) ? ' --selected' : ''}`} key={cart.id} onClick={() => handleCart(cart)}>
                   {isEdit && (
                     <input type="checkbox" name="cartCheck" id={`cart_${cart.id}`} className="cartslist__check epcheckbox" checked={selectedCarts.includes(cart.id)} onChange={() => {handleSelectCart(cart.id)}} />
                   )}
@@ -114,7 +112,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
                         <span className="cartslist --date">
                           {t('created')} - {(cart.meta.timestamps.created_at).substring(0, 10)}
                         </span>
-                        <button className="cartslist__selectcart" onClick={() => handleCart(cart)}>
+                        <button className="cartslist__selectcart">
                           <ArrowRightIcon />
                         </button>
                         <br />
@@ -146,7 +144,6 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
           <div className="cartslist__confirmation" role="presentation" ref={modalRef}>
             <div className="cartslist__confirmationtitle">
               {selectedCarts.length !== multiCartData.length ? t('confirmation') : t('warning')}
-              <button className="cartslist__closebtn" onClick={() => setIsShowModal(false)}><CloseIcon /></button>
             </div>
             <div className="cartslist__confirmationmsg">
               {selectedCarts.length !== multiCartData.length ? (
@@ -154,8 +151,8 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
               ) : t('warning-msg')}
             </div>
             <div className="cartslist__confirmationbtns">
-              <button className="epbtn --ghost" onClick={() => setIsShowModal(false)}>{t("cancel")}</button>
               <button className="epbtn --primary" onClick={() => onDeleteCart()} disabled={selectedCarts.length === multiCartData.length}>{t("delete")}</button>
+              <button className="epbtn --ghost" onClick={() => setIsShowModal(false)}>{t("cancel")}</button>
             </div>
           </div>
           <div className="cartslist__confirmationoverlay" />
