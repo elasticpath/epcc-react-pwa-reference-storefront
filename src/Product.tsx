@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { useResolve, useProductImages } from './hooks';
 import { addToCart, loadProductBySlug } from './service';
@@ -8,6 +8,7 @@ import { useTranslation, useCurrency, useCartData } from './app-state';
 import { isProductAvailable } from './helper';
 import { Availability } from './Availability';
 import { VariationsSelector } from './VariationsSelector';
+import { APIErrorContext } from './APIErrorProvider';
 
 import './Product.scss';
 
@@ -22,16 +23,23 @@ export const Product: React.FC = () => {
   const { selectedLanguage } = useTranslation();
   const { selectedCurrency } = useCurrency();
   const { updateCartItems } = useCartData();
+  const { addError } = useContext(APIErrorContext);
 
   const [product] = useResolve(
-    async () => loadProductBySlug(productSlug, selectedLanguage, selectedCurrency),
-    [productSlug, selectedLanguage, selectedCurrency]
+    async () => {
+      try {
+        return loadProductBySlug(productSlug, selectedLanguage, selectedCurrency)
+      } catch (error) {
+        addError(error.errors);
+      }
+    },
+    [productSlug, selectedLanguage, selectedCurrency, addError]
   );
   const [productId, setProductId] = useState('');
 
   useEffect(() => {
     product && setProductId(product.id);
-  }, [product])
+  }, [product]);
 
   const productImageHrefs = useProductImages(product);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -46,9 +54,12 @@ export const Product: React.FC = () => {
   const handleAddToCart = () => {
     const mcart = localStorage.getItem('mcart') || '';
     addToCart(mcart, productId)
-      .then(() => {
-        updateCartItems()
+    .then(() => {
+      updateCartItems()
     })
+    .catch ((err) => {
+      addError(err.errors);
+    });
   };
 
   const handleNextImageClicked = () => {

@@ -8,6 +8,8 @@ import { AppStateProvider } from './app-state';
 import { AppHeader } from './AppHeader';
 import { AppFooter } from './AppFooter';
 import { CompareOverlay } from './CompareOverlay';
+import { APIErrorProvider } from './APIErrorProvider';
+import { APIErrorNotification } from './APIErrorNotification';
 import './App.scss';
 
 const App: React.FC = () => {
@@ -17,33 +19,36 @@ const App: React.FC = () => {
   );
 
   return (
-    <Router>
-      <AppStateProvider>
-        <InstantSearch searchClient={searchClient} indexName={config.algoliaIndexName}>
-          <Configure hitsPerPage={8}/>
-          <div className="app">
-          <header className="app__header">
-            <AppHeader />
-          </header>
-          <main className="app__main">
-            <Switch>
-              {routes.map(route => (
-                <Route key={route.path} {...route} />
-              ))}
-            </Switch>
-          </main>
-          <footer id="app-footer" role="contentinfo" aria-label="app-footer">
-            <div className="app__footer">
-              <AppFooter />
-            </div>
-          </footer>
-          <aside className="app__compareoverlay">
-            <CompareOverlay />
-          </aside>
-        </div>
-        </InstantSearch>
-      </AppStateProvider>
-    </Router>
+    <APIErrorProvider>
+      <Router>
+        <AppStateProvider>
+          <InstantSearch searchClient={searchClient} indexName={config.algoliaIndexName}>
+            <Configure hitsPerPage={8}/>
+            <div className="app">
+            <header className="app__header">
+              <AppHeader />
+              <APIErrorNotification />
+            </header>
+            <main className="app__main">
+              <Switch>
+                {routes.map(route => (
+                  <Route key={route.path} {...route} />
+                ))}
+              </Switch>
+            </main>
+            <footer id="app-footer" role="contentinfo" aria-label="app-footer">
+              <div className="app__footer">
+                <AppFooter />
+              </div>
+            </footer>
+            <aside className="app__compareoverlay">
+              <CompareOverlay />
+            </aside>
+          </div>
+          </InstantSearch>
+        </AppStateProvider>
+      </Router>
+    </APIErrorProvider>
   );
 };
 
