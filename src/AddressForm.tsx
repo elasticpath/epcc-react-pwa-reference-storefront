@@ -1,10 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { updateAddress, addNewAddress } from './service';
 import { useFormik } from 'formik';
 import { useAddressData, useTranslation } from './app-state';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import Modal from 'react-responsive-modal';
-import { APIErrorContext } from './APIErrorProvider';
 
 import './AddressForm.scss';
 
@@ -37,7 +36,6 @@ export const AddressForm: React.FC<AddressFormParams> = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [addressErrors, setAddressErrors] = useState<any[]>([]);
   const { updateAddresses } = useAddressData();
-  const { addError } = useContext(APIErrorContext);
 
   let initialValues:FormValues = {
     id: addressData?.id ?? '',
@@ -102,7 +100,6 @@ export const AddressForm: React.FC<AddressFormParams> = (props) => {
           .catch(error => {
             setIsLoading(false);
             setAddressErrors(error.errors);
-            addError(error.errors);
             console.error(error);
           });
       } else {
@@ -115,7 +112,6 @@ export const AddressForm: React.FC<AddressFormParams> = (props) => {
         .catch(error => {
           setIsLoading(false);
           setAddressErrors(error.errors);
-          addError(error.errors);
           console.error(error);
         });
       }

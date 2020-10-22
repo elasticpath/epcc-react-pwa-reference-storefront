@@ -1,9 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { useFormik } from 'formik';
 import { register, login } from './service';
 import { useCustomerData, useTranslation } from './app-state';
-import { APIErrorContext } from './APIErrorProvider';
 
 import './RegistrationForm.scss';
 
@@ -19,7 +18,6 @@ export const RegistrationForm: React.FC = (props) => {
   const { setCustomerData } = useCustomerData();
   const { t } = useTranslation();
   const history = useHistory();
-  const { addError } = useContext(APIErrorContext);
 
   const [registrationErrors, setRegistrationErrors] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -75,7 +73,6 @@ export const RegistrationForm: React.FC = (props) => {
           const errorsContainer = error.errors.map((el:any) => el.detail).join('\n');
           setIsLoading(false);
           setRegistrationErrors(errorsContainer);
-          addError(error.errors);
           console.error(error);
         });
     },

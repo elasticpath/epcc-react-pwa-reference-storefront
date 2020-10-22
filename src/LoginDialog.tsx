@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Modal from 'react-responsive-modal';
 import { useFormik } from 'formik';
@@ -6,7 +6,6 @@ import { login } from './service';
 import { useCustomerData, useTranslation } from './app-state';
 import { createRegistrationUrl } from './routes';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
-import { APIErrorContext } from './APIErrorProvider';
 
 import './LoginDialog.scss';
 
@@ -25,7 +24,6 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
   const { setCustomerData } = useCustomerData();
   const { t } = useTranslation();
   const registrationUrl = createRegistrationUrl();
-  const { addError } = useContext(APIErrorContext);
 
   const [failedLogin, setFailedLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -61,7 +59,6 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
         .catch(error => {
           setIsLoading(false);
           setFailedLogin(true);
-          addError(error.errors);
           console.error(error);
         });
     },
