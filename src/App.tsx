@@ -19,8 +19,8 @@ const App: React.FC = () => {
   );
 
   return (
-    <APIErrorProvider>
-      <Router>
+    <Router>
+      <APIErrorProvider>
         <AppStateProvider>
           <InstantSearch searchClient={searchClient} indexName={config.algoliaIndexName}>
             <Configure hitsPerPage={8}/>
@@ -47,8 +47,8 @@ const App: React.FC = () => {
           </div>
           </InstantSearch>
         </AppStateProvider>
-      </Router>
-    </APIErrorProvider>
+      </APIErrorProvider>
+    </Router>
   );
 };
 

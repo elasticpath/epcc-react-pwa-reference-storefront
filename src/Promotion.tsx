@@ -37,7 +37,6 @@ export const Promotion: React.FC<PromotionProps> = (props) => {
         .catch(error => {
           console.error(error);
           addError(error.errors);
-          setErrors({promoCode: t('code-expired')});
         })
     },
   });
