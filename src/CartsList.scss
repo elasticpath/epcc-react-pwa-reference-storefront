@@ -1,6 +1,7 @@
 @import './theme/common.scss';
 
 .cartslist {
+  $block: &;
   text-align: center;
 
   &__content {
@@ -29,8 +30,9 @@
 
   &__editbutton {
     position: absolute;
-    top: -20px;
+    top: 8px;
     right: 0;
+    color: $thirdComplimentColor;
 
     &:hover {
       cursor: pointer;
@@ -62,9 +64,26 @@
     margin-bottom: 30px;
 
     &:not(.--editmode) {
-      .cartslist__cartelement,
-      .cartslist__description {
+      #{$block}__cartelement,
+      #{$block}__description {
         cursor: pointer;
+      }
+
+      #{$block}__cartelement:not(.--selected) {
+        &:hover {
+          background-color: $sixthComplimentBackground;
+          color: $firstComplimentColor;
+
+          #{$block}__date {
+            color: $firstComplimentColor;
+          }
+
+          #{$block}__selectcart {
+            svg {
+              fill: $firstComplimentColor;
+            }
+          }
+        }
       }
     }
   }
@@ -75,7 +94,19 @@
     border-bottom: 1px solid $secondBorderColor;
 
     &.--selected {
-      background-color: $sixthComplimentBackground;
+      background-color: $firstComplimentColor;
+      color: $mainBackgroundColor;
+
+      #{$block}__date,
+      #{$block}__description {
+        color: $mainBackgroundColor;
+      }
+
+      #{$block}__selectcart {
+        svg {
+          fill: $mainBackgroundColor;
+        }
+      }
     }
   }
 
@@ -87,7 +118,7 @@
     }
   }
 
-  &.--date {
+  &__date {
     font-size: 11px;
     color: $thirdComplimentTextColor;
     text-transform: uppercase;
@@ -110,7 +141,7 @@
       overflow: hidden;
       max-width: 240px;
 
-      @media (max-width: $mobileXSmallWidth) {
+      @media (max-width: $mobileXSmallWidth - 1px) {
         max-width: 150px;
       }
     }
@@ -142,6 +173,7 @@
 
   &__selectedtitle {
     width: 100%;
+    min-height: 44px;
     visibility: hidden;
 
     .isshow {
@@ -220,11 +252,39 @@
     }
   }
 
+  .settingscart {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
+    padding: 32px;
+    background: $mainBackgroundColor;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(500px);
+    transition: all 0.3s ease 0s;
+    z-index: 1;
+
+    &.--show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0px);
+    }
+  }
+
   @media (max-width: $mobileXSmallWidth - 1px) {
     &__confirmation {
       width: calc(100% - 40px);
       padding: 15px 20px 20px;
       right: 20px
+    }
+
+    .settingscart {
+      padding: 20px;
     }
   }
 }

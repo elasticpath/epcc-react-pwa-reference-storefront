@@ -172,7 +172,8 @@ img, svg {
     border-radius: 4px;
 
     &:focus {
-      border-color: #0099DE;
+      border-color: $firstComplimentColor;
+      outline: 0 auto transparent;
     }
   }
 

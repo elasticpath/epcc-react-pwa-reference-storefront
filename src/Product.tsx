@@ -224,9 +224,9 @@ export const Product: React.FC = () => {
         <div className="product__createcartmodalbg">
           <div className="product__createcartmodal" ref={modalRef}>
             <SettingsCart
-              toBackPage={() => {setModalOpen(false)}}
               title={CreateCartHeader}
               onCartCreate={onCartCreate}
+              handleHideSettings={() => {setModalOpen(false)}}
             />
           </div>
         </div>

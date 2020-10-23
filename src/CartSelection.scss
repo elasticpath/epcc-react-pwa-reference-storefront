@@ -67,7 +67,7 @@
       overflow: hidden;
       max-width: 240px;
 
-      @media (max-width: $mobileXSmallWidth) {
+      @media (max-width: $mobileXSmallWidth - 1px) {
         max-width: 150px;
       }
     }

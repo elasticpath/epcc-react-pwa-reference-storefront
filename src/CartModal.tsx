@@ -10,9 +10,8 @@ import Checkout from "./Checkout";
 import { CartSelection } from './CartSelection';
 import { CartItemList } from './CartItemList';
 import { CartsList } from "./CartsList";
-import { SettingsCart } from "./SettingsCart";
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
-import { ReactComponent as BackArrovIcon } from './images/icons/arrow_back-black-24dp.svg';
+import { ReactComponent as BackArrowIcon } from './images/icons/arrow_back-black-24dp.svg';
 
 import './CartModal.scss';
 
@@ -61,6 +60,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
   const [shippingAddress, setShippingAddress] = useState<FormValues>(initialValues);
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [hideBackButton, setHideBackButton] = useState(false);
 
   const onPayOrder = async (token: string) => {
     try {
@@ -97,7 +97,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
   };
 
   const handleBackPage = () => {
-    if(route === "shipping" || route === "settings" || route === "cartsList" || route === "createCart") {
+    if(route === "shipping" || route === "cartsList") {
       setRoute("itemList")
     } else if (route === "billing") {
       setRoute("shipping")
@@ -148,22 +148,13 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
                 <CloseIcon/>
               </button>
             ) : (
-              <button className="cartmodal__closebutton" type="button" aria-label="close" onClick={handleBackPage}>
-                <BackArrovIcon/>
-              </button>
+              (!hideBackButton && (
+                <button className="cartmodal__closebutton" type="button" aria-label="close" onClick={handleBackPage}>
+                  <BackArrowIcon/>
+                </button>
+              ))
             )}
           </div>
-          {route === 'settings' && (
-            <SettingsCart
-              toBackPage={(page: string) => setRoute(page)}
-              isEditCart
-            />
-          )}
-          {route === 'createCart' && (
-            <SettingsCart
-              toBackPage={(page: string) => setRoute(page)}
-            />
-          )}
           {(route === 'itemList' && (isCartSelected || !isLoggedIn)) && (
             <CartItemList
               items={cartData}
@@ -179,6 +170,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
           {isLoggedIn && route === 'cartsList' && (
             <CartsList
               onHandlePage={(page: string) => handlePage(page)}
+              handleHideBackButton={(value:boolean) => {setHideBackButton(value)}}
             />
           )}
           {route === 'shipping' && (

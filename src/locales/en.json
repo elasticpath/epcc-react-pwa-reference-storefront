@@ -200,5 +200,6 @@
   "are-you-sure-you-want-to-delete-your-carts": "Are you sure you want to delete your carts?",
   "warning": "Warning",
   "warning-msg": "You may not delete all of your carts. Unselect one cart to delete",
-  "loading": "Loading"
+  "loading": "Loading",
+  "carts-description": "Enter your carts description here"
 }

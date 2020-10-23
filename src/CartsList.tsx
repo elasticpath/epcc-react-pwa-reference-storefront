@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { useTranslation, useMultiCartData, useCartData } from './app-state';
 import { removeCartItems } from './service';
+import { SettingsCart } from "./SettingsCart";
 import { ReactComponent as ArrowRightIcon } from "./images/icons/keyboard_arrow_right-black-24dp.svg";
 import { ReactComponent as DeleteIcon } from "./images/icons/delete-black-24dp.svg";
 
@@ -9,22 +10,20 @@ import './CartsList.scss';
 
 interface CartsListParams {
   onHandlePage: (route: string) => any,
+  handleHideBackButton: (value: boolean) => any,
 }
 
 export  const CartsList: React.FC<CartsListParams> = (props) => {
-  const { onHandlePage } = props;
+  const { onHandlePage, handleHideBackButton } = props;
   const { multiCartData, selectedCart, updateSelectedCart, setIsCartSelected, updateCartData } = useMultiCartData();
   const { updateCartItems } = useCartData();
   const [selectedCarts, setSelectedCarts] = useState<string[]>([]);
   const [isEdit, setIsEdit] = useState(false);
   const [isShowModal, setIsShowModal] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
 
   const { t } = useTranslation();
-
-  const onHandleCart = (page: string) => {
-    onHandlePage(page);
-  };
 
   const handleSelectCart = (cartId: string) => {
     if(!selectedCarts.find(c => c === cartId)) {
@@ -72,11 +71,20 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
     }
   };
 
+  const handleCartEdit = () => {
+    setIsEdit(!isEdit);
+    if (isEdit) {
+      handleHideBackButton(false);
+    } else {
+      handleHideBackButton(true);
+    }
+  };
+
   return (
     <div className="cartslist">
       <div className="cartslist__content">
         {multiCartData.length && (
-          <button className="cartslist__editbutton" onClick={() => setIsEdit(!isEdit)}>
+          <button className="cartslist__editbutton" onClick={handleCartEdit}>
             {t(isEdit ? 'done' : 'edit')}
           </button>
         )}
@@ -112,14 +120,14 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
                         {cart.name}
                       </strong>
                       <span className="cartslist__select">
-                        <span className="cartslist --date">
+                        <span className="cartslist__date">
                           {t('created')} - {(cart.meta.timestamps.created_at).substring(0, 10)}
                         </span>
                         <button className="cartslist__selectcart">
                           <ArrowRightIcon />
                         </button>
                         <br />
-                        <span className="cartslist --date">
+                        <span className="cartslist__date">
                           {t('edited')} - {(cart.meta.timestamps.updated_at).substring(0, 10)}
                         </span>
                       </span>
@@ -140,7 +148,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
             {t('you-have-no-carts')}
           </div>
         )}
-        <button className="epbtn --primary --fullwidth --large" onClick={() => onHandleCart('createCart')} >{t('create-cart')}</button>
+        <button className="epbtn --primary --fullwidth --large" onClick={() => setShowSettings(true)} >{t('create-cart')}</button>
       </div>
       {isShowModal && (
         <React.Fragment>
@@ -161,6 +169,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
           <div className="cartslist__confirmationoverlay" />
         </React.Fragment>
       )}
+      <SettingsCart showSettings={showSettings} handleHideSettings={() => setShowSettings(false)} />
     </div>
   )
 };

@@ -6,10 +6,11 @@ import {ReactComponent as ClearIcon} from "./images/icons/ic_clear.svg";
 import './SettingsCart.scss';
 
 interface SettingsCartParams {
-  toBackPage: (route: string) => any,
   isEditCart?: boolean,
   title?: JSX.Element,
   onCartCreate?: (cartData: any) => void,
+  showSettings?: boolean
+  handleHideSettings: () => void
 }
 
 interface FormValues {
@@ -18,7 +19,7 @@ interface FormValues {
 }
 
 export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
-  const { toBackPage, isEditCart, title, onCartCreate } = props;
+  const { isEditCart, title, onCartCreate, showSettings, handleHideSettings } = props;
   const { t } = useTranslation();
   const { createCart, editCart } = useMultiCartData();
   const [isLoading, setIsLoading] = useState(false);
@@ -36,10 +37,11 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
     return errors;
   };
 
-  const {handleSubmit, handleChange, values, errors, setFieldValue} = useFormik({
+  const {handleSubmit, handleChange, values, errors, setFieldValue, resetForm} = useFormik({
     initialValues,
     validate,
     onSubmit: async (values)  => {
+      setIsLoading(true);
       if(isEditCart) {
         await editCart(values);
       } else {
@@ -47,12 +49,13 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
         if (onCartCreate) onCartCreate(cartData);
       }
       setIsLoading(false);
-      toBackPage(('itemList'));
+      handleHideSettings();
+      resetForm();
     },
   });
 
   return (
-    <div className={`settingscart`}>
+    <div className={`settingscart${showSettings ? ' --show' : ''}`}>
       <div className="settingscart__addcartform">
         {title ?? (
           <h2 className="settingscart__title">
@@ -74,30 +77,25 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
           </div>
           <div className="settingscart__field">
             <label className="epform__label" htmlFor="description">{t('cart-description')}</label>
-            <textarea className="epform__input" id="description" onChange={handleChange} value={values.description} />
+            <textarea className="epform__input" id="description" onChange={handleChange} value={values.description} placeholder={t('carts-description')} />
             {(values.description && values.description.length > 0) && (
-              <span role="presentation" className={`descriptionclear ${errors.name && "--errorbutton"}`} onClick={() => setFieldValue('description', '')}>
+              <button className="settingscart__clearbtn" onClick={() => setFieldValue('description', '')}>
                 <ClearIcon />
-              </span>
+              </button>
             )}
           </div>
-          <div className="settingscart__savebutton">
+          <div className="settingscart__btns">
+            <button className="epbtn --bordered" type="button" onClick={handleHideSettings}>{t('cancel')}</button>
             <button
-              className={`epbtn --primary --fullwidth cartitemlist ${
+              className={`epbtn --primary ${
                 isLoading ? "--loading" : ""
                 }`}
               type="submit"
-              onClick={() => {
-                handleSubmit();
-                setIsLoading(true);
-              }}
+              onClick={() => {handleSubmit()}}
               disabled={isLoading}
             >
-              {t("save")}
+              {!isLoading? t("save") : <span className="circularLoader" aria-label={t('loading')} />}
             </button>
-          </div>
-          <div className="settingscart__cancelbutton">
-           <button className="epbtn --bordered --fullwidth" type="button" onClick={() => toBackPage('itemList')}>{t('cancel')}</button>
           </div>
         </form>
       </div>
