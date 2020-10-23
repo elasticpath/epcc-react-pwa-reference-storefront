@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react';
 import constate from 'constate';
 import * as moltin from '@moltin/sdk';
-import { getCustomer, getAddresses, getAllOrders, loadCategoryTree, getCartItems } from './service';
-import * as service from './service';
+import {
+  getCustomer,
+  getAddresses,
+  getAllOrders,
+  loadCategoryTree,
+  getCartItems,
+  loadEnabledCurrencies
+} from './service';
 import { config } from './config';
 
 import en from './locales/en.json';
@@ -250,7 +256,7 @@ function useCurrencyState() {
       return;
     }
 
-    service.loadEnabledCurrencies().then(currencies => {
+    loadEnabledCurrencies().then(currencies => {
       // Check if we need to update selectedCurrency
       const selected = currencies.find(c => c.code === selectedCurrency);
 

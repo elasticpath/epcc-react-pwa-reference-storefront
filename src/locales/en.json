@@ -165,7 +165,6 @@
   "checkout-with-items": "Checkout with {quantityItems} items",
   "gift-card": "Gift card or discount code",
   "apply": "Apply",
-  "code-expired": "Code expired or invalid",
   "promo-code": "Promo code",
   "payment-card": "Payment card",
   "continue-to-billing": "Continue to billing information",

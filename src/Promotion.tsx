@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import { useCartData, useTranslation } from './app-state';
 import { addPromotion, removeCartItem } from './service';
 
 import './Promotion.scss';
+import { APIErrorContext } from "./APIErrorProvider";
 
 interface FormValues {
   promoCode: string,
@@ -18,6 +19,7 @@ export const Promotion: React.FC<PromotionProps> = (props) => {
   const { t } = useTranslation();
   const { updateCartItems } = useCartData();
   const mcart = localStorage.getItem('mcart') || '';
+  const { addError } = useContext(APIErrorContext);
 
   const initialValues:FormValues = {
     promoCode: '',
@@ -34,7 +36,7 @@ export const Promotion: React.FC<PromotionProps> = (props) => {
         })
         .catch(error => {
           console.error(error);
-          setErrors({promoCode: t('code-expired')});
+          addError(error.errors);
         })
     },
   });
@@ -45,6 +47,7 @@ export const Promotion: React.FC<PromotionProps> = (props) => {
         updateCartItems();
       })
       .catch(error => {
+        addError(error.errors);
         console.error(error);
       })
   };
