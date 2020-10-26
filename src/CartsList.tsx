@@ -110,7 +110,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
             </div>
             <div className={`cartslist__cartlist${isEdit ? ' --editmode' : ''}`}>
               {multiCartData.map((cart: any) => (
-                <div role="presentation" className={`cartslist__cartelement${cart.id.includes(selectedCart && selectedCart.id) ? ' --selected' : ''}`} key={cart.id} onClick={() => handleCart(cart)}>
+                <div role="presentation" className={`cartslist__cartelement${cart.id.includes(selectedCart && selectedCart.id) ? ' --selected' : ''}`} key={cart.id} onClick={() => handleCart(cart)} tabIndex={-1}>
                   {isEdit && (
                     <input type="checkbox" name="cartCheck" id={`cart_${cart.id}`} className="cartslist__check epcheckbox" checked={selectedCarts.includes(cart.id)} onChange={() => {handleSelectCart(cart.id)}} />
                   )}

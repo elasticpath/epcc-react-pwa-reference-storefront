@@ -62,49 +62,47 @@
   &__cartlist {
     border-top: 1px solid $secondBorderColor;
     margin-bottom: 30px;
-
-    &:not(.--editmode) {
-      #{$block}__cartelement,
-      #{$block}__description {
-        cursor: pointer;
-      }
-
-      #{$block}__cartelement:not(.--selected) {
-        &:hover {
-          background-color: $sixthComplimentBackground;
-          color: $firstComplimentColor;
-
-          #{$block}__date {
-            color: $firstComplimentColor;
-          }
-
-          #{$block}__selectcart {
-            svg {
-              fill: $firstComplimentColor;
-            }
-          }
-        }
-      }
-    }
   }
 
   &__cartelement {
     text-align: left;
-    padding: 20px 8px;
     border-bottom: 1px solid $secondBorderColor;
 
-    &.--selected {
-      background-color: $firstComplimentColor;
-      color: $mainBackgroundColor;
+    #{$block}__description {
+      padding: 20px 8px;
+    }
 
-      #{$block}__date,
-      #{$block}__description {
-        color: $mainBackgroundColor;
+    .epcheckbox {
+      + #{$block}__description {
+        padding-left: 32px;
+
+        &:before {
+          top: 20px;
+          left: 8px;
+        }
+      }
+
+      &:checked {
+        + #{$block}__description {
+          &:after {
+            top: 23px;
+            left: 9px;
+          }
+        }
+      }
+    }
+
+    &.--selected, &:hover {
+      background-color: $sixthComplimentBackground;
+      color: $firstComplimentColor;
+
+      #{$block}__date {
+        color: $firstComplimentColor;
       }
 
       #{$block}__selectcart {
         svg {
-          fill: $mainBackgroundColor;
+          fill: $firstComplimentColor;
         }
       }
     }
@@ -112,6 +110,7 @@
 
   &__description {
     display: block;
+    cursor: pointer;
 
     p {
       font-size: 13px;
@@ -273,6 +272,28 @@
       opacity: 1;
       visibility: visible;
       transform: translateX(0px);
+    }
+  }
+
+  @media (min-width: $mobileWidth) {
+    &__cartlist:not(.--editmode) {
+      &__cartelement {
+        &:focus {
+          background-color: $firstComplimentColor;
+          color: $mainBackgroundColor;
+
+          #{$block}__date,
+          #{$block}__description {
+            color: $mainBackgroundColor;
+          }
+
+          #{$block}__selectcart {
+            svg {
+              fill: $mainBackgroundColor;
+            }
+          }
+        }
+      }
     }
   }
 

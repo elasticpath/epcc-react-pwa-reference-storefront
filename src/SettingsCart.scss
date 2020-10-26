@@ -2,10 +2,10 @@
 @import './theme/common.scss';
 
 .settingscart {
+  $block: &;
   text-align: center;
 
-  &__field {
-    position: relative;
+  .epform__group {
     margin: 30px 0;
 
     input {
@@ -19,36 +19,36 @@
       resize: none;
     }
 
-    path {
-      fill: $secondComplimentTextColor;
-    }
-
-    .nameclear {
+    #{$block}__clearname {
+      display: none;
       position: absolute;
       right: 5px;
       top: 28px;
+
+      svg {
+        fill: $secondComplimentTextColor;
+      }
 
       &:hover {
         cursor: pointer;
       }
     }
-
-    .--errorborder {
-      border: 1px solid $mainErrorColor;
-    }
-
-    .--redbutton {
-      path {
-        fill: $mainErrorColor;
-      }
-    }
   }
 
   &__clearbtn {
+    display: none;
     position: absolute;
     right: 5px;
     bottom: 5px;
     cursor: pointer;
+  }
+
+  .epform__input {
+    &:focus {
+      + #{$block}__clearbtn {
+        display: inline-block;
+      }
+    }
   }
 
   &__btns {

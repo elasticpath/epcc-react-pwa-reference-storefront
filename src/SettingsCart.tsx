@@ -63,11 +63,11 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
           </h2>
         )}
         <form>
-          <div className="settingscart__field">
+          <div className={`epform__group ${errors.name ? '--error' : ''}`}>
             <label className="epform__label" htmlFor="name">{t('cart-name')}</label>
-            <input className={`epform__input ${errors.name && "--errorborder"}`} id="name" onChange={handleChange} value={values.name} />
+            <input className="epform__input" id="name" onChange={handleChange} value={values.name} />
             {(values.name && values.name.length > 0) && (
-              <button type="button" className={`nameclear ${errors.name && "--errorbutton"}`} onClick={() => setFieldValue('name', '')}>
+              <button type="button" className="settingscart__clearname settingscart__clearbtn" onClick={() => setFieldValue('name', '')}>
                 <ClearIcon />
               </button>
             )}
@@ -75,7 +75,7 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
               {errors.name ? errors.name : null}
             </div>
           </div>
-          <div className="settingscart__field">
+          <div className="epform__group">
             <label className="epform__label" htmlFor="description">{t('cart-description')}</label>
             <textarea className="epform__input" id="description" onChange={handleChange} value={values.description} placeholder={t('carts-description')} />
             {(values.description && values.description.length > 0) && (

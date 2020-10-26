@@ -383,6 +383,7 @@ function useCartItemsState() {
   }, [mcart]);
 
   const updateCartItems = () => {
+    const mcart = localStorage.getItem('mcart') || '';
     getCartItems(mcart).then(res => {
       const cartData = res.data.length ? res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item') : [];
       setCartData(cartData);
@@ -461,11 +462,15 @@ function useMultiCartDataState() {
   };
 
   const updateCartData = () => {
+    const selectedCart = localStorage.getItem('mcart');
     getMultiCarts(token).then(res => {
       setMultiCartData(res.data);
-      const cartId = res.data[0] ? res.data[0].id : '';
-      updateSelectedCart(res.data[0]);
-      localStorage.setItem('mcart', cartId);
+      const selectedCartData = res.data.filter(el => (el.id === selectedCart));
+      if (selectedCartData.length === 0) {
+        const cartId = res.data[0] ? res.data[0].id : '';
+        updateSelectedCart(res.data[0]);
+        localStorage.setItem('mcart', cartId);
+      }
     });
   };
 

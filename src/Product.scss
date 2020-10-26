@@ -153,6 +153,9 @@
       line-height: 13px;
       cursor: pointer;
       font-weight: bold;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
 
       &:hover {
         background-color: $sixthComplimentBackground;

@@ -34,7 +34,7 @@ export const Product: React.FC = () => {
   const { selectedCurrency } = useCurrency();
   const { updateCartItems } = useCartData();
   const { isLoggedIn } = useCustomerData();
-  const { multiCartData } = useMultiCartData();
+  const { multiCartData, updateCartData } = useMultiCartData();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -78,6 +78,7 @@ export const Product: React.FC = () => {
     return addToCart(mcart, productId)
       .then(() => {
         updateCartItems();
+        updateCartData();
       }).finally(() => {
         setAddToCartLoading(false);
       })
