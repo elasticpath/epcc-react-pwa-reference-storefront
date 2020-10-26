@@ -11,7 +11,7 @@ export const QuickOrder: React.FC = (props) => {
   const { updateCartItems } = useCartData();
 
   const defaultItem = {
-    code: '', quantity: 0, isInvalid: false,
+    code: '', quantity: 0, isInvalid: false, errorMsg: ''
   };
 
   const defaultItemsCount = 10;
@@ -42,7 +42,7 @@ export const QuickOrder: React.FC = (props) => {
     if (value !== '') {
       handleUpdate(index, [{'code': value}, {'isInvalid': false}, {'quantity': 1}]);
     } else {
-      handleUpdate(index, [{'code': ''}, {'quantity': 0}]);
+      handleUpdate(index, [{'code': ''}, {'isInvalid': false}, {'quantity': 0}]);
     }
   };
 
@@ -71,9 +71,19 @@ export const QuickOrder: React.FC = (props) => {
         setShowLoader(false);
       })
       .catch(error => {
-        setError(error.errors[0].detail);
         setShowLoader(false);
-        console.error(error);
+        setError(t('sku-error'));
+        const itemsArr:any[] = [...items];
+        error.errors.forEach((errorEl:any) => (
+          items.forEach((el, index) => {
+            if (el.code === errorEl.meta.sku) {
+              itemsArr[index] = {...itemsArr[index]};
+              itemsArr[index].errorMsg = errorEl.detail;
+              itemsArr[index].isInvalid = true;
+            }
+          }
+        )));
+        setItems(itemsArr);
       });
   };
 
