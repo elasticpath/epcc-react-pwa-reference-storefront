@@ -58,7 +58,7 @@ export const QuickOrder: React.FC = (props) => {
     const products = items.filter(el => (el.code && el.quantity > 0)).map(el => {
       return {
         type: 'cart_item',
-        id: el.code,
+        sku: el.code,
         quantity: el.quantity,
       }
     });
