@@ -48,7 +48,7 @@ export const BulkOrder: React.FC = (props) => {
       .split('\n')
       .filter(l => l.trim().length)
       .map(l => l.split(/[ ,;]+/))
-      .map(p => ({ type: 'cart_item', id: p[0] || '', quantity: isNaN(parseInt(p[1])) ? 1 : parseInt(p[1]) }));
+      .map(p => ({ type: 'cart_item', sku: p[0] || '', quantity: isNaN(parseInt(p[1])) ? 1 : parseInt(p[1]) }));
     setBulkOrderItems(bulkOrderItems);
   }, [values.productSKU]);
 
