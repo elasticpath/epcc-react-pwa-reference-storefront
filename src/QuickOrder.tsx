@@ -71,6 +71,7 @@ export const QuickOrder: React.FC = (props) => {
         setShowLoader(false);
       })
       .catch(error => {
+        console.error(error);
         setShowLoader(false);
         setError(t('sku-error'));
         const itemsArr:any[] = [...items];
