@@ -58,7 +58,7 @@ export const QuickOrder: React.FC = (props) => {
 
   const handleAddFields = () => {
     const itemsCount = items.length;
-    if (itemsCount >= 20) return;
+    if (itemsCount >= 100) return;
     const additionalItems = [...items, ...Array(additionalItemsCount).fill(defaultItem).map((item, index) => ({ ...item, key: `quick-order-sku-${(index + itemsCount)}` }))];
     setItems(additionalItems);
   };
