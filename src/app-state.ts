@@ -384,7 +384,7 @@ function useCartItemsState() {
       setQuantity(itemQuantity - count);
       setCount(itemQuantity);
       setTotalPrice(res.meta.display_price.without_tax.formatted);
-      if (!showCartPopup && itemQuantity - count !== 0) {
+      if (!showCartPopup && itemQuantity - count > 0) {
         setShowCartPopup(true);
         setTimeout(() => {
           setShowCartPopup(false);
