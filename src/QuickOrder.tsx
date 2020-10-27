@@ -43,6 +43,16 @@ export const QuickOrder: React.FC = (props) => {
       handleUpdate(index, [{'code': value}, {'isInvalid': false}, {'quantity': 1}]);
     } else {
       handleUpdate(index, [{'code': ''}, {'isInvalid': false}, {'quantity': 0}]);
+      if (items.filter(el => (el.quantity !== 0)).length === 1) {
+        setError('');
+      }
+    }
+  };
+
+  const handleClear = (index:number) => {
+    handleUpdate(index, [{'code': ''}, {'isInvalid': false}, {'quantity': 0}]);
+    if (items.filter(el => (el.quantity !== 0)).length === 1) {
+      setError('');
     }
   };
 
@@ -73,7 +83,8 @@ export const QuickOrder: React.FC = (props) => {
       .catch(error => {
         console.error(error);
         setShowLoader(false);
-        setError(t('sku-error'));
+        const errorsContainer = error.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}`)).join('\n');
+        setError(errorsContainer);
         const itemsArr:any[] = [...items];
         error.errors.forEach((errorEl:any) => (
           items.forEach((el, index) => {
@@ -107,7 +118,7 @@ export const QuickOrder: React.FC = (props) => {
                 onChange={(e) => {handleChange(index, e.target.value)}}
               />
               {item.code &&
-              <button className="quickorder__clearbtn" type="reset" onClick={() => {handleUpdate(index, [{'code': ''}, {'isInvalid': false}, {'quantity': 0}])}}>
+              <button className="quickorder__clearbtn" type="reset" onClick={() => {handleClear(index)}}>
                 <ClearIcon className="quickorder__clearicon" />
               </button>
               }

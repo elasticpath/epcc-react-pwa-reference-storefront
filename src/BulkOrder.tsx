@@ -36,7 +36,8 @@ export const BulkOrder: React.FC = (props) => {
           setShowLoader(false);
         })
         .catch(error => {
-          setBulkError(error.errors[0].detail);
+          const errorsContainer = error.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}`)).join('\n');
+          setBulkError(errorsContainer);
           setShowLoader(false);
           console.error(error);
         });
@@ -52,6 +53,11 @@ export const BulkOrder: React.FC = (props) => {
     setBulkOrderItems(bulkOrderItems);
   }, [values.productSKU]);
 
+  const handleClear = () => {
+    resetForm();
+    setBulkError('');
+  };
+
   return (
     <div className="bulkorder">
       {bulkError && (
@@ -64,7 +70,7 @@ export const BulkOrder: React.FC = (props) => {
           </label>
           <textarea className="bulkorder__textarea" id="productSKU" rows={5} onChange={handleChange} value={values.productSKU} />
           {values.productSKU &&
-            <button className="bulkorder__clearbtn" type="reset" onClick={() => {resetForm()}}>
+            <button className="bulkorder__clearbtn" type="reset" onClick={handleClear}>
               <ClearIcon className="bulkorder__clearicon" />
             </button>
           }

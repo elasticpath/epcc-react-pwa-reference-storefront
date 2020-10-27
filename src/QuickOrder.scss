@@ -119,6 +119,7 @@
     color: $mainErrorColor;
     border: 1px solid $mainErrorColor;
     background-color: $mainBackgroundColor;
+    white-space: pre;
   }
 
   @media (max-width: $mobileWidth - 1px) {
