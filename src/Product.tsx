@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { useResolve, useProductImages } from './hooks';
@@ -19,6 +19,7 @@ import { SettingsCart } from './SettingsCart';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import { ReactComponent as SpinnerIcon } from './images/icons/ic_spinner.svg';
 import { ReactComponent as CaretIcon } from './images/icons/ic_caret.svg';
+import { APIErrorContext } from './APIErrorProvider';
 
 import './Product.scss';
 
@@ -47,16 +48,23 @@ export const Product: React.FC = () => {
   const dropdownRef = useOnclickOutside(() => {
     setDropdownOpen(false)
   });
+  const { addError } = useContext(APIErrorContext);
 
   const [product] = useResolve(
-    async () => loadProductBySlug(productSlug, selectedLanguage, selectedCurrency),
-    [productSlug, selectedLanguage, selectedCurrency]
+    async () => {
+      try {
+        return loadProductBySlug(productSlug, selectedLanguage, selectedCurrency)
+      } catch (error) {
+        addError(error.errors);
+      }
+    },
+    [productSlug, selectedLanguage, selectedCurrency, addError]
   );
   const [productId, setProductId] = useState('');
 
   useEffect(() => {
     product && setProductId(product.id);
-  }, [product])
+  }, [product]);
 
   useEffect(() => {
     document.body.style.overflow = modalOpen ? 'hidden' : 'unset';

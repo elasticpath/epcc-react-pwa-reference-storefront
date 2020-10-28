@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import * as moltin from '@moltin/sdk';
 import { useAddressData } from './app-state';
 import { deleteAddress } from './service';
 import { useTranslation } from './app-state';
 import { AddressForm } from './AddressForm';
 import { DeleteAddressDialog } from './DeleteAddressDialog';
+import { APIErrorContext } from "./APIErrorProvider";
 
 import './Address.scss';
 
@@ -16,6 +17,7 @@ export const Address: React.FC = () => {
   const [selectedDeleteAddress, setSelectedDeleteAddress] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { addressData, updateAddresses } = useAddressData();
+  const { addError } = useContext(APIErrorContext);
 
   const handleDelete = (addressId: string) => {
     setIsDeleteModalOpen(true);
@@ -39,6 +41,7 @@ export const Address: React.FC = () => {
         setIsDeleteModalOpen(false);
       })
       .catch(error => {
+        addError(error.errors);
         setIsLoading(false);
         setIsDeleteModalOpen(false);
         console.error(error);

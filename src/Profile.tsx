@@ -1,8 +1,8 @@
-
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useFormik } from 'formik';
 import { updateCustomer } from './service';
 import { useCustomerData, useTranslation } from './app-state';
+import { APIErrorContext } from './APIErrorProvider';
 
 import './Profile.scss';
 
@@ -17,6 +17,7 @@ export const Profile: React.FC = (props) => {
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { addError } = useContext(APIErrorContext);
 
   const initialValues:FormValues = {
     email: customerEmail,
@@ -52,6 +53,7 @@ export const Profile: React.FC = (props) => {
           setIsEditMode(false);
         })
         .catch(error => {
+          addError(error.errors);
           console.error(error);
         });
     },

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { Elements, StripeProvider } from 'react-stripe-elements';
 import { useCartData, useCustomerData, useMultiCartData, useOrdersData, useTranslation } from './app-state';
@@ -12,6 +12,7 @@ import { CartItemList } from './CartItemList';
 import { CartsList } from "./CartsList";
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import { ReactComponent as BackArrowIcon } from './images/icons/arrow_back-black-24dp.svg';
+import { APIErrorContext } from "./APIErrorProvider";
 
 import './CartModal.scss';
 
@@ -53,6 +54,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
   const { updatePurchaseHistory } = useOrdersData();
   const { isCartSelected } = useMultiCartData();
   const { t } = useTranslation();
+  const { addError } = useContext(APIErrorContext);
 
   const [route, setRoute] = useState<string>('');
   const [isSameAddress, setIsSameAddress] = useState(true);
@@ -83,6 +85,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
       setRoute('completed');
       setIsSameAddress(true);
     } catch (err) {
+      addError(err.errors);
       console.error(err)
     }
   };

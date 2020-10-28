@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import * as moltin from '@moltin/sdk';
 import { loadImageHref } from './service';
+import { APIErrorContext } from "./APIErrorProvider";
 
 type FetchHookResult<R> = [
   R | undefined,
@@ -10,6 +11,7 @@ type FetchHookResult<R> = [
 
 export function useResolve<R>(promiseFn: () => Promise<R> | undefined, deps?: React.DependencyList): FetchHookResult<R> {
   const [result, setResult] = useState<FetchHookResult<R>>([undefined, true, undefined]);
+  const { addError } = useContext(APIErrorContext);
 
   useEffect(() => {
     let isCurrent = true;
@@ -24,6 +26,7 @@ export function useResolve<R>(promiseFn: () => Promise<R> | undefined, deps?: Re
           }
         })
         .catch(error => {
+          addError(error.errors);
           if (isCurrent) {
             setResult([undefined, false, error]);
           }

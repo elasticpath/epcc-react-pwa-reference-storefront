@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useCartData, useCustomerData, useTranslation, useMultiCartData } from './app-state';
 import { removeCartItem, updateCartItem } from './service';
 import { ImageContainer } from "./ImageContainer";
 import { Promotion } from "./Promotion";
+import { APIErrorContext } from "./APIErrorProvider";
 
 import './CartItemList.scss';
 
@@ -18,6 +19,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const { isLoggedIn } = useCustomerData();
   const { count, totalPrice, updateCartItems } = useCartData();
   const { selectedCart } = useMultiCartData();
+  const { addError } = useContext(APIErrorContext);
 
   const isLoading = false;
   const imgSize = 73;
@@ -37,6 +39,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
         setRemovingItem(-1);
       })
       .catch(error => {
+        addError(error.errors);
         console.error(error);
       })
   };

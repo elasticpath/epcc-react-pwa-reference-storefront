@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { useFormik } from 'formik';
@@ -53,7 +52,7 @@ export const RegistrationForm: React.FC = (props) => {
     }
 
     return errors;
-  }
+  };
 
   const {handleSubmit, handleChange, values, errors} = useFormik({
     initialValues,
