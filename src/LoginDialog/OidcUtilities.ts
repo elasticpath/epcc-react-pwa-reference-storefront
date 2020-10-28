@@ -24,10 +24,15 @@ export const generateOidcLoginRedirectUrl = (baseRedirectUrl: string, cId: strin
         'response_type=code',
         'scope=openid+email+profile'
     ].join('&');
-    
-    return `${baseRedirectUrl}?${oidcParameters}`
+
+
+    let delimeter = "?";
+    if (baseRedirectUrl.indexOf("?") >= 0) {
+        delimeter = "&";
+    }
+    return `${baseRedirectUrl}${delimeter}${oidcParameters}`
 }
 
 export const getAuthorizationEndpointFromProfile = (profile: any):string =>{
-    return `${profile?.meta?.discovery_document?.authorization_endpoint}?`
+    return `${profile?.meta?.discovery_document?.authorization_endpoint}&`
 }
