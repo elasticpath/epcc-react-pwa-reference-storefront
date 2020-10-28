@@ -72,6 +72,36 @@
       }
     }
   }
+
+  .settingscart {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
+    padding: 32px;
+    background: $mainBackgroundColor;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(500px);
+    transition: all 0.3s ease 0s;
+    z-index: 1;
+
+    &.--show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0px);
+    }
+  }
+
+  @media (max-width: $mobileXSmallWidth - 1px) {
+    .settingscart {
+      padding: 20px;
+    }
+  }
 }
 
 

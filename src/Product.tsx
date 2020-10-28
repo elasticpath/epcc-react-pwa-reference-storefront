@@ -141,7 +141,7 @@ export const Product: React.FC = () => {
                 key="create-cart-btn"
                 onClick={() => setModalOpen(true)}
               >
-                Create cart
+                {t('create-cart')}
               </button>
             </div>
           ) : null}

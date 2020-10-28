@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useTranslation, useMultiCartData } from './app-state';
+import { SettingsCart } from "./SettingsCart";
 import './CartSelection.scss';
 
 interface CartSelectionParams {
@@ -12,6 +13,7 @@ export  const CartSelection: React.FC<CartSelectionParams> = (props) => {
   const [selectedItem, setSelectedItem] = useState(mcart);
   const { multiCartData, updateSelectedCart, setIsCartSelected } = useMultiCartData();
   const [selectedCart, setSelectedCart] = useState(multiCartData[0]);
+  const [showSettings, setShowSettings] = useState(false);
 
   const { t } = useTranslation();
 
@@ -72,11 +74,12 @@ export  const CartSelection: React.FC<CartSelectionParams> = (props) => {
           </div>
         )}
         {multiCartData.length ? (
-          <button className="epbtn --primary --fullwidth --large" onClick={() => onHandleCart('itemList')} >{t('select-cart')}</button>
+          <button className="epbtn --primary --fullwidth --large" disabled={!selectedItem} onClick={() => onHandleCart('itemList')} >{t('select-cart')}</button>
           ) : (
-          <button className="epbtn --primary --fullwidth --large" onClick={() => onHandlePage('createCart')} >{t('create-cart')}</button>
+          <button className="epbtn --primary --fullwidth --large" onClick={() => setShowSettings(true)}>{t('create-cart')}</button>
         )}
       </div>
+      <SettingsCart showSettings={showSettings} handleHideSettings={() => setShowSettings(false)} />
     </div>
   )
 };
