@@ -368,6 +368,8 @@ function useCartItemsState() {
   const [cartData, setCartData] = useState<moltin.CartItem[]>([]);
   const [promotionItems, setPromotionItems] = useState<moltin.CartItem[]>([]);
   const [count, setCount] = useState(0);
+  const [quantity, setQuantity] = useState(0);
+  const [showCartPopup, setShowCartPopup] = useState(false);
   const [totalPrice, setTotalPrice] = useState('');
   const mcart = localStorage.getItem('mcart') || '';
 
@@ -389,14 +391,21 @@ function useCartItemsState() {
       setCartData(cartData);
       const promotionItems = res.data.length ? res.data.filter(({ type }) => type === 'promotion_item') : [];
       setPromotionItems(promotionItems);
-      const count = res.data.length ? res.data.reduce((sum, { quantity }) => sum + quantity, 0) : 0;
-      setCount(count);
+      const itemQuantity = res.data.length ? res.data.reduce((sum, { quantity }) => sum + quantity, 0) : 0;
+      setQuantity(itemQuantity - count);
+      setCount(itemQuantity);
       const totalPrice = res.meta ? res.meta.display_price.without_tax.formatted : '';
-      setTotalPrice(totalPrice)
+      setTotalPrice(totalPrice);
+      if (!showCartPopup && itemQuantity - count > 0) {
+        setShowCartPopup(true);
+        setTimeout(() => {
+          setShowCartPopup(false);
+        }, 3200);
+      }
     });
   };
 
-  return { cartData, promotionItems, count, totalPrice, updateCartItems }
+  return { cartData, promotionItems, count, quantity, showCartPopup, totalPrice, updateCartItems }
 }
 
 function useMultiCartDataState() {

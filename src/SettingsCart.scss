@@ -31,6 +31,7 @@
 
       &:hover {
         cursor: pointer;
+        display: inline-block;
       }
     }
   }
@@ -41,6 +42,10 @@
     right: 5px;
     bottom: 5px;
     cursor: pointer;
+
+    &:hover {
+      display: inline-block;
+    }
   }
 
   .epform__input {

@@ -200,5 +200,8 @@
   "warning": "Warning",
   "warning-msg": "You may not delete all of your carts. Unselect one cart to delete",
   "loading": "Loading",
-  "carts-description": "Enter your carts description here"
+  "carts-description": "Enter your carts description here",
+  "cart-popup-info": "{quantity} Items have been added to your cart",
+  "cart-popup-info-1": "1 Item has been added to your cart",
+  "view-cart": "View cart"
 }
