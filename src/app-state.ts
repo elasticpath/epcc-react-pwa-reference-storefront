@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import constate from 'constate';
 import * as moltin from '@moltin/sdk';
-import { getCustomer, getAddresses, getAllOrders, loadCategoryTree, getCartItems, loadCustomerAuthenticationSettings, loadAuthenticationProfiles } from './service';
+import { getCustomer, getAddresses, getAllOrders, loadCategoryTree, getCartItems, loadCustomerAuthenticationSettings, loadOidcProfiles } from './service';
 import * as service from './service';
 import { config } from './config';
 
@@ -360,23 +360,23 @@ function useCompareProductsState() {
 
 function useCustomerAuthenticationSettingsState() {
   const [ authenticationSettings, setAuthenticationSettings ] = useState<object>()
-  const [ authenticationProfiles, setAuthenticationProfiles ] = useState<object>();
+  const [ oidcProfiles, setOidcProfiles ] = useState<object>();
 
   useEffect(()=>{
     loadCustomerAuthenticationSettings().then((authSettings) => {
       setAuthenticationSettings(authSettings);
-      
+
       const authenticationRealmId = authSettings?.data?.relationships['authentication-realm']?.data?.id
-      
-      loadAuthenticationProfiles(authenticationRealmId).then((profiles) => {
-        setAuthenticationProfiles(profiles);
+
+      loadOidcProfiles(authenticationRealmId).then((profiles) => {
+        setOidcProfiles(profiles);
       })
     }).catch((err)=>{
       console.log(err)
     });
   },[])
- 
-  return { authenticationSettings, authenticationProfiles }
+
+  return { authenticationSettings, oidcProfiles }
 }
 
 function useCartItemsState() {
@@ -442,7 +442,7 @@ export const [
   useCartData,
 ] = constate(
   useGlobalState,
-  value => value.translation,  
+  value => value.translation,
   value => value.customerData,
   value => value.addressData,
   value => value.ordersData,
