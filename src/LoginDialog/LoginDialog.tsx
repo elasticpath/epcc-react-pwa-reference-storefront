@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Modal from 'react-responsive-modal';
 import { useTranslation, useCustomerAuthenticationSettings } from '../app-state';
 import { PasswordLoginForm } from './PasswordLoginForm';
-import { LoginDialogDivider } from './LoginDialogDivider'; 
+import { LoginDialogDivider } from './LoginDialogDivider';
 
 import { ReactComponent as CloseIcon } from '../images/icons/ic_close.svg';
 
@@ -18,13 +18,13 @@ interface AppModalLoginMainProps {
 export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
   const { handleModalClose, openModal } = props;
 
-  const { authenticationSettings, authenticationProfiles }: any = useCustomerAuthenticationSettings()
-  
+  const { authenticationSettings, oidcProfiles }: any = useCustomerAuthenticationSettings()
+
   const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
   const [failedLogin, setFailedLogin] = useState(false);
-  
+
   const handleClose = () => {
     setFailedLogin(false);
     handleModalClose();
@@ -48,22 +48,22 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
           <div className="logindialog__feedback">
           {failedLogin ? t('invalid-email-or-password') : ('')}
           </div>
-        
+
           {
-            authenticationSettings ? 
+            authenticationSettings ?
             authenticationSettings?.data.allow_password_authentication &&
             <PasswordLoginForm handleModalClose={handleModalClose} isLoading={isLoading} setIsLoading={setIsLoading} setFailedLogin={setFailedLogin} />
             :
             <div className="epminiLoader" />
           }
-          
+
           {
-            authenticationProfiles ? 
+            oidcProfiles ?
             [
               authenticationSettings?.data.allow_password_authentication && <LoginDialogDivider/>,
               <OidcLoginButtons key="OidcLoginButton"/>
             ]: (
-              authenticationSettings && 
+              authenticationSettings &&
               [
                 authenticationSettings?.data.allow_password_authentication && <LoginDialogDivider/>,
                 <div key="oidcLoginButtonLoader" className="epminiLoader" />

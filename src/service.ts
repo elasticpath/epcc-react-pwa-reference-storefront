@@ -4,27 +4,27 @@ import { config } from './config';
 const MoltinGateway = moltin.gateway;
 
 export async function loadCustomerAuthenticationSettings(): Promise<any> {
-  const moltin = MoltinGateway({ 
+  const moltin = MoltinGateway({
     client_id: config.clientId,
     host: config.endpointURL,
   });
   return moltin.AuthenticationSettings.Get()
 }
 
-export async function loadAuthenticationProfiles(realmId: string): Promise<any> {
-  const moltin = MoltinGateway({ 
+export async function loadOidcProfiles(realmId: string): Promise<any> {
+  const moltin = MoltinGateway({
     client_id: config.clientId,
     host: config.endpointURL,
   });
-  return moltin.AuthenticationProfile.All(realmId)
+  return moltin.OidcProfile.All(realmId)
 }
 
-export function getAuthenticationProfile(realmId: string, profileId: string) {
-  const moltin = MoltinGateway({ 
+export function getOidcProfile(realmId: string, profileId: string) {
+  const moltin = MoltinGateway({
     client_id: config.clientId,
     host: config.endpointURL,
   });
-  return moltin.AuthenticationProfile.Get({
+  return moltin.OidcProfile.Get({
       realmId,
       profileId
     }
@@ -162,7 +162,7 @@ export async function login(email: string, password: string): Promise<moltin.Cus
 export async function getCustomer(id: string, token: string): Promise<moltin.CustomerBase> {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const { data } = await moltin.Customers.Get(id, token);
-  
+
   return data;
 }
 
@@ -248,5 +248,3 @@ export async function payment(payment: object, orderId: string) {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   await moltin.Orders.Payment(orderId, payment)
 }
-
-
