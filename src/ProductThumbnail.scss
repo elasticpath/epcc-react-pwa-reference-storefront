@@ -30,6 +30,11 @@
     font-weight: bold;
   }
 
+  #{$block}__sku {
+    margin-top: 10px;
+    font-size: $sizeSmall;
+  }
+
   #{$block}__comparecheck {
     margin-top: 10px;
     font-size: smaller;

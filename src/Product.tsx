@@ -95,6 +95,9 @@ export const Product: React.FC = () => {
             <h1 className="product__name">
               {product.name}
             </h1>
+            <div className="product__sku">
+              {product.sku}
+            </div>
             <div className="product__price">
               {product.meta.display_price.without_tax.formatted}
             </div>

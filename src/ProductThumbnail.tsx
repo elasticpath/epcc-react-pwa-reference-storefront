@@ -30,6 +30,9 @@ export const ProductThumbnail: React.FC<ProductThumbnailProps> = (props) => {
           {props.product.name}
         </Link>
       </div>
+      <div className="productthumbnail__sku">
+        {props.product.sku}
+      </div>
       <div className="productthumbnail__price">
         {props.product.meta.display_price.without_tax.formatted}
       </div>

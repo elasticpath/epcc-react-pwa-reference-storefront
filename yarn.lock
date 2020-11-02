@@ -2170,10 +2170,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@moltin/sdk@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@moltin/sdk/-/sdk-4.0.2.tgz#08b86be8cdb5248f157602bb2522616957d085bf"
-  integrity sha512-QTaW9jX7dkVOQhwK4xj59uf+4cHNnUqBDUiAGEsRHyPvwLaetQNUkb7Pa2vWPC9V+jQ7lycv4xqth3okmXj8Eg==
+"@moltin/sdk@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@moltin/sdk/-/sdk-4.4.0.tgz#a00334aff72c11fd7157446c031cdccc2a64d1a4"
+  integrity sha512-Yj+blauwGScUNi5uJEOi0A2tztmqLztAGkr0mZnRGD1VKis8BwIM4jgs7aS6Y/a9xRtVqJ3xXWsoqyn8wi0dOg==
   dependencies:
     es6-promise "^4.0.5"
     fetch-everywhere "^1.0.5"

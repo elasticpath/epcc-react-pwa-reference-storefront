@@ -14,6 +14,9 @@ import { Address } from './Address';
 import { Search } from './Search';
 import { PurchaseHistory } from './PurchaseHistory';
 import { OrderDetails } from './OrderDetails';
+import { Orders } from './Orders';
+import { BulkOrder } from './BulkOrder';
+import { QuickOrder } from './QuickOrder';
 
 interface RouteConfig {
   path: string;
@@ -34,12 +37,18 @@ export const routes: RouteConfig[] = [
   { exact: false, path: '/account', component: MyAccount, },
   { exact: false, path: '/search', component: Search, },
   { exact: true, path: '/orderdetails/:orderId', component: OrderDetails, },
+  { exact: false, path: '/orders', component: Orders, },
 ];
 
 export const routesAccount: RouteConfig[] = [
   { exact: true, path: '/account', component: Profile, },
   { exact: true, path: '/account/address', component: Address, },
   { exact: true, path: '/account/purchase-history', component: PurchaseHistory, },
+];
+
+export const routesOrders: RouteConfig[] = [
+  { exact: true, path: '/orders/bulk-order', component: BulkOrder, },
+  { exact: true, path: '/orders/quick-order', component: QuickOrder, },
 ];
 
 export function createHomeUrl(): string {
@@ -76,4 +85,12 @@ export function createPurchaseHistoryUrl(): string {
 
 export function createSearchUrl(): string {
   return `/search`;
+}
+
+export function createBulkOrderUrl(): string {
+  return `/orders/bulk-order`;
+}
+
+export function createQuickOrderUrl(): string {
+  return `/orders/quick-order`;
 }

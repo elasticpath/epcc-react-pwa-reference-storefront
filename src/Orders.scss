@@ -1,0 +1,43 @@
+@import './theme/common';
+
+.orders {
+  position: relative;
+  width: 100%;
+  padding-top: 50px;
+
+  &__nav {
+    margin-bottom: 50px;
+  }
+
+  &__content {
+    margin-bottom: 50px;
+  }
+
+  &__menu {
+    display: flex;
+  }
+
+  &__link {
+    display: inline-block;
+    width: 100%;
+    padding-bottom: 15px;
+    text-align: center;
+    color: $secondComplimentTextColor;
+    border-bottom: 1px solid transparent;
+  }
+
+  &__menuitem {
+    width: 50%;
+    border-bottom: 1px solid $firstBorderColor;
+
+    &.--selected {
+      border-color: $firstComplimentColor;
+
+      .orders__link {
+        color: $firstComplimentColor;
+        border-color: $firstComplimentColor;
+      }
+    }
+  }
+
+}
