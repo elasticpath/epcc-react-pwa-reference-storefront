@@ -1,0 +1,94 @@
+@import './theme/common';
+
+.bulkorder {
+
+  &__form {
+    max-width: 800px;
+  }
+
+  &__group {
+    position: relative;
+    margin-bottom: 25px;
+  }
+
+  &__label {
+    display: inline-block;
+    font-size: $sizeSmall;
+    margin-bottom: 5px;
+  }
+
+  &__textarea {
+    width: 100%;
+    min-height: 400px;
+    padding: 10px;
+    font-size: $sizeSmall;
+    border: 1px solid $secondBorderColor;
+    border-radius: 4px;
+    color: $secondComplimentTextColor;
+
+    &:focus {
+      border-color: $firstComplimentColor;
+      outline: 0 auto transparent;
+    }
+  }
+
+  &__info {
+    margin-bottom: 15px;
+
+    p {
+      font-size: $sizeSmall;
+      white-space: pre;
+    }
+  }
+
+  &__clearbtn {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    cursor: pointer;
+  }
+
+  &__clearicon {
+    fill: $thirdComplimentTextColor;
+  }
+
+  &__btns {
+    text-align: right;
+
+    .epbtn {
+      height: 42px;
+      min-width: 300px;
+
+      .circularLoader {
+        border-top-color: $mainColor;
+      }
+    }
+  }
+
+  &__feedback {
+    width: 100%;
+    padding: 20px 60px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: $sizeSmall;
+    color: $mainErrorColor;
+    border: 1px solid $mainErrorColor;
+    background-color: $mainBackgroundColor;
+    white-space: pre;
+  }
+
+  @media (max-width: $mobileWidth - 1px) {
+    &__feedback {
+      padding: 15px;
+    }
+  }
+
+  @media (max-width: $mobileXSmallWidth - 1px) {
+    &__btns {
+      .epbtn {
+        min-width: 100%;
+      }
+    }
+  }
+}

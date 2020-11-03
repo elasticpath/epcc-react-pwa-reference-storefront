@@ -1,0 +1,58 @@
+
+@import './theme/common.scss';
+
+.bulkorderdropdown {
+  width: 30px;
+  position: relative;
+
+  &__btn {
+    height: 27px;
+    width: 30px;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: transparent;
+    text-align: center;
+  }
+
+  &__btnicon {
+    display: inline-block;
+    content: " ";
+    width: 24px;
+    height: 24px;
+    background-size: cover;
+  }
+
+  &__menu {
+    min-width: 130px;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: $mainBackgroundColor;
+    z-index: 2;
+    border: 1px solid $secondComplimentColor;
+    margin-top: 5px;
+  }
+
+  &__link {
+    width: 100%;
+    display: inline-block;
+    padding: 7px 10px;
+    color: $thirdComplimentColor;
+    font-size: $sizeSmall;
+    line-height: 19px;
+
+    &:hover {
+      background-color: adjust-color($color: $thirdComplimentColor, $lightness: 64%);
+    }
+  }
+
+  &__open & {
+    &__btn {
+      background-color: $firstComplimentColor;
+    }
+
+    &__btnicon {
+      fill: $mainBackgroundColor;
+    }
+  }
+}
