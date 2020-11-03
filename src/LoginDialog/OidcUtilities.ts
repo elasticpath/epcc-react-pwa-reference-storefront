@@ -16,18 +16,18 @@ export const generateOidcLoginRedirectUrl = (baseRedirectUrl: string, cId: strin
     localStorage.setItem('state', stateToken);
     localStorage.setItem('location', prevLocation);
     
-    // String Build Oidc Redirect Url
-    const oidcParameters = [
-        `client_id=${cId}`,
-        `redirect_uri=${generateRedirectUri()}`,
-        `state=${stateToken}`,
-        'response_type=code',
-        'scope=openid+email+profile'
-    ].join('&');
-    
-    return `${baseRedirectUrl}?${oidcParameters}`
+    let url = new URL(baseRedirectUrl);
+    url.searchParams.append("client_id", cId);
+    url.searchParams.append("redirect_uri", generateRedirectUri());
+    url.searchParams.append("state", stateToken);
+    url.searchParams.append("response_type", "code");
+    url.searchParams.append("scope", "openid+email+profile");
+
+
+    return url.toString();
 }
 
 export const getAuthorizationEndpointFromProfile = (profile: any):string =>{
-    return `${profile?.meta?.discovery_document?.authorization_endpoint}?`
+    let authorizationEndpoint = profile?.meta?.discovery_document?.authorization_endpoint;
+    return authorizationEndpoint.indexOf("?") ? `${authorizationEndpoint}&` : `${authorizationEndpoint}?`
 }
