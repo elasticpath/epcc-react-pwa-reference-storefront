@@ -12,7 +12,7 @@
   }
 
   &__logo {
-    padding:  0 20px 0 60px;
+    padding:  0 10px 0 60px;
   }
 
   &__search {
@@ -24,6 +24,10 @@
   }
 
   &__language {
+    margin-right: 20px;
+  }
+
+  &__bulkorder {
     margin-right: 20px;
   }
 
@@ -122,7 +126,8 @@
     &__accountm,
     &__search,
     &__language,
-    &__account {
+    &__account,
+    &__bulkorder {
       margin-right: 10px;
     }
 
@@ -130,7 +135,7 @@
       margin: 0;
     }
 
-      &__moltincartcontainer & {
+    &__moltincartcontainer & {
       &__cartbtn.--bordered {
         border: none;
 
@@ -164,6 +169,26 @@
 
     &__carticon {
       display: none;
+    }
+  }
+
+  @media (max-width: $mobileXSmallWidth - 1px) {
+    &__accountm,
+    &__search,
+    &__language,
+    &__account,
+    &__bulkorder {
+      margin-right: 5px;
+    }
+
+    &__logo {
+      .logo-image {
+        max-width: 85px;
+      }
+    }
+
+    &__cartbtn.epbtn {
+      padding: 10px;
     }
   }
 }

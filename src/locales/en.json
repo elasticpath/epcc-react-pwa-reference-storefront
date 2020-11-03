@@ -203,5 +203,15 @@
   "carts-description": "Enter your carts description here",
   "cart-popup-info": "{quantity} Items have been added to your cart",
   "cart-popup-info-1": "1 Item has been added to your cart",
-  "view-cart": "View cart"
+  "view-cart": "View cart",
+  "bulk-order": "Bulk order",
+  "quick-order": "Quick order",
+  "add-products-by-sku": "Add products by SKU",
+  "bulk-order-format": "Add each SKU on a separate line\nUse format: SKU, quantity",
+  "add-items-to-cart": "Add {quantity} items to cart",
+  "add-item-to-cart": "Add 1 item to cart",
+  "quick-add-info": "Enter product SKU’s in inputs. The quick add form accepts up to 100 items at a time.",
+  "sku": "SKU",
+  "add-more-fields": "Add more fields",
+  "sku-error": "We’re unable to add your items to cart, some item SKU’s are unavailable"
 }

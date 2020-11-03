@@ -1,0 +1,157 @@
+@import './theme/common';
+
+.quickorder {
+  &__info {
+    font-size: $sizeSmall;
+    margin-bottom: 50px;
+  }
+
+  &__formwrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+
+  &__form {
+    width: 45%;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 5px;
+
+    .epform__group {
+      flex-grow: 1;
+      margin-right: 20px;
+
+      &.--error {
+        .quickorder__clearicon {
+          fill: $mainErrorColor;
+        }
+      }
+    }
+
+    .epform__input {
+      padding-right: 30px;
+
+      &:focus {
+        border-color: $firstComplimentColor;
+        outline: 0 auto transparent;
+      }
+    }
+  }
+
+  &__clearbtn {
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+    cursor: pointer;
+  }
+
+  &__clearicon {
+    fill: $thirdComplimentTextColor;
+  }
+
+  &__quantity {
+    min-width: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 15px;
+  }
+
+  &__arrow {
+    display: inline-block;
+    height: 7px;
+    width: 7px;
+    border-bottom: 1px solid $fourthComplimentTextColor;
+    border-right: 1px solid $fourthComplimentTextColor;
+    cursor: pointer;
+
+    &.--top {
+      transform: rotate(225deg);
+    }
+
+    &.--bottom {
+      transform: rotate(45deg);
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+  }
+
+  &__count {
+    padding: 7px 0;
+    text-align: center;
+  }
+
+  &__btns {
+    text-align: right;
+
+    .epbtn {
+      height: 42px;
+      margin-bottom: 10px;
+
+      &:first-child {
+        min-width: 200px;
+        margin-right: 20px;
+      }
+
+      &.--primary {
+        min-width: 300px;
+
+        .circularLoader {
+          border-top-color: $mainColor;
+        }
+      }
+    }
+  }
+
+  &__feedback {
+    width: 100%;
+    padding: 20px 60px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: $sizeSmall;
+    color: $mainErrorColor;
+    border: 1px solid $mainErrorColor;
+    background-color: $mainBackgroundColor;
+    white-space: pre;
+  }
+
+  @media (max-width: $mobileWidth - 1px) {
+    &__btns {
+      .epbtn {
+        &.--primary {
+          min-width: 200px;
+        }
+      }
+    }
+
+    &__feedback {
+      padding: 15px;
+    }
+  }
+
+  @media (max-width: $mobileXSmallWidth - 1px) {
+    &__form {
+      width: 100%;
+    }
+
+    &__btns {
+      .epbtn {
+        &:first-child {
+          min-width: 100%;
+          margin-right: 0;
+        }
+
+        &.--primary {
+          min-width: 100%;
+        }
+      }
+    }
+  }
+}

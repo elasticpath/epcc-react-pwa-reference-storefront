@@ -9,6 +9,7 @@ import { SearchBar } from './SearchBar';
 import { AccountDropdown } from './AccountDropdown';
 import { Navigation } from "./Navigation";
 import { CartModal } from "./CartModal";
+import { BulkOrderDropdown } from './BulkOrderDropdown';
 
 import headerLogo from './images/site-images/Company-Logo.svg';
 import { ReactComponent as CartIcon } from './images/icons/cart-icon.svg';
@@ -61,6 +62,9 @@ export const AppHeader: React.FC = () => {
               <button className="epbtn" onClick={handleCartModal}>{t('view-cart')}</button>
             </div>
           )}
+        </div>
+        <div className="appheader__bulkorder">
+          <BulkOrderDropdown />
         </div>
         <div className="appheader__account">
           <AccountDropdown />
