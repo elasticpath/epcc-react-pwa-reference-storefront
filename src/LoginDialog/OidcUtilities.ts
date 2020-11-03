@@ -16,37 +16,18 @@ export const generateOidcLoginRedirectUrl = (baseRedirectUrl: string, cId: strin
     localStorage.setItem('state', stateToken);
     localStorage.setItem('location', prevLocation);
     
-    // String Build Oidc Redirect Url
-    const oidcParameters = [
-        `client_id=${cId}`,
-        `redirect_uri=${generateRedirectUri()}`,
-        `state=${stateToken}`,
-        'response_type=code',
-        'scope=openid+email+profile'
-    ].join('&');
+    let url = new URL(baseRedirectUrl);
+    url.searchParams.append("client_id", cId);
+    url.searchParams.append("redirect_uri", generateRedirectUri());
+    url.searchParams.append("state", stateToken);
+    url.searchParams.append("response_type", "code");
+    url.searchParams.append("scope", "openid+email+profile");
 
 
-    // the baseRedirectUrl may contain a query parameter already
-    //in this case, we want to append our new oidcParameters with '&' instead of '?'
-    //otherwise the url will be invalid (can't have 2 '?' in the url)
-    //
-    //
-    // example:
-    // baseRedirectUrl: //realms/realm-id?profile=xyz
-    //
-    // becomes //realms/realm-id?profile=xyz&client_id=abc...
-    // instead of //realms/realm-id?profile=xyz?client_id=abc...
-    let delimeter = "?";
-    if (baseRedirectUrl.indexOf("?") >= 0) {
-        delimeter = "&";
-    }
-    return `${baseRedirectUrl}${delimeter}${oidcParameters}`
+    return url.toString();
 }
 
 export const getAuthorizationEndpointFromProfile = (profile: any):string =>{
-    let delimeter = "?";
-    if (profile?.meta?.discovery_document?.authorization_endpoint.indexOf("?") >= 0) {
-        delimeter = "&";
-    }
-    return `${profile?.meta?.discovery_document?.authorization_endpoint}${delimeter}`
+    let authorizationEndpoint = profile?.meta?.discovery_document?.authorization_endpoint;
+    return authorizationEndpoint.indexOf("?") ? `${authorizationEndpoint}&` : `${authorizationEndpoint}?`
 }
