@@ -8,6 +8,31 @@
     position: relative;
   }
 
+  &__deleteCartAlert {
+    border: 1px solid $secondBorderColor;
+    box-sizing: border-box;
+    height: 
+    48px;
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    bottom: 0%;
+    p {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 13px;
+      line-height: 18px;
+      text-align: left;
+      position: absolute;
+      left: 4.44%;
+      right: 25%;
+      top: 33.33%;
+      bottom: 29.17%;
+      
+    }
+  }
+
   &__deletebutton {
     min-height: 24px;
 
@@ -92,7 +117,7 @@
       }
     }
 
-    &.--selected, &:hover {
+    &:hover {
       background-color: $sixthComplimentBackground;
       color: $firstComplimentColor;
 

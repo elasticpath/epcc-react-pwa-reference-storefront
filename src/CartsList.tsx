@@ -18,10 +18,12 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
   const { multiCartData, selectedCart, updateSelectedCart, setIsCartSelected, updateCartData } = useMultiCartData();
   const { updateCartItems } = useCartData();
   const [selectedCarts, setSelectedCarts] = useState<string[]>([]);
+  const [deletedCartNumber , setDeletedCartNumber] = useState(Number)
   const [isEdit, setIsEdit] = useState(false);
   const [isShowModal, setIsShowModal] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [showDeletedCartsnumber, setShowDeletedCartsnumber ] = useState(false);
 
   const { t } = useTranslation();
 
@@ -48,6 +50,8 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
 
   const onDeleteCart = () => {
     setShowLoader(true);
+    setShowDeletedCartsnumber(true);
+    setDeletedCartNumber(selectedCarts.length);
     const promises = selectedCarts.map(el => removeCartItems(el));
     Promise.all(promises)
       .then(() => {
@@ -73,19 +77,19 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
 
   const handleCartEdit = () => {
     setIsEdit(!isEdit);
-    if (isEdit) {
-      handleHideBackButton(false);
-    } else {
-      handleHideBackButton(true);
-    }
   };
 
   return (
     <div className="cartslist">
       <div className="cartslist__content">
+        {showDeletedCartsnumber ?  (
+          <div className="cartslist__deleteCartAlert">
+            <p>You have deleted ${deletedCartNumber} ${t('cart')} </p>
+          </div>
+        ): ''}
         {multiCartData.length && (
           <button className="cartslist__editbutton" onClick={handleCartEdit}>
-            {t(isEdit ? 'done' : 'edit')}
+            {t(isEdit ? '' : 'edit')}
           </button>
         )}
         <h2 className="cartslist__title">
@@ -98,9 +102,10 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
                 <span>
                   <input type="checkbox" name="cartCheck" id="select-all" className="cartslist__checkall epcheckbox" onChange={() => {handleSelectAll()}} />
                   <label htmlFor="select-all" className="">
-                    {selectedCarts.length}
-                    &nbsp;
-                    {t('selected')}
+                    {selectedCarts.length == 1 ?  `${selectedCarts.length} ${t('cart')}
+                    ${t('selected')}` : `${selectedCarts.length} ${t('cart')}s
+                    ${t('selected')}` }
+                    
                   </label>
                 </span>
                 <button className="cartslist__deletebutton" disabled={selectedCarts.length === 0} onClick={() => setIsShowModal(true)}>
@@ -110,7 +115,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
             </div>
             <div className={`cartslist__cartlist${isEdit ? ' --editmode' : ''}`}>
               {multiCartData.map((cart: any) => (
-                <div role="presentation" className={`cartslist__cartelement${cart.id.includes(selectedCart && selectedCart.id) ? ' --selected' : ''}`} key={cart.id} onClick={() => handleCart(cart)} tabIndex={-1}>
+                <div role="presentation" className='cartslist__cartelement' key={cart.id} onClick={() => handleCart(cart)} tabIndex={-1}>
                   {isEdit && (
                     <input type="checkbox" name="cartCheck" id={`cart_${cart.id}`} className="cartslist__check epcheckbox" checked={selectedCarts.includes(cart.id)} onChange={() => {handleSelectCart(cart.id)}} />
                   )}
