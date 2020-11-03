@@ -34,5 +34,9 @@ export const generateOidcLoginRedirectUrl = (baseRedirectUrl: string, cId: strin
 }
 
 export const getAuthorizationEndpointFromProfile = (profile: any):string =>{
-    return `${profile?.meta?.discovery_document?.authorization_endpoint}&`
+    let delimeter = "?";
+    if (profile?.meta?.discovery_document?.authorization_endpoint.indexOf("?") >= 0) {
+        delimeter = "&";
+    }
+    return `${profile?.meta?.discovery_document?.authorization_endpoint}${delimeter}`
 }
