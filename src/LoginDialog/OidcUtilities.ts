@@ -26,6 +26,16 @@ export const generateOidcLoginRedirectUrl = (baseRedirectUrl: string, cId: strin
     ].join('&');
 
 
+    // the baseRedirectUrl may contain a query parameter already
+    //in this case, we want to append our new oidcParameters with '&' instead of '?'
+    //otherwise the url will be invalid (can't have 2 '?' in the url)
+    //
+    //
+    // example:
+    // baseRedirectUrl: //realms/realm-id?profile=xyz
+    //
+    // becomes //realms/realm-id?profile=xyz&client_id=abc...
+    // instead of //realms/realm-id?profile=xyz?client_id=abc...
     let delimeter = "?";
     if (baseRedirectUrl.indexOf("?") >= 0) {
         delimeter = "&";
