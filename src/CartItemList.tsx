@@ -18,7 +18,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const { t } = useTranslation();
   const { isLoggedIn } = useCustomerData();
   const { count, totalPrice, updateCartItems } = useCartData();
-  const { selectedCart } = useMultiCartData();
+  const { selectedCart, updateCartData } = useMultiCartData();
   const { addError } = useContext(APIErrorContext);
 
   const isLoading = false;
@@ -36,6 +36,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
     removeCartItem(mcart, id)
       .then(() => {
         updateCartItems();
+        updateCartData();
         setRemovingItem(-1);
       })
       .catch(error => {
@@ -48,6 +49,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
     updateCartItem(mcart, id, quantity)
       .then(() => {
         updateCartItems();
+        updateCartData();
       })
       .catch(error => {
         console.error(error);
