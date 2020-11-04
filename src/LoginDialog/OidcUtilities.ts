@@ -11,18 +11,17 @@ export const generateRedirectUri = () => {
 
 export const generateOidcLoginRedirectUrl = (baseRedirectUrl: string, cId: string, prevLocation: string) => {
     const stateToken = generateStateToken();
-    
+
     // Set state and prevLocation for when oidc redirects back to the application.
     localStorage.setItem('state', stateToken);
     localStorage.setItem('location', prevLocation);
-    
+
     let url = new URL(baseRedirectUrl);
     url.searchParams.append("client_id", cId);
     url.searchParams.append("redirect_uri", generateRedirectUri());
     url.searchParams.append("state", stateToken);
     url.searchParams.append("response_type", "code");
-    url.searchParams.append("scope", "openid+email+profile");
-
+    url.searchParams.append("scope", "openid email profile");
 
     return url.toString();
 }
