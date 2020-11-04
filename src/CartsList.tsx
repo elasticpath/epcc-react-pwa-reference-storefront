@@ -84,12 +84,12 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
       <div className="cartslist__content">
         {showDeletedCartsnumber ?  (
           <div className="cartslist__deleteCartAlert">
-            <p>You have deleted ${deletedCartNumber} ${t('cart')} </p>
+            <p>You have deleted {deletedCartNumber} {t('cart')} </p>
           </div>
         ): ''}
         {multiCartData.length && (
           <button className="cartslist__editbutton" onClick={handleCartEdit}>
-            {t(isEdit ? '' : 'edit')}
+            {t(isEdit ? 'Done' : 'edit')}
           </button>
         )}
         <h2 className="cartslist__title">

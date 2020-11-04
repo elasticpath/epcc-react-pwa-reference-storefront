@@ -4,6 +4,7 @@ import { removeCartItem, updateCartItem } from './service';
 import { ImageContainer } from "./ImageContainer";
 import { Promotion } from "./Promotion";
 import { APIErrorContext } from "./APIErrorProvider";
+import { ReactComponent as SettingsIcon } from "./images/icons/settings-black-24dp.svg";
 
 import './CartItemList.scss';
 
@@ -67,9 +68,9 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
         {isLoggedIn && selectedCart ? (
           <span>
             {selectedCart.name || ''}
-            {/*<span className="cartitemlist__settingsicon">*/}
-            {/*  <SettingsIcon onClick={() => onHandlePage('settings')} />*/}
-            {/*</span>*/}
+            <span className="cartitemlist__settingsicon">
+             <SettingsIcon onClick={() => onHandlePage('settings')} />
+            </span>
           </span>
         ) : (
           <span>
