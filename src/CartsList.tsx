@@ -14,11 +14,11 @@ interface CartsListParams {
 }
 
 export  const CartsList: React.FC<CartsListParams> = (props) => {
-  const { onHandlePage, handleHideBackButton } = props;
-  const { multiCartData, selectedCart, updateSelectedCart, setIsCartSelected, updateCartData } = useMultiCartData();
+  const { onHandlePage } = props;
+  const { multiCartData, updateSelectedCart, setIsCartSelected, updateCartData } = useMultiCartData();
   const { updateCartItems } = useCartData();
   const [selectedCarts, setSelectedCarts] = useState<string[]>([]);
-  const [deletedCartNumber , setDeletedCartNumber] = useState(Number)
+  const [deletedCartNumber , setDeletedCartNumber] = useState(Number);
   const [isEdit, setIsEdit] = useState(false);
   const [isShowModal, setIsShowModal] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
@@ -102,10 +102,10 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
                 <span>
                   <input type="checkbox" name="cartCheck" id="select-all" className="cartslist__checkall epcheckbox" onChange={() => {handleSelectAll()}} />
                   <label htmlFor="select-all" className="">
-                    {selectedCarts.length == 1 ?  `${selectedCarts.length} ${t('cart')}
+                    {selectedCarts.length === 1 ?  `${selectedCarts.length} ${t('cart')}
                     ${t('selected')}` : `${selectedCarts.length} ${t('cart')}s
                     ${t('selected')}` }
-                    
+
                   </label>
                 </span>
                 <button className="cartslist__deletebutton" disabled={selectedCarts.length === 0} onClick={() => setIsShowModal(true)}>
