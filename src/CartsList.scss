@@ -10,6 +10,8 @@
 
   &__deleteCartAlert {
     border: 1px solid $secondBorderColor;
+    background-color: $mainBackgroundColor;
+    z-index: 1;
     box-sizing: border-box;
     height: 
     48px;

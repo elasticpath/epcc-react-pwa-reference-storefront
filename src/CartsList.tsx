@@ -24,6 +24,8 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
   const [showLoader, setShowLoader] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showDeletedCartsnumber, setShowDeletedCartsnumber ] = useState(false);
+  // const [visible, setVisible] = useState(false)
+ 
 
   const { t } = useTranslation();
 
@@ -63,6 +65,9 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
       .catch(error => {
         console.error(error);
       });
+      setTimeout(() => {
+        setShowDeletedCartsnumber(false)
+      }, 6000);
   };
 
   const handleCart = (cart:any) => {
@@ -81,12 +86,12 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
 
   return (
     <div className="cartslist">
-      <div className="cartslist__content">
-        {showDeletedCartsnumber ?  (
+      {showDeletedCartsnumber ?  (
           <div className="cartslist__deleteCartAlert">
-            <p>You have deleted {deletedCartNumber} {t('cart')} </p>
+            <p>You have deleted {deletedCartNumber} {deletedCartNumber === 1 ? `${t('cart')}` : `${t('carts')}`}  </p>
           </div>
         ): ''}
+      <div className="cartslist__content">
         {multiCartData.length && (
           <button className="cartslist__editbutton" onClick={handleCartEdit}>
             {t(isEdit ? 'Done' : 'edit')}
@@ -103,12 +108,12 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
                   <input type="checkbox" name="cartCheck" id="select-all" className="cartslist__checkall epcheckbox" onChange={() => {handleSelectAll()}} />
                   <label htmlFor="select-all" className="">
                     {selectedCarts.length === 1 ?  `${selectedCarts.length} ${t('cart')}
-                    ${t('selected')}` : `${selectedCarts.length} ${t('cart')}s
+                    ${t('selected')}` : `${selectedCarts.length} ${t('carts')}
                     ${t('selected')}` }
 
                   </label>
                 </span>
-                <button className="cartslist__deletebutton" disabled={selectedCarts.length === 0} onClick={() => setIsShowModal(true)}>
+                <button className="cartslist__deletebutton" disabled={selectedCarts.length === 0 ||  multiCartData.length === 1  } onClick={() => setIsShowModal(true)}>
                   {!isShowModal ? <DeleteIcon /> : <span className="circularLoader" aria-label={t('loading')} />}
                 </button>
               </div>
