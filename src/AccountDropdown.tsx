@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
-import { useCustomerData, useTranslation } from './app-state';
+import { useCustomerData, useTranslation, useMultiCartData } from './app-state';
 import { createAccountUrl } from './routes';
 import { LoginDialog } from './LoginDialog';
 import { ReactComponent as AccountIcon } from './images/icons/ic_account.svg';
@@ -10,6 +10,7 @@ import './AccountDropdown.scss';
 
 export const AccountDropdown: React.FC = (props) => {
   const { isLoggedIn, customerEmail, customerName, clearCustomerData } = useCustomerData();
+  const { setIsCartSelected } = useMultiCartData();
   const { t } = useTranslation();
   const history = useHistory();
 
@@ -39,6 +40,7 @@ export const AccountDropdown: React.FC = (props) => {
   const logout = () => {
     localStorage.setItem('mcart', createCartIdentifier());
     clearCustomerData();
+    setIsCartSelected(false);
     history.push('/');
   };
 

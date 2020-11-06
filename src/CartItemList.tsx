@@ -1,10 +1,15 @@
 import React, { useContext, useState } from 'react';
+import useOnclickOutside from 'react-cool-onclickoutside';
 import { useCartData, useCustomerData, useTranslation, useMultiCartData } from './app-state';
 import { removeCartItem, updateCartItem } from './service';
 import { ImageContainer } from "./ImageContainer";
 import { Promotion } from "./Promotion";
 import { APIErrorContext } from "./APIErrorProvider";
+import { LoginForm } from "./LoginForm";
+import { CreateCart } from "./CreateCart";
 import { ReactComponent as SettingsIcon } from "./images/icons/settings-black-24dp.svg";
+import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
+import { ReactComponent as BackArrowIcon } from './images/icons/arrow_back-black-24dp.svg';
 
 import './CartItemList.scss';
 
@@ -12,10 +17,11 @@ interface CartItemListParams {
   items: any,
   handlePage: (route: string) => any,
   promotionItems: any,
+  handleCloseCartModal: () => void
 }
 
 export const CartItemList: React.FC<CartItemListParams> = (props) => {
-  const { items, handlePage, promotionItems } = props;
+  const { items, handlePage, promotionItems, handleCloseCartModal } = props;
   const { t } = useTranslation();
   const { isLoggedIn } = useCustomerData();
   const { count, totalPrice, updateCartItems } = useCartData();
@@ -26,7 +32,13 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const imgSize = 73;
   const mcart = localStorage.getItem('mcart') || '';
   const [removingItem, setRemovingItem] = useState(-1);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showCreateCart, setShowCreateCart] = useState(false);
   const quantityItems = count.toString();
+
+  const modalRef = useOnclickOutside(() => {
+    setShowLoginModal(false);
+  });
 
   const onHandlePage = (page: string) => {
     handlePage(page)
@@ -55,6 +67,19 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
       .catch(error => {
         console.error(error);
       })
+  };
+
+  const handleCheckout = () => {
+    if (!isLoggedIn) {
+      setShowLoginModal(true);
+    } else {
+      onHandlePage('shipping');
+    }
+  };
+
+  const handleLogin = () => {
+    setShowCreateCart(true);
+    setShowLoginModal(false);
   };
 
   return (
@@ -124,10 +149,32 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
             <span className="cartitemlist__subtotal">{totalPrice}</span>
           </div>
           <div className="cartitemlist__checkoutbutton">
-            <button className="epbtn --secondary --large --fullwidth" onClick={() => onHandlePage('shipping')}>
+            <button className="epbtn --secondary --large --fullwidth" onClick={handleCheckout}>
               {t('checkout-with-items', { quantityItems })}
             </button>
           </div>
+          {showLoginModal && (
+            <React.Fragment>
+              <div className="cartitemlist__prompt" role="presentation" ref={modalRef}>
+                <div className="cartitemlist__prompttitle">
+                  <h2>{t('login')}</h2>
+                  <button type="button" aria-label="close" onClick={() => setShowLoginModal(false)}>
+                    <CloseIcon className="cartitemlist__closeicon" />
+                    <BackArrowIcon className="cartitemlist__backicon" />
+                  </button>
+                </div>
+                <div className="cartitemlist__promptbody">
+                  <LoginForm createNewCart onSubmit={handleLogin} handleCloseCartModal={handleCloseCartModal} />
+                  <div className="cartitemlist__promptcontent">
+                    <p>{t('or')}</p>
+                    <button type="button" className="epbtn --bordered" onClick={() => onHandlePage('shipping')}>{t('checkout-as-guest')}</button>
+                  </div>
+                </div>
+              </div>
+              <div className="cartitemlist__promptoverlay" />
+            </React.Fragment>
+          )}
+          <CreateCart showCreateCart={showCreateCart} handleHideCreateCart={() => setShowCreateCart(false)} />
         </div>
       ) : (
         <div className="cartmodal__body">

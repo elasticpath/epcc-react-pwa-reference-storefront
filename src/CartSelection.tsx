@@ -45,9 +45,9 @@ export  const CartSelection: React.FC<CartSelectionParams> = (props) => {
               {t('saved-carts')} ({multiCartData.length})
             </h3>
             <div className="cartselection__cartlist">
-              {multiCartData.map((cart: any) => (
+              {multiCartData.map((cart: any, index) => (
                 <div className="cartselection__cartelement" key={cart.id}>
-                  <input type="radio" name="cartCheck" id={`cart_${cart.id}`} className="epradio" defaultChecked={selectedItem === cart.id} onChange={() => {handleSelectCart(cart)}} />
+                  <input type="radio" name="cartCheck" id={`cart_${cart.id}`} className="epradio" defaultChecked={index === 0} onChange={() => {handleSelectCart(cart)}} />
                   <label htmlFor={`cart_${cart.id}`} className="cartselection__description">
                     <div className="cartselection__cartname">
                       <strong className="--overflowtext">

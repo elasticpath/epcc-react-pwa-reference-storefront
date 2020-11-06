@@ -2,12 +2,11 @@
 @import './theme/common';
 
 .cartitemlist {
-position: relative;
 
   &__mycart {
     position: absolute;
-    right: 0;
-    top: 5px;
+    right: 35px;
+    top: 40px;
 
     &:hover {
       cursor: pointer;
@@ -156,8 +155,109 @@ position: relative;
     }
   }
 
+  &__prompt {
+    width: 350px;
+    position: absolute;
+    top: 130px;
+    right: 50px;
+    background: $mainBackgroundColor;
+    border: 1px solid $mainBorderColor;
+    padding: 20px 25px 30px;
+    z-index: 4;
+
+    .epform__group {
+      .epbtn {
+        width: 100%;
+
+        &:first-child {
+          margin-bottom: 20px;
+          background-color: $buttonActiveColor;
+          border: 1px solid $buttonActiveColor;
+
+          &:hover {
+            background-color: $btnPrimaryHoverColor;
+            border: 1px solid $btnPrimaryHoverColor;
+          }
+
+          &:active {
+            background: $mainColor;
+            border: 1px solid $mainColor;
+          }
+        }
+      }
+    }
+  }
+
+  &__prompttitle {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    font-size: 20px;
+    border-bottom: 1px solid $secondBorderColor;
+
+    button {
+      cursor: pointer;
+    }
+  }
+
+  &__promptcontent {
+    p {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .epbtn {
+      width: 100%;
+    }
+  }
+
+  &__promptoverlay {
+    background-color: $mainTextColor;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    opacity: 0.3;
+  }
+
   &__subtotal {
     font-size: 20px;
     font-weight: bold;
+  }
+
+  @media (min-width: $mobileXSmallWidth) {
+    &__backicon {
+      display: none;
+    }
+  }
+
+  @media (max-width: $mobileXSmallWidth - 1px) {
+    &__prompt {
+      width: 100%;
+      height: 100%;
+      top: 0;
+      right: 0;
+    }
+
+    &__prompttitle {
+      padding-right: 24px;
+      border-bottom: none;
+      margin-bottom: 20px;
+
+      h2 {
+        flex-grow: 1;
+        text-align: center;
+      }
+
+      button {
+        order: -1;
+      }
+    }
+
+    &__closeicon {
+      display: none;
+    }
   }
 }

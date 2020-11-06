@@ -214,5 +214,9 @@
   "quick-add-info": "Enter product SKU’s in inputs. The quick add form accepts up to 100 items at a time.",
   "sku": "SKU",
   "add-more-fields": "Add more fields",
-  "sku-error": "We’re unable to add your items to cart, some item SKU’s are unavailable"
+  "sku-error": "We’re unable to add your items to cart, some item SKU’s are unavailable",
+  "or": "OR",
+  "checkout-as-guest": "Checkout as guest",
+  "creating-new-cart": "Creating a new cart",
+  "creating-cart-info": "You have other carts in your account. Select ‘Next’ to continue with your current cart \nand add it to your account.  "
 }
