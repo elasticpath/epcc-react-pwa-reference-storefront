@@ -1,6 +1,8 @@
 @import './theme/common';
 
 .orderdetail {
+  $block: &;
+
   width: 100%;
   padding: 40px;
 
@@ -17,6 +19,7 @@
     font-weight: bold;
     font-size: 22px;
     margin: 30px 0;
+    text-transform: capitalize;
 
     &.--main {
       text-align: center;
@@ -57,5 +60,46 @@
   &__addresses {
     margin-right: 40px;
     display: inline-block;
+  }
+
+  &__items {
+    width: 100%;
+
+    #{$block}__tr {
+      border-bottom: 1px solid $mainBorderColor;
+
+      &:nth-child(2n-1) {
+        background-color: unset;
+      }
+    }
+    #{$block}__td {
+      width: 50%;
+    }
+  }
+
+  &__itemimage {
+    width: 200px;
+    min-width: 200px;
+    height: 100%;
+    align-self: center;
+
+    img {
+      width: inherit;
+    }
+
+    @media (max-width: $mobileWidth - 1px) {
+      min-width: 100px;
+    }
+  }
+
+  &__item {
+    margin-bottom: 40px;
+    display: flex;
+
+    &:nth-child(2n) {
+      #{$block}__tr {
+        background-color: $secondComplimentBackground;
+      }
+    }
   }
 }

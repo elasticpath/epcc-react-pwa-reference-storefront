@@ -1,22 +1,56 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { ReactComponent as ArrowLeft } from './images/icons/arrow_left.svg';
 import { useTranslation } from './app-state';
+import { getProductsByIds } from './service';
+import { useResolve } from './hooks';
+import { APIErrorContext } from './APIErrorProvider';
+import { ProductMainImage } from './ProductMainImage';
 
 import './OrderDetails.scss';
 
 interface LocationState {
   order: any;
+  items: moltin.OrderItem[];
+}
+
+interface OrderItemWithProductData extends moltin.OrderItem {
+  productData: moltin.Product
 }
 
 export const OrderDetails: React.FC = () => {
   const { t } = useTranslation();
   const location = useLocation<LocationState>();
   const orderData = location?.state?.order;
+  const itemsData = location?.state?.items;
+  const { addError } = useContext(APIErrorContext);
+
+  const [products] = useResolve(async () => {
+    try {
+      const orderProducts = orderData.relationships.items.data.map(
+        (orderItem: { id: string }) => {
+          return itemsData.find((item) => orderItem.id === item.id);
+        }
+      );
+      const ids = orderProducts.reduce(
+        (acum: string[], orderProduct: { product_id: string }) =>
+          (acum = [...acum, orderProduct.product_id]),
+        []
+      );
+
+      const products: moltin.Product[] = await getProductsByIds(ids);
+      return orderProducts.map((item: moltin.OrderItem) => ({
+        ...item,
+        productData: products.find((product) => product.id === item.product_id),
+      }));
+    } catch (error) {
+      addError(error.errors);
+    }
+  }, [orderData, addError, itemsData]);
 
   return (
-    <div className="orderdetail">
+    <div className="orderdetail container">
       <Link to="/account/purchase-history" className="orderdetail__link">
         <ArrowLeft />
         {t('back')}
@@ -86,6 +120,50 @@ export const OrderDetails: React.FC = () => {
                 </div>
               </div>
             </div>
+            <div className="orderdetail__title">{t('items')}</div>
+            {products && (<ul className="orderdetail__items">
+              {products.map((product: OrderItemWithProductData) => (
+                <li className="orderdetail__item" key={product.sku}>
+                  <div className="orderdetail__itemimage">
+                    <ProductMainImage product={product.productData}/>
+                  </div>
+                  <table className="orderdetail__table">
+                    <tbody>
+                    <tr className="orderdetail__tr">
+                      <td className="orderdetail__td">{t('name')}:</td>
+                      <td className="orderdetail__td">
+                        {product.name}
+                      </td>
+                    </tr>
+                    <tr className="orderdetail__tr">
+                      <td className="orderdetail__td">{t('quantity')}:</td>
+                      <td className="orderdetail__td">
+                        {product.quantity}
+                      </td>
+                    </tr>
+                    <tr className="orderdetail__tr">
+                      <td className="orderdetail__td">{t('sub-total')}:</td>
+                      <td className="orderdetail__td">
+                        {product.meta?.display_price?.without_tax?.value.formatted}
+                      </td>
+                    </tr>
+                    <tr className="orderdetail__tr" key={product.sku}>
+                      <td className="orderdetail__td">{t('tax')}:</td>
+                      <td className="orderdetail__td">
+                        {product.meta?.display_price?.tax?.value.formatted}
+                      </td>
+                    </tr>
+                    <tr className="orderdetail__tr">
+                      <td className="orderdetail__td">{t('item total')}:</td>
+                      <td className="orderdetail__td">
+                        {product.meta?.display_price?.with_tax?.value.formatted}
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </li>
+              ))}
+            </ul>)}
           </div>
         </div>
       )}
