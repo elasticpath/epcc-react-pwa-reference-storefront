@@ -51,7 +51,7 @@ export const generateRedirectUri = () => {
     return `${oidcHandlerRoute}`
 }
 
-export const generateOidcLoginRedirectUrl = (baseRedirectUrl: string, cId: string, prevLocation: string) => {
+export const generateOidcLoginRedirectUrl = (baseRedirectUrl: string, cId: string, prevLocation: string) : Promise<string> => {
     const stateToken = generateStateToken();
 
     // Set state and prevLocation for when oidc redirects back to the application.
@@ -59,20 +59,20 @@ export const generateOidcLoginRedirectUrl = (baseRedirectUrl: string, cId: strin
     localStorage.setItem('location', prevLocation);
 
     const codeVerifier = generateRandomString();
-    const codeChallenge = pkceChallengeFromVerifier(codeVerifier)
-
     localStorage.setItem('code_verifier', codeVerifier)
 
-    let url = new URL(baseRedirectUrl);
-    url.searchParams.append("client_id", cId);
-    url.searchParams.append("redirect_uri", generateRedirectUri());
-    url.searchParams.append("state", stateToken);
-    url.searchParams.append("response_type", "code");
-    url.searchParams.append("scope", "openid email profile");
-    url.searchParams.append("code_challenge_method","S256");
-    url.searchParams.append("code_challenge",codeChallenge);
+    return pkceChallengeFromVerifier(codeVerifier).then( (codeChallenge: string) => {
+        let url = new URL(baseRedirectUrl);
+        url.searchParams.append("client_id", cId);
+        url.searchParams.append("redirect_uri", generateRedirectUri());
+        url.searchParams.append("state", stateToken);
+        url.searchParams.append("response_type", "code");
+        url.searchParams.append("scope", "openid email profile");
+        url.searchParams.append("code_challenge_method","S256");
+        url.searchParams.append("code_challenge", codeChallenge);
 
-    return url.toString();
+        return url.toString();
+    });
 }
 
 export const getAuthorizationEndpointFromProfile = (profile: any):string =>{
