@@ -2,7 +2,8 @@
 @import './theme/common';
 
 .cartitemlist {
-position: relative;
+  $block: &;
+  position: relative;
 
   &__mycart {
     position: absolute;
@@ -159,5 +160,28 @@ position: relative;
   &__subtotal {
     font-size: 20px;
     font-weight: bold;
+  }
+  .settingscart {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
+    padding: 32px;
+    background: $mainBackgroundColor;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(500px);
+    transition: all 0.3s ease 0s;
+    z-index: 1;
+
+    &.--show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0px);
+    }
   }
 }

@@ -5,6 +5,7 @@ import { ImageContainer } from "./ImageContainer";
 import { Promotion } from "./Promotion";
 import { APIErrorContext } from "./APIErrorProvider";
 import { ReactComponent as SettingsIcon } from "./images/icons/settings-black-24dp.svg";
+import { SettingsCart } from "./SettingsCart";
 
 import './CartItemList.scss';
 
@@ -21,6 +22,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const { count, totalPrice, updateCartItems } = useCartData();
   const { selectedCart, updateCartData } = useMultiCartData();
   const { addError } = useContext(APIErrorContext);
+  const [showSettings, setShowSettings] = useState(false);
 
   const isLoading = false;
   const imgSize = 73;
@@ -69,7 +71,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
           <span>
             {selectedCart.name || ''}
             <span className="cartitemlist__settingsicon">
-             <SettingsIcon onClick={() => onHandlePage('settings')} />
+             <SettingsIcon onClick={() => setShowSettings(true)} />
             </span>
           </span>
         ) : (
@@ -134,6 +136,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
           {t('your-cart-is-empty')}
         </div>
       )}
+      <SettingsCart isEditCart name={selectedCart?.name} showSettings={showSettings} handleHideSettings={() => setShowSettings(false)} />
     </div>
   )
 };
