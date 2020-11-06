@@ -154,7 +154,7 @@ export async function oidcLogin(code: string, redirectUri: string, codeVerifier:
 
 export async function login(email: string, password: string): Promise<moltin.CustomerToken> {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
-  const { data } = await moltin.Customers.Token(email, password);
+  const { data } = await moltin.Customers.TokenViaPassword(email, password);
 
   return data;
 }
