@@ -52,7 +52,7 @@ img, svg {
     color: $mainNavigationColor;
     border: 1px solid $buttonActiveColor;
 
-    &:hover {
+    &:hover, &:focus{
       background-color: $btnPrimaryHoverColor;
       border: 1px solid $btnPrimaryHoverColor;
     }
@@ -68,7 +68,7 @@ img, svg {
     border: 1px solid $firstComplimentColor;
     color: $mainBackgroundColor;
 
-    &:hover {
+    &:hover, &:focus {
       background-color: $btnSecondaryHoverColor;
       border: 1px solid $btnSecondaryHoverColor;
     }
@@ -85,7 +85,7 @@ img, svg {
     border: 1px solid $firstComplimentColor;
     color: $firstComplimentColor;
 
-    &:hover {
+    &:hover , &:focus{
       background-color: $firstComplimentColor;
       border: 1px solid $firstComplimentColor;
       color: $mainBackgroundColor;
@@ -97,7 +97,7 @@ img, svg {
     }
   }
 
-  &:hover {
+  &:hover , &:focus{
     background-color: change-color($color: $btnColor, $saturation: 40%, $lightness: 95%);
   }
 

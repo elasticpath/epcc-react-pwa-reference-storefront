@@ -6,10 +6,11 @@ import {ReactComponent as ClearIcon} from "./images/icons/ic_clear.svg";
 import './SettingsCart.scss';
 
 interface SettingsCartParams {
+  name?: string,
   isEditCart?: boolean,
   title?: JSX.Element,
   onCartCreate?: (cartData: any) => void,
-  showSettings?: boolean
+  showSettings?: boolean,
   handleHideSettings: () => void
 }
 
@@ -19,10 +20,11 @@ interface FormValues {
 }
 
 export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
-  const { isEditCart, title, onCartCreate, showSettings, handleHideSettings } = props;
+  const { name, isEditCart, title, onCartCreate, showSettings, handleHideSettings } = props;
   const { t } = useTranslation();
   const { createCart, editCart } = useMultiCartData();
   const [isLoading, setIsLoading] = useState(false);
+ 
 
   let initialValues: FormValues = {
     name: '',
@@ -54,20 +56,21 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
     },
   });
 
+
   return (
     <div className={`settingscart${showSettings ? ' --show' : ''}`}>
       <div className="settingscart__addcartform">
         {title ?? (
           <h2 className="settingscart__title">
-            {isEditCart ? t("settings") : t("new-cart")}
+            {isEditCart ? `${t("cart")} ${t("settings")}` : t("new-cart")}
           </h2>
         )}
         <form>
           <div className={`epform__group ${errors.name ? '--error' : ''}`}>
             <label className="epform__label" htmlFor="name">{t('cart-name')}</label>
-            <input className="epform__input" id="name" placeholder={t('new-cart')} onChange={handleChange} value={values.name} />
+            <input className="epform__input" id="name" placeholder={isEditCart ? name : t('new-cart')}  onChange={handleChange} value={values.name} />
             {(values.name && values.name.length > 0) && (
-              <button type="button" className="settingscart__clearname settingscart__clearbtn" onClick={() => setFieldValue('name', '')}>
+              <button tabIndex={-1} type="button" className="settingscart__clearname settingscart__clearbtn" onClick={() => setFieldValue('name', '')}>
                 <ClearIcon />
               </button>
             )}
@@ -79,7 +82,7 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
             <label className="epform__label" htmlFor="description">{t('cart-description')}</label>
             <textarea className="epform__input" id="description" onChange={handleChange} value={values.description} placeholder={t('carts-description')} />
             {(values.description && values.description.length > 0) && (
-              <button className="settingscart__clearbtn" onClick={() => setFieldValue('description', '')}>
+              <button tabIndex={-1} className="settingscart__clearbtn" onClick={() => setFieldValue('description', '')}>
                 <ClearIcon />
               </button>
             )}
