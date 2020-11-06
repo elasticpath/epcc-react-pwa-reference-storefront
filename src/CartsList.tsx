@@ -5,6 +5,7 @@ import { removeCartItems } from './service';
 import { SettingsCart } from "./SettingsCart";
 import { ReactComponent as ArrowRightIcon } from "./images/icons/keyboard_arrow_right-black-24dp.svg";
 import { ReactComponent as DeleteIcon } from "./images/icons/delete-black-24dp.svg";
+import { ReactComponent as CloseIcon } from "./images/icons/ic_close.svg";
 
 import './CartsList.scss';
 
@@ -24,7 +25,6 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
   const [showLoader, setShowLoader] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showDeletedCartsnumber, setShowDeletedCartsnumber ] = useState(false);
-  // const [visible, setVisible] = useState(false)
  
 
   const { t } = useTranslation();
@@ -50,6 +50,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
     setIsShowModal(false);
   });
 
+  
   const onDeleteCart = () => {
     setShowLoader(true);
     setShowDeletedCartsnumber(true);
@@ -67,9 +68,9 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
       });
       setTimeout(() => {
         setShowDeletedCartsnumber(false)
-      }, 6000);
+      }, 4000);
   };
-
+  
   const handleCart = (cart:any) => {
     if (!isEdit) {
       localStorage.setItem('mcart', cart.id);
@@ -89,6 +90,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
       {showDeletedCartsnumber ?  (
           <div className="cartslist__deleteCartAlert">
             <p>You have deleted {deletedCartNumber} {deletedCartNumber === 1 ? `${t('cart')}` : `${t('carts')}`}  </p>
+            <CloseIcon onClick={() => setShowDeletedCartsnumber(false)}/>
           </div>
         ): ''}
       <div className="cartslist__content">
@@ -98,7 +100,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
           </button>
         )}
         <h2 className="cartslist__title">
-          {t('my-carts')}
+          {t('my-carts')} 
         </h2>
         {multiCartData && multiCartData.length ? (
           <div>
@@ -110,7 +112,6 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
                     {selectedCarts.length === 1 ?  `${selectedCarts.length} ${t('cart')}
                     ${t('selected')}` : `${selectedCarts.length} ${t('carts')}
                     ${t('selected')}` }
-
                   </label>
                 </span>
                 <button className="cartslist__deletebutton" disabled={selectedCarts.length === 0 ||  multiCartData.length === 1  } onClick={() => setIsShowModal(true)}>
