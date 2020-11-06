@@ -228,6 +228,12 @@ export async function createNewCart(data: any, token: string) {
   return cartRes;
 }
 
+export async function editCartInfo(data: any, token: string) {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const updatedCart = await moltin.Cart(). UpdateCart(data, token);
+  return updatedCart;
+}
+
 export async function getMultiCarts(token: string) {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const cartsList = await moltin.Cart().GetCartsList(token);

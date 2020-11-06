@@ -10,6 +10,7 @@ import {
   loadEnabledCurrencies,
   getMultiCarts,
   createNewCart,
+  editCartInfo,
   addCustomerAssociation,
 } from './service';
 import { config } from './config';
@@ -442,9 +443,17 @@ function useMultiCartDataState() {
     )
   );
 
-  const editCart = (data: any) => {
-    return null;
-  };
+  const editCart = (data: any) => (
+    editCartInfo(data, token).then((updatedCart: any) =>
+      addCustomerAssociation(updatedCart.data.id, mcustomer, token).then(() =>
+        getMultiCarts(token).then(res => {
+          setMultiCartData(res.data);
+          return updatedCart;
+        })
+      )
+    )
+  );
+ 
 
   const updateSelectedCart = (cart: any) => {
     setSelectedCart(cart)
