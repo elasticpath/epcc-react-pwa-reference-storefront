@@ -52,7 +52,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
   const { cartData, promotionItems, updateCartItems } = useCartData();
   const { isLoggedIn } = useCustomerData();
   const { updatePurchaseHistory } = useOrdersData();
-  const { isCartSelected } = useMultiCartData();
+  const { isCartSelected, isCreateNewCart } = useMultiCartData();
   const { t } = useTranslation();
   const { addError } = useContext(APIErrorContext);
 
@@ -158,14 +158,15 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
               ))
             )}
           </div>
-          {(route === 'itemList' && (isCartSelected || !isLoggedIn)) && (
+          {(route === 'itemList' && (isCartSelected || !isLoggedIn || isCreateNewCart)) && (
             <CartItemList
               items={cartData}
               handlePage={(page: string) => handlePage(page)}
               promotionItems={promotionItems}
+              handleCloseCartModal={handleCloseModal}
             />
           )}
-          {isLoggedIn && !isCartSelected && route === 'itemList' && (
+          {isLoggedIn && !isCartSelected && (route === 'itemList') && !isCreateNewCart && (
             <CartSelection
               onHandlePage={(page: string) => handlePage(page)}
             />

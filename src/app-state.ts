@@ -442,7 +442,7 @@ function useMultiCartDataState() {
       )
     )
   );
-
+  
   const editCart = (data: any) => (
     editCartInfo(data, token).then((updatedCart: any) =>
       addCustomerAssociation(updatedCart.data.id, mcustomer, token).then(() =>
@@ -453,7 +453,6 @@ function useMultiCartDataState() {
       )
     )
   );
- 
 
   const updateSelectedCart = (cart: any) => {
     setSelectedCart(cart)
