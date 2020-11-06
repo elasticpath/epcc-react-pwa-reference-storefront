@@ -28,10 +28,6 @@
     }
   }
 
-  &__nextbutton {
-    width: 100px;
-  }
-
   &__title {
     font-size: $sizeMediumLarger;
   }
@@ -40,35 +36,11 @@
     background-color: $mainBackgroundColor;
     border: none;
     position: relative;
-
-    &.--loading {
-
-      &:before {
-        content: '';
-        height: 100%;
-        width: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: $mainBackgroundColor;
-        opacity: 0.5;
-        z-index: 1;
-      }
-    }
   }
 
   &__body {
     position: relative;
-    padding: 25px 5px 5px;
-  }
-
-  &__feedback {
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin-top: 5px;
-    font-weight: bold;
-    color: $mainErrorColor;
+    padding: 0 5px 5px;
   }
 
   .epbtn + .epbtn {

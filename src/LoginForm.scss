@@ -1,0 +1,29 @@
+@import './theme/common.scss';
+
+.loginform {
+  position: relative;
+  padding-top: 25px;
+
+  &.--loading {
+    &:before {
+      content: '';
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: $mainBackgroundColor;
+      opacity: 0.5;
+      z-index: 1;
+    }
+  }
+
+  &__feedback {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 5px;
+    font-weight: bold;
+    color: $mainErrorColor;
+  }
+}

@@ -236,7 +236,8 @@ export async function getMultiCarts(token: string) {
 
 export async function addCustomerAssociation(cartId: string, customerId: string, token: string) {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
-  await moltin.Cart(cartId).AddCustomerAssociation(customerId, token);
+  const result = await moltin.Cart(cartId).AddCustomerAssociation(customerId, token);
+  return result;
 }
 
 

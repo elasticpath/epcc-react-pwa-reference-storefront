@@ -442,22 +442,6 @@ function useMultiCartDataState() {
     )
   );
 
-  const associateGuestCart = (cartName: string) => {
-    if(cartName) {
-      const data = {
-        id: guestCartId,
-        name: cartName
-      };
-      editCart(data)
-    } else {
-      addCustomerAssociation(guestCartId, mcustomer, token).then(() =>
-        getMultiCarts(token).then(res => {
-          setMultiCartData(res.data);
-        })
-      )
-    }
-  };
-
   const editCart = (data: any) => {
     return null;
   };
@@ -485,6 +469,7 @@ function useMultiCartDataState() {
 
   return {
     multiCartData,
+    setMultiCartData,
     createCart,
     selectedCart,
     updateSelectedCart,
@@ -492,9 +477,9 @@ function useMultiCartDataState() {
     setIsCartSelected,
     editCart,
     updateCartData,
-    associateGuestCart,
     setIsCreateNewCart,
     isCreateNewCart,
+    guestCartId,
     setGuestCartId
   }
 }
