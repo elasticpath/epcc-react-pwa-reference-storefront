@@ -230,7 +230,7 @@ export async function createNewCart(data: any, token: string) {
 
 export async function editCartInfo(data: any, token: string) {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
-  const updatedCart = await moltin.Cart(). UpdateCart(data, token);
+  const updatedCart = await moltin.Cart().UpdateCart(data, token);
   return updatedCart;
 }
 
