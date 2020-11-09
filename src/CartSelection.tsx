@@ -18,7 +18,11 @@ export  const CartSelection: React.FC<CartSelectionParams> = (props) => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    multiCartData && setSelectedCart(multiCartData[0]);
+    if (multiCartData && multiCartData.length > 0) {
+      setSelectedCart(multiCartData[0]);
+      localStorage.setItem('mcart', multiCartData[0].id);
+      setSelectedItem(multiCartData[0].id);
+    }
   }, [multiCartData]);
 
   const onHandleCart = (page:string) => {

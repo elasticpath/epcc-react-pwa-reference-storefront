@@ -7,6 +7,7 @@ import './SettingsCart.scss';
 
 interface SettingsCartParams {
   name?: string,
+  description?: string,
   isEditCart?: boolean,
   title?: JSX.Element,
   onCartCreate?: (cartData: any) => void,
@@ -20,15 +21,14 @@ interface FormValues {
 }
 
 export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
-  const { name, isEditCart, title, onCartCreate, showSettings, handleHideSettings } = props;
+  const { name, description, isEditCart, title, onCartCreate, showSettings, handleHideSettings } = props;
   const { t } = useTranslation();
   const { createCart, editCart } = useMultiCartData();
   const [isLoading, setIsLoading] = useState(false);
- 
 
   let initialValues: FormValues = {
-    name: '',
-    description: '',
+    name: isEditCart && name ? name.toString() : '',
+    description: isEditCart && description ? description.toString() : '',
   };
 
   const validate = (values:any) => {
@@ -56,7 +56,6 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
     },
   });
 
-
   return (
     <div className={`settingscart${showSettings ? ' --show' : ''}`}>
       <div className="settingscart__addcartform">
@@ -68,7 +67,7 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
         <form>
           <div className={`epform__group ${errors.name ? '--error' : ''}`}>
             <label className="epform__label" htmlFor="name">{t('cart-name')}</label>
-            <input className="epform__input" id="name" placeholder={isEditCart ? name : t('new-cart')} onChange={handleChange} value={values.name} />
+            <input className="epform__input" id="name" placeholder={t('new-cart')} onChange={handleChange} value={values.name} />
             {(values.name && values.name.length > 0) && (
               <button tabIndex={-1} type="button" className="settingscart__clearname settingscart__clearbtn" onClick={() => setFieldValue('name', '')}>
                 <ClearIcon />

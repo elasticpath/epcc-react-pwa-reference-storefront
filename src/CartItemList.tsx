@@ -183,7 +183,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
           {t('your-cart-is-empty')}
         </div>
       )}
-      <SettingsCart isEditCart name={selectedCart?.name} showSettings={showSettings} handleHideSettings={() => setShowSettings(false)} />
+      <SettingsCart isEditCart name={selectedCart?.name} description={selectedCart?.description} showSettings={showSettings} handleHideSettings={() => setShowSettings(false)} />
     </div>
   )
 };

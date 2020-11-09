@@ -437,18 +437,18 @@ function useMultiCartDataState() {
       addCustomerAssociation(cartRes.data.id, mcustomer, token).then(() =>
         getMultiCarts(token).then(res => {
           setMultiCartData(res.data);
-          return cartRes;
         })
       )
     )
   );
-  
+
   const editCart = (data: any) => (
     editCartInfo(data, token).then((updatedCart: any) =>
       addCustomerAssociation(updatedCart.data.id, mcustomer, token).then(() =>
         getMultiCarts(token).then(res => {
           setMultiCartData(res.data);
-          return updatedCart;
+          const selectedCartData = res.data.filter(el => el.id === updatedCart.data.id);
+          setSelectedCart(selectedCartData[0]);
         })
       )
     )
