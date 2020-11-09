@@ -1,6 +1,8 @@
 @import './theme/common.scss';
 
 .createcart {
+  $block: &;
+
   position: absolute;
   top: 0px;
   right: 0px;
@@ -63,6 +65,26 @@
 
       &:first-child {
         margin-right: 20px;
+      }
+    }
+  }
+
+  &__clearbtn {
+    display: none;
+    position: absolute;
+    right: 5px;
+    bottom: 2px;
+    cursor: pointer;
+
+    &:hover {
+      display: inline-block;
+    }
+  }
+
+  .epform__input {
+    &:focus {
+      + #{$block}__clearbtn {
+        display: inline-block;
       }
     }
   }

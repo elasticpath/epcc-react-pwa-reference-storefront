@@ -84,6 +84,8 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
     setShowLoginModal(false);
   };
 
+  console.log('showCreateCart', showCreateCart);
+
   return (
     <div className={`cartitemlist ${isLoading ? '--loading' : ''}`}>
       {isLoggedIn && (
@@ -176,7 +178,6 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
               <div className="cartitemlist__promptoverlay" />
             </React.Fragment>
           )}
-          <CreateCart showCreateCart={showCreateCart} handleHideCreateCart={() => setShowCreateCart(false)} />
         </div>
       ) : (
         <div className="cartmodal__body">
@@ -184,6 +185,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
         </div>
       )}
       <SettingsCart isEditCart name={selectedCart?.name} description={selectedCart?.description} showSettings={showSettings} handleHideSettings={() => setShowSettings(false)} />
+      <CreateCart showCreateCart={showCreateCart} handleHideCreateCart={() => setShowCreateCart(false)} />
     </div>
   )
 };

@@ -444,13 +444,11 @@ function useMultiCartDataState() {
 
   const editCart = (data: any) => (
     editCartInfo(data, token).then((updatedCart: any) =>
-      addCustomerAssociation(updatedCart.data.id, mcustomer, token).then(() =>
-        getMultiCarts(token).then(res => {
-          setMultiCartData(res.data);
-          const selectedCartData = res.data.filter(el => el.id === updatedCart.data.id);
-          setSelectedCart(selectedCartData[0]);
-        })
-      )
+      getMultiCarts(token).then(res => {
+        setMultiCartData(res.data);
+        const selectedCartData = res.data.filter(el => el.id === updatedCart.data.id);
+        setSelectedCart(selectedCartData[0]);
+      })
     )
   );
 
