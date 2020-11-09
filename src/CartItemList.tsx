@@ -84,8 +84,6 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
     setShowLoginModal(false);
   };
 
-  console.log('showCreateCart', showCreateCart);
-
   return (
     <div className={`cartitemlist ${isLoading ? '--loading' : ''}`}>
       {isLoggedIn && (
