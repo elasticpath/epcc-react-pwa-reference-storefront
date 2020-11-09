@@ -81,6 +81,21 @@
     font-weight: bold;
   }
 
+  &__closebutton {
+    position: absolute;
+    padding-top: 8px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    svg {
+      width: 22px;
+      height: 22px;
+      fill: $thirdComplimentTextColor;
+    }
+  }
+
   @media screen and (max-width: $mobileXSmallWidth - 1px) {
     &__btns {
       .epbtn {

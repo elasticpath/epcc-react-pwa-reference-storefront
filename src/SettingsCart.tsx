@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useMultiCartData, useTranslation } from "./app-state";
 import { useFormik } from 'formik';
 import {ReactComponent as ClearIcon} from "./images/icons/ic_clear.svg";
+import { ReactComponent as BackArrowIcon } from './images/icons/arrow_back-black-24dp.svg';
 
 import './SettingsCart.scss';
 
@@ -59,6 +60,11 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
   return (
     <div className={`settingscart${showSettings ? ' --show' : ''}`}>
       <div className="settingscart__addcartform">
+        {isEditCart &&
+          <button className="settingscart__closebutton" type="button" aria-label="close" onClick={handleHideSettings}>
+            <BackArrowIcon/>
+          </button>
+        }
         {title ?? (
           <h2 className="settingscart__title">
             {isEditCart ? `${t("cart")} ${t("settings")}` : t("new-cart")}
