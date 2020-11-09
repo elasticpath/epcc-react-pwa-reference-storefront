@@ -13,7 +13,8 @@ interface SettingsCartParams {
   title?: JSX.Element,
   onCartCreate?: (cartData: any) => void,
   showSettings?: boolean,
-  handleHideSettings: () => void
+  handleHideSettings: () => void,
+  setShowCartAlert: () => void
 }
 
 interface FormValues {
@@ -22,7 +23,7 @@ interface FormValues {
 }
 
 export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
-  const { name, description, isEditCart, title, onCartCreate, showSettings, handleHideSettings } = props;
+  const { name, description, isEditCart, title, onCartCreate, showSettings, handleHideSettings, setShowCartAlert } = props;
   const { t } = useTranslation();
   const { createCart, editCart } = useMultiCartData();
   const [isLoading, setIsLoading] = useState(false);
@@ -53,8 +54,10 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
       }
       setIsLoading(false);
       handleHideSettings();
+      setShowCartAlert();
       resetForm();
     },
+    
   });
 
   return (

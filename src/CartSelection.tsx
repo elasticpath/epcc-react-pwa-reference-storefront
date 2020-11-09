@@ -83,7 +83,7 @@ export  const CartSelection: React.FC<CartSelectionParams> = (props) => {
           <button className="epbtn --primary --fullwidth --large" onClick={() => setShowSettings(true)}>{t('create-cart')}</button>
         )}
       </div>
-      <SettingsCart showSettings={showSettings} handleHideSettings={() => setShowSettings(false)} />
+      <SettingsCart showSettings={showSettings} handleHideSettings={() => setShowSettings(false)} setShowCartAlert={() => ''} />
     </div>
   )
 };

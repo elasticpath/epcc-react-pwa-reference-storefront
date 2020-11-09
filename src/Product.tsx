@@ -239,6 +239,7 @@ export const Product: React.FC = () => {
               title={CreateCartHeader}
               onCartCreate={onCartCreate}
               handleHideSettings={() => {setModalOpen(false)}}
+              setShowCartAlert={() => ''}
             />
           </div>
         </div>

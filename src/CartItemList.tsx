@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { useCartData, useCustomerData, useTranslation, useMultiCartData } from './app-state';
 import { removeCartItem, updateCartItem } from './service';
@@ -29,6 +29,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const { selectedCart, updateCartData } = useMultiCartData();
   const { addError } = useContext(APIErrorContext);
   const [showSettings, setShowSettings] = useState(false);
+  const [showUpdateCartAlert, setShowUpdateCartAlert ] = useState(false);
 
   const isLoading = false;
   const imgSize = 73;
@@ -84,12 +85,25 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
     setShowLoginModal(false);
   };
 
+  useEffect(() => {
+    if(showUpdateCartAlert)
+      setTimeout(() => {
+        setShowUpdateCartAlert(false)
+      }, 4000);
+  })
+
   return (
     <div className={`cartitemlist ${isLoading ? '--loading' : ''}`}>
       {isLoggedIn && (
         <button className="cartitemlist__mycart" onClick={() => onHandlePage('cartsList')}>
           {t('my-carts')}
         </button>
+      )}
+      {showUpdateCartAlert &&  (
+        <div className="cartslist__alertMessage">
+          <p>You update new cart</p>
+          <CloseIcon onClick={() => setShowUpdateCartAlert(false)}/>
+        </div>
       )}
       <h2 className="cartitemlist__title">
         {isLoggedIn && selectedCart ? (
@@ -182,7 +196,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
           {t('your-cart-is-empty')}
         </div>
       )}
-      <SettingsCart isEditCart name={selectedCart?.name} description={selectedCart?.description} showSettings={showSettings} handleHideSettings={() => setShowSettings(false)} />
+      <SettingsCart isEditCart name={selectedCart?.name} description={selectedCart?.description} showSettings={showSettings} handleHideSettings={() => setShowSettings(false)} setShowCartAlert={() => setShowUpdateCartAlert(true)} />
       <CreateCart showCreateCart={showCreateCart} handleHideCreateCart={() => setShowCreateCart(false)} />
     </div>
   )

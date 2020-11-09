@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { useTranslation, useMultiCartData, useCartData } from './app-state';
 import { removeCartItems } from './service';
@@ -25,6 +25,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
   const [showLoader, setShowLoader] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showDeletedCartsnumber, setShowDeletedCartsnumber ] = useState(false);
+  const [showCreateCartAlert, setShowCreateCartAlert ] = useState(false);
 
   const { t } = useTranslation();
 
@@ -83,12 +84,25 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
     setIsEdit(!isEdit);
   };
 
+  useEffect(() => {
+    if(showCreateCartAlert)
+      setTimeout(() => {
+        setShowCreateCartAlert(false)
+      }, 4000);
+  })
+
   return (
     <div className="cartslist">
       {showDeletedCartsnumber &&  (
-        <div className="cartslist__deleteCartAlert">
+        <div className="cartslist__alertMessage">
           <p>You have deleted {deletedCartNumber} {deletedCartNumber === 1 ? `${t('cart')}` : `${t('carts')}`}</p>
           <CloseIcon onClick={() => setShowDeletedCartsnumber(false)}/>
+        </div>
+      )}
+      {showCreateCartAlert &&  (
+        <div className="cartslist__alertMessage">
+          <p>You created new cart</p>
+          <CloseIcon onClick={() => setShowCreateCartAlert(false)}/>
         </div>
       )}
       <div className="cartslist__content">
@@ -178,7 +192,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
           <div className="cartslist__confirmationoverlay" />
         </React.Fragment>
       )}
-      <SettingsCart showSettings={showSettings} handleHideSettings={() => setShowSettings(false)} />
+      <SettingsCart showSettings={showSettings} handleHideSettings={() => setShowSettings(false)} setShowCartAlert={() => setShowCreateCartAlert(true)}/>
     </div>
   )
 };
