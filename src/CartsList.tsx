@@ -95,13 +95,13 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
     <div className="cartslist">
       {showDeletedCartsnumber &&  (
         <div className="cartslist__alertMessage">
-          <p>You have deleted {deletedCartNumber} {deletedCartNumber === 1 ? `${t('cart')}` : `${t('carts')}`}</p>
+          <p>{t('delete-cart-message')} {deletedCartNumber} {deletedCartNumber === 1 ? `${t('cart')}` : `${t('carts')}`}</p>
           <CloseIcon onClick={() => setShowDeletedCartsnumber(false)}/>
         </div>
       )}
       {showCreateCartAlert &&  (
         <div className="cartslist__alertMessage">
-          <p>You created new cart</p>
+          <p>{t('create-cart-message')}</p>
           <CloseIcon onClick={() => setShowCreateCartAlert(false)}/>
         </div>
       )}

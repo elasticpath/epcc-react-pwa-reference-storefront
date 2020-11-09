@@ -101,7 +101,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
       )}
       {showUpdateCartAlert &&  (
         <div className="cartslist__alertMessage">
-          <p>You update new cart</p>
+          <p>{t('update-cart-message')}</p>
           <CloseIcon onClick={() => setShowUpdateCartAlert(false)}/>
         </div>
       )}
