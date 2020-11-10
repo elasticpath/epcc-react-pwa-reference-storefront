@@ -38,9 +38,6 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
     if (!values.name) {
       errors.name = t('cart-name-is-required');
     }
-    if(values.name.length > 250) {
-      errors.name = t('cart-name-length-error');
-    }
     return errors;
   };
 
