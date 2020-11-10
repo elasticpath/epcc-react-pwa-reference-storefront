@@ -1,0 +1,92 @@
+@import "./theme/common";
+
+.orderdetailstable {
+  $block: &;
+
+  width: 100%;
+  padding: 40px;
+
+  &__title {
+    font-weight: bold;
+    font-size: 22px;
+    margin: 30px 0;
+    text-transform: capitalize;
+  }
+
+  &__details {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__body {
+    flex: auto;
+    color: #4c5666;
+  }
+
+  &__table {
+    width: 100%;
+  }
+
+  &__tr {
+    padding: 10px 0;
+
+    &:nth-child(2n-1) {
+      background-color: $firstComplimentBackground;
+    }
+  }
+
+  &__td {
+    padding: 10px;
+  }
+
+  &__block {
+    padding: 10px 0;
+  }
+
+  &__addresses {
+    margin-right: 40px;
+    display: inline-block;
+    text-align: left;
+  }
+
+  &__items {
+    width: 100%;
+
+    #{$block}__tr {
+      border-bottom: 1px solid $mainBorderColor;
+
+      &:nth-child(2n-1) {
+        background-color: unset;
+      }
+    }
+    #{$block}__td {
+      width: 50%;
+    }
+  }
+
+  &__itemimage {
+    width: 200px;
+    min-width: 200px;
+    height: 100%;
+    align-self: center;
+
+    img {
+      width: inherit;
+    }
+
+    @media (max-width: $mobileWidth - 1px) {
+      min-width: 100px;
+    }
+  }
+
+  &__item {
+    margin-bottom: 40px;
+    display: flex;
+
+    &:nth-child(2n) {
+      #{$block}__tr {
+        background-color: $secondComplimentBackground;
+      }
+    }
+  }
+}

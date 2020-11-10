@@ -212,11 +212,13 @@ function usePurchaseHistoryState() {
   const id = localStorage.getItem('mcustomer') || '';
 
   const [ordersData, setOrdersData] = useState<moltin.Order[]>([]);
+  const [ordersItemsData, setOrdersItemsData] = useState<moltin.OrderItem[]>([]);
 
   useEffect(() => {
     if (token) {
-      getAllOrders(token).then(res => {
+      getAllOrders(token).then((res: any) => {
         setData(res.data);
+        setItemsData(res.included.items);
       });
     }
     else {
@@ -234,11 +236,16 @@ function usePurchaseHistoryState() {
     setOrdersData(data);
   };
 
-  const clearCustomerData = () => {
-    setOrdersData([]);
+  const setItemsData = (data: any) => {
+    setOrdersItemsData(data);
   };
 
-  return { ordersData, updatePurchaseHistory }
+  const clearCustomerData = () => {
+    setOrdersData([]);
+    setOrdersItemsData([]);
+  };
+
+  return { ordersData, ordersItemsData, updatePurchaseHistory }
 }
 
 const defaultCurrency = 'USD';
