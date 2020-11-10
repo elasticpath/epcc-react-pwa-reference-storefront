@@ -103,7 +103,7 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
                 }`}
               type="submit"
               onClick={() => {handleSubmit()}}
-              disabled={isLoading}
+              disabled={isLoading || !values.name}
             >
               {!isLoading? t("save") : <span className="circularLoader" aria-label={t('loading')} />}
             </button>
