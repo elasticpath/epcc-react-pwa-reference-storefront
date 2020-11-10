@@ -38,6 +38,9 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
     if (!values.name) {
       errors.name = t('cart-name-is-required');
     }
+    if(values.name.length > 250) {
+      errors.name = t('cart-name-length-error');
+    }
     return errors;
   };
 
@@ -103,7 +106,7 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
                 }`}
               type="submit"
               onClick={() => {handleSubmit()}}
-              disabled={isLoading || !values.name}
+              disabled={isLoading || !values.name || values.name.length > 250}
             >
               {!isLoading? t("save") : <span className="circularLoader" aria-label={t('loading')} />}
             </button>
