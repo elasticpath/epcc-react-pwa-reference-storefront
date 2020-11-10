@@ -189,5 +189,9 @@
   "cart-popup-info": "{quantity} Items have been added to your cart",
   "cart-popup-info-1": "1 Item has been added to your cart",
   "view-cart": "View cart",
-  "sku-error": "We’re unable to add your items to cart, some item SKU’s are unavailable"
+  "sku-error": "We’re unable to add your items to cart, some item SKU’s are unavailable",
+  "quantity": "Quantity",
+  "sub-total": "Sub-total",
+  "tax": "Tax",
+  "item total": "Item Total"
 }

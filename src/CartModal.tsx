@@ -13,6 +13,7 @@ import { ReactComponent as BackArrovIcon } from './images/icons/arrow_back-black
 import { APIErrorContext } from "./APIErrorProvider";
 
 import './CartModal.scss';
+import {OrderDetailsTable} from './OrderDetailsTable';
 
 interface CartModalParams {
   handleCloseModal: (...args: any[]) => any,
@@ -59,6 +60,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
   const [shippingAddress, setShippingAddress] = useState<FormValues>(initialValues);
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [orderData, setOrderData] = useState<any>({});
 
   const onPayOrder = async (token: string) => {
     try {
@@ -78,6 +80,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
       await updatePurchaseHistory();
       await removeCartItems(mcart);
       updateCartItems();
+      setOrderData(orderRes);
       setRoute('completed');
       setIsSameAddress(true);
     } catch (err) {
@@ -219,6 +222,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
             </div>
             <div className="completed__body">
               <p>{t('thank-you-for-your-order')}</p>
+              <OrderDetailsTable orderData={orderData.data} orderItems={orderData.included.items} />
               <button className="epbtn --secondary --large" onClick={onCloseModal}>{t('continue-shopping')}</button>
             </div>
           </div>
