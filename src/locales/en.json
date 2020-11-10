@@ -222,5 +222,9 @@
   "delete-cart-message" : "You have deleted",
   "update-cart-message" : "Your cart settings have been updated",
   "create-cart-message" : "You've added a new cart to your cart list",
-  "cart-name-length-error" : "Cart name must be less than 250 characters"
+  "cart-name-length-error" : "Cart name must be less than 250 characters",
+  "quantity": "Quantity",
+  "sub-total": "Sub-total",
+  "tax": "Tax",
+  "item total": "Item Total"
 }

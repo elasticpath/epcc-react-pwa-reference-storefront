@@ -7,8 +7,7 @@ import './PurchaseHistory.scss';
 
 export const PurchaseHistory: React.FC = () => {
   const { t } = useTranslation();
-  const { ordersData } = useOrdersData();
-
+  const { ordersData, ordersItemsData: items } = useOrdersData();
   return (
     <div className="purchasehistory">
       <h1 className="purchasehistory__title">{t('purchase-history')}</h1>
@@ -31,7 +30,7 @@ export const PurchaseHistory: React.FC = () => {
                   <Link
                     to={{
                       pathname: `/orderdetails/${order.id}`,
-                      state: { order }
+                      state: { order, items }
                     }}
                     className="purchasehistory__link"
                   >
