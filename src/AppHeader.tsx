@@ -19,7 +19,7 @@ import './AppHeader.scss';
 export const AppHeader: React.FC = () => {
   const { t } = useTranslation();
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
-  const { count, quantity, showCartPopup, updateCartItems } = useCartData();
+  const { count, cartQuantity, showCartPopup, updateCartItems } = useCartData();
 
   const handleCloseCartModal = () => {
     setIsCartModalOpen(false);
@@ -58,7 +58,7 @@ export const AppHeader: React.FC = () => {
           </button>
           {showCartPopup && (
             <div className="appheader__cartpopup">
-              <p>{quantity === 1 ? t('cart-popup-info-1') : t('cart-popup-info', {quantity: quantity.toString()})}</p>
+              <p>{cartQuantity === 1 ? t('cart-popup-info-1') : t('cart-popup-info', {quantity: cartQuantity.toString()})}</p>
               <button className="epbtn" onClick={handleCartModal}>{t('view-cart')}</button>
             </div>
           )}

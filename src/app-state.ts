@@ -369,7 +369,7 @@ function useCartItemsState() {
   const [cartData, setCartData] = useState<moltin.CartItem[]>([]);
   const [promotionItems, setPromotionItems] = useState<moltin.CartItem[]>([]);
   const [count, setCount] = useState(0);
-  const [quantity, setQuantity] = useState(0);
+  const [cartQuantity, setCartQuantity] = useState(0);
   const [showCartPopup, setShowCartPopup] = useState(false);
   const [totalPrice, setTotalPrice] = useState('');
   const mcart = localStorage.getItem('mcart') || '';
@@ -380,7 +380,7 @@ function useCartItemsState() {
         setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'));
         setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'));
         setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0));
-        setTotalPrice(res.meta.display_price.without_tax.formatted)
+        setTotalPrice(res.meta.display_price.without_tax.formatted);
       });
     }
   }, [mcart]);
@@ -393,20 +393,22 @@ function useCartItemsState() {
       const promotionItems = res.data.length ? res.data.filter(({ type }) => type === 'promotion_item') : [];
       setPromotionItems(promotionItems);
       const itemQuantity = res.data.length ? res.data.reduce((sum, { quantity }) => sum + quantity, 0) : 0;
-      setQuantity(itemQuantity - count);
       setCount(itemQuantity);
       const totalPrice = res.meta ? res.meta.display_price.without_tax.formatted : '';
       setTotalPrice(totalPrice);
-      if (!showCartPopup && itemQuantity - count > 0) {
-        setShowCartPopup(true);
-        setTimeout(() => {
-          setShowCartPopup(false);
-        }, 3200);
-      }
     });
   };
 
-  return { cartData, promotionItems, count, quantity, showCartPopup, totalPrice, updateCartItems }
+  const handleShowCartPopup = () => {
+    if (!showCartPopup) {
+      setShowCartPopup(true);
+      setTimeout(() => {
+        setShowCartPopup(false);
+      }, 3200);
+    }
+  };
+
+  return { cartData, promotionItems, count, cartQuantity, setCartQuantity, showCartPopup, handleShowCartPopup, totalPrice, updateCartItems }
 }
 
 function useMultiCartDataState() {
@@ -453,7 +455,7 @@ function useMultiCartDataState() {
   );
 
   const updateSelectedCart = (cart: any) => {
-    setSelectedCart(cart)
+    setSelectedCart(cart);
   };
 
   const clearCartData = () => {

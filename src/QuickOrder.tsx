@@ -8,7 +8,7 @@ import './QuickOrder.scss'
 
 export const QuickOrder: React.FC = (props) => {
   const { t } = useTranslation();
-  const { updateCartItems } = useCartData();
+  const { updateCartItems, setCartQuantity, handleShowCartPopup } = useCartData();
 
   const defaultItem = {
     code: '', quantity: 0, isInvalid: false, errorMsg: ''
@@ -74,9 +74,12 @@ export const QuickOrder: React.FC = (props) => {
     });
     setError('');
     setShowLoader(true);
+    const totalQuantity = products.reduce((sum, { quantity }) => sum + quantity, 0);
     bulkAdd(mcart, products)
       .then(() => {
         updateCartItems();
+        setCartQuantity(totalQuantity);
+        handleShowCartPopup();
         setItems(Array(defaultItemsCount).fill(defaultItem).map((item, index) => ({ ...item, key: `quick-order-sku-${index}` })));
         setShowLoader(false);
       })

@@ -33,9 +33,9 @@ export const Product: React.FC = () => {
   const { t } = useTranslation();
   const { selectedLanguage } = useTranslation();
   const { selectedCurrency } = useCurrency();
-  const { updateCartItems } = useCartData();
+  const { updateCartItems, setCartQuantity, handleShowCartPopup } = useCartData();
   const { isLoggedIn } = useCustomerData();
-  const { multiCartData, updateCartData } = useMultiCartData();
+  const { multiCartData, updateCartData, updateSelectedCart, setIsCartSelected } = useMultiCartData();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -81,12 +81,20 @@ export const Product: React.FC = () => {
   };
 
   const handleAddToCart = (cartId?: string) => {
-    const mcart = cartId ? cartId : localStorage.getItem("mcart") || "" ;
+    const currentCart = localStorage.getItem("mcart") || "";
+    const mcart = cartId ? cartId : currentCart;
     setAddToCartLoading(true);
     return addToCart(mcart, productId)
       .then(() => {
-        updateCartItems();
+        if (cartId && cartId !== currentCart) {
+          localStorage.setItem('mcart', cartId);
+        } else {
+          updateCartItems();
+        }
+        if (isLoggedIn) setIsCartSelected(true);
         updateCartData();
+        setCartQuantity(1);
+        handleShowCartPopup();
       }).finally(() => {
         setAddToCartLoading(false);
       })
@@ -106,6 +114,12 @@ export const Product: React.FC = () => {
         setModalOpen(false);
       });
     }
+  };
+
+  const handleAddToSelectedCart = (cart:any) => {
+    updateSelectedCart(cart);
+    handleAddToCart(cart.id);
+    setDropdownOpen(false);
   };
 
   const CartButton = () => {
@@ -136,10 +150,7 @@ export const Product: React.FC = () => {
                 <button
                   className="product__addtocartdropdownbtn"
                   key={cart.id}
-                  onClick={() => {
-                    handleAddToCart(cart.id);
-                    setDropdownOpen(false);
-                  }}
+                  onClick={() => { handleAddToSelectedCart(cart) }}
                 >
                   {cart.name}
                 </button>
