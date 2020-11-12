@@ -157,7 +157,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
                       </span>
                     </div>
                     <p className="cartslist__quantity">
-                      {cart.relationships.items.data ? cart.relationships.items.data.length : 0} {cart.relationships.items.data.length === 1 ? t('product') : t('products')}
+                      {cart.relationships.items.data ? cart.relationships.items.data.length : 0}
                     </p>
                     <p>
                       {cart.description}
