@@ -85,6 +85,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
   };
 
   useEffect(() => {
+    updateCartData();
     if(showCreateCartAlert)
       setTimeout(() => {
         setShowCreateCartAlert(false)
