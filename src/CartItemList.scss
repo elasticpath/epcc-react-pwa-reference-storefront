@@ -15,19 +15,24 @@
     }
   }
 
+  &__header{
+    line-height: 34px;
+    padding-bottom: 50px;
+    padding-top: 20px;
+    max-width: 300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center; 
+  }
+
   &__title {
     font-style: normal;
     font-weight: 700;
     font-size: 28px;
-    line-height: 34px;
-    padding-bottom: 50px;
-    padding-top: 20px;
     text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    max-width: 350px;
-    margin: 0 auto;
   }
 
   &__product {
@@ -283,6 +288,23 @@
 
     &__closeicon {
       display: none;
+    }
+
+    &__header {
+      max-width: 160px;
+    }
+  
+    &__title{
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 20px;
+    }
+  
+    &__settingsicon{
+      line-height: 20px;
+      svg{
+        height: 14px;
+      }
     }
   }
 }

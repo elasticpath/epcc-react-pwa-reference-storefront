@@ -105,20 +105,25 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
           <CloseIcon onClick={() => setShowUpdateCartAlert(false)}/>
         </div>
       )}
-      <h2 className="cartitemlist__title">
-        {isLoggedIn && selectedCart ? (
-          <span>
-            {selectedCart.name || ''}
-            <span className="cartitemlist__settingsicon">
-             <SettingsIcon onClick={() => setShowSettings(true)} />
+      <div className="cartitemlist__header">
+        <h2 className="cartitemlist__title">
+          {isLoggedIn && selectedCart ? (
+            <span>
+              {selectedCart.name || ''}
             </span>
-          </span>
-        ) : (
-          <span>
-            {t('your-shopping-cart')}
-          </span>
-          )}
-      </h2>
+
+          ) : (
+            <span>
+              {t('your-shopping-cart')}
+            </span>
+            )}
+            
+        </h2>
+        <span className="cartitemlist__settingsicon">
+                <SettingsIcon onClick={() => setShowSettings(true)} />
+        </span>
+      </div>
+      
       {items && items.length > 0 ? (
         <div>
           <div className="cartitemlist__wrap">

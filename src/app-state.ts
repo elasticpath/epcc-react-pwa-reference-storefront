@@ -218,7 +218,8 @@ function usePurchaseHistoryState() {
     if (token) {
       getAllOrders(token).then((res: any) => {
         setData(res.data);
-        setItemsData(res.included.items);
+        if (res && res.included)
+         setItemsData(res.included.items);
       });
     }
     else {
