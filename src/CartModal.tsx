@@ -170,9 +170,12 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
             />
           )}
           {isLoggedIn && !isCartSelected && (route === 'itemList') && !isCreateNewCart && (
-            <CartSelection
-              onHandlePage={(page: string) => handlePage(page)}
-            />
+            <CartItemList
+            items={cartData}
+            handlePage={(page: string) => handlePage(page)}
+            promotionItems={promotionItems}
+            handleCloseCartModal={handleCloseModal}
+          />
           )}
           {isLoggedIn && route === 'cartsList' && (
             <CartsList
