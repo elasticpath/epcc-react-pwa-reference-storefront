@@ -111,7 +111,6 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
             <span>
               {selectedCart.name || ''}
             </span>
-
           ) : (
             <span>
               {t('your-shopping-cart')}
