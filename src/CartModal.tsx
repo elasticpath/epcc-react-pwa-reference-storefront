@@ -7,7 +7,7 @@ import { checkout, payment, removeCartItems } from './service';
 
 import { AddressFields } from "./AddressFields";
 import Checkout from "./Checkout";
-import { CartSelection } from './CartSelection';
+// import { CartSelection } from './CartSelection';
 import { CartItemList } from './CartItemList';
 import { CartsList } from "./CartsList";
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
