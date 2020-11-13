@@ -226,5 +226,6 @@
   "quantity": "Quantity",
   "sub-total": "Sub-total",
   "tax": "Tax",
-  "item total": "Item Total"
+  "item-total": "Item Total",
+  "create-new-cart": "+ Create a new cart"
 }

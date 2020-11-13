@@ -12,7 +12,7 @@ interface LoginFormProps {
   onSubmit?: (...args: any[]) => any,
   handleCloseCartModal?: (...args: any[]) => any,
   openModal?: boolean,
-  createNewCart?: boolean,
+  createCart?: boolean,
 }
 
 interface FormValues {
@@ -21,7 +21,7 @@ interface FormValues {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = (props) => {
-  const { handleModalClose, onSubmit, openModal, createNewCart, handleCloseCartModal } = props;
+  const { handleModalClose, onSubmit, openModal, createCart, handleCloseCartModal } = props;
   const { setCustomerData } = useCustomerData();
   const { t } = useTranslation();
   const { setGuestCartId, setIsCreateNewCart } = useMultiCartData();
@@ -55,25 +55,25 @@ export const LoginForm: React.FC<LoginFormProps> = (props) => {
       const cartId = localStorage.getItem('mcart') || '';
       setGuestCartId(cartId);
       setIsLoading(true);
-      try {
-        const result: any = await login(values.emailField.toLowerCase(), values.passwordField);
-        await setCustomerData(result.token, result.customer_id);
-        await setIsLoading(false);
-        if (handleModalClose) {
-          handleModalClose();
-        }
-        if (createNewCart) {
-          setIsCreateNewCart(true);
-        }
-        if (onSubmit) {
-          onSubmit();
-        }
-      }
-      catch (error) {
-        setIsLoading(false);
-        setFailedLogin(true);
-        console.error(error);
-      }
+      login(values.emailField.toLowerCase(), values.passwordField)
+        .then((result) => {
+          setCustomerData(result.token, result.customer_id);
+          setIsLoading(false);
+          if (handleModalClose) {
+            handleModalClose();
+          }
+          if (createCart) {
+            setIsCreateNewCart(true);
+          }
+          if (onSubmit) {
+            onSubmit();
+          }
+        })
+        .catch(error => {
+          setIsLoading(false);
+          setFailedLogin(true);
+          console.error(error);
+        });
     },
   });
 

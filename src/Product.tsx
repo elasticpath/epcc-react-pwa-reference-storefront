@@ -114,31 +114,43 @@ export const Product: React.FC = () => {
     setDropdownOpen(false);
   };
 
+  const handleAddToDefaultCart = () => {
+    if (multiCartData && multiCartData.length > 0) {
+      handleAddToSelectedCart(multiCartData[0]);
+    }
+  };
+
   const CartButton = () => {
     if (!productId) return null;
     if (isLoggedIn) {
       return (
         <div className="product__addtocartdropdowncontainer">
-          <button
-            className={`epbtn --primary product__addtocartdropdowntoggle ${
-              dropdownOpen ? "--open" : ""
-            }`}
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-          >
-            {t("add-to-cart")}
-            {addToCartLoading ? (
-              <SpinnerIcon className="product__addtocartdropdownicspinner" />
-            ) : (
-              <CaretIcon
-                className={`product__addtocartdropdowniscaret ${
-                  dropdownOpen ? "--rotated" : ""
-                }`}
-              />
-            )}
-          </button>
+          <div className="product__addtocartdropdownwrap">
+            <button
+              className="epbtn --primary product__addtocartbtn"
+              onClick={handleAddToDefaultCart}
+            >
+              {t("add-to-cart")}
+              {' - '}
+              {multiCartData && multiCartData.length > 0 && multiCartData[0].name}
+            </button>
+            <button onClick={() => setDropdownOpen(!dropdownOpen)} className={`product__addtocartdropdowntoggle${
+              dropdownOpen ? " --open" : ""
+            }`}>
+              {addToCartLoading ? (
+                <SpinnerIcon className="product__addtocartdropdownicspinner" />
+              ) : (
+                <CaretIcon
+                  className={`product__addtocartdropdowniscaret ${
+                    dropdownOpen ? "--rotated" : ""
+                  }`}
+                />
+              )}
+            </button>
+          </div>
           {dropdownOpen ? (
             <div className="product__addtocartdropdowncontent">
-              {multiCartData.map((cart) => (
+              {multiCartData.slice(1).map((cart) => (
                 <button
                   className="product__addtocartdropdownbtn"
                   key={cart.id}
@@ -152,7 +164,7 @@ export const Product: React.FC = () => {
                 key="create-cart-btn"
                 onClick={() => setModalOpen(true)}
               >
-                {t('create-cart')}
+                {t('create-new-cart')}
               </button>
             </div>
           ) : null}

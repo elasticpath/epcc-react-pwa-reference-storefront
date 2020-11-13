@@ -117,13 +117,13 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
               {t('your-shopping-cart')}
             </span>
             )}
-            
+
         </h2>
         <span className="cartitemlist__settingsicon">
                 <SettingsIcon onClick={() => setShowSettings(true)} />
         </span>
       </div>
-      
+
       {items && items.length > 0 ? (
         <div>
           <div className="cartitemlist__wrap">
@@ -185,7 +185,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
                   </button>
                 </div>
                 <div className="cartitemlist__promptbody">
-                  <LoginForm createNewCart onSubmit={handleLogin} handleCloseCartModal={handleCloseCartModal} />
+                  <LoginForm createCart onSubmit={handleLogin} handleCloseCartModal={handleCloseCartModal} />
                   <div className="cartitemlist__promptcontent">
                     <p>{t('or')}</p>
                     <button type="button" className="epbtn --bordered" onClick={() => onHandlePage('shipping')}>{t('checkout-as-guest')}</button>
