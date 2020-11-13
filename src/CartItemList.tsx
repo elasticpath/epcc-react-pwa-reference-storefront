@@ -120,7 +120,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
 
         </h2>
         <span className="cartitemlist__settingsicon">
-                <SettingsIcon onClick={() => setShowSettings(true)} />
+          {isLoggedIn && selectedCart && <SettingsIcon onClick={() => setShowSettings(true)} /> }
         </span>
       </div>
 
