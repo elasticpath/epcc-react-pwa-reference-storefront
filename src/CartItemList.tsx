@@ -90,7 +90,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
       setTimeout(() => {
         setShowUpdateCartAlert(false)
       }, 4000);
-  })
+  }, [])
 
   return (
     <div className={`cartitemlist ${isLoading ? '--loading' : ''}`}>
