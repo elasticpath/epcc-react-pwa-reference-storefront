@@ -108,14 +108,6 @@ export const Product: React.FC = () => {
     setProductId(childID);
   };
 
-  const onCartCreate = ({ data }: {data?: {id: string}}) => {
-    if (data) {
-      handleAddToCart(data.id).then(() => {
-        setModalOpen(false);
-      });
-    }
-  };
-
   const handleAddToSelectedCart = (cart:any) => {
     updateSelectedCart(cart);
     handleAddToCart(cart.id);
@@ -248,7 +240,7 @@ export const Product: React.FC = () => {
           <div className="product__createcartmodal" ref={modalRef}>
             <SettingsCart
               title={CreateCartHeader}
-              onCartCreate={onCartCreate}
+              onCartCreate={() => {setModalOpen(false)}}
               handleHideSettings={() => {setModalOpen(false)}}
               setShowCartAlert={() => ''}
             />
