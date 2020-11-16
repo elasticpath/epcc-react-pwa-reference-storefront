@@ -116,54 +116,107 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
         </h2>
         {multiCartData && multiCartData.length ? (
           <div>
-            <div className="cartslist__selectedtitle">
-              <div className={`${isEdit ? 'isshow' : ''}`}>
-                <span>
-                  <input type="checkbox" name="cartCheck" id="select-all" className="cartslist__checkall epcheckbox" onChange={() => {handleSelectAll()}} />
-                  <label htmlFor="select-all" className="">
-                    {selectedCarts.length === 1 ?  `${selectedCarts.length} ${t('cart')}
-                    ${t('selected')}` : `${selectedCarts.length} ${t('carts')}
-                    ${t('selected')}` }
-                  </label>
-                </span>
-                <button className="cartslist__deletebutton" disabled={selectedCarts.length === 0 || multiCartData.length === 1} onClick={() => setIsShowModal(true)}>
-                  {!isShowModal ? <DeleteIcon /> : <span className="circularLoader" aria-label={t('loading')} />}
-                </button>
+            <div className="cartslist__editview">
+              <div className="cartslist__selectedtitle">
+                <div className={`${isEdit ? 'isshow' : ''}`}>
+                  <span>
+                    <input type="checkbox" name="cartCheck" id="select-all" className="cartslist__checkall epcheckbox" checked={selectedCarts.length === multiCartData.length} onChange={() => {handleSelectAll()}} />
+                    <label htmlFor="select-all" className="">
+                      {selectedCarts.length === 1 ?  `${selectedCarts.length} ${t('cart')}
+                      ${t('selected')}` : `${selectedCarts.length} ${t('carts')}
+                      ${t('selected')}` }
+                    </label>
+                  </span>
+                  <button className="cartslist__deletebutton" disabled={selectedCarts.length === 0 || multiCartData.length === 1} onClick={() => setIsShowModal(true)}>
+                    {!isShowModal ? <DeleteIcon /> : <span className="circularLoader" aria-label={t('loading')} />}
+                  </button>
+                </div>
+              </div>
+              <div className={`cartslist__cartlist${isEdit ? ' --editmode' : ''}`}>
+                {multiCartData.map((cart: any) => (
+                  <div role="presentation" className='cartslist__cartelement' key={cart.id} onClick={() => handleCart(cart)} tabIndex={-1}>
+                    {isEdit && (
+                      <input type="checkbox" name="cartCheck" id={`cart_${cart.id}`} className="cartslist__check epcheckbox" checked={selectedCarts.includes(cart.id)} onChange={() => {handleSelectCart(cart.id)}} />
+                    )}
+                    <label htmlFor={`cart_${cart.id}`} className="cartslist__description">
+                      <div className="cartslist__cartname">
+                        <strong className="--overflowtext">
+                          {cart.name}
+                        </strong>
+                        <span className="cartslist__select">
+                          <span className="cartslist__date">
+                            {t('created')} - {(cart.meta.timestamps.created_at).substring(0, 10)}
+                          </span>
+                          <button className="cartslist__selectcart">
+                            <ArrowRightIcon />
+                          </button>
+                          <br />
+                          <span className="cartslist__date">
+                            {t('edited')} - {(cart.meta.timestamps.updated_at).substring(0, 10)}
+                          </span>
+                        </span>
+                      </div>
+                      <p className="cartslist__quantity">
+                        {cart.relationships.items.data ? cart.relationships.items.data.length : 0} {cart.relationships.items.data && cart.relationships.items.data.length === 1 ? t('product') : t('products') }
+                      </p>
+                      <p>
+                        {cart.description}
+                      </p>
+                    </label>
+                  </div>
+                ))}
               </div>
             </div>
-            <div className={`cartslist__cartlist${isEdit ? ' --editmode' : ''}`}>
-              {multiCartData.map((cart: any) => (
-                <div role="presentation" className='cartslist__cartelement' key={cart.id} onClick={() => handleCart(cart)} tabIndex={-1}>
-                  {isEdit && (
+            <div className="cartslist__listview">
+              <div className="cartslist__selectedtitle">
+                <div className='isshow'>
+                  <span>
+                    <input type="checkbox" name="cartCheck" id="select-all" className="cartslist__checkall epcheckbox" checked={selectedCarts.length === multiCartData.length} onChange={() => {handleSelectAll()}} />
+                    <label htmlFor="select-all" className="">
+                      {selectedCarts.length === 1 ?  `${selectedCarts.length} ${t('cart')}
+                      ${t('selected')}` : `${selectedCarts.length} ${t('carts')}
+                      ${t('selected')}` }
+                    </label>
+                  </span>
+                  <button className="cartslist__deletebutton" disabled={selectedCarts.length === 0 || multiCartData.length === 1} onClick={() => setIsShowModal(true)}>
+                    {!isShowModal ? <DeleteIcon /> : <span className="circularLoader" aria-label={t('loading')} />}
+                  </button>
+                </div>
+              </div>
+              <div className={`cartslist__cartlist${isEdit ? ' --editmode' : ''}`}>
+                {multiCartData.map((cart: any) => (
+                  <div className='cartslist__cartelement'>
                     <input type="checkbox" name="cartCheck" id={`cart_${cart.id}`} className="cartslist__check epcheckbox" checked={selectedCarts.includes(cart.id)} onChange={() => {handleSelectCart(cart.id)}} />
-                  )}
-                  <label htmlFor={`cart_${cart.id}`} className="cartslist__description">
-                    <div className="cartslist__cartname">
-                      <strong className="--overflowtext">
-                        {cart.name}
-                      </strong>
-                      <span className="cartslist__select">
-                        <span className="cartslist__date">
-                          {t('created')} - {(cart.meta.timestamps.created_at).substring(0, 10)}
-                        </span>
-                        <button className="cartslist__selectcart">
-                          <ArrowRightIcon />
-                        </button>
-                        <br />
-                        <span className="cartslist__date">
-                          {t('edited')} - {(cart.meta.timestamps.updated_at).substring(0, 10)}
-                        </span>
-                      </span>
-                    </div>
-                    <p className="cartslist__quantity">
-                      {cart.relationships.items.data ? cart.relationships.items.data.length : 0} {cart.relationships.items.data && cart.relationships.items.data.length === 1 ? t('product') : t('products') }
-                    </p>
-                    <p>
-                      {cart.description}
-                    </p>
-                  </label>
+                    <label htmlFor={`cart_${cart.id}`} className="cartslist__description">
+                      <div role="presentation"  key={cart.id} onClick={() => handleCart(cart)} tabIndex={-1}>
+                        <div className="cartslist__cartname" >
+                          <strong className="--overflowtext">
+                            {cart.name}
+                          </strong>
+                          <span className="cartslist__select">
+                            <span className="cartslist__date">
+                              {t('created')} - {(cart.meta.timestamps.created_at).substring(0, 10)}
+                            </span>
+                            <button className="cartslist__selectcart">
+                              <ArrowRightIcon />
+                            </button>
+                            <br />
+                            <span className="cartslist__date">
+                              {t('edited')} - {(cart.meta.timestamps.updated_at).substring(0, 10)}
+                            </span>
+                          </span>
+                        </div>
+                        <p className="cartslist__quantity">
+                          {cart.relationships.items.data ? cart.relationships.items.data.length : 0} {cart.relationships.items.data && cart.relationships.items.data.length === 1 ? t('product') : t('products') }
+                        </p>
+                        <p>
+                          {cart.description}
+                        </p>
+                      </div>
+                    </label>
                 </div>
               ))}
+              </div>
             </div>
           </div>
         ) : (

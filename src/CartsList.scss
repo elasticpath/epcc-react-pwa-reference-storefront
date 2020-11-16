@@ -4,6 +4,13 @@
   $block: &;
   text-align: center;
 
+  &__editview {
+    display: block;
+  }
+  &__listview {
+    display: none;
+  }
+
   &__content {
     position: relative;
   }
@@ -312,6 +319,19 @@
   }
 
   @media (min-width: $mobileWidth) {
+
+    &__listview {
+      display: block;
+    }
+
+    &__editview {
+      display: none;
+    }
+    
+    &__editbutton{
+      display: none;
+    }
+
     &__cartlist:not(.--editmode) {
       &__cartelement {
         &:focus {
@@ -334,6 +354,7 @@
   }
 
   @media (max-width: $mobileXSmallWidth - 1px) {
+
     &__confirmation {
       width: calc(100% - 40px);
       padding: 15px 20px 20px;
