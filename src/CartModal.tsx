@@ -161,18 +161,26 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
               ))
             )}
           </div>
-          {((isLoggedIn && route === 'cartsList') || (isLoggedIn && route === 'itemList' && !isCartSelected && !isCreateNewCart)) && (
-            <CartsList
-              onHandlePage={(page: string) => handlePage(page)}
-              handleHideBackButton={(value:boolean) => {setHideBackButton(value)}}
-            />
-          )}
           {(route === 'itemList' && (isCartSelected || !isLoggedIn || isCreateNewCart)) && (
             <CartItemList
               items={cartData}
               handlePage={(page: string) => handlePage(page)}
               promotionItems={promotionItems}
               handleCloseCartModal={handleCloseModal}
+            />
+          )}
+          {isLoggedIn && !isCartSelected && (route === 'itemList') && !isCreateNewCart && (
+            <CartItemList
+              items={cartData}
+              handlePage={(page: string) => handlePage(page)}
+              promotionItems={promotionItems}
+              handleCloseCartModal={handleCloseModal}
+            />
+          )}
+          {isLoggedIn && route === 'cartsList' && (
+            <CartsList
+              onHandlePage={(page: string) => handlePage(page)}
+              handleHideBackButton={(value:boolean) => {setHideBackButton(value)}}
             />
           )}
           {route === 'shipping' && (
