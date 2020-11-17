@@ -236,7 +236,7 @@ const defaultCurrency = 'USD';
 
 function useCurrencyState() {
   const [allCurrencies, setAllCurrencies] = useState<moltin.Currency[]>([]);
-  // Set previously saved or defautlt currency before fetching the list of supported ones
+  // Set previously saved or default currency before fetching the list of supported ones
   const [selectedCurrency, setSelectedCurrency] = useState(localStorage.getItem('selectedCurrency') ?? defaultCurrency);
 
   const setCurrency = (newCurrency: string) => {

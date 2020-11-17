@@ -22,7 +22,7 @@ export const OidcLoginButtons: React.FC = () => {
         const { links } = await getOidcProfile(authenticationRealmId, profile.id)
         const baseRedirectUrl = links['authorization-endpoint']
 
-        window.location.href = generateOidcLoginRedirectUrl(baseRedirectUrl, cId, location.pathname);
+        window.location.href = await generateOidcLoginRedirectUrl(baseRedirectUrl, cId, location.pathname);
     }
     const clientId = `${authenticationSettings?.data.meta.client_id}`
 

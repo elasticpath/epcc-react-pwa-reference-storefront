@@ -146,15 +146,15 @@ export async function register(name: string, email: string, password: string): P
   return data;
 }
 
-export async function oidcLogin(code?: string, redirectUri?: string): Promise<moltin.CustomerToken> {
+export async function oidcLogin(code: string, redirectUri: string, codeVerifier: string): Promise<moltin.CustomerToken> {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
-  const { data } = await moltin.Customers.Token('', '', code, redirectUri).then();
+  const { data } = await moltin.Customers.TokenViaOIDC( code, redirectUri, codeVerifier).then();
   return data;
 }
 
 export async function login(email: string, password: string): Promise<moltin.CustomerToken> {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
-  const { data } = await moltin.Customers.Token(email, password);
+  const { data } = await moltin.Customers.TokenViaPassword(email, password);
 
   return data;
 }

@@ -17,10 +17,12 @@ export const OidcHandler: React.FC<any> = ()=> {
             let query = new URLSearchParams(location.search);
             const code = query.get('code')
             const state = query.get('state')
-            
+            const codeVerifier = localStorage.getItem('code_verifier');
+
             if(code !== undefined && state !== undefined) {
-                if (state === localStorage.getItem('state')) {
-                    const response: any = await oidcLogin(code!, generateRedirectUri())
+                if (state === localStorage.getItem('state') && typeof codeVerifier === "string" ) {
+
+                    const response: any = await oidcLogin(code!, generateRedirectUri(), codeVerifier)
                     const result = response;
                     
                     setCustomerData(result.token, result.customer_id);
