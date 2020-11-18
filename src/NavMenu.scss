@@ -123,13 +123,16 @@
           &__nextbutton {
             &.--haschildren {
               height: 48px;
+              padding: 12px 16px 12px 40px;
               position: relative;
               flex: 1;
-
+              color: $thirdComplimentColor;
+              text-align: left;
 
               &:after {
                 display: inline-block;
                 position: absolute;
+                top: 18px;
                 right: 28px;
                 content: ' ';
                 width: 8px;
@@ -139,7 +142,6 @@
                 border-bottom: 2px solid $firstComplimentColor;
                 transform-origin: center;
                 transform: rotate(-135deg);
-                vertical-align: middle;
               }
             }
           }
