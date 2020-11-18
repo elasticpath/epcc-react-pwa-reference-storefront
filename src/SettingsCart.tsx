@@ -72,7 +72,6 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
           }
           return setIsLoading(false);
         })
-        
       }
     },
   });
