@@ -108,6 +108,10 @@
     #{$block}__addtocartbtn {
       text-align: left;
       flex-grow: 1;
+      text-overflow: ellipsis;
+      width: 270px;
+      white-space: nowrap;
+      overflow: hidden;
     }
 
     #{$block}__addtocartdropdowntoggle {
