@@ -25,6 +25,11 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [failedLogin, setFailedLogin] = useState(false);
 
+  const passwordAuthAvailable: boolean =
+    authenticationSettings?.data.allow_password_authentication !== undefined
+      ? authenticationSettings?.data.allow_password_authentication
+      : true;
+
   const handleClose = () => {
     setFailedLogin(false);
     handleModalClose();
@@ -48,24 +53,24 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
           <div className="logindialog__feedback">
           {failedLogin ? t('invalid-email-or-password') : ('')}
           </div>
-
-          {
-            authenticationSettings ?
-            authenticationSettings?.data.allow_password_authentication &&
-            <PasswordLoginForm handleModalClose={handleModalClose} isLoading={isLoading} setIsLoading={setIsLoading} setFailedLogin={setFailedLogin} />
-            :
-            <div className="epminiLoader" />
-          }
+          {passwordAuthAvailable && (
+            <PasswordLoginForm
+              handleModalClose={handleModalClose}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+              setFailedLogin={setFailedLogin}
+            />
+          )}
 
           {
             oidcProfiles ?
             [
-              authenticationSettings?.data.allow_password_authentication && <LoginDialogDivider/>,
+              passwordAuthAvailable && <LoginDialogDivider key="oidcLoginButtonDivider" />,
               <OidcLoginButtons key="OidcLoginButton"/>
             ]: (
               authenticationSettings &&
               [
-                authenticationSettings?.data.allow_password_authentication && <LoginDialogDivider/>,
+                passwordAuthAvailable && <LoginDialogDivider key="oidcLoginButtonLoaderDivider" />,
                 <div key="oidcLoginButtonLoader" className="epminiLoader" />
               ])
           }
