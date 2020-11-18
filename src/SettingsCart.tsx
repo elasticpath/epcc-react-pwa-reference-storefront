@@ -27,7 +27,9 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
   const { t } = useTranslation();
   const { createCart, editCart } = useMultiCartData();
   const [isLoading, setIsLoading] = useState(false);
-  const [nameError, setNameError ] = useState("")
+  const [nameError, setNameError ] = useState("");
+  const [descriptionError , setDescriptionError ] = useState("");
+
 
   let initialValues: FormValues = {
     name: isEditCart && name ? name.toString() : '',
@@ -60,9 +62,17 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
         setShowCartAlert();
         resetForm();
       }
-      catch(error) {
-        setNameError(error.errors[0].detail)
-        setIsLoading(false);
+      catch(errors) {
+        errors.errors.map((error:any) => {
+          if(error.source === "data.name") {
+            setNameError(error.detail)
+          }
+          else if (error.source === "data.description"){
+            setDescriptionError(error.detail)
+          }
+          return setIsLoading(false);
+        })
+        
       }
     },
   });
@@ -102,6 +112,9 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
                 <ClearIcon />
               </button>
             )}
+            <div className="epform__error">
+              {values.description.length > 250 ? descriptionError : null}
+            </div>
           </div>
           <div className="settingscart__btns">
             <button className="epbtn --bordered" type="button" onClick={handleHideSettings}>{t('cancel')}</button>

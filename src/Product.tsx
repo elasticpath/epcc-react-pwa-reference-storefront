@@ -134,7 +134,7 @@ export const Product: React.FC = () => {
               {' - '}
               {multiCartData && multiCartData.length > 0 && multiCartData[0].name}
             </button>
-            <button onClick={() => setDropdownOpen(!dropdownOpen)} className={`product__addtocartdropdowntoggle${
+            <button onClick={() => setDropdownOpen(!dropdownOpen)} className={`epbtn --primary product__addtocartdropdowntoggle${
               dropdownOpen ? " --open" : ""
             }`}>
               {addToCartLoading ? (

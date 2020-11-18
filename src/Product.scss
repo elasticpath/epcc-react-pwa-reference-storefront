@@ -116,12 +116,11 @@
 
     #{$block}__addtocartdropdowntoggle {
       width: 50px;
-      background-color: $firstComplimentColor;
       text-align: center;
       cursor: pointer;
 
       &.--open {
-        //background-color: $btnSecondaryHoverColor;
+        background-color: $mainColor;
       }
     }
 
