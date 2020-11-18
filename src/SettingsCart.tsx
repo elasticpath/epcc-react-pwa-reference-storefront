@@ -61,6 +61,10 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
         handleHideSettings();
         setShowCartAlert();
         resetForm();
+        if(descriptionError !== "" || nameError !== ""){
+          setDescriptionError("");
+          setNameError("");
+        }
       }
       catch(errors) {
         errors.errors.map((error:any) => {
