@@ -27,6 +27,7 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
   const { t } = useTranslation();
   const { createCart, editCart } = useMultiCartData();
   const [isLoading, setIsLoading] = useState(false);
+  const [nameError, setNameError ] = useState("")
 
   let initialValues: FormValues = {
     name: isEditCart && name ? name.toString() : '',
@@ -46,18 +47,24 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
     validate,
     onSubmit: async (values)  => {
       setIsLoading(true);
-      if(isEditCart) {
-        await editCart(values);
-      } else {
-        const cartData = await createCart(values);
-        if (onCartCreate) onCartCreate(cartData);
+      try{
+        if(isEditCart) {
+          await editCart(values);
+        }
+        else {
+          const cartData = await createCart(values);
+          if (onCartCreate) onCartCreate(cartData);
+        }
+        setIsLoading(false);
+        handleHideSettings();
+        setShowCartAlert();
+        resetForm();
       }
-      setIsLoading(false);
-      handleHideSettings();
-      setShowCartAlert();
-      resetForm();
+      catch(error) {
+        setNameError(error.errors[0].detail)
+        setIsLoading(false);
+      }
     },
-    
   });
 
   return (
@@ -84,6 +91,7 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
             )}
             <div className="epform__error">
               {errors.name ? errors.name : null}
+              {values.name.length > 250 ? nameError : null}
             </div>
           </div>
           <div className="epform__group">
@@ -103,7 +111,7 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
                 }`}
               type="submit"
               onClick={() => {handleSubmit()}}
-              disabled={isLoading || !values.name || values.name.length > 250}
+              disabled={isLoading || !values.name }
             >
               {!isLoading? t("save") : <span className="circularLoader" aria-label={t('loading')} />}
             </button>
