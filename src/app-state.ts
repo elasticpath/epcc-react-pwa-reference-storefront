@@ -11,15 +11,18 @@ import {
 } from './service';
 import { config } from './config';
 
-import en from './locales/en.json';
-import fr from './locales/fr.json';
+const languages = config.supportedLocales.map(el => {
+  return {
+    [el.value] : require(`./locales/${el.value}.json`),
+  }
+}).reduce((result, current) => {
+  return Object.assign(result, current);
+}, {});
 
+const defaultLanguage = config.defaultLanguage;
 const translations: { [lang: string]: { [name: string]: string } } = {
-  en,
-  fr,
+  ...languages,
 };
-
-const defaultLanguage = 'en';
 
 function getInitialLanguage(): string {
   const savedLanguage = localStorage.getItem('selectedLanguage');
@@ -54,7 +57,6 @@ function getInitialLanguage(): string {
 
   return defaultLanguage;
 }
-
 function checkTranslations() {
   const keys: { [key: string]: boolean } = {};
 
@@ -246,7 +248,7 @@ function usePurchaseHistoryState() {
   return { ordersData, ordersItemsData, updatePurchaseHistory }
 }
 
-const defaultCurrency = 'USD';
+const defaultCurrency = config.defaultCurrency;
 
 function useCurrencyState() {
   const [allCurrencies, setAllCurrencies] = useState<moltin.Currency[]>([]);

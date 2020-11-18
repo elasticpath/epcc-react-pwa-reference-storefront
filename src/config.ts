@@ -12,4 +12,14 @@ export const config = {
   compareKeys: process.env.REACT_APP_COMPARE_KEYS?.split(',') || [],
   endpointURL: process.env.REACT_APP_ENDPOINT_URL || 'api.moltin.com',
   b2b: false,
+  supportedLocales: [
+    {
+      "value": "en"
+    },
+    {
+      "value": "fr"
+    }
+  ],
+  defaultLanguage: "en",
+  defaultCurrency: "USD",
 };
