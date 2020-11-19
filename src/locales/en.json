@@ -227,5 +227,10 @@
   "sub-total": "Sub-total",
   "tax": "Tax",
   "item-total": "Item Total",
-  "create-new-cart": "+ Create a new cart"
+  "create-new-cart": "Create a new cart",
+  "empty-cart": "Empty cart",
+  "remove-all-items-confirmation": "Are you sure you want to clear all the items from your cart?",
+  "yes": "Yes", 
+  "no": "No"
+
 }

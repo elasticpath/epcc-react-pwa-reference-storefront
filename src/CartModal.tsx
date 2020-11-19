@@ -3,7 +3,7 @@ import useOnclickOutside from 'react-cool-onclickoutside';
 import { Elements, StripeProvider } from 'react-stripe-elements';
 import { useCartData, useCustomerData, useMultiCartData, useOrdersData, useTranslation } from './app-state';
 import { config } from './config';
-import { checkout, payment, removeCartItems } from './service';
+import { checkout, payment, deleteCart } from './service';
 
 import { AddressFields } from "./AddressFields";
 import Checkout from "./Checkout";
@@ -82,7 +82,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
       };
       await payment(paymentParams, orderRes.data.id);
       await updatePurchaseHistory();
-      await removeCartItems(mcart);
+      await deleteCart(mcart);
       updateCartItems();
       setOrderData(orderRes);
       setRoute('completed');

@@ -233,6 +233,79 @@
     font-weight: bold;
   }
 
+  &__emptycart {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 20px;
+    color: $btnColor;
+    cursor: pointer;
+    margin-top: 20px;
+
+    svg{
+      fill: $btnColor;
+      width:14px;
+    }
+
+    &:hover{
+      color: $btnSecondaryHoverColor;
+      svg{
+        fill: $btnSecondaryHoverColor;
+      }
+    }
+  }
+
+  &__confirmationoverlay {
+    background-color: $mainTextColor;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    opacity: 0.3;
+  }
+
+  &__confirmation {
+    width: 350px;
+    position: absolute;
+    top: 130px;
+    right: 50px;
+    background: $secondComplimentBackground;
+    border: 1px solid $mainBorderColor;
+    padding: 20px 30px 30px;
+    z-index: 4;
+  }
+
+  &__closebtn {
+    cursor: pointer;
+  }
+
+  &__confirmationtitle {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid $secondBorderColor;
+  }
+
+  &__confirmationmsg {
+    text-align: left;
+    margin-bottom: 30px;
+  }
+
+  &__confirmationbtns {
+    .epbtn {
+      width: 100%;
+      height: 42px;
+
+      &.--primary {
+        margin-bottom: 15px;
+      }
+    }
+  }
+
   .settingscart {
     position: absolute;
     top: 0px;

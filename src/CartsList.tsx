@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { useTranslation, useMultiCartData, useCartData } from './app-state';
-import { removeCartItems } from './service';
+import { deleteCart } from './service';
 import { SettingsCart } from "./SettingsCart";
 import { ReactComponent as ArrowRightIcon } from "./images/icons/keyboard_arrow_right-black-24dp.svg";
 import { ReactComponent as DeleteIcon } from "./images/icons/delete-black-24dp.svg";
@@ -54,7 +54,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
     setShowLoader(true);
     setShowDeletedCartsnumber(true);
     setDeletedCartNumber(selectedCarts.length);
-    const promises = selectedCarts.map(el => removeCartItems(el));
+    const promises = selectedCarts.map(el => deleteCart(el));
     Promise.all(promises)
       .then(() => {
         updateCartData();

@@ -12,6 +12,7 @@ import { SettingsCart } from "./SettingsCart";
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import { ReactComponent as BackArrowIcon } from './images/icons/arrow_back-black-24dp.svg';
 
+
 import './CartItemList.scss';
 
 interface CartItemListParams {
@@ -30,6 +31,8 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const { addError } = useContext(APIErrorContext);
   const [showSettings, setShowSettings] = useState(false);
   const [showUpdateCartAlert, setShowUpdateCartAlert ] = useState(false);
+  const [isShowModal, setIsShowModal] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
 
   const isLoading = false;
   const imgSize = 73;
@@ -122,7 +125,6 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
           {isLoggedIn && selectedCart && <SettingsIcon onClick={() => setShowSettings(true)} /> }
         </span>
       </div>
-
       {items && items.length > 0 ? (
         <div>
           <div className="cartitemlist__wrap">
@@ -160,6 +162,12 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
                 </div>
               </div>
             ))}
+            <div>
+              <button className="cartitemlist__emptycart" onClick={() => setIsShowModal(true)}>
+                <CloseIcon/>
+                  {t('empty-cart')}
+              </button>
+            </div>
           </div>
           <div className="cartitemlist__promotion">
             <Promotion promotionItems={promotionItems} />
@@ -199,6 +207,23 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
         <div className="cartmodal__body">
           {t('your-cart-is-empty')}
         </div>
+      )}
+      {isShowModal && (
+        <React.Fragment>
+          <div className="cartitemlist__confirmation" role="presentation" ref={modalRef}>
+            <div className="cartitemlist__confirmationtitle">
+              {t('confirmation')}
+            </div>
+            <div className="cartitemlist__confirmationmsg">
+              {t('remove-all-items-confirmation')}
+            </div>
+            <div className="cartitemlist__confirmationbtns">
+              <button className="epbtn --primary">{!showLoader ? t('yes') : <span className="circularLoader" aria-label={t('loading')} />}</button>
+              <button className="epbtn --ghost" onClick={() => setIsShowModal(false)}>{t("no")}</button>
+            </div>
+          </div>
+          <div className="cartitemlist__confirmationoverlay" />
+        </React.Fragment>
       )}
       <SettingsCart isEditCart name={selectedCart?.name} description={selectedCart?.description} showSettings={showSettings} handleHideSettings={() => setShowSettings(false)} setShowCartAlert={() => setShowUpdateCartAlert(true)} />
       <CreateCart showCreateCart={showCreateCart} handleHideCreateCart={() => setShowCreateCart(false)} />
