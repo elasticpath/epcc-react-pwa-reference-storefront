@@ -108,7 +108,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
       <div className="cartslist__content">
         {multiCartData.length && (
           <button className="cartslist__editbutton" onClick={handleCartEdit}>
-            {t(isEdit ? 'Done' : 'edit')}
+            {t(isEdit ? 'done' : 'edit')}
           </button>
         )}
         <h2 className="cartslist__title">
