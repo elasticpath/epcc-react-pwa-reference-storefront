@@ -14,10 +14,12 @@ export const config = {
   b2b: process.env.REACT_APP_B2B_ENABLE || false,
   supportedLocales: process.env.REACT_APP_SUPPORTED_LOCALES?.split(',').map(el => JSON.parse(el)) || [
     {
-      "value": "en"
+      "key": "en",
+      "name": "english"
     },
     {
-      "value": "fr"
+      "key": "fr",
+      "name": "french"
     }
   ],
   defaultLanguage: process.env.REACT_APP_DEFAULT_LANGUAGE || "en",

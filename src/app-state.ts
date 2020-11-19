@@ -13,7 +13,7 @@ import { config } from './config';
 
 const languages = config.supportedLocales.map(el => {
   return {
-    [el.value] : require(`./locales/${el.value}.json`),
+    [el.key] : require(`./locales/${el.key}.json`),
   }
 }).reduce((result, current) => {
   return Object.assign(result, current);
