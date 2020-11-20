@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import constate from 'constate';
 import * as moltin from '@moltin/sdk';
 import { getCustomer, getAddresses, getAllOrders, loadCategoryTree, getCartItems, loadCustomerAuthenticationSettings, loadOidcProfiles } from './service';
@@ -127,13 +127,13 @@ function useCustomerDataState() {
     }
   }, [customerId, customerToken]);
 
-  const setCustomerData = (token: string, id: string) => {
+  const setCustomerData = useCallback((token: string, id: string) => {
     localStorage.setItem('mtoken', token);
     localStorage.setItem('mcart', id);
     localStorage.setItem('mcustomer', id);
     setCustomerToken(token);
     setCustomerId(id);
-  };
+  }, []);
 
   const clearCustomerData = () => {
     localStorage.setItem('mtoken', '');
