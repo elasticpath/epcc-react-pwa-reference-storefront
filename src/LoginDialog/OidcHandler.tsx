@@ -6,40 +6,41 @@ import { generateRedirectUri } from './OidcUtilities'
 
 export const OidcHandler: React.FC<any> = ()=> {
 
-    const history = useHistory()
-    const location = useLocation()
-    const { setCustomerData } = useCustomerData();
+  const history = useHistory();
+  const historyPush = history.push;
+  const location = useLocation();
+  const locationSearch = location.search;
+  const { setCustomerData } = useCustomerData();
 
-    useEffect(() => {
-        async function setCustomerDataFromOidcCallback() {
-            const redirectInitialLocation:string = localStorage.getItem('location') || '/';
+  useEffect(() => {
+    async function setCustomerDataFromOidcCallback() {
+      const redirectInitialLocation: string = localStorage.getItem('location') || '/';
 
-            let query = new URLSearchParams(location.search);
-            const code = query.get('code')
-            const state = query.get('state')
-            const codeVerifier = localStorage.getItem('code_verifier');
+      let query = new URLSearchParams(locationSearch);
+      const code = query.get('code')
+      const state = query.get('state')
+      const codeVerifier = localStorage.getItem('code_verifier');
 
-            if(code !== undefined && state !== undefined) {
-                if (state === localStorage.getItem('state') && typeof codeVerifier === "string" ) {
+      if (code !== undefined && state !== undefined) {
+        if (state === localStorage.getItem('state') && typeof codeVerifier === "string" ) {
 
-                    const response: any = await oidcLogin(code!, generateRedirectUri(), codeVerifier)
-                    const result = response;
-                    
-                    setCustomerData(result.token, result.customer_id);
-                    
-                    history.push(redirectInitialLocation);
-                } else {
-                    alert('Unable to validate identity');
-                    history.push(redirectInitialLocation);
-                }
+          const response: any = await oidcLogin(code!, generateRedirectUri(), codeVerifier)
+          const result = response;
+          setCustomerData(result.token, result.customer_id);
 
-                localStorage.removeItem('location')
-                localStorage.removeItem('state')
-            }
+          historyPush(redirectInitialLocation);
+        } else {
+          alert('Unable to validate identity');
+          historyPush(redirectInitialLocation);
         }
 
-        setCustomerDataFromOidcCallback();
-    });
+        localStorage.removeItem('location')
+        localStorage.removeItem('state')
+      }
+    }
 
-    return( <div className="epminiLoader --center" />   )
+    setCustomerDataFromOidcCallback();
+  }, [historyPush, locationSearch, setCustomerData]);
+
+  return( <div className="epminiLoader --center" />   )
 }
