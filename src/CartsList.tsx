@@ -63,6 +63,8 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
         setSelectedCarts([]);
       })
       .catch(error => {
+        setIsShowModal(false);
+        setShowLoader(false);
         console.error(error);
       });
       setTimeout(() => {

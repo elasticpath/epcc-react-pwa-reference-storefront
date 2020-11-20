@@ -29,10 +29,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const { count, totalPrice, updateCartItems } = useCartData();
   const { selectedCart, updateCartData } = useMultiCartData();
   const { addError } = useContext(APIErrorContext);
-  const [showSettings, setShowSettings] = useState(false);
-  const [showUpdateCartAlert, setShowUpdateCartAlert ] = useState(false);
-  const [isShowModal, setIsShowModal] = useState(false);
-  const [showLoader, setShowLoader] = useState(false);
+  const quantityItems = count.toString();
 
   const isLoading = false;
   const imgSize = 73;
@@ -40,7 +37,11 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const [removingItem, setRemovingItem] = useState(-1);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showCreateCart, setShowCreateCart] = useState(false);
-  const quantityItems = count.toString();
+  const [showSettings, setShowSettings] = useState(false);
+  const [showUpdateCartAlert, setShowUpdateCartAlert ] = useState(false);
+  const [isShowModal, setIsShowModal] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
+  
 
   const modalRef = useOnclickOutside(() => {
     setShowLoginModal(false);
@@ -60,8 +61,9 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
         updateCartData();
       })
       .catch(error => {
+        setShowLoader(false);
+        setIsShowModal(false);
         addError(error.errors);
-        console.error(error);
       })
   };
 
@@ -75,7 +77,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
       })
       .catch(error => {
         addError(error.errors);
-        console.error(error);
+        setRemovingItem(-1);
       })
   };
 
