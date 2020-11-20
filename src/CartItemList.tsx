@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { useCartData, useCustomerData, useTranslation, useMultiCartData } from './app-state';
-import { removeCartItem, updateCartItem } from './service';
+import { removeAllCartItems, removeCartItem, updateCartItem } from './service';
 import { ImageContainer } from "./ImageContainer";
 import { Promotion } from "./Promotion";
 import { APIErrorContext } from "./APIErrorProvider";
@@ -48,6 +48,21 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
 
   const onHandlePage = (page: string) => {
     handlePage(page)
+  };
+
+  const handleRemoveAllItems = () => {
+    setShowLoader(true);
+    removeAllCartItems(mcart)
+      .then(() => {
+        setShowLoader(false);
+        setIsShowModal(false);
+        updateCartItems();
+        updateCartData();
+      })
+      .catch(error => {
+        addError(error.errors);
+        console.error(error);
+      })
   };
 
   const handleRemove = (id:string, index:number) => {
@@ -218,7 +233,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
               {t('remove-all-items-confirmation')}
             </div>
             <div className="cartitemlist__confirmationbtns">
-              <button className="epbtn --primary">{!showLoader ? t('yes') : <span className="circularLoader" aria-label={t('loading')} />}</button>
+              <button className="epbtn --primary" onClick={handleRemoveAllItems}>{!showLoader ? t('yes') : <span className="circularLoader" aria-label={t('loading')} />}</button>
               <button className="epbtn --ghost" onClick={() => setIsShowModal(false)}>{t("no")}</button>
             </div>
           </div>

@@ -230,9 +230,9 @@ export async function checkout(reference: string, customer: any, billing: any, s
   return checkoutRes;
 }
 
-export async function payment(payment: object, orderId: string) {
-  // const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
-  // await moltin.Orders.Payment(orderId, payment)
+export async function payment(payment: moltin.ConfirmPaymentBody, orderId: string) {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  await moltin.Orders.Payment(orderId, payment)
 }
 
 export async function createNewCart(data: any, token: string) {
