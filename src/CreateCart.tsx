@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import { useMultiCartData, useTranslation } from "./app-state";
 import { addCustomerAssociation, getMultiCarts, editCartInfo } from "./service";
 import { ReactComponent as ClearIcon } from "./images/icons/ic_clear.svg";
-import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
+
 
 import './CreateCart.scss';
 
@@ -23,7 +23,7 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   let initialValues: FormValues = {
-    cartName: '',
+    cartName: 'New Cart',
   };
 
   const validate = (values: any) => {
@@ -70,9 +70,6 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
     <div className={`createcart${showCreateCart ? ' --show' : ''}`}>
       <div className="createcart__content">
         <div className="createcart__title">
-          <button type="button" aria-label="close" className="createcart__close" onClick={handleHideCreateCart}>
-            <CloseIcon className="createcart__closeicon"/>
-          </button>
           <h2>
             {t('creating-new-cart')}
           </h2>
@@ -92,7 +89,6 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
             </div>
           </div>
           <div className="createcart__btns">
-            <button className="epbtn --bordered" type="button" onClick={handleHideCreateCart}>{t('cancel')}</button>
             <button
               className={`epbtn --primary ${
                 isLoading ? "--loading" : ""
