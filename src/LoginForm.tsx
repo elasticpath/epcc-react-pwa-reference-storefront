@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { login } from './service';
 import { useCustomerData, useMultiCartData, useTranslation } from './app-state';
 import { createRegistrationUrl } from './routes';
+import { createBrowserHistory } from "history";
 
 import './LoginForm.scss';
 
@@ -27,6 +28,9 @@ export const LoginForm: React.FC<LoginFormProps> = (props) => {
   const { setGuestCartId, setIsCreateNewCart } = useMultiCartData();
 
   const registrationUrl = createRegistrationUrl();
+
+  const browserHistory = createBrowserHistory();
+  const history = useHistory();
 
   const [failedLogin, setFailedLogin] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -59,6 +63,10 @@ export const LoginForm: React.FC<LoginFormProps> = (props) => {
         .then((result) => {
           setCustomerData(result.token, result.customer_id);
           setIsLoading(false);
+          if(browserHistory.location.pathname === "/registration")
+          {
+            history.push('/');
+          }
           if (handleModalClose) {
             handleModalClose();
           }
