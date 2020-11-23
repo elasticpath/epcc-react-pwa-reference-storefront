@@ -35,7 +35,7 @@
   },
   "scripts": {
     "start": "EXTEND_ESLINT=true BROWSER=none react-scripts start",
-    "build": "EXTEND_ESLINT=true GENERATE_SOURCEMAP=false INLINE_RUNTIME_CHUNK=true react-scripts build && yarn sw",
+    "build": "node getCurrencyAndLanguage.js && EXTEND_ESLINT=true GENERATE_SOURCEMAP=false INLINE_RUNTIME_CHUNK=true react-scripts build && yarn sw",
     "test": "EXTEND_ESLINT=true react-scripts test",
     "eject": "react-scripts eject",
     "serve": "serve -c serve.json",

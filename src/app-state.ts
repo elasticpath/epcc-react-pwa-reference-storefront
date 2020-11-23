@@ -10,6 +10,7 @@ import {
   loadEnabledCurrencies
 } from './service';
 import { config } from './config';
+import currenciesData from './currencies.json';
 
 const languages = config.supportedLocales.map(el => {
   return {
@@ -251,7 +252,8 @@ function usePurchaseHistoryState() {
 const defaultCurrency = config.defaultCurrency;
 
 function useCurrencyState() {
-  const [allCurrencies, setAllCurrencies] = useState<moltin.Currency[]>([]);
+  const defaultCurrencies = currenciesData || [];
+  const [allCurrencies, setAllCurrencies] = useState<moltin.Currency[]>(defaultCurrencies);
   // Set previously saved or defautlt currency before fetching the list of supported ones
   const [selectedCurrency, setSelectedCurrency] = useState(localStorage.getItem('selectedCurrency') ?? defaultCurrency);
 
