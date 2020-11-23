@@ -20,7 +20,7 @@
 
   &__footer {
     flex: 0 0 100px;
-    background-color: $mainNavigationBackgroundColor;
+    background: $mainNavigationBackgroundColor;
     padding-left: $maxScrollWidth;
     padding-right: calc(#{$maxScrollWidth} - 100vw + 100%);
   }
