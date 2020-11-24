@@ -359,24 +359,26 @@ function useCompareProductsState() {
 }
 
 function useCustomerAuthenticationSettingsState() {
-  const [ authenticationSettings, setAuthenticationSettings ] = useState<object>()
-  const [ oidcProfiles, setOidcProfiles ] = useState<object>();
+  const [authenticationSettings, setAuthenticationSettings] = useState<any>()
+  const [isLoadingOidcProfiles, setIsLoadingOidcProfiles] = useState(true);
+  const [oidcProfiles, setOidcProfiles] = useState<moltin.ResourcePage<moltin.Profile>>();
 
   useEffect(()=>{
     loadCustomerAuthenticationSettings().then((authSettings) => {
       setAuthenticationSettings(authSettings);
 
-      const authenticationRealmId = authSettings?.data?.relationships['authentication-realm']?.data?.id
+      const authenticationRealmId = authSettings?.data?.relationships['authentication-realm']?.data?.id;
 
       loadOidcProfiles(authenticationRealmId).then((profiles) => {
         setOidcProfiles(profiles);
+        setIsLoadingOidcProfiles(false);
       })
     }).catch((err)=>{
       console.log(err)
     });
-  },[])
+  }, [])
 
-  return { authenticationSettings, oidcProfiles }
+  return { authenticationSettings, isLoadingOidcProfiles, oidcProfiles };
 }
 
 function useCartItemsState() {

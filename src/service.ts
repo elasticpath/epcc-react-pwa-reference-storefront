@@ -11,12 +11,12 @@ export async function loadCustomerAuthenticationSettings(): Promise<any> {
   return moltin.AuthenticationSettings.Get()
 }
 
-export async function loadOidcProfiles(realmId: string): Promise<any> {
+export async function loadOidcProfiles(realmId: string): Promise<moltin.ResourcePage<moltin.Profile>> {
   const moltin = MoltinGateway({
     client_id: config.clientId,
     host: config.endpointURL,
   });
-  return moltin.OidcProfile.All(realmId)
+  return moltin.OidcProfile.All(realmId);
 }
 
 export function getOidcProfile(realmId: string, profileId: string) {
