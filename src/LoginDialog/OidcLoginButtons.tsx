@@ -12,32 +12,36 @@ import { generateOidcLoginRedirectUrl } from './OidcUtilities';
 import './OidcLoginButtons.scss';
 
 export const OidcLoginButtons: React.FC = () => {
-    const { authenticationSettings, oidcProfiles }: any = useCustomerAuthenticationSettings()
-    const [ isLoading ] = useState(false);
-    const location = useLocation()
+  const { authenticationSettings, isLoadingOidcProfiles, oidcProfiles } = useCustomerAuthenticationSettings()
+  const [ isLoading ] = useState(false);
+  const location = useLocation()
 
-    const handleOidcButtonClicked = async (profile:any, cId:any) => {
-        const authenticationRealmId = authenticationSettings.data.relationships['authentication-realm'].data.id
+  const handleOidcButtonClicked = async (profile:any, cId:any) => {
+    const authenticationRealmId = authenticationSettings.data.relationships['authentication-realm'].data.id;
 
-        const { links } = await getOidcProfile(authenticationRealmId, profile.id)
-        const baseRedirectUrl = links['authorization-endpoint']
+    const { links } = await getOidcProfile(authenticationRealmId, profile.id);
+    const baseRedirectUrl = links['authorization-endpoint'];
 
-        window.location.href = await generateOidcLoginRedirectUrl(baseRedirectUrl, cId, location.pathname);
-    }
-    const clientId = `${authenticationSettings?.data.meta.client_id}`
+    window.location.href = await generateOidcLoginRedirectUrl(baseRedirectUrl, cId, location.pathname);
+  }
 
-    return (
-        <div className="auth-opt">
-        {
-            oidcProfiles.data.map((profile:any)=>{
+  const clientId = `${authenticationSettings?.data.meta.client_id}`;
 
-                return (
-                    <button key={`${profile.name}`} className={`authbtn ${profile.name}`} onClick={()=>handleOidcButtonClicked(profile, clientId)}>
-                        {isLoading ? 'Loading' : `Login with ${profile.name}`}
-                    </button>
-                );
-            })
-        }
-        </div>
-        );
+  return (
+    <div className="auth-opt">
+      {isLoadingOidcProfiles && (
+        <div key="oidcLoginButtonLoader" className="epminiLoader" />
+      )}
+
+      {oidcProfiles && (
+        oidcProfiles.data.map((profile:any)=>{
+          return (
+            <button key={`${profile.name}`} className={`authbtn ${profile.name}`} onClick={()=>handleOidcButtonClicked(profile, clientId)}>
+              {isLoading ? 'Loading' : `Login with ${profile.name}`}
+            </button>
+          );
+        })
+      )}
+    </div>
+  );
 };

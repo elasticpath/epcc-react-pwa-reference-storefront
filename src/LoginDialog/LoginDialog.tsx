@@ -18,7 +18,7 @@ interface AppModalLoginMainProps {
 export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
   const { handleModalClose, openModal } = props;
 
-  const { authenticationSettings, oidcProfiles }: any = useCustomerAuthenticationSettings()
+  const { authenticationSettings, oidcProfiles } = useCustomerAuthenticationSettings()
 
   const { t } = useTranslation();
 
@@ -51,8 +51,9 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
         </div>
         <div className="logindialog__body">
           <div className="logindialog__feedback">
-          {failedLogin ? t('invalid-email-or-password') : ('')}
+            {failedLogin ? t('invalid-email-or-password') : ('')}
           </div>
+
           {passwordAuthAvailable && (
             <PasswordLoginForm
               handleModalClose={handleModalClose}
@@ -62,18 +63,11 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
             />
           )}
 
-          {
-            oidcProfiles ?
-            [
-              passwordAuthAvailable && <LoginDialogDivider key="oidcLoginButtonDivider" />,
-              <OidcLoginButtons key="OidcLoginButton"/>
-            ]: (
-              authenticationSettings &&
-              [
-                passwordAuthAvailable && <LoginDialogDivider key="oidcLoginButtonLoaderDivider" />,
-                <div key="oidcLoginButtonLoader" className="epminiLoader" />
-              ])
-          }
+          {passwordAuthAvailable && oidcProfiles && oidcProfiles.data.length > 0 && (
+            <LoginDialogDivider />
+          )}
+
+          <OidcLoginButtons />
         </div>
       </div>
     </Modal>
