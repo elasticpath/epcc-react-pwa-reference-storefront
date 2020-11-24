@@ -135,7 +135,7 @@ export async function getCustomer(id: string, token: string): Promise<moltin.Cus
 export async function updateCustomer(id: string, name: string, email: string, token: string): Promise<{ data: moltin.Customer }> {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   // @ts-ignore
-  const result = await moltin.Customers.Update(id, {type: 'customer', name, email}, token);
+  const result = await moltin.Customers.Update(id, {type: 'customer', name, email, password: '',}, token);
 
   return result;
 }
