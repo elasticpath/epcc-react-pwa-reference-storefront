@@ -3,6 +3,7 @@ import moltin from "@moltin/sdk";
 import { useTranslation, useAddressData } from './app-state';
 import { PlacesSuggest } from './PlacesSuggest';
 import { useFormik } from 'formik';
+import { CountriesSelect } from './CountriesSelect';
 
 import './AddressFields.scss';
 
@@ -283,7 +284,7 @@ export const AddressFields: React.FC<CheckoutParams> = (props) => {
                 &nbsp;
                 {t('country')}
               </label>
-              <input className="epform__input" id="country" type="text" onChange={handleChange} value={values.country} />
+              <CountriesSelect value={values.country} onChange={handleChange} />
               <div className="epform__error">
                 {errors.country ? errors.country : null}
               </div>
