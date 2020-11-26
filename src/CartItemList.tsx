@@ -19,11 +19,13 @@ interface CartItemListParams {
   items: any,
   handlePage: (route: string) => any,
   promotionItems: any,
-  handleCloseCartModal: () => void
+  handleCloseCartModal: () => void,
+  newCart: boolean,
+  handleNewCart?: (arg:boolean) => void,
 }
 
 export const CartItemList: React.FC<CartItemListParams> = (props) => {
-  const { items, handlePage, promotionItems, handleCloseCartModal } = props;
+  const { items, handlePage, promotionItems, handleCloseCartModal, newCart, handleNewCart } = props;
   const { t } = useTranslation();
   const { isLoggedIn } = useCustomerData();
   const { count, totalPrice, updateCartItems } = useCartData();
@@ -36,7 +38,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const mcart = localStorage.getItem('mcart') || '';
   const [removingItem, setRemovingItem] = useState(-1);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showCreateCart, setShowCreateCart] = useState(false);
+  // const [showCreateCart, setShowCreateCart] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showUpdateCartAlert, setShowUpdateCartAlert ] = useState(false);
   const [isShowModal, setIsShowModal] = useState(false);
@@ -101,7 +103,8 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   };
 
   const handleLogin = () => {
-    setShowCreateCart(true);
+    if(handleNewCart)
+      handleNewCart(true);
     setShowLoginModal(false);
   };
 
@@ -243,7 +246,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
         </React.Fragment>
       )}
       <SettingsCart isEditCart name={selectedCart?.name} description={selectedCart?.description} showSettings={showSettings} handleHideSettings={() => setShowSettings(false)} setShowCartAlert={() => setShowUpdateCartAlert(true)} />
-      <CreateCart showCreateCart={showCreateCart} handleHideCreateCart={() => setShowCreateCart(false)} />
+      <CreateCart showCreateCart={newCart} handleHideCreateCart={handleNewCart ? () => handleNewCart(false) : () => null} />
     </div>
   )
 };

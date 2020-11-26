@@ -8,11 +8,14 @@ import './LoginDialog.scss';
 
 interface AppModalLoginMainProps {
   handleModalClose: (...args: any[]) => any,
+  openCartModal?: (...args: any[]) => any,
   openModal: boolean,
+  createCart: boolean,
+  handleShowNewCart?: (...args: any[]) => any,
 }
 
 export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
-  const { handleModalClose, openModal } = props;
+  const { handleModalClose,openCartModal, openModal, createCart, handleShowNewCart } = props;
   const { t } = useTranslation();
 
   return (
@@ -27,7 +30,7 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
           </button>
         </div>
         <div className="logindialog__body">
-          <LoginForm handleModalClose={handleModalClose} openModal={openModal} />
+          <LoginForm createCart={createCart} handleModalClose={handleModalClose} openModal={openModal} openCartModal={openCartModal} handleShowNewCart={handleShowNewCart}/>
         </div>
       </div>
     </Modal>

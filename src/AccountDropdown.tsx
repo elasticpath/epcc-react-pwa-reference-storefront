@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
-import { useCustomerData, useTranslation, useMultiCartData } from './app-state';
+import { useCartData, useCustomerData, useTranslation, useMultiCartData } from './app-state';
 import { createAccountUrl } from './routes';
 import { LoginDialog } from './LoginDialog';
 import { ReactComponent as AccountIcon } from './images/icons/ic_account.svg';
 
 import './AccountDropdown.scss';
 
-export const AccountDropdown: React.FC = (props) => {
+
+interface AccountDropdownProps {
+  openCartModal?: (...args: any[]) => any,
+  handleShowNewCart?: (...args: any[]) => any,
+}
+
+export const AccountDropdown: React.FC<AccountDropdownProps> = (props) => {
+  const { openCartModal, handleShowNewCart} = props;
   const { isLoggedIn, customerEmail, customerName, clearCustomerData } = useCustomerData();
+  const { count } = useCartData();
   const { setIsCartSelected } = useMultiCartData();
   const { t } = useTranslation();
   const history = useHistory();
@@ -82,7 +90,10 @@ export const AccountDropdown: React.FC = (props) => {
           </button>
         </div>
       )}
-        <LoginDialog openModal={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} />
+      {count > 0
+        ? <LoginDialog createCart={true} openModal={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} openCartModal={openCartModal} handleShowNewCart={handleShowNewCart}/>
+        : <LoginDialog createCart={false} openModal={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} />
+      }
       </div>
     );
 };

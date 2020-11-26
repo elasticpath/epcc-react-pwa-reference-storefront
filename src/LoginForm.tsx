@@ -12,8 +12,10 @@ interface LoginFormProps {
   handleModalClose?: (...args: any[]) => any,
   onSubmit?: (...args: any[]) => any,
   handleCloseCartModal?: (...args: any[]) => any,
+  openCartModal?: (...args: any[]) => any,
   openModal?: boolean,
   createCart?: boolean,
+  handleShowNewCart?: (...args: any[]) => any,
 }
 
 interface FormValues {
@@ -22,7 +24,7 @@ interface FormValues {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = (props) => {
-  const { handleModalClose, onSubmit, openModal, createCart, handleCloseCartModal } = props;
+  const { handleModalClose,openCartModal, onSubmit, openModal, createCart, handleCloseCartModal, handleShowNewCart } = props;
   const { setCustomerData } = useCustomerData();
   const { t } = useTranslation();
   const { setGuestCartId, setIsCreateNewCart } = useMultiCartData();
@@ -70,7 +72,12 @@ export const LoginForm: React.FC<LoginFormProps> = (props) => {
           if (handleModalClose) {
             handleModalClose();
           }
+          if(openCartModal && handleShowNewCart){
+              openCartModal();
+              handleShowNewCart();
+          }
           if (createCart) {
+            console.log("hello")
             setIsCreateNewCart(true);
           }
           if (onSubmit) {

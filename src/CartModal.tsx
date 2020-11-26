@@ -20,6 +20,8 @@ import {OrderDetailsTable} from './OrderDetailsTable';
 interface CartModalParams {
   handleCloseModal: (...args: any[]) => any,
   isCartModalOpen: boolean,
+  newCart: boolean, 
+  handleNewCart?: (arg: boolean) => void,
 }
 
 interface FormValues {
@@ -49,7 +51,7 @@ let initialValues: FormValues = {
 };
 
 export const CartModal: React.FC<CartModalParams> = (props) => {
-  const { handleCloseModal, isCartModalOpen } = props;
+  const { handleCloseModal, isCartModalOpen, newCart, handleNewCart } = props;
   const { cartData, promotionItems, updateCartItems } = useCartData();
   const { isLoggedIn } = useCustomerData();
   const { updatePurchaseHistory } = useOrdersData();
@@ -167,6 +169,8 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
               handlePage={(page: string) => handlePage(page)}
               promotionItems={promotionItems}
               handleCloseCartModal={handleCloseModal}
+              newCart={newCart}
+              handleNewCart={handleNewCart}
             />
           )}
           {isLoggedIn && !isCartSelected && (route === 'itemList') && !isCreateNewCart && (
@@ -175,6 +179,8 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
               handlePage={(page: string) => handlePage(page)}
               promotionItems={promotionItems}
               handleCloseCartModal={handleCloseModal}
+              newCart={newCart}
+              handleNewCart={handleNewCart}
             />
           )}
           {isLoggedIn && route === 'cartsList' && (

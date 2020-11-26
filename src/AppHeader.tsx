@@ -20,10 +20,15 @@ export const AppHeader: React.FC = () => {
   const { t } = useTranslation();
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const { count, cartQuantity, showCartPopup, updateCartItems } = useCartData();
+  const [newCart, setNewCart] = useState(false);
 
   const handleCloseCartModal = () => {
     setIsCartModalOpen(false);
   };
+
+  const openCartModal = () => {
+      setIsCartModalOpen(true);
+  }
 
   const handleCartModal = () => {
     updateCartItems();
@@ -67,7 +72,7 @@ export const AppHeader: React.FC = () => {
           <BulkOrderDropdown />
         </div>
         <div className="appheader__account">
-          <AccountDropdown />
+          <AccountDropdown openCartModal={openCartModal} handleShowNewCart={() => setNewCart(true)} />
         </div>
       </div>
       <div className="appheader__navigation">
@@ -80,7 +85,7 @@ export const AppHeader: React.FC = () => {
           </strong>
         </div>
       </Offline>
-      <CartModal isCartModalOpen={isCartModalOpen} handleCloseModal={handleCloseCartModal} />
+      <CartModal newCart={newCart} handleNewCart={(bool:boolean) => setNewCart(bool)} isCartModalOpen={isCartModalOpen} handleCloseModal={handleCloseCartModal} />
     </div>
   );
 };
