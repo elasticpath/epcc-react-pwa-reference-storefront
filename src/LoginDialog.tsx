@@ -11,7 +11,7 @@ interface AppModalLoginMainProps {
   openCartModal?: (...args: any[]) => any,
   openModal: boolean,
   createCart: boolean,
-  handleShowNewCart?: (...args: any[]) => any,
+  handleShowNewCart?: (arg:boolean) => void,
 }
 
 export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {

@@ -11,7 +11,7 @@ import './AccountDropdown.scss';
 
 interface AccountDropdownProps {
   openCartModal?: (...args: any[]) => any,
-  handleShowNewCart?: (...args: any[]) => any,
+  handleShowNewCart?: (arg:boolean) => void,
 }
 
 export const AccountDropdown: React.FC<AccountDropdownProps> = (props) => {
@@ -49,6 +49,8 @@ export const AccountDropdown: React.FC<AccountDropdownProps> = (props) => {
     localStorage.setItem('mcart', createCartIdentifier());
     clearCustomerData();
     setIsCartSelected(false);
+    if(handleShowNewCart)
+      handleShowNewCart(false);
     history.push('/');
   };
 

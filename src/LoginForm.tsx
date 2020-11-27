@@ -15,7 +15,7 @@ interface LoginFormProps {
   openCartModal?: (...args: any[]) => any,
   openModal?: boolean,
   createCart?: boolean,
-  handleShowNewCart?: (...args: any[]) => any,
+  handleShowNewCart?: (arg:boolean) => void,
 }
 
 interface FormValues {
@@ -74,7 +74,7 @@ export const LoginForm: React.FC<LoginFormProps> = (props) => {
           }
           if(openCartModal && handleShowNewCart){
               openCartModal();
-              handleShowNewCart();
+              handleShowNewCart(true);
           }
           if (createCart) {
             console.log("hello")

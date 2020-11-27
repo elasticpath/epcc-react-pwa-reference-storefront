@@ -72,7 +72,7 @@ export const AppHeader: React.FC = () => {
           <BulkOrderDropdown />
         </div>
         <div className="appheader__account">
-          <AccountDropdown openCartModal={openCartModal} handleShowNewCart={() => setNewCart(true)} />
+          <AccountDropdown openCartModal={openCartModal} handleShowNewCart={(bool:boolean) => setNewCart(bool)} />
         </div>
       </div>
       <div className="appheader__navigation">
