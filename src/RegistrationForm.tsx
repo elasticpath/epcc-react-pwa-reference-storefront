@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { useFormik } from 'formik';
 import { register, login } from './service';
-import { useCustomerData, useTranslation } from './app-state';
+import { useCustomerData, useMultiCartData, useTranslation } from './app-state';
 
 import './RegistrationForm.scss';
 
@@ -16,6 +16,7 @@ interface FormValues {
 
 export const RegistrationForm: React.FC = (props) => {
   const { setCustomerData } = useCustomerData();
+  const { createCart } = useMultiCartData();
   const { t } = useTranslation();
   const history = useHistory();
 
@@ -66,6 +67,7 @@ export const RegistrationForm: React.FC = (props) => {
           login(values.email.toLowerCase(), values.password).then((result) => {
             setIsLoading(false);
             setCustomerData(result.token, result.customer_id);
+            createCart({name: 'Cart'});
             history.push('/');
           })
         })

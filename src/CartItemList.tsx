@@ -38,7 +38,6 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const mcart = localStorage.getItem('mcart') || '';
   const [removingItem, setRemovingItem] = useState(-1);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  // const [showCreateCart, setShowCreateCart] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showUpdateCartAlert, setShowUpdateCartAlert ] = useState(false);
   const [isShowModal, setIsShowModal] = useState(false);
