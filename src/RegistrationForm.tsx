@@ -70,7 +70,6 @@ export const RegistrationForm: React.FC = (props) => {
             setCustomerData(result.token, result.customer_id);
             if(cartData.length === 0 ){
               createCart({name: 'Cart'});
-              console.log("registration create")
             }
             else{
               addCustomerAssociation(guestCart, result.customer_id, result.token)
@@ -79,7 +78,6 @@ export const RegistrationForm: React.FC = (props) => {
                   setMultiCartData(res.data);
                   updateSelectedCart(res.data[0]);
                   localStorage.setItem('mcart', res.data[0].id);
-                  console.log("customerAssociation create")
                 })
                 .catch(error => {
                   console.error(error);

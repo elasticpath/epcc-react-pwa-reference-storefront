@@ -3,7 +3,7 @@ import useOnclickOutside from 'react-cool-onclickoutside';
 import { Elements, StripeProvider } from 'react-stripe-elements';
 import { useCartData, useCustomerData, useMultiCartData, useOrdersData, useTranslation } from './app-state';
 import { config } from './config';
-import { checkout, payment, deleteCart } from './service';
+import { checkout, payment, removeAllCartItems } from './service';
 
 import { AddressFields } from "./AddressFields";
 import Checkout from "./Checkout";
@@ -55,7 +55,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
   const { cartData, promotionItems, updateCartItems } = useCartData();
   const { isLoggedIn } = useCustomerData();
   const { updatePurchaseHistory } = useOrdersData();
-  const { isCartSelected, isCreateNewCart } = useMultiCartData();
+  const { isCartSelected, isCreateNewCart, updateCartData } = useMultiCartData();
   const { t } = useTranslation();
   const { addError } = useContext(APIErrorContext);
 
@@ -84,8 +84,9 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
       };
       await payment(paymentParams, orderRes.data.id);
       await updatePurchaseHistory();
-      await deleteCart(mcart);
+      await  removeAllCartItems(mcart)
       updateCartItems();
+      updateCartData();
       setOrderData(orderRes);
       setRoute('completed');
       setIsSameAddress(true);
