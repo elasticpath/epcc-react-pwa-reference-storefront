@@ -467,7 +467,6 @@ function useMultiCartDataState() {
                 setMultiCartData(res.data);
                 const selectedCartData = res.data.filter(el => el.id === cartRes.data.id);
                 setSelectedCart(selectedCartData[0]);
-                console.log("login default cart creation create")
               })
             )
           )
