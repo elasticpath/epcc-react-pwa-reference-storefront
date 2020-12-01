@@ -477,7 +477,7 @@ function useMultiCartDataState() {
       }
     )
   );
-  const defaultCart = () => {
+  const createDefaultCart = () => {
     if (token) {
       getMultiCarts(token).then(res => {
         if (res.data.length === 0) {
@@ -487,6 +487,7 @@ function useMultiCartDataState() {
                 setMultiCartData(res.data);
                 const selectedCartData = res.data.filter(el => el.id === cartRes.data.id);
                 setSelectedCart(selectedCartData[0]);
+                console.log("login default cart creation create")
               })
             )
           )
@@ -540,7 +541,7 @@ function useMultiCartDataState() {
     isCreateNewCart,
     guestCartId,
     setGuestCartId,
-    defaultCart
+    createDefaultCart
   }
 }
 

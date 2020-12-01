@@ -27,7 +27,7 @@ export const LoginForm: React.FC<LoginFormProps> = (props) => {
   const { handleModalClose,openCartModal, onSubmit, openModal, createCart, handleCloseCartModal, handleShowNewCart } = props;
   const { setCustomerData } = useCustomerData();
   const { t } = useTranslation();
-  const { setGuestCartId, setIsCreateNewCart, defaultCart  } = useMultiCartData();
+  const { setGuestCartId, setIsCreateNewCart, createDefaultCart  } = useMultiCartData();
 
   const registrationUrl = createRegistrationUrl();
 
@@ -65,7 +65,7 @@ export const LoginForm: React.FC<LoginFormProps> = (props) => {
         .then((result) => {
           setCustomerData(result.token, result.customer_id);
           setIsLoading(false);
-          defaultCart();
+          createDefaultCart();
           if(browserHistory.location.pathname === "/registration")
           {
             history.push('/');

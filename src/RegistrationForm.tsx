@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { useFormik } from 'formik';
 import {register, login, addCustomerAssociation, getMultiCarts} from './service';
-import { useCustomerData, useMultiCartData, useTranslation } from './app-state';
+import { useCustomerData, useMultiCartData, useTranslation, useCartData } from './app-state';
 
 import './RegistrationForm.scss';
 
@@ -16,7 +16,8 @@ interface FormValues {
 
 export const RegistrationForm: React.FC = (props) => {
   const { setCustomerData } = useCustomerData();
-  const { setMultiCartData, updateSelectedCart } = useMultiCartData();
+  const { setMultiCartData, updateSelectedCart, createCart } = useMultiCartData();
+  const { cartData } = useCartData();
   const { t } = useTranslation();
   const history = useHistory();
 
@@ -67,12 +68,18 @@ export const RegistrationForm: React.FC = (props) => {
           login(values.email.toLowerCase(), values.password).then((result) => {
             setIsLoading(false);
             setCustomerData(result.token, result.customer_id);
-            addCustomerAssociation(guestCart, result.customer_id, result.token)
+            if(cartData.length === 0 ){
+              createCart({name: 'Cart'});
+              console.log("registration create")
+            }
+            else{
+              addCustomerAssociation(guestCart, result.customer_id, result.token)
               .then(() =>
                 getMultiCarts(result.token).then(res => {
                   setMultiCartData(res.data);
                   updateSelectedCart(res.data[0]);
                   localStorage.setItem('mcart', res.data[0].id);
+                  console.log("customerAssociation create")
                 })
                 .catch(error => {
                   console.error(error);
@@ -81,6 +88,7 @@ export const RegistrationForm: React.FC = (props) => {
               .catch(error => {
                 console.error(error);
               });
+            }
             history.push('/');
           })
         })
