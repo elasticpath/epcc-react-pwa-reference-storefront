@@ -435,18 +435,6 @@ function useMultiCartDataState() {
         const cartId = res.data[0] ? res.data[0].id : '';
         updateSelectedCart(res.data[0]);
         localStorage.setItem('mcart', cartId);
-        // if (res.data.length === 0) {
-        //   createNewCart({name: 'Cart'}, token).then((cartRes: any) =>
-        //     addCustomerAssociation(cartRes.data.id, mcustomer, token).then(() =>
-        //       getMultiCarts(token).then(res => {
-        //         setMultiCartData(res.data);
-        //         const selectedCartData = res.data.filter(el => el.id === cartRes.data.id);
-        //         setSelectedCart(selectedCartData[0]);
-        //         console.log("it is in app-state")
-        //       })
-        //     )
-        //   )
-        // }
       });
     }
     else {
@@ -454,15 +442,6 @@ function useMultiCartDataState() {
     }
   }, [mcustomer, token]);
 
-  // const createCart = (data: any) => (
-  //   createNewCart(data, token).then((cartRes: any) =>
-  //     addCustomerAssociation(cartRes.data.id, mcustomer, token).then(() =>
-  //       getMultiCarts(token).then(res => {
-  //         setMultiCartData(res.data);
-  //       })
-  //     )
-  //   )
-  // );
   const createCart = (data: any) => (
     createNewCart(data, token).then((cartRes: any) => {
         const customerId = localStorage.getItem('mcustomer') || '';
@@ -477,6 +456,7 @@ function useMultiCartDataState() {
       }
     )
   );
+
   const createDefaultCart = () => {
     if (token) {
       getMultiCarts(token).then(res => {
