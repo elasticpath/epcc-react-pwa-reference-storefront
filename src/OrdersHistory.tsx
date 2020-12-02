@@ -88,7 +88,7 @@ export const OrdersHistory: React.FC = () => {
                 <h3 className="ordershistory__informationtitle">{t('action')}</h3>
             </div>
 
-            {ordersData.map((order: moltin.Order)=> (
+            {sortedOrder.map((order: moltin.Order)=> (
               
               <div className="ordershistory__ordersdetails" key={order.id}>
                 
