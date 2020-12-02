@@ -31,6 +31,7 @@ export const AppHeader: React.FC = () => {
   }
 
   const handleCartModal = () => {
+
     updateCartItems();
     setIsCartModalOpen(true);
   };

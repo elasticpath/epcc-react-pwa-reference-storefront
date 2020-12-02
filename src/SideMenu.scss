@@ -3,7 +3,6 @@
 
 .sidemenu {
   $block: &;
-
   position: relative;
   background-color: $secondComplimentBackground;
   margin-bottom: 10px;
@@ -36,10 +35,9 @@
     width: 100%;
     min-height: 50px;
     padding: 0 25px;
-    background: transparent;
+    background: $buttonActiveColor;
     border: 1px solid $mainBorderColor;
-    border-left: 3px solid $firstComplimentColor;
-    color: $firstComplimentColor;
+    color: $mainBackgroundColor;
     font-weight: bold;
     text-align: left;
 
@@ -49,8 +47,8 @@
 
     &:before {
       content: "";
-      border-bottom: 2px solid $firstComplimentColor;
-      border-right: 2px solid $firstComplimentColor;
+      border-bottom: 2px solid $mainBackgroundColor;
+      border-right: 2px solid $mainBackgroundColor;
       height: 8px;
       width: 8px;
       position: absolute;
@@ -58,6 +56,7 @@
       top: 45%;
       right: 20px;
     }
+
 
     @media screen and (min-width: $tabletSmallWidth) {
       display: none;
