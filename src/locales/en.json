@@ -231,6 +231,10 @@
   "empty-cart": "Empty cart",
   "remove-all-items-confirmation": "Are you sure that you want to clear all of the items from your cart?",
   "yes": "Yes", 
-  "no": "No"
+  "no": "No",
+  "orders" : "Orders",
+  "orderid": "OrderId",
+  "action": "Action",
+  "re-order": "Re-order"
 
 }
