@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { useFormik } from 'formik';
 import {register, login, addCustomerAssociation, getMultiCarts} from './service';
-import { useCustomerData, useMultiCartData, useTranslation, useCartData } from './app-state';
+import { useCustomerData, useMultiCartData, useTranslation } from './app-state';
 
 import './RegistrationForm.scss';
 
