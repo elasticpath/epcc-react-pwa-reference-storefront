@@ -16,8 +16,7 @@ interface FormValues {
 
 export const RegistrationForm: React.FC = (props) => {
   const { setCustomerData } = useCustomerData();
-  const { setMultiCartData, updateSelectedCart, createCart } = useMultiCartData();
-  const { cartData } = useCartData();
+  const { setMultiCartData, updateSelectedCart } = useMultiCartData();
   const { t } = useTranslation();
   const history = useHistory();
 
