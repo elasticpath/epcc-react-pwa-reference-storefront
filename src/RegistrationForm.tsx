@@ -68,10 +68,6 @@ export const RegistrationForm: React.FC = (props) => {
           login(values.email.toLowerCase(), values.password).then((result) => {
             setIsLoading(false);
             setCustomerData(result.token, result.customer_id);
-            if(cartData.length === 0 ){
-              createCart({name: 'Cart'});
-            }
-            else{
               addCustomerAssociation(guestCart, result.customer_id, result.token)
               .then(() =>
                 getMultiCarts(result.token).then(res => {
@@ -86,7 +82,6 @@ export const RegistrationForm: React.FC = (props) => {
               .catch(error => {
                 console.error(error);
               });
-            }
             history.push('/');
           })
         })
