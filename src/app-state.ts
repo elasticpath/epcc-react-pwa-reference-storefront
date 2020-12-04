@@ -221,11 +221,7 @@ function usePurchaseHistoryState() {
       getAllOrders(token).then((res: any) => {
         setData(res.data);
         if (res && res.included)
-<<<<<<< HEAD
           setItemsData(res.included.items);
-=======
-         setItemsData(res.included.items);
->>>>>>> origin/MT-4114-create-new-cart
       });
     }
     else {
