@@ -11,6 +11,10 @@
   &__content {
     flex: 1 0;
   }
+  .container {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
 
   @media screen and (min-width: $tabletSmallWidth) {
     &__wrap {

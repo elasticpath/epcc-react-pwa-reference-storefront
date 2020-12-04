@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { useTranslation } from "./app-state";
-import { createAccountUrl, createAddressUrl, createPurchaseHistoryUrl } from './routes';
+import { createAccountUrl, createAddressUrl, createOrdersHistoryUrl } from './routes';
 
 import './SideMenu.scss'
 
@@ -11,7 +11,7 @@ export const SideMenu: React.FC = (props) => {
   const { t } = useTranslation();
   const accountUrl = createAccountUrl();
   const addressUrl = createAddressUrl();
-  const purchaseHistoryUrl = createPurchaseHistoryUrl();
+  const ordersHistoryUrl = createOrdersHistoryUrl();
   const location = useLocation();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -31,7 +31,7 @@ export const SideMenu: React.FC = (props) => {
   const sideMenuItems = [
     { to: accountUrl, children: 'my-account' },
     { to: addressUrl, children: 'addresses' },
-    { to: purchaseHistoryUrl, children: 'purchase-history' }
+    { to: ordersHistoryUrl, children: 'orders' }
   ];
 
   sideMenuItems.push();

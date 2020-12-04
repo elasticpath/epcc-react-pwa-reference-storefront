@@ -163,7 +163,7 @@ export const OrderDetailsTable: React.FC<OrderDetailsTableParams> = ({
                       </tr>
                       <tr className="orderdetailstable__tr">
                         <td className="orderdetailstable__td">
-                          {t("item total")}:
+                          {t("item-total")}:
                         </td>
                         <td className="orderdetailstable__td">
                           {

@@ -15,7 +15,7 @@ import { MyAccount } from './MyAccount';
 import { Profile } from './Profile';
 import { Address } from './Address';
 import { Search } from './Search';
-import { PurchaseHistory } from './PurchaseHistory';
+import { OrdersHistory } from './OrdersHistory';
 import { OrderDetails } from './OrderDetails';
 import { Orders } from './Orders';
 import { BulkOrder } from './BulkOrder';
@@ -49,7 +49,7 @@ export const routes: RouteConfig[] = [
 export const routesAccount: RouteConfig[] = [
   { exact: true, path: '/account', component: Profile, },
   { exact: true, path: '/account/address', component: Address, },
-  { exact: true, path: '/account/purchase-history', component: PurchaseHistory, },
+  { exact: true, path: '/account/orders-history', component: OrdersHistory, },
 ];
 
 export const routesOrders: RouteConfig[] = [
@@ -85,8 +85,8 @@ export function createAddressUrl(): string {
   return `/account/address`;
 }
 
-export function createPurchaseHistoryUrl(): string {
-  return `/account/purchase-history`;
+export function createOrdersHistoryUrl(): string {
+  return `/account/Orders-history`;
 }
 
 export function createSearchUrl(): string {

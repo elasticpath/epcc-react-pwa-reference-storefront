@@ -23,9 +23,9 @@
     right: 0px;
     overflow-y: scroll;
     height: 100%;
+    min-height: 100%;
     width: 100%;
     max-width: 500px;
-    padding: 32px;
     opacity: 0;
     visibility: hidden;
     transform: translateX(500px);
@@ -45,6 +45,20 @@
       visibility: visible;
       transform: translateX(0px);
     }
+  }
+
+  &__header {
+    position: absolute;
+    top: 38px;
+    left: 32px;
+    z-index: 1;
+  }
+
+  &__contentwrap {
+    position: relative;
+    overflow: hidden;
+    min-height: inherit;
+    padding: 32px;
   }
 
   .checkbox-text {
@@ -174,6 +188,17 @@
   }
   .shipping-info {
     margin-top: 20px;
+  }
+
+  @media (max-width: $mobileXSmallWidth - 1px) {
+    &__contentwrap {
+      padding: 20px;
+    }
+
+    &__header {
+      top: 26px;
+      left: 20px;
+    }
   }
 }
 

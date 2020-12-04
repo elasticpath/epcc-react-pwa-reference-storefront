@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { useFormik } from 'formik';
-import { register, login } from './service';
-import { useCustomerData, useTranslation } from './app-state';
+import {register, login, addCustomerAssociation, getMultiCarts} from './service';
+import { useCustomerData, useMultiCartData, useTranslation } from './app-state';
 
 import './RegistrationForm.scss';
 
@@ -16,6 +16,7 @@ interface FormValues {
 
 export const RegistrationForm: React.FC = (props) => {
   const { setCustomerData } = useCustomerData();
+  const { setMultiCartData, updateSelectedCart } = useMultiCartData();
   const { t } = useTranslation();
   const history = useHistory();
 
@@ -60,12 +61,26 @@ export const RegistrationForm: React.FC = (props) => {
     onSubmit: (values) => {
       setRegistrationErrors('');
       setIsLoading(true);
-
+      const guestCart = localStorage.getItem('mcart') || '';
       register(`${values.firstName} ${values.lastName}`, values.email, values.password)
         .then(() => {
           login(values.email.toLowerCase(), values.password).then((result) => {
             setIsLoading(false);
             setCustomerData(result.token, result.customer_id);
+              addCustomerAssociation(guestCart, result.customer_id, result.token)
+              .then(() =>
+                getMultiCarts(result.token).then(res => {
+                  setMultiCartData(res.data);
+                  updateSelectedCart(res.data[0]);
+                  localStorage.setItem('mcart', res.data[0].id);
+                })
+                .catch(error => {
+                  console.error(error);
+                })
+              )
+              .catch(error => {
+                console.error(error);
+              });
             history.push('/');
           })
         })

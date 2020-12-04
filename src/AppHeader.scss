@@ -149,6 +149,10 @@
     &__cartbtntxt {
       display: none;
     }
+
+    &__cartpopup {
+      right: -43px;
+    }
   }
 
   @media all and (display-mode: standalone) {
