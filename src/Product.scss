@@ -68,8 +68,13 @@
         font-weight: bold;
       }
 
+      #{$block}__sku {
+        margin-top: 15px;
+        font-size: $sizeSmall;
+      }
+
       #{$block}__price {
-        margin-top: 14px;
+        margin-top: 5px;
         font-size: $sizeXXLarge;
         color: hsl(0, 0, 30%);
       }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { Elements, StripeProvider } from 'react-stripe-elements';
 import { useCartData, useCustomerData, useOrdersData, useTranslation } from './app-state';
@@ -10,8 +10,10 @@ import Checkout from "./Checkout";
 import { CartItemList } from './CartItemList';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import { ReactComponent as BackArrovIcon } from './images/icons/arrow_back-black-24dp.svg';
+import { APIErrorContext } from "./APIErrorProvider";
 
 import './CartModal.scss';
+import {OrderDetailsTable} from './OrderDetailsTable';
 
 interface CartModalParams {
   handleCloseModal: (...args: any[]) => any,
@@ -50,6 +52,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
   const { isLoggedIn } = useCustomerData();
   const { updatePurchaseHistory } = useOrdersData();
   const { t } = useTranslation();
+  const { addError } = useContext(APIErrorContext);
 
   const [route, setRoute] = useState<string>('itemList');
   const [isSameAddress, setIsSameAddress] = useState(true);
@@ -57,6 +60,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
   const [shippingAddress, setShippingAddress] = useState<FormValues>(initialValues);
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
+  const [orderData, setOrderData] = useState<any>({});
 
   const onPayOrder = async (token: string) => {
     try {
@@ -76,9 +80,11 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
       await updatePurchaseHistory();
       await removeCartItems(mcart);
       updateCartItems();
+      setOrderData(orderRes);
       setRoute('completed');
       setIsSameAddress(true);
     } catch (err) {
+      addError(err.errors);
       console.error(err)
     }
   };
@@ -216,6 +222,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
             </div>
             <div className="completed__body">
               <p>{t('thank-you-for-your-order')}</p>
+              <OrderDetailsTable orderData={orderData.data} orderItems={orderData.included.items} />
               <button className="epbtn --secondary --large" onClick={onCloseModal}>{t('continue-shopping')}</button>
             </div>
           </div>

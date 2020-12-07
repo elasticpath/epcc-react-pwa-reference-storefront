@@ -1,19 +1,31 @@
 import { useState, useEffect, useCallback } from 'react';
 import constate from 'constate';
 import * as moltin from '@moltin/sdk';
-import { getCustomer, getAddresses, getAllOrders, loadCategoryTree, getCartItems, loadCustomerAuthenticationSettings, loadOidcProfiles } from './service';
-import * as service from './service';
+import {
+  getCustomer,
+  getAddresses,
+  getAllOrders,
+  loadCategoryTree,
+  getCartItems,
+  loadEnabledCurrencies,
+  loadCustomerAuthenticationSettings,
+  loadOidcProfiles
+} from './service';
+
 import { config } from './config';
 
-import en from './locales/en.json';
-import fr from './locales/fr.json';
+const languages = config.supportedLocales.map(el => {
+  return {
+    [el.key] : require(`./locales/${el.key}.json`),
+  }
+}).reduce((result, current) => {
+  return Object.assign(result, current);
+}, {});
 
+const defaultLanguage = config.defaultLanguage;
 const translations: { [lang: string]: { [name: string]: string } } = {
-  en,
-  fr,
+  ...languages,
 };
-
-const defaultLanguage = 'en';
 
 function getInitialLanguage(): string {
   const savedLanguage = localStorage.getItem('selectedLanguage');
@@ -48,7 +60,6 @@ function getInitialLanguage(): string {
 
   return defaultLanguage;
 }
-
 function checkTranslations() {
   const keys: { [key: string]: boolean } = {};
 
@@ -203,11 +214,14 @@ function usePurchaseHistoryState() {
   const id = localStorage.getItem('mcustomer') || '';
 
   const [ordersData, setOrdersData] = useState<moltin.Order[]>([]);
+  const [ordersItemsData, setOrdersItemsData] = useState<moltin.OrderItem[]>([]);
 
   useEffect(() => {
     if (token) {
-      getAllOrders(token).then(res => {
+      getAllOrders(token).then((res: any) => {
         setData(res.data);
+        if (res && res.included)
+          setItemsData(res.included.items);
       });
     }
     else {
@@ -225,14 +239,19 @@ function usePurchaseHistoryState() {
     setOrdersData(data);
   };
 
-  const clearCustomerData = () => {
-    setOrdersData([]);
+  const setItemsData = (data: any) => {
+    setOrdersItemsData(data);
   };
 
-  return { ordersData, updatePurchaseHistory }
+  const clearCustomerData = () => {
+    setOrdersData([]);
+    setOrdersItemsData([]);
+  };
+
+  return { ordersData, ordersItemsData, updatePurchaseHistory }
 }
 
-const defaultCurrency = 'USD';
+const defaultCurrency = config.defaultCurrency;
 
 function useCurrencyState() {
   const [allCurrencies, setAllCurrencies] = useState<moltin.Currency[]>([]);
@@ -250,7 +269,7 @@ function useCurrencyState() {
       return;
     }
 
-    service.loadEnabledCurrencies().then(currencies => {
+    loadEnabledCurrencies().then(currencies => {
       // Check if we need to update selectedCurrency
       const selected = currencies.find(c => c.code === selectedCurrency);
 
@@ -385,6 +404,8 @@ function useCartItemsState() {
   const [cartData, setCartData] = useState<moltin.CartItem[]>([]);
   const [promotionItems, setPromotionItems] = useState<moltin.CartItem[]>([]);
   const [count, setCount] = useState(0);
+  const [quantity, setQuantity] = useState(0);
+  const [showCartPopup, setShowCartPopup] = useState(false);
   const [totalPrice, setTotalPrice] = useState('');
   const mcart = localStorage.getItem('mcart') || '';
 
@@ -403,12 +424,20 @@ function useCartItemsState() {
     getCartItems(mcart).then(res => {
       setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'));
       setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'));
-      setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0));
-      setTotalPrice(res.meta.display_price.without_tax.formatted)
+      const itemQuantity = res.data.reduce((sum, { quantity }) => sum + quantity, 0);
+      setQuantity(itemQuantity - count);
+      setCount(itemQuantity);
+      setTotalPrice(res.meta.display_price.without_tax.formatted);
+      if (!showCartPopup && itemQuantity - count > 0) {
+        setShowCartPopup(true);
+        setTimeout(() => {
+          setShowCartPopup(false);
+        }, 3200);
+      }
     });
   };
 
-  return { cartData, promotionItems, count, totalPrice, updateCartItems }
+  return { cartData, promotionItems, count, quantity, showCartPopup, totalPrice, updateCartItems }
 }
 
 function useGlobalState() {

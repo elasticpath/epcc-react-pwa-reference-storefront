@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { useTranslation, useCurrency } from './app-state';
+import { config } from './config';
 
 import './LanguageDropdown.scss';
 
-const languages = [
-  { key: 'en', name: 'english' },
-  { key: 'fr', name: 'french' },
-];
+const languages = config.supportedLocales
 
 export const LanguageDropdown: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);

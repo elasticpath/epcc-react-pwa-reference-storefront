@@ -16,7 +16,7 @@ The Elastic Path Commerce Cloud REACT PWA Reference Storefront is a flexible e-c
 
 The storefront uses the [Elastic Path Commerce Cloud JavaScript SDK](https://github.com/moltin/js-sdk) for all Elastic Path Commerce Cloud API requests.
 
-You can try out a [live instance of the Reference Storefront](https://epcc-reference.elasticpath.com/).
+You can try out a [live instance of the B2C Reference Storefront](https://epcc-reference.elasticpath.com/), and a [live instance of the B2B Reference Storefront](https://epcc-referenceb2b.elasticpath.com/).
 
 > 💳 To check out, use the test card number `4242 4242 4242 4242`, any future expiry date, and any three-digit Card Verification Code (CVC).
 

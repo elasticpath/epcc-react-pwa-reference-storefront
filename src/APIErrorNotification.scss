@@ -1,0 +1,40 @@
+@import './theme/common';
+
+.notification {
+  height: 0;
+
+  &__body {
+    max-width: 800px;
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+    justify-content: center;
+    border: 1px solid $mainErrorColor;
+    border-radius: 4px;
+    color: $mainErrorColor;
+    background-color: $mainBackgroundColor;
+    padding: 5px 10px;
+    z-index: 1001;
+  }
+
+  &__erroricon {
+   fill:  $mainErrorColor;
+   display: inline-block;
+  }
+
+  &__details {
+    display: inline-block;
+    padding: 2px 10px 0;
+  }
+
+  &__closebtn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    fill:  $mainErrorColor;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

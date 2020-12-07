@@ -4,7 +4,7 @@
   flex: 0 0 48px;
   z-index: 1;
   width: 100%;
-  background-color: black;
+  background-color: $mainNavigationBackgroundColor;
   text-align: center;
   display: inline-block;
   position: relative;
@@ -35,7 +35,6 @@
     text-decoration: none;
 
     &.--haschildren {
-      padding-left: 0;
       cursor: pointer;
 
       &:after {

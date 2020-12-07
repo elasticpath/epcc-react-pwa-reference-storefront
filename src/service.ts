@@ -1,5 +1,5 @@
 import * as moltin from '@moltin/sdk';
-import { config } from './config';
+import {config} from './config';
 
 const MoltinGateway = moltin.gateway;
 
@@ -200,8 +200,16 @@ export async function deleteAddress(customer: string, address: any, token: strin
 
 export async function getAllOrders(token: string): Promise<{ data: moltin.Order[] }> {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
-  const result = await moltin.Orders.Limit(100).All(token);
+  const result = await moltin.Orders.Limit(100).With('items').All(token);
   return result;
+}
+
+export async function getProductsByIds(ids: string[]): Promise<any> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const productsRequests = ids.map(id => moltin.Products.Get(id));
+  const products = await Promise.all(productsRequests);
+
+  return products.map(product => product.data)
 }
 
 export async function getCartItems(reference: string): Promise<moltin.CartItemsResponse> {
@@ -220,6 +228,13 @@ export async function addToCart(reference: string, productId: string): Promise<v
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const quantity = 1;
   await moltin.Cart(reference).AddProduct(productId, quantity);
+}
+
+export async function bulkAdd(reference: string, data: moltin.CartItemObject[]): Promise<moltin.CartItemsResponse> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const result = await moltin.Cart(reference).BulkAdd(data);
+
+  return result;
 }
 
 export async function addPromotion(reference: string, promoCode: string): Promise<void> {

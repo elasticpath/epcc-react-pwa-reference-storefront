@@ -108,6 +108,10 @@
 
     .ais-SearchBox-reset {
       right: 5px;
+
+      svg {
+        fill: $firstComplimentColor;
+      }
     }
 
     .ais-SearchBox-loadingIndicator {
