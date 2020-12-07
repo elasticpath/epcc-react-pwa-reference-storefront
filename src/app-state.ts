@@ -456,21 +456,21 @@ function useMultiCartDataState() {
   );
 
   const createDefaultCart = () => {
-    if (token) {
-      getMultiCarts(token).then(res => {
-        if (res.data.length === 0) {
-          createNewCart({name: 'Cart'}, token).then((cartRes: any) =>
-            addCustomerAssociation(cartRes.data.id, mcustomer, token).then(() =>
-              getMultiCarts(token).then(res => {
-                setMultiCartData(res.data);
-                const selectedCartData = res.data.filter(el => el.id === cartRes.data.id);
-                setSelectedCart(selectedCartData[0]);
-              })
-            )
+    const customerId = localStorage.getItem('mcustomer') || '';
+    const token = localStorage.getItem('mtoken') || '';
+    getMultiCarts(token).then(res => {
+      if (res.data.length === 0) {
+        createNewCart({name: 'Cart'}, token).then((cartRes: any) =>
+          addCustomerAssociation(cartRes.data.id, customerId, token).then(() =>
+            getMultiCarts(token).then(res => {
+              setMultiCartData(res.data);
+              const selectedCartData = res.data.filter(el => el.id === cartRes.data.id);
+              setSelectedCart(selectedCartData[0]);
+            })
           )
-        }
-      });
-    }
+        )
+      }
+    });
   }
 
   const editCart = (data: any) => (
