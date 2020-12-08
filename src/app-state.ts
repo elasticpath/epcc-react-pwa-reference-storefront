@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import constate from 'constate';
 import * as moltin from '@moltin/sdk';
 import {
@@ -7,8 +7,11 @@ import {
   getAllOrders,
   loadCategoryTree,
   getCartItems,
-  loadEnabledCurrencies
+  loadEnabledCurrencies,
+  loadCustomerAuthenticationSettings,
+  loadOidcProfiles
 } from './service';
+
 import { config } from './config';
 
 const languages = config.supportedLocales.map(el => {
@@ -135,13 +138,13 @@ function useCustomerDataState() {
     }
   }, [customerId, customerToken]);
 
-  const setCustomerData = (token: string, id: string) => {
+  const setCustomerData = useCallback((token: string, id: string) => {
     localStorage.setItem('mtoken', token);
     localStorage.setItem('mcart', id);
     localStorage.setItem('mcustomer', id);
     setCustomerToken(token);
     setCustomerId(id);
-  };
+  }, []);
 
   const clearCustomerData = () => {
     localStorage.setItem('mtoken', '');
@@ -252,7 +255,7 @@ const defaultCurrency = config.defaultCurrency;
 
 function useCurrencyState() {
   const [allCurrencies, setAllCurrencies] = useState<moltin.Currency[]>([]);
-  // Set previously saved or defautlt currency before fetching the list of supported ones
+  // Set previously saved or default currency before fetching the list of supported ones
   const [selectedCurrency, setSelectedCurrency] = useState(localStorage.getItem('selectedCurrency') ?? defaultCurrency);
 
   const setCurrency = (newCurrency: string) => {
@@ -280,6 +283,8 @@ function useCurrencyState() {
       }
 
       setAllCurrencies(currencies);
+    }).catch((err) => {
+      console.error(err)
     });
   }, [allCurrencies.length, selectedCurrency]);
 
@@ -321,7 +326,7 @@ function useCategoriesState(selectedLanguage: string) {
     loadCategoryTree(selectedLanguage).then(result => {
       setCategoriesTree(result);
       setCategoryPaths(mergeMaps(result));
-    });
+    }).catch(err=>console.error(err));
   }, [selectedLanguage]);
 
   const categoryPathBySlug = (slug: string) => {
@@ -370,6 +375,29 @@ function useCompareProductsState() {
     removeFromCompare,
     removeAll,
   };
+}
+
+function useCustomerAuthenticationSettingsState() {
+  const [authenticationSettings, setAuthenticationSettings] = useState<any>()
+  const [isLoadingOidcProfiles, setIsLoadingOidcProfiles] = useState(true);
+  const [oidcProfiles, setOidcProfiles] = useState<moltin.ResourcePage<moltin.Profile>>();
+
+  useEffect(()=>{
+    loadCustomerAuthenticationSettings().then((authSettings) => {
+      setAuthenticationSettings(authSettings);
+
+      const authenticationRealmId = authSettings?.data?.relationships['authentication-realm']?.data?.id;
+
+      loadOidcProfiles(authenticationRealmId).then((profiles) => {
+        setOidcProfiles(profiles);
+        setIsLoadingOidcProfiles(false);
+      })
+    }).catch((err)=>{
+      console.log(err)
+    });
+  }, [])
+
+  return { authenticationSettings, isLoadingOidcProfiles, oidcProfiles };
 }
 
 function useCartItemsState() {
@@ -428,6 +456,7 @@ function useGlobalState() {
     currency,
     categories: useCategoriesState(translation.selectedLanguage),
     compareProducts: useCompareProductsState(),
+    authenticationSettings: useCustomerAuthenticationSettingsState(),
   };
 }
 
@@ -440,6 +469,7 @@ export const [
   useCurrency,
   useCategories,
   useCompareProducts,
+  useCustomerAuthenticationSettings,
   useCartData,
 ] = constate(
   useGlobalState,
@@ -450,5 +480,6 @@ export const [
   value => value.currency,
   value => value.categories,
   value => value.compareProducts,
+  value => value.authenticationSettings,
   value => value.cartData,
 );
