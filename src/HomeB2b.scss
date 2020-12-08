@@ -1,0 +1,95 @@
+@import './theme/common';
+
+.homeb2b {
+  $block: &;
+  width: 100%;
+
+  #{$block}__banner {
+    overflow: hidden;
+    height: 480px;
+    margin-bottom: 45px;
+    position: relative;
+  }
+
+  #{$block}__bannerimage {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    object-fit: cover;
+  }
+
+  #{$block}__bannerwrap {
+    width: 100%;
+    padding: 15px 0 30px;
+    background-color: hsla(0, 0, 0, 0.6);
+    color: $mainBackgroundColor;
+    position: absolute;
+    bottom: 0px;
+  }
+
+  #{$block}__bannerheading {
+    font-size: $sizeXXLarge;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  #{$block}__bannertxt {
+    p {
+      font-size: $sizeInitial;
+      line-height: 22px;
+      margin-bottom: 10px;
+    }
+  }
+
+  #{$block}__goodstitlesmall {
+    font-size: 12px;
+    font-style: italic;
+    color: $firstComplimentTextColor;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-transform: capitalize;
+  }
+
+  #{$block}__goodstitle {
+    font-size: 20px;
+    font-weight: 600;
+    color: $mainColor;
+    margin-bottom: 10px;
+  }
+
+  #{$block}__goodsheading {
+    color: $mainColor;
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+
+  #{$block}__goodsdesc {
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 0;
+  }
+
+  #{$block}__goodscell {
+    padding: 22px;
+    margin-bottom: 30px;
+    border: 1px solid $fifthComplimentTextColor;
+  }
+
+  #{$block}__goodsblockbottom {
+    border: none;
+  }
+
+  @media (min-width: 992px) {
+    #{$block}__goodsgrid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-gap: 60px;
+    }
+
+    #{$block}__goodsblock {
+      padding-right: 100px;
+      margin-bottom: 60px;
+    }
+  }
+}

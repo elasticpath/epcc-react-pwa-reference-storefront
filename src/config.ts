@@ -11,4 +11,17 @@ export const config = {
   algoliaIndexName: process.env.REACT_APP_ALGOLIA_INDEX_NAME || 'product',
   compareKeys: process.env.REACT_APP_COMPARE_KEYS?.split(',') || [],
   endpointURL: process.env.REACT_APP_ENDPOINT_URL || 'api.moltin.com',
+  b2b: process.env.REACT_APP_B2B_ENABLE || false,
+  supportedLocales: process.env.REACT_APP_SUPPORTED_LOCALES?.split(',').map(el => JSON.parse(el)) || [
+    {
+      "key": "en",
+      "name": "english"
+    },
+    {
+      "key": "fr",
+      "name": "french"
+    }
+  ],
+  defaultLanguage: process.env.REACT_APP_DEFAULT_LANGUAGE || "en",
+  defaultCurrency: process.env.REACT_APP_DEFAULT_CURRENCY || "USD",
 };

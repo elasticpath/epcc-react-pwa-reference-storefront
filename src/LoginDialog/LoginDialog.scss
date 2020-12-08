@@ -1,5 +1,5 @@
 
-@import './theme/common.scss';
+@import './../theme/common.scss';
 
 .logindialog {
   min-width: 500px;
@@ -43,8 +43,21 @@
     padding: 0 5px 5px;
   }
 
-  .epbtn + .epbtn {
-    margin-left: 10px;
+  .registerbtn {
+    width: 45%;
+  }
+
+  .loginbtn {
+    width: 45%;
+  }
+}
+
+.auth-opt {
+  display: flex;
+  flex-direction: column;
+
+  .authbtn {
+    margin: 0 0 3% 0;
   }
 }
 

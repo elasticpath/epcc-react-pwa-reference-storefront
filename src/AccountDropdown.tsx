@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { useCartData, useCustomerData, useTranslation, useMultiCartData } from './app-state';
 import { createAccountUrl } from './routes';
-import { LoginDialog } from './LoginDialog';
+import { LoginDialog } from './LoginDialog/LoginDialog';
 import { ReactComponent as AccountIcon } from './images/icons/ic_account.svg';
 
 import './AccountDropdown.scss';

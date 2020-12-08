@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import { useAddressData, useTranslation } from './app-state';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import Modal from 'react-responsive-modal';
+import { CountriesSelect } from './CountriesSelect';
 
 import './AddressForm.scss';
 
@@ -230,7 +231,7 @@ export const AddressForm: React.FC<AddressFormParams> = (props) => {
                 &nbsp;
                 {t('country')}
               </label>
-              <input className="epform__input" id="country" type="text" onChange={handleChange} value={values.country} />
+              <CountriesSelect value={values.country} onChange={handleChange} />
               <div className="epform__error">
                 {errors.country ? errors.country : null}
               </div>
