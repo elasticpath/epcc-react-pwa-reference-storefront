@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
+import * as moltin from '@moltin/sdk';
 import { useTranslation, useCurrency } from './app-state';
 import { config } from './config';
 
@@ -61,7 +62,7 @@ export const LanguageDropdown: React.FC = () => {
             <div className="languagedropdown__title">
               Currency
             </div>
-            {allCurrencies.map(c => (
+            {allCurrencies.map((c: moltin.Currency) => (
               <button
                 key={c.id}
                 className="languagedropdown__itembtn"

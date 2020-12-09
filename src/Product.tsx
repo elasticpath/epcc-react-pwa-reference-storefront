@@ -150,7 +150,7 @@ export const Product: React.FC = () => {
           </div>
           {dropdownOpen ? (
             <div className="product__addtocartdropdowncontent">
-              {multiCartData.slice(1).map((cart) => (
+              {multiCartData.slice(1).map((cart: moltin.CartItem) => (
                 <button
                   className="product__addtocartdropdownbtn"
                   key={cart.id}

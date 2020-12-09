@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import * as moltin from '@moltin/sdk';
 import { useTranslation, useMultiCartData } from './app-state';
 import { SettingsCart } from "./SettingsCart";
 import './CartSelection.scss';
@@ -49,7 +50,7 @@ export  const CartSelection: React.FC<CartSelectionParams> = (props) => {
               {t('saved-carts')} ({multiCartData.length})
             </h3>
             <div className="cartselection__cartlist">
-              {multiCartData.map((cart: any, index) => (
+              {multiCartData.map((cart: moltin.CartItem, index: number) => (
                 <div className="cartselection__cartelement" key={cart.id}>
                   <input type="radio" name="cartCheck" id={`cart_${cart.id}`} className="epradio" defaultChecked={index === 0} onChange={() => {handleSelectCart(cart)}} />
                   <label htmlFor={`cart_${cart.id}`} className="cartselection__description">

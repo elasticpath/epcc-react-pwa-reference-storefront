@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
+import * as moltin from '@moltin/sdk';
 import { useTranslation, useMultiCartData, useCartData } from './app-state';
 import { deleteCart } from './service';
 import { SettingsCart } from "./SettingsCart";
@@ -38,7 +39,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
   };
 
   const handleSelectAll = () => {
-    const allCarts = multiCartData.map(cart => cart.id);
+    const allCarts = multiCartData.map((cart: moltin.Cart) => cart.id);
     if(selectedCarts.length < allCarts.length) {
       setSelectedCarts(allCarts);
     } else {

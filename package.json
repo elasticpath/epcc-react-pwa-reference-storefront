@@ -12,7 +12,7 @@
     "algolia-places-react": "^1.6.0",
     "algoliasearch": "^4.3.0",
     "app-localizer": "^1.2.2",
-    "constate": "^2.0.0",
+    "constate": "^3.1.0",
     "css-reset-and-normalize": "^2.1.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "formik": "^2.1.4",
