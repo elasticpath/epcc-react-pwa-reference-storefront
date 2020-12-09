@@ -1,25 +1,21 @@
-import React, { Dispatch, SetStateAction, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
-import { useCustomerData, useTranslation, useMultiCartData } from '../app-state';
-import { createRegistrationUrl } from '../routes';
-import { login } from '../service';
+import { login } from './service';
+import { useCustomerData, useMultiCartData, useTranslation } from './app-state';
+import { createRegistrationUrl } from './routes';
 import { createBrowserHistory } from "history";
-import './PasswordLoginForm.scss'
 
-import './LoginDialog.scss';
+import './LoginForm.scss';
 
-interface PasswordLoginFormProps {
+interface LoginFormProps {
   handleModalClose?: (...args: any[]) => any,
+  onSubmit?: (...args: any[]) => any,
   handleCloseCartModal?: (...args: any[]) => any,
-  isLoading: boolean,
-  setIsLoading: Dispatch<SetStateAction<boolean>>,
-  setFailedLogin?: Dispatch<SetStateAction<boolean>>,
+  openCartModal?: (...args: any[]) => any,
   openModal?: boolean,
   createCart?: boolean,
   handleShowNewCart?: (arg:boolean) => void,
-  openCartModal?: (...args: any[]) => any,
-  onSubmit?: (...args: any[]) => any,
 }
 
 interface FormValues {
@@ -27,16 +23,19 @@ interface FormValues {
   passwordField: string,
 }
 
-export const PasswordLoginForm: React.FC<PasswordLoginFormProps> = (props) => {
-  const { handleModalClose,handleCloseCartModal, setIsLoading, setFailedLogin,onSubmit, openCartModal, openModal, createCart, handleShowNewCart  } = props;
-  
+export const LoginForm: React.FC<LoginFormProps> = (props) => {
+  const { handleModalClose,openCartModal, onSubmit, openModal, createCart, handleCloseCartModal, handleShowNewCart } = props;
   const { setCustomerData } = useCustomerData();
   const { t } = useTranslation();
-  const registrationUrl = createRegistrationUrl();
   const { setGuestCartId, setIsCreateNewCart, createDefaultCart  } = useMultiCartData();
+
+  const registrationUrl = createRegistrationUrl();
 
   const browserHistory = createBrowserHistory();
   const history = useHistory();
+
+  const [failedLogin, setFailedLogin] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const initialValues:FormValues = {
     emailField: '',
@@ -53,12 +52,12 @@ export const PasswordLoginForm: React.FC<PasswordLoginFormProps> = (props) => {
     }
 
     return errors;
-  }
+  };
 
-  const {handleSubmit, handleChange,resetForm, values, errors} = useFormik({
+  const {handleSubmit, handleChange, resetForm, values, errors} = useFormik({
     initialValues,
     validate,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const cartId = localStorage.getItem('mcart') || '';
       setGuestCartId(cartId);
       setIsLoading(true);
@@ -75,10 +74,11 @@ export const PasswordLoginForm: React.FC<PasswordLoginFormProps> = (props) => {
             handleModalClose();
           }
           if(openCartModal && handleShowNewCart){
-            openCartModal();
-            handleShowNewCart(true);
+              openCartModal();
+              handleShowNewCart(true);
           }
           if (createCart) {
+            console.log("hello")
             setIsCreateNewCart(true);
           }
           if (onSubmit) {
@@ -87,8 +87,7 @@ export const PasswordLoginForm: React.FC<PasswordLoginFormProps> = (props) => {
         })
         .catch(error => {
           setIsLoading(false);
-          if(setFailedLogin)
-            setFailedLogin(true);
+          setFailedLogin(true);
           console.error(error);
         });
     },
@@ -101,44 +100,51 @@ export const PasswordLoginForm: React.FC<PasswordLoginFormProps> = (props) => {
     if (handleCloseCartModal) {
       handleCloseCartModal();
     }
-  }
+  };
+
   useEffect(() => {
-    if (!openModal && setFailedLogin) {
+    if (!openModal) {
       setFailedLogin(false);
       resetForm();
     }
-  }, [openModal, resetForm, setFailedLogin]);
+  }, [openModal, resetForm]);
 
   return (
-        <form className="epform" id="login_modal_form" onSubmit={handleSubmit}>
-        
+    <div className={`loginform${isLoading ? ' --loading' : ''}`}>
+      {
+        (isLoading) ? <div className="epminiLoader --centered" /> : ('')
+      }
+      <div className="loginform__feedback">
+        {failedLogin ? t('invalid-email-or-password') : ('')}
+      </div>
+      <form className="epform" id="login_modal_form" onSubmit={handleSubmit}>
         <div className={`epform__group ${errors.emailField ? '--error' : ''}`}>
-            <label className="epform__label" htmlFor="emailField">
-            {t('email')}
-            </label>
-            <input className="epform__input" id="emailField" type="text" onChange={handleChange} value={values.emailField} />
-            <div className="epform__error">
+          <label className="epform__label" htmlFor="emailField">
+            {t('email')}:
+          </label>
+          <input className="epform__input" id="emailField" type="text" onChange={handleChange} value={values.emailField} />
+          <div className="epform__error">
             {errors.emailField ? errors.emailField : null}
-            </div>
+          </div>
         </div>
         <div className={`epform__group ${errors.passwordField ? '--error' : ''}`}>
-            <label className="epform__label" htmlFor="passwordField">
-            {t('password')}
-            </label>
-            <input className="epform__input" id="passwordField" type="password" onChange={handleChange} value={values.passwordField} />
-            <div className="epform__error">
+          <label className="epform__label" htmlFor="passwordField">
+            {t('password')}:
+          </label>
+          <input className="epform__input" id="passwordField" type="password" onChange={handleChange} value={values.passwordField} />
+          <div className="epform__error">
             {errors.passwordField ? errors.passwordField : null}
-            </div>
+          </div>
         </div>
-        
         <div className="epform__group --btn-container">
-            <button className="epbtn --primary loginbtn" id="login_modal_login_button" type="submit" disabled={props.isLoading}>
+          <button className="epbtn --secondary" id="login_modal_login_button" type="submit" disabled={isLoading}>
             {t('login')}
-            </button>
-            <Link to={registrationUrl} className="epbtn --secondary registerbtn" id="login_modal_register_button" onClick={registerNewUser}>
+          </button>
+          <Link to={registrationUrl} className="epbtn --secondary" id="login_modal_register_button" onClick={registerNewUser}>
             {t('register')}
-            </Link>
+          </Link>
         </div>
-        </form>
+      </form>
+    </div>
   );
 };

@@ -219,7 +219,7 @@ export async function getCartItems(reference: string): Promise<moltin.CartItemsR
   return CartItems;
 }
 
-export async function removeCartItems(reference: string) {
+export async function deleteCart(reference: string) {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   await moltin.Cart(reference).Delete();
 }
@@ -247,6 +247,11 @@ export async function removeCartItem(reference: string, itemId: string): Promise
   await moltin.Cart(reference).RemoveItem(itemId);
 }
 
+export async function removeAllCartItems(reference: string): Promise<void> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  await moltin.Cart(reference).RemoveAllItems();
+}
+
 export async function updateCartItem(reference: string, productId: string, quantity: number): Promise<void> {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   await moltin.Cart(reference).UpdateItem(productId, quantity);
@@ -262,4 +267,28 @@ export async function checkout(reference: string, customer: any, billing: any, s
 export async function payment(payment: moltin.ConfirmPaymentBody, orderId: string) {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   await moltin.Orders.Payment(orderId, payment)
+}
+
+export async function createNewCart(data: any, token: string) {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const cartRes = await moltin.Cart().CreateCart(data, token);
+  return cartRes;
+}
+
+export async function editCartInfo(data: any, token: string) {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const updatedCart = await moltin.Cart().UpdateCart(data, token);
+  return updatedCart;
+}
+
+export async function getMultiCarts(token: string) {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const cartsList = await moltin.Cart().GetCartsList(token);
+  return cartsList;
+}
+
+export async function addCustomerAssociation(cartId: string, customerId: string, token: string) {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const result = await moltin.Cart(cartId).AddCustomerAssociation(customerId, token);
+  return result;
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import * as moltin from '@moltin/sdk';
 import { loadCategoryProducts } from './service';
 import { useCategories, useTranslation, useCurrency } from './app-state';
 import { ProductThumbnail } from './ProductThumbnail';
@@ -53,7 +54,7 @@ export const Category: React.FC = () => {
       {category && products ? (
         <>
           <div className="category__breadcrumbs">
-            {categoryPath?.map((category, index) => (
+            {categoryPath?.map((category: moltin.Category, index: number) => (
               <React.Fragment key={category.id}>
                 {index > 0 && (
                   <span className="category__breadcrumbseparator">{'>'}</span>

@@ -1,0 +1,37 @@
+@import './theme/common.scss';
+
+.CartsPagination {
+    position: relative;
+    bottom: 0;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 15px;
+    text-align: center;
+
+    &__pagenumber {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13px;
+        line-height: 15px;
+        text-align: center;
+    }
+
+    &__prevpageicon {
+        transform: rotate(90deg);
+    }
+
+    &__nextpageicon {
+        transform: rotate(-90deg);
+    }
+
+    svg {
+        fill: #3C4858;
+        cursor: pointer;
+
+        &:hover{
+            fill:$firstComplimentTextColor;
+        }
+    }
+
+}

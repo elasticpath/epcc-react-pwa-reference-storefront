@@ -1,0 +1,113 @@
+
+@import './theme/common.scss';
+
+.settingscart {
+  $block: &;
+  text-align: center;
+
+  .epform__group {
+    margin: 30px 0;
+
+    input {
+      height: 40px;
+      padding-left: 12px;
+    }
+
+    textarea {
+      height: 150px;
+      padding: 10px 8px;
+      resize: none;
+    }
+
+    #{$block}__clearname {
+      display: none;
+      position: absolute;
+      right: 5px;
+      top: 28px;
+
+      svg {
+        fill: $secondComplimentTextColor;
+      }
+
+      &:hover {
+        cursor: pointer;
+        display: inline-block;
+      }
+    }
+  }
+
+  &__clearbtn {
+    display: none;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    cursor: pointer;
+
+    &:hover {
+      display: inline-block;
+    }
+  }
+
+  .epform__input {
+    &:focus {
+      + #{$block}__clearbtn {
+        display: inline-block;
+      }
+    }
+  }
+
+  &__btns {
+    text-align: right;
+
+    .epbtn {
+      min-width: 150px;
+
+      &:first-child {
+        margin-right: 20px;
+      }
+    }
+  }
+
+  &__addcartform {
+    text-align: left;
+    margin-bottom: 50px;
+  }
+
+  &__title {
+    font-style: normal;
+    font-size: 28px;
+    line-height: 34px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  &__closebutton {
+    position: absolute;
+    padding-top: 8px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    svg {
+      width: 22px;
+      height: 22px;
+      fill: $thirdComplimentTextColor;
+    }
+  }
+
+  @media screen and (max-width: $mobileXSmallWidth - 1px) {
+    &__btns {
+      .epbtn {
+        min-width: 100%;
+
+        &:first-child {
+          margin-right: 0;
+          margin-bottom: 15px;
+        }
+      }
+    }
+  }
+}
+
+

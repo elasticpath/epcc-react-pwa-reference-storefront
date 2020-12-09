@@ -20,7 +20,7 @@ export const OrderDetails: React.FC = () => {
 
   return (
     <div className="orderdetail container">
-      <Link to="/account/purchase-history" className="orderdetail__link">
+      <Link to="/account/orders-history" className="orderdetail__link">
         <ArrowLeft />
         {t('back')}
       </Link>

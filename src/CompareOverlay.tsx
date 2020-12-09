@@ -34,7 +34,7 @@ export const CompareOverlay: React.FC = (props) => {
     <div className={`compareoverlay ${isShowingOverlay ? 'compareoverlay--visible' : ''} ${!showCompareMenu ? 'compareoverlay--fadeout' : ''}`}>
       <div className="compareoverlay__content">
         <div className="compareoverlay__products">
-          {compareProducts.map(product => (
+          {compareProducts.map((product: moltin.Product) => (
             <div key={product.id} className="compareoverlay__product">
               <div className="compareoverlay__productimg">
                 <ProductMainImage product={product} />

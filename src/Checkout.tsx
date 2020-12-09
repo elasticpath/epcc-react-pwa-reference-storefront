@@ -16,10 +16,12 @@ export const Checkout: React.FC<CheckoutParams> = (props) => {
   const { t } = useTranslation();
 
   const [isComplete, setIsComplete] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
   const onPayment = async () => {
     let payment;
+    setIsLoading(true);
     try {
       payment = await stripe.createToken({
         name: `${shippingAddress.first_name} ${shippingAddress.last_name}`,
@@ -31,9 +33,11 @@ export const Checkout: React.FC<CheckoutParams> = (props) => {
         address_country: shippingAddress.country
       });
       await onPayOrder(payment.token.id)
+      setIsLoading(false);
     }
     catch (paymentError) {
       console.error({ paymentError })
+      return setIsLoading(false);
     }
   };
 
@@ -75,7 +79,7 @@ export const Checkout: React.FC<CheckoutParams> = (props) => {
           <div className="checkout__error">{errorMsg}</div>
         )}
       </div>
-      <button className="epbtn --secondary --large --fullwidth" type="button" onClick={onPayment} disabled={!isComplete || isDisabled}>{t('pay') + ' ' + totalPrice}</button>
+      <button className={`epbtn --secondary --large --fullwidth ${isLoading ? "--loding" : ""}`} type="button" onClick={onPayment} disabled={!isComplete || isDisabled || isLoading}>{!isLoading ? t('pay') + ' ' + totalPrice : <span className="circularLoader" aria-label={t('loading')} /> }</button>
     </div>
   )
 };

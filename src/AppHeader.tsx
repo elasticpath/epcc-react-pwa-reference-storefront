@@ -19,13 +19,19 @@ import './AppHeader.scss';
 export const AppHeader: React.FC = () => {
   const { t } = useTranslation();
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
-  const { count, quantity, showCartPopup, updateCartItems } = useCartData();
+  const { count, cartQuantity, showCartPopup, updateCartItems } = useCartData();
+  const [newCart, setNewCart] = useState(false);
 
   const handleCloseCartModal = () => {
     setIsCartModalOpen(false);
   };
 
+  const openCartModal = () => {
+      setIsCartModalOpen(true);
+  }
+
   const handleCartModal = () => {
+
     updateCartItems();
     setIsCartModalOpen(true);
   };
@@ -58,7 +64,7 @@ export const AppHeader: React.FC = () => {
           </button>
           {showCartPopup && (
             <div className="appheader__cartpopup">
-              <p>{quantity === 1 ? t('cart-popup-info-1') : t('cart-popup-info', {quantity: quantity.toString()})}</p>
+              <p>{cartQuantity === 1 ? t('cart-popup-info-1') : t('cart-popup-info', {quantity: cartQuantity.toString()})}</p>
               <button className="epbtn" onClick={handleCartModal}>{t('view-cart')}</button>
             </div>
           )}
@@ -67,7 +73,7 @@ export const AppHeader: React.FC = () => {
           <BulkOrderDropdown />
         </div>
         <div className="appheader__account">
-          <AccountDropdown />
+          <AccountDropdown openCartModal={openCartModal} handleShowNewCart={(bool:boolean) => setNewCart(bool)} />
         </div>
       </div>
       <div className="appheader__navigation">
@@ -80,7 +86,7 @@ export const AppHeader: React.FC = () => {
           </strong>
         </div>
       </Offline>
-      <CartModal isCartModalOpen={isCartModalOpen} handleCloseModal={handleCloseCartModal} />
+      <CartModal newCart={newCart} handleNewCart={(bool:boolean) => setNewCart(bool)} isCartModalOpen={isCartModalOpen} handleCloseModal={handleCloseCartModal} />
     </div>
   );
 };

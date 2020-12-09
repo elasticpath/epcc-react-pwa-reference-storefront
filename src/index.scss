@@ -52,14 +52,14 @@ img, svg {
     color: $mainNavigationColor;
     border: 1px solid $buttonActiveColor;
 
-    &:hover {
+    &:hover, &:focus{
       background-color: $btnPrimaryHoverColor;
       border: 1px solid $btnPrimaryHoverColor;
     }
 
     &:active {
       background: $mainColor;
-      border-color: $mainColor;
+      border: 1px solid $mainColor;
     }
   }
 
@@ -68,7 +68,7 @@ img, svg {
     border: 1px solid $firstComplimentColor;
     color: $mainBackgroundColor;
 
-    &:hover {
+    &:hover, &:focus {
       background-color: $btnSecondaryHoverColor;
       border: 1px solid $btnSecondaryHoverColor;
     }
@@ -85,7 +85,7 @@ img, svg {
     border: 1px solid $firstComplimentColor;
     color: $firstComplimentColor;
 
-    &:hover {
+    &:hover , &:focus{
       background-color: $firstComplimentColor;
       border: 1px solid $firstComplimentColor;
       color: $mainBackgroundColor;
@@ -97,7 +97,7 @@ img, svg {
     }
   }
 
-  &:hover {
+  &:hover , &:focus{
     background-color: change-color($color: $btnColor, $saturation: 40%, $lightness: 95%);
   }
 
@@ -154,7 +154,6 @@ img, svg {
     font-weight: 600;
     line-height: 15px;
     color: $secondComplimentTextColor;
-    text-transform: uppercase;
     margin-bottom: 5px;
   }
 
@@ -173,7 +172,8 @@ img, svg {
     border-radius: 4px;
 
     &:focus {
-      border-color: #0099DE;
+      border-color: $firstComplimentColor;
+      outline: 0 auto transparent;
     }
   }
 
@@ -182,6 +182,58 @@ img, svg {
     color: $mainErrorColor;
     position: absolute;
     top: 100%;
+  }
+}
+
+.epcheckbox {
+  display: none;
+
+  +label {
+    position: relative;
+    padding-left: 25px;
+    font-size: 13px;
+    line-height: 18px;
+    color: $firstComplimentTextColor;
+    vertical-align: top;
+    margin-bottom: 0;
+    &:before {
+      content: "";
+      width: 18px;
+      height: 18px;
+      border: 1px solid $secondBorderColor;
+      border-radius: 2px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: $mainBackgroundColor;
+    }
+  }
+
+  &:disabled {
+    +label {
+      opacity: 0.4;
+    }
+  }
+
+  &:checked {
+    +label {
+      &:before {
+        border-color: $firstComplimentColor;
+        background-color: $firstComplimentColor;
+      }
+      &:after {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 1px;
+        width: 12px;
+        height: 7px;
+        border: solid 2px $mainBackgroundColor;
+        border-right: none;
+        border-top: none;
+        transform: translate(2px, 1px) rotate(-45deg);
+      }
+    }
   }
 }
 
@@ -276,11 +328,10 @@ img, svg {
   margin-top: 10px;
 
   &.--centered {
-    margin: 0;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    margin: -15px 0 0 -15px;
     z-index: 2;
   }
 }

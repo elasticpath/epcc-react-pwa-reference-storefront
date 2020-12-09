@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { useTranslation, useCartData } from './app-state';
+import { useTranslation, useCartData, useMultiCartData } from './app-state';
 import { bulkAdd } from './service';
 import { ReactComponent as ClearIcon } from './images/icons/ic_clear.svg';
 
@@ -8,7 +8,8 @@ import './QuickOrder.scss'
 
 export const QuickOrder: React.FC = (props) => {
   const { t } = useTranslation();
-  const { updateCartItems } = useCartData();
+  const { updateCartItems, setCartQuantity, handleShowCartPopup } = useCartData();
+  const { updateCartData } = useMultiCartData();
 
   const defaultItem = {
     code: '', quantity: 0, isInvalid: false, errorMsg: ''
@@ -74,9 +75,13 @@ export const QuickOrder: React.FC = (props) => {
     });
     setError('');
     setShowLoader(true);
+    const totalQuantity = products.reduce((sum, { quantity }) => sum + quantity, 0);
     bulkAdd(mcart, products)
       .then(() => {
         updateCartItems();
+        updateCartData();
+        setCartQuantity(totalQuantity);
+        handleShowCartPopup();
         setItems(Array(defaultItemsCount).fill(defaultItem).map((item, index) => ({ ...item, key: `quick-order-sku-${index}` })));
         setShowLoader(false);
       })
