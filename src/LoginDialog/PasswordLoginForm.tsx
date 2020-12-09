@@ -107,7 +107,7 @@ export const PasswordLoginForm: React.FC<PasswordLoginFormProps> = (props) => {
       setFailedLogin(false);
       resetForm();
     }
-  }, [openModal, resetForm]);
+  }, [openModal, resetForm, setFailedLogin]);
 
   return (
         <form className="epform" id="login_modal_form" onSubmit={handleSubmit}>
@@ -132,10 +132,10 @@ export const PasswordLoginForm: React.FC<PasswordLoginFormProps> = (props) => {
         </div>
         
         <div className="epform__group --btn-container">
-            <button className="epbtn --primary " id="login_modal_login_button" type="submit" disabled={props.isLoading}>
+            <button className="epbtn --primary loginbtn" id="login_modal_login_button" type="submit" disabled={props.isLoading}>
             {t('login')}
             </button>
-            <Link to={registrationUrl} className="epbtn --secondary " id="login_modal_register_button" onClick={registerNewUser}>
+            <Link to={registrationUrl} className="epbtn --secondary registerbtn" id="login_modal_register_button" onClick={registerNewUser}>
             {t('register')}
             </Link>
         </div>
