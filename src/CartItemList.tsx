@@ -5,7 +5,7 @@ import { removeAllCartItems, removeCartItem, updateCartItem } from './service';
 import { ImageContainer } from "./ImageContainer";
 import { Promotion } from "./Promotion";
 import { APIErrorContext } from "./APIErrorProvider";
-import { LoginForm } from "./LoginForm";
+import { PasswordLoginForm } from "./LoginDialog/PasswordLoginForm";
 import { CreateCart } from "./CreateCart";
 import { ReactComponent as SettingsIcon } from "./images/icons/settings-black-24dp.svg";
 import { SettingsCart } from "./SettingsCart";
@@ -33,7 +33,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const { addError } = useContext(APIErrorContext);
   const quantityItems = count.toString();
 
-  const isLoading = false;
+  const [isLoading, setIsLoading] = useState(false);
   const imgSize = 73;
   const mcart = localStorage.getItem('mcart') || '';
   const [removingItem, setRemovingItem] = useState(-1);
@@ -211,7 +211,12 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
                   </button>
                 </div>
                 <div className="cartitemlist__promptbody">
-                  <LoginForm createCart onSubmit={handleLogin} handleCloseCartModal={handleCloseCartModal} />
+                  <PasswordLoginForm createCart
+                   onSubmit={handleLogin}
+                    handleCloseCartModal={handleCloseCartModal}
+                    isLoading={isLoading}
+                    setIsLoading={setIsLoading}
+                  />
                   <div className="cartitemlist__promptcontent">
                     <p>{t('or')}</p>
                     <button type="button" className="epbtn --bordered" onClick={() => onHandlePage('shipping')}>{t('checkout-as-guest')}</button>

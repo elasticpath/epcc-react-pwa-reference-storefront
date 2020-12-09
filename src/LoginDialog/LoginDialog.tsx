@@ -13,10 +13,13 @@ import { OidcLoginButtons } from './OidcLoginButtons';
 interface AppModalLoginMainProps {
   handleModalClose: (...args: any[]) => any,
   openModal: boolean,
+  createCart: boolean,
+  handleShowNewCart?: (arg:boolean) => void,
+  openCartModal?: (...args: any[]) => any,
 }
 
 export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
-  const { handleModalClose, openModal } = props;
+  const {handleModalClose,openCartModal, openModal, createCart, handleShowNewCart } = props;
 
   const { authenticationSettings, oidcProfiles } = useCustomerAuthenticationSettings()
 
@@ -60,6 +63,10 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
               isLoading={isLoading}
               setIsLoading={setIsLoading}
               setFailedLogin={setFailedLogin}
+              createCart={createCart}
+              openModal={openModal}
+              openCartModal={openCartModal}
+              handleShowNewCart={handleShowNewCart}
             />
           )}
 

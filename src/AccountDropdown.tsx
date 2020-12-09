@@ -92,10 +92,10 @@ export const AccountDropdown: React.FC<AccountDropdownProps> = (props) => {
           </button>
         </div>
       )}
-      {/*{count > 0*/}
-      {/*  ? <LoginDialog createCart={true} openModal={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} openCartModal={openCartModal} handleShowNewCart={handleShowNewCart}/>*/}
-      {/*  : <LoginDialog createCart={false} openModal={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} />*/}
-      {/*}*/}
+      {count > 0
+        ? <LoginDialog createCart={true} openModal={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} openCartModal={openCartModal} handleShowNewCart={handleShowNewCart}/>
+        : <LoginDialog createCart={false} openModal={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} />
+      }
       </div>
     );
 };
