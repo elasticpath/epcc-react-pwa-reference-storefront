@@ -57,8 +57,18 @@ export const OrdersHistory: React.FC = () => {
     <div className="ordershistory">
       <h1 className="ordershistory__title">{t('orders')}</h1>
       <div className="ordershistory__searchfilterbar">
+        <button className="ordershistory__searchfilterbar --mbldate" onClick={sortByDate}>
+                  <span>{t('date')}</span>
+                  <span>
+                    <CaretIcon
+                      className={`ordershistory__sortbydatecaret ${
+                        ascending ? "--rotated" : ""
+                      }`}
+                    />
+                  </span> 
+                </button>
         <div className="ordershistory__datedropdown">
-          <span>Show</span>
+          <span className="--show">Show</span>
           <div className="ordershistory__datedropdowncontainer" ref={ref}>
             <div className="ordershistory__datedropdownwrap">
               <button className={`ordershistory__datedropdowntoggle ${
