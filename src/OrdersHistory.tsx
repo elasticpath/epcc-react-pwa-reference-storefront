@@ -58,15 +58,15 @@ export const OrdersHistory: React.FC = () => {
       <h1 className="ordershistory__title">{t('orders')}</h1>
       <div className="ordershistory__searchfilterbar">
         <button className="ordershistory__searchfilterbar --mbldate" onClick={sortByDate}>
-                  <span>{t('date')}</span>
-                  <span>
-                    <CaretIcon
-                      className={`ordershistory__sortbydatecaret ${
-                        ascending ? "--rotated" : ""
-                      }`}
-                    />
-                  </span> 
-                </button>
+          <span>{t('date')}</span>
+          <span>
+            <CaretIcon
+              className={`ordershistory__sortbydatecaret ${
+                ascending ? "--rotated" : ""
+              }`}
+            />
+          </span> 
+        </button>
         <div className="ordershistory__datedropdown">
           <span className="--show">Show</span>
           <div className="ordershistory__datedropdowncontainer" ref={ref}>
@@ -82,13 +82,21 @@ export const OrdersHistory: React.FC = () => {
               </button>
             </div>
             {dateDropDownOpen && (
-              <div className="ordershistory__datedropdowncontent">
-                {dateDropDown.map((date, id) => (
-                  <button className="ordershistory__datedropdownbtn" key={id} onClick={() => filterByDate(date, id)}> 
-                    {t(date)}
-                  </button>
-                ))}
+              <div>
+                <div className="ordershistory__bgdatedropdowncontent"></div>
+                <div className="ordershistory__datedropdowncontent">
+                  <div className="ordershistory__datedropdowndonebtn">
+                    <p>Show</p>
+                    <button onClick={() => setDateDropDownOpen(false)}>Done</button>
+                  </div>
+                  {dateDropDown.map((date, id) => (
+                    <button className="ordershistory__datedropdownbtn" key={id} onClick={() => filterByDate(date, id)}> 
+                      {t(date)}
+                    </button>
+                  ))}
+                </div>
               </div>
+              
             )}
           </div>
         </div>

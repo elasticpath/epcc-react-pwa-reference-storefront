@@ -73,6 +73,9 @@
     height: 64px;
     background-color: $secondComplimentBackground;
     padding: 0px 10px;
+    display: grid;
+    grid-template-columns: 1fr 1.8fr;
+    align-items: center;
   }
 
   .--mbldate{
@@ -92,15 +95,128 @@
       path{
         fill: white;
       }
-    }
+    } 
+  }
+
+
+  &__datedropdown{
+    display: flex;
+    column-gap: 10px;
+    align-items:center;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+  }
+
+  &__datedropdowncontainer {
+    display: block;
+    position: relative;
+  }
+
+  &__datedropdownwrap {
+    display: flex;
     
+    &:hover{
+      background-color: $sixthComplimentBackground;
+    }
+  }
+
+  &__datedropdowntoggle {
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid $firstComplimentColor!important;
+    padding: 8px 13px;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    color: $firstComplimentColor;
+
+    &.--open{
+      background-color: $firstComplimentColor;
+      color: $mainBackgroundColor;
+    }
+  }
+
+  &__dropdowncaret {
+    margin-left: 15px;
+
+    path{
+      fill:$firstComplimentColor;
+    }
+  }
+
+  &__datedropdowncontent{
+    position: fixed;
+    overflow-x: hidden;
+    z-index: 1;
+    width: 100%;
+    margin-top: 2px;
+    bottom: 0;
+    left: 0;
+  }
+
+  &__bgdatedropdowncontent {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0,0,0,.3);
+    width: 100%;
+    height: 100%;
+  }
+
+  &__datedropdownbtn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    background-color: $mainBackgroundColor;
+    color: $firstComplimentColor;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    letter-spacing: 0.2px;
+    mix-blend-mode: normal;
+    cursor: pointer;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:hover {
+      background-color: $sixthComplimentBackground;
+    }
+
+    &:active{
+      background-color: $firstComplimentColor;
+      color: $mainBackgroundColor;
+    }
   }
 
   .--show{
-    display: none;
+    display: block;
+    padding-left: 10px;
   }
-  &__datedropdowncontainer{
-    display: none;
+
+  &__datedropdowndonebtn {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 16px;
+    background-color: $mainBackgroundColor;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    letter-spacing: 0.2px;
+    justify-content: space-between;
+    font-weight: bold;
+    border-bottom: 1px solid #CCCCCC;
+    button{
+      color: $firstComplimentColor; ;
+    }
   }
   
   @media screen and (min-width: $tabletSmallWidth) {
@@ -117,11 +233,12 @@
       grid-template-columns: repeat(6, 1fr);
       background-color: $secondComplimentBackground;
       margin-top: $sizeLarge;
-      grid-column-gap: 20px;
+      grid-column-gap: 30px;
+      padding-right:20px;
+      
     }
 
     &__informationtitle{
-      
       font-style: normal;
       font-weight: 600;
       font-size: 14px;
@@ -146,7 +263,8 @@
     &__ordersdetails {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
-      grid-column-gap: 20px;
+      grid-column-gap: 30px;
+      padding: 20px 20px 20px 0px;
     }
 
     &__detail {
@@ -154,6 +272,9 @@
       &.--leftclmn{
         grid-column-start: auto;
         grid-column-end: auto;
+      }
+      &:first-child {
+        padding-left: 20px;
       }
     }
     
@@ -167,6 +288,9 @@
       grid-template-columns: repeat(3, 1fr);
       justify-content: start;
       gap: 24px;
+      height: fit-content;
+      background-color: unset;
+      padding: 0px 10px;
     }
 
     .--mbldate{
@@ -177,6 +301,7 @@
     &__searchcontainer{
       position: relative;
       width: 200px;
+      
       svg{
         position: absolute;
         left: 0px;
@@ -193,8 +318,8 @@
     }
     .--date{
       display: flex;
-      justify-content: center;
-
+      padding-left: 20px;
+      // justify-content: center;
       &:hover{
         background-color: $sixthComplimentBackground;
         color: $firstComplimentColor;
@@ -205,61 +330,6 @@
         color: white;
       }
     }
-
-    &__sortbydatecaret{
-      path{
-        fill: $sixthComplimentTextColor; 
-      }
-    }
-
-    &__datedropdown{
-      display: flex;
-      column-gap: 10px;
-      align-items:center;
-      font-weight: 500;
-      font-size: 13px;
-      line-height: 16px;
-    }
-
-    &__datedropdowncontainer {
-      display: block;
-      position: relative;
-    }
-
-    &__datedropdownwrap {
-      display: flex;
-      
-      &:hover{
-        background-color: $sixthComplimentBackground;
-      }
-    }
-
-    &__datedropdowntoggle {
-      text-align: center;
-      cursor: pointer;
-      border: 1px solid $firstComplimentColor!important;
-      padding: 8px 13px;
-      font-weight: 500;
-      font-size: 13px;
-      line-height: 16px;
-      display: flex;
-      align-items: center;
-      color: $firstComplimentColor;
-
-      &.--open{
-        background-color: $firstComplimentColor;
-        color: $mainBackgroundColor;
-      }
-    }
-
-    &__dropdowncaret {
-      margin-left: 15px;
-
-      path{
-        fill:$firstComplimentColor;
-      }
-    }
-
     &__datedropdowncontent{
       position: absolute;
       border: 1px solid $firstComplimentColor;
@@ -267,39 +337,27 @@
       z-index: 1;
       width: 100%;
       margin-top: 2px;
+      bottom: unset;
+      left: unset;
+    }
+
+    &__sortbydatecaret{
+      path{
+        fill: $sixthComplimentTextColor; 
+      }
+    }
+
+    &__bgdatedropdowncontent {
+      display: none;
     }
 
     &__datedropdownbtn {
-      display: block;
-      width: 100%;
       height: 32px;
       padding: 10px;
-      background-color: $mainBackgroundColor;
-      color: $firstComplimentColor;
-      font-weight: 500;
-      font-size: 13px;
-      line-height: 16px;
-      letter-spacing: 0.2px;
-      mix-blend-mode: normal;
-      cursor: pointer;
-      font-weight: bold;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-
-      &:hover {
-        background-color: $sixthComplimentBackground;
-      }
-
-      &:active{
-        background-color: $firstComplimentColor;
-        color: $mainBackgroundColor;
-      }
     }
 
-    .--show{
-      display: block;
-      padding-left: 10px;
+    &__datedropdowndonebtn {
+      display: none;
     }
-  } 
+  }
 }
