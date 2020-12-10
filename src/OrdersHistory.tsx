@@ -15,7 +15,7 @@ export const OrdersHistory: React.FC = () => {
   const [dateDropDownOpen, setDateDropDownOpen] = useState(false);
   const [ascending, setAscending] = useState(false);
  
-  const dateDropDown = ["Last 6 months", "Last 12 months", "Last 18 months"];
+  const dateDropDown = ["last-6-months", "last-12-months", "last-18-months"];
   const [selectedDate, setSelectedDate] = useState(dateDropDown[0]);
 
   const handleSelectorClicked = () => {
@@ -36,7 +36,7 @@ export const OrdersHistory: React.FC = () => {
     }
   }
 
-  const filterByDate = useCallback((date:string = "Last 6 months", index:number = 0) => {
+  const filterByDate = useCallback((date:string = 'last-6-months', index:number = 0) => {
       setSelectedDate(date);
       setDateDropDownOpen(false);
       const endDate = new Date();
@@ -65,7 +65,7 @@ export const OrdersHistory: React.FC = () => {
                 dateDropDownOpen ? " --open" : ""}`}
                 onClick={handleSelectorClicked}
               >
-                {selectedDate}
+                {t(selectedDate)}
                 <CaretIcon
                   className={`ordershistory__dropdowncaret ${dateDropDownOpen ? "--rotatedcaret" : ""}`}
                 />
@@ -75,7 +75,7 @@ export const OrdersHistory: React.FC = () => {
               <div className="ordershistory__datedropdowncontent">
                 {dateDropDown.map((date, id) => (
                   <button className="ordershistory__datedropdownbtn" key={id} onClick={() => filterByDate(date, id)}> 
-                    {date} 
+                    {t(date)}
                   </button>
                 ))}
               </div>
