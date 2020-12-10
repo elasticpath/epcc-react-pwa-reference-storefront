@@ -1,0 +1,274 @@
+@import './theme/common';
+
+.ordershistory {
+
+  &__title {
+    display: none;
+  }
+
+  &__informationheader {
+    display:none
+  }
+
+  &__link {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__detail {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 16px;
+    direction: rtl;
+    text-align: left;
+
+    &.--id{
+      color: $firstComplimentColor;
+    }
+
+    &.--leftclmn{
+      grid-column-start: 1;
+      grid-column-end: 2;
+    }
+  }
+
+  &__ordersdetails {
+    padding: 20px;
+    height: max-content;
+    border-bottom: 1px solid #C6CBD4;
+    display: grid;
+    grid-template-columns: 45% 55%;
+  }
+  
+  &__button {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 20px;
+    color: $firstComplimentColor;
+    text-align: center;
+    padding: 10px 15px;;
+    border: 1px solid $firstComplimentColor;
+    box-shadow: 0px 1px 0px rgba(22, 29, 37, 0.1), inset 0px 1px 0px rgba(255, 255, 255, 0.06);
+  }
+
+  .--rotated {
+    transform: rotate(180deg);
+  }
+
+  .--rotatedcaret{
+    transform: rotate(180deg);
+    path{
+      fill: $mainBackgroundColor;
+    }
+  }
+  
+  @media screen and (min-width: $tabletSmallWidth) {
+    &__title {
+      display: block;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 28px;
+      line-height: 34px;
+    }
+    
+    &__informationheader{
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      background-color: $secondComplimentBackground;
+      margin-top: $sizeLarge;
+      grid-column-gap: 20px;
+    }
+
+    &__informationtitle{
+      
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 24px;
+      color: $sixthComplimentTextColor;
+      align-self: center;
+      padding: 20px 0px;
+
+      &:hover{
+        path{
+          fill: $firstComplimentColor; 
+        }
+      }
+
+      &:active{
+        path{
+          fill: white; 
+        }
+      }
+    }
+
+    &__ordersdetails {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-column-gap: 20px;
+    }
+
+    &__detail {
+      align-self: center;
+      &.--leftclmn{
+        grid-column-start: auto;
+        grid-column-end: auto;
+      }
+    }
+    
+    &__detailtitle{
+      display: none;
+    }
+
+    &__searchfilterbar{
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      justify-content: start;
+      gap: 24px;
+    }
+
+    &__searchcontainer{
+      position: relative;
+      width: 200px;
+      svg{
+        position: absolute;
+        left: 0px;
+        pointer-events: none;
+        top: 50%;
+        transform: translate(50%, -50%);
+        width: 17.49px;
+        height: 17.49px;
+        path{
+          fill:#666666;
+        }
+      }
+      width: 100%;
+    }
+    .--date{
+      display: flex;
+      justify-content: center;
+
+      &:hover{
+        background-color: $sixthComplimentBackground;
+        color: $firstComplimentColor;
+      }
+
+      &:active{
+        background-color: $firstComplimentColor;
+        color: white;
+      }
+    }
+
+    &__sortbydatecaret{
+      path{
+        fill: $sixthComplimentTextColor; 
+      }
+    }
+
+    &__datedropdown{
+      display: flex;
+      column-gap: 10px;
+      align-items:center;
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 16px;
+    }
+
+    &__datedropdowncontainer {
+      position: relative;
+    }
+
+    &__datedropdownwrap {
+      display: flex;
+      
+      &:hover{
+        background-color: $sixthComplimentBackground;
+      }
+    }
+
+    &__datedropdowntoggle {
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid $firstComplimentColor!important;
+      padding: 8px 13px;
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 16px;
+      display: flex;
+      align-items: center;
+      color: $firstComplimentColor;
+
+      &.--open{
+        background-color: $firstComplimentColor;
+        color: $mainBackgroundColor;
+      }
+    }
+
+    &__dropdowncaret {
+      margin-left: 15px;
+
+      path{
+        fill:$firstComplimentColor;
+      }
+    }
+
+    &__datedropdowncontent{
+      position: absolute;
+      border: 1px solid $firstComplimentColor;
+      overflow-x: hidden;
+      z-index: 1;
+      width: 100%;
+      margin-top: 2px;
+    }
+
+    &__datedropdownbtn {
+      display: block;
+      width: 100%;
+      height: 32px;
+      padding: 10px;
+      background-color: $mainBackgroundColor;
+      color: $firstComplimentColor;
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 16px;
+      letter-spacing: 0.2px;
+      mix-blend-mode: normal;
+      cursor: pointer;
+      font-weight: bold;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &:hover {
+        background-color: $sixthComplimentBackground;
+      }
+
+      &:active{
+        background-color: $firstComplimentColor;
+        color: $mainBackgroundColor;
+      }
+    }
+
+    &__searchinput {
+      outline: none;
+      padding-left: 30px;
+      width: 100%;
+      height:100%;
+      border: 1px solid #CCCCCC;
+      box-sizing: border-box;
+      border-radius: 24px;
+      
+      &:active, &:focus {
+        border: 1px solid #197C93;
+        box-sizing: border-box;
+        color: #197C93;
+      }
+    }
+  } 
+}
