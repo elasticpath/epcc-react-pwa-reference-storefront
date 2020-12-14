@@ -5,11 +5,11 @@ import { useOrdersData, useTranslation } from './app-state';
 import { ReactComponent as CaretIcon } from './images/icons/ic_caret.svg';
 import useOnclickOutside from 'react-cool-onclickoutside';
 
+
 import './OrdersHistory.scss';
 
 export const OrdersHistory: React.FC = () => {
   const { t } = useTranslation();
-
   const { ordersData, ordersItemsData: items} = useOrdersData();
   const [sortedOrder, setSortedOrder] = useState(ordersData)
   const [dateDropDownOpen, setDateDropDownOpen] = useState(false);
@@ -41,7 +41,7 @@ export const OrdersHistory: React.FC = () => {
       setDateDropDownOpen(false);
       const endDate = new Date();
       const startDate =  endDate.setMonth(endDate.getMonth() - (6 * index + 6));
-      const dateFilterOrders = ordersData.filter((order:any) => Date.parse(order.meta.timestamps.created_at) > startDate );
+      const dateFilterOrders = ordersData.filter((order:moltin.Order) => Date.parse(order.meta.timestamps.created_at) > startDate );
       setSortedOrder(dateFilterOrders)
   }, [ordersData])
 
@@ -149,6 +149,7 @@ export const OrdersHistory: React.FC = () => {
                 <p className="ordershistory__detail --leftclmn">
                 <span className="ordershistory__detailtitle">{t('payment')}:</span>
                   {order.payment}
+                
                 </p>
                 <button className="ordershistory__detail ordershistory__button">{t('re-order')}</button>
               </div>             

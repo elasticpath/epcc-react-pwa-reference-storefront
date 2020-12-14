@@ -6,6 +6,9 @@
   position: relative;
   background-color: $secondComplimentBackground;
   margin-bottom: 10px;
+  @media screen and (min-width: $tabletSmallWidth){
+    height: 550px;
+  }
 
   &__link {
     height: 40px;
@@ -64,6 +67,7 @@
   }
 
   @media screen and (max-width: $tabletSmallWidth - 1px) {
+
     &__dropdown {
       width: 100%;
       position: absolute;

@@ -2,25 +2,24 @@
 
 .orderdetailstable {
   $block: &;
-
   width: 100%;
-  padding: 40px;
 
   &__title {
-    font-weight: bold;
+    h1{
+      font-weight: bold;
     font-size: 22px;
-    margin: 30px 0;
+   
     text-transform: capitalize;
+    }
   }
 
-  &__details {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  &__body {
-    flex: auto;
-    color: #4c5666;
+  &__body, &__header {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-column-gap: 60px;
+    width: 100%;
+    color: $buttonActiveColor;
+    margin-bottom: 30px;
   }
 
   &__table {
@@ -41,52 +40,122 @@
 
   &__block {
     padding: 10px 0;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+  }
+
+  &__status{
+      margin-bottom: 13px;
   }
 
   &__addresses {
-    margin-right: 40px;
     display: inline-block;
     text-align: left;
+    border: 1px solid $secondBorderColor;
+    box-sizing: border-box;
+    padding: 30px;
+    width: 300px;
+    margin-bottom: 25px;
   }
 
-  &__items {
-    width: 100%;
+  &__addresstitle {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+  }
 
-    #{$block}__tr {
-      border-bottom: 1px solid $mainBorderColor;
-
-      &:nth-child(2n-1) {
-        background-color: unset;
-      }
+  &__reorderbutton {
+    background: $buttonActiveColor;
+    height: fit-content;
+    width: 300px;
+    padding: 15px;
+    text-align: center;
+    color: white;
+    border: 1px solid $buttonActiveColor;
+    cursor: pointer;
+    &:hover{
+      background-color: $btnPrimaryHoverColor;
     }
-    #{$block}__td {
-      width: 50%;
+    &:active{
+      background-color: $mainColor;
     }
   }
 
   &__itemimage {
-    width: 200px;
-    min-width: 200px;
-    height: 100%;
-    align-self: center;
-
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
     img {
-      width: inherit;
-    }
-
-    @media (max-width: $mobileWidth - 1px) {
-      min-width: 100px;
+      width: 40px;
+      height: 48px;
+      padding: 2px;
+      border: 1px solid $secondBorderColor;
+      box-sizing: border-box;
+      margin-right: 8px;
     }
   }
 
-  &__item {
-    margin-bottom: 40px;
+  &__totalprice, &__taxprice{
     display: flex;
+    justify-content: space-between;
+    margin-left: 20px;
+    padding: 20px 0px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+  }
 
-    &:nth-child(2n) {
-      #{$block}__tr {
-        background-color: $secondComplimentBackground;
-      }
+  &__taxprice {
+    border-bottom: 1px solid $secondBorderColor;
+  }
+
+  &__totalpricenum {
+    font-size: 20px;
+  }
+
+  &__productsku{
+    color: $firstComplimentColor;
+  }
+
+  @media screen and (min-width: $tabletSmallWidth) {
+    &__details {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 20px;
     }
+
+    &__itemsheaderwrapper {
+      display: grid;
+      grid-template-columns: 2fr repeat(4, 1fr);
+      background-color: $secondComplimentBackground;
+      grid-column-gap: 30px;
+      padding:0px 20px;
+    }
+
+    &__itemsheader {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 24px;
+      color: $sixthComplimentTextColor;
+      align-self: center;
+      padding: 20px 0px;
+    }
+    &__item {
+      display: grid;
+      grid-template-columns: 2fr repeat(4, 1fr);
+      grid-column-gap: 30px;
+      padding:10px 20px;
+      align-items: center;
+      border-bottom: 1px solid #C6CBD4;
+      }
   }
 }
+
+
+
+

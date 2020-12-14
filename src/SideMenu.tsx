@@ -7,7 +7,12 @@ import { createAccountUrl, createAddressUrl, createOrdersHistoryUrl } from './ro
 
 import './SideMenu.scss'
 
-export const SideMenu: React.FC = (props) => {
+interface SideMenuProps {
+  orderId?: string
+}
+
+export const SideMenu: React.FC<SideMenuProps> = (props) => {
+  const { orderId } = props
   const { t } = useTranslation();
   const accountUrl = createAccountUrl();
   const addressUrl = createAddressUrl();
@@ -45,9 +50,14 @@ export const SideMenu: React.FC = (props) => {
       <div className={`sidemenu__dropdown ${!isOpen ? 'sidemenu__hidden' : ''}`}>
         {sideMenuItems.map(elem => (
           <div className='sidemenu__item' key={elem.to}>
-            <Link to={elem.to} className={`sidemenu__link ${location.pathname === elem.to ? '--selected' : ''}`} onClick={handleHideMenu}>{t(elem.children)}</Link>
+            {location.pathname === `/orderdetails/${orderId}`
+              ?
+                <Link to={elem.to} className={`sidemenu__link ${ elem.to === ordersHistoryUrl ? '--selected' : ''}`} onClick={handleHideMenu}>{t(elem.children)}</Link>
+              :
+                <Link to={elem.to} className={`sidemenu__link ${location.pathname === elem.to ? '--selected' : ''}`} onClick={handleHideMenu}>{t(elem.children)}</Link>}
           </div>
         ))}
+       
       </div>
     </div>
   )
