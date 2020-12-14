@@ -63,6 +63,10 @@ export function createHomeUrl(): string {
   return '/';
 }
 
+export function createOrderDetailsUrl () {
+  return '/orderdetails';
+}
+
 export function createCategoryUrl(categorySlug: string, pageNum?: number): string {
   return `/category/${categorySlug}${pageNum && pageNum > 1 ? `/${pageNum}` : ''}`;
 }
@@ -88,7 +92,7 @@ export function createAddressUrl(): string {
 }
 
 export function createOrdersHistoryUrl(): string {
-  return `/account/Orders-history`;
+  return `/account/orders-history`;
 }
 
 export function createSearchUrl(): string {
