@@ -409,6 +409,7 @@ function useCartItemsState() {
   const [count, setCount] = useState(0);
   const [cartQuantity, setCartQuantity] = useState(0);
   const [showCartPopup, setShowCartPopup] = useState(false);
+  const [openModal, setOpenModal] = useState(false)
   const [totalPrice, setTotalPrice] = useState('');
   const mcart = localStorage.getItem('mcart') || '';
 
@@ -446,7 +447,7 @@ function useCartItemsState() {
     }
   };
 
-  return { cartData, promotionItems, count, cartQuantity, setCartQuantity, showCartPopup, handleShowCartPopup, totalPrice, updateCartItems }
+  return { cartData, promotionItems, count, cartQuantity, setCartQuantity, showCartPopup, handleShowCartPopup, totalPrice, updateCartItems , openModal, setOpenModal }
 }
 
 function useMultiCartDataState() {

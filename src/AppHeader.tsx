@@ -18,22 +18,21 @@ import './AppHeader.scss';
 
 export const AppHeader: React.FC = () => {
   const { t } = useTranslation();
-  const [isCartModalOpen, setIsCartModalOpen] = useState(false);
-  const { count, cartQuantity, showCartPopup, updateCartItems } = useCartData();
+  const { count, cartQuantity, showCartPopup, updateCartItems, setOpenModal, openModal } = useCartData();
   const [newCart, setNewCart] = useState(false);
 
   const handleCloseCartModal = () => {
-    setIsCartModalOpen(false);
+    setOpenModal(false);
   };
 
   const openCartModal = () => {
-      setIsCartModalOpen(true);
+    setOpenModal(true);
   }
 
   const handleCartModal = () => {
 
     updateCartItems();
-    setIsCartModalOpen(true);
+    setOpenModal(true);
   };
 
   return (
@@ -86,7 +85,7 @@ export const AppHeader: React.FC = () => {
           </strong>
         </div>
       </Offline>
-      <CartModal newCart={newCart} handleNewCart={(bool:boolean) => setNewCart(bool)} isCartModalOpen={isCartModalOpen} handleCloseModal={handleCloseCartModal} />
+      <CartModal newCart={newCart} handleNewCart={(bool:boolean) => setNewCart(bool)} isCartModalOpen={openModal} handleCloseModal={handleCloseCartModal} />
     </div>
   );
 };

@@ -45,7 +45,7 @@ export const SideMenu: React.FC<SideMenuProps> = (props) => {
   return (
     <div className="sidemenu" ref={ref}>
       <button className="sidemenu__btn" onClick={handleSelectorClicked}>
-        {currentSideMenuItems.length > 0 && t(currentSideMenuItems[0].children)}
+        {currentSideMenuItems.length > 0 ? t(currentSideMenuItems[0].children) : t("orders")}
       </button>
       <div className={`sidemenu__dropdown ${!isOpen ? 'sidemenu__hidden' : ''}`}>
         {sideMenuItems.map(elem => (
@@ -53,7 +53,7 @@ export const SideMenu: React.FC<SideMenuProps> = (props) => {
             {location.pathname === `/orderdetails/${orderId}`
               ?
                 <Link to={elem.to} className={`sidemenu__link ${ elem.to === ordersHistoryUrl ? '--selected' : ''}`} onClick={handleHideMenu}>{t(elem.children)}</Link>
-              :
+                 :
                 <Link to={elem.to} className={`sidemenu__link ${location.pathname === elem.to ? '--selected' : ''}`} onClick={handleHideMenu}>{t(elem.children)}</Link>}
           </div>
         ))}

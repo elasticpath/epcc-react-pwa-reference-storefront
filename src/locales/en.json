@@ -255,5 +255,6 @@
   "last-12-months": "Last 12 months",
   "last-18-months": "Last 18 months",
   "back-to-order-history" : "Back to order history", 
-  "order" : "Order"
+  "order" : "Order",
+  "price": "Price"
 }

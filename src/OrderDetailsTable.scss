@@ -7,35 +7,19 @@
   &__title {
     h1{
       font-weight: bold;
-    font-size: 22px;
-   
-    text-transform: capitalize;
+      font-size: 22px;
+      text-transform: capitalize;
     }
   }
 
   &__body, &__header {
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    grid-column-gap: 60px;
-    width: 100%;
-    color: $buttonActiveColor;
-    margin-bottom: 30px;
+    padding: 0px 20px;
   }
 
-  &__table {
-    width: 100%;
-  }
-
-  &__tr {
-    padding: 10px 0;
-
-    &:nth-child(2n-1) {
-      background-color: $firstComplimentBackground;
-    }
-  }
-
-  &__td {
-    padding: 10px;
+  &__body {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column-reverse;
   }
 
   &__block {
@@ -55,7 +39,7 @@
     border: 1px solid $secondBorderColor;
     box-sizing: border-box;
     padding: 30px;
-    width: 300px;
+    width: 100%;
     margin-bottom: 25px;
   }
 
@@ -66,32 +50,58 @@
   }
 
   &__reorderbutton {
+    display: none;
+    width: 300px;
+    z-index: 10;
     background: $buttonActiveColor;
     height: fit-content;
-    width: 300px;
     padding: 15px;
     text-align: center;
     color: white;
     border: 1px solid $buttonActiveColor;
     cursor: pointer;
+
     &:hover{
       background-color: $btnPrimaryHoverColor;
     }
+
+    &:active{
+      background-color: $mainColor;
+    }
+  }
+
+  &__reorderbuttonmobile{
+    width: 100%;
+    z-index: 10;
+    background: $buttonActiveColor;
+    height: fit-content;
+    padding: 15px;
+    text-align: center;
+    color: white;
+    border: 1px solid $buttonActiveColor;
+    cursor: pointer;
+
+    &:hover{
+      background-color: $btnPrimaryHoverColor;
+    }
+
     &:active{
       background-color: $mainColor;
     }
   }
 
   &__itemimage {
+    grid-row-start: 0;
+    grid-row-end: 3;
+    align-self: center;
     font-style: normal;
     font-weight: normal;
     font-size: 13px;
     line-height: 16px;
-    display: flex;
-    align-items: center;
+
     img {
-      width: 40px;
-      height: 48px;
+      width: 40px!important;
+      height: 48px!important;
       padding: 2px;
       border: 1px solid $secondBorderColor;
       box-sizing: border-box;
@@ -108,6 +118,7 @@
     font-size: 16px;
     line-height: 20px;
   }
+  
 
   &__taxprice {
     border-bottom: 1px solid $secondBorderColor;
@@ -121,7 +132,57 @@
     color: $firstComplimentColor;
   }
 
+  &__itemsheaderwrapper {
+    display: none;
+  }
+
+  &__name{
+    display: none;
+  }
+
+  &__item{
+    padding: 10px 0;
+    mix-blend-mode: normal;
+    border-bottom: 1px solid #C6CBD4;
+    display: grid;
+    grid-template-columns: 50px 1fr 1fr;
+    grid-template-rows: repeat(3, 24px);
+  }
+
+  &__productname,  &__productsku, &__productprice{
+    grid-column-start: 2;
+    grid-column-end: 3;
+  }
+
+  &__productquantity,  &__producttotal{
+    grid-column-start: 3;
+    grid-column-end: 4;
+    
+  }
+
+  &__productquantity{
+    grid-row-start: 1;
+  }
+
+  &__producttotal{
+    grid-row-start: 2;
+  }
+
   @media screen and (min-width: $tabletSmallWidth) {
+
+    &__body, &__header {
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+      grid-column-gap: 60px;
+      width: 100%;
+      color: $buttonActiveColor;
+      margin-bottom: 30px;
+    }
+
+    &__addresses {
+      width: 300px;
+    }
+
     &__details {
       display: flex;
       flex-wrap: wrap;
@@ -145,14 +206,62 @@
       align-self: center;
       padding: 20px 0px;
     }
+
     &__item {
       display: grid;
       grid-template-columns: 2fr repeat(4, 1fr);
+      grid-template-rows: none;
       grid-column-gap: 30px;
       padding:10px 20px;
       align-items: center;
       border-bottom: 1px solid #C6CBD4;
-      }
+      align-items: center;
+    }
+
+    &__itemimage {
+      display: flex;
+      align-items: center;
+      grid-row-start: auto;
+      grid-row-end: auto;
+    }
+
+    &__productname{
+      display: none;
+    }
+
+    &__productsku, &__productprice{
+      grid-column-start: auto;
+      grid-column-end: auto;
+    }
+
+    &__productquantity,  &__producttotal{
+      grid-column-start: auto;
+      grid-column-end: auto;
+    }
+
+    &__productquantity{
+      grid-row-start: auto;
+    }
+
+    &__producttotal{
+      grid-row-start: auto;
+    }
+
+    &__name{
+      display: block;
+    }
+
+    &__titlespan{
+      display: none;
+    }
+
+    &__reorderbuttonmobile{
+      display: none;
+    }
+
+    &__reorderbutton{
+      display: block;
+    }
   }
 }
 
