@@ -53,7 +53,7 @@ export const SideMenu: React.FC<SideMenuProps> = (props) => {
             {location.pathname === `/orderdetails/${orderId}`
               ?
                 <Link to={elem.to} className={`sidemenu__link ${ elem.to === ordersHistoryUrl ? '--selected' : ''}`} onClick={handleHideMenu}>{t(elem.children)}</Link>
-                 :
+              :
                 <Link to={elem.to} className={`sidemenu__link ${location.pathname === elem.to ? '--selected' : ''}`} onClick={handleHideMenu}>{t(elem.children)}</Link>}
           </div>
         ))}

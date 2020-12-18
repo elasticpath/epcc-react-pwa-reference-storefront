@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { ProductMainImage } from "./ProductMainImage";
 import { useTranslation, useCartData, useMultiCartData } from "./app-state";
 import { useResolve } from "./hooks";
-import { getProductsByIds , bulkAdd} from "./service";
+import { getProductsByIds , bulkAdd } from "./service";
 import { APIErrorContext } from "./APIErrorProvider";
 
 import "./OrderDetailsTable.scss";
