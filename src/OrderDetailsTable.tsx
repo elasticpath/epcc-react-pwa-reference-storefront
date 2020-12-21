@@ -53,11 +53,18 @@ export const OrderDetailsTable: React.FC<OrderDetailsTableParams> = ({
   const reOrder = () => {
     setShowLoader(true);
     const mcart = localStorage.getItem('mcart') || '';
-    const data = [{
-      type: "order_items",
-      order_id: orderData.id,
-    }];
+    
+      const data=  [
+        {
+          type: 'order_items',
+          order_id: orderData.id
+        }
+      ];
 
+      // const options = {
+      //   add_all_or_nothing: false
+      // }
+   
     bulkAdd(mcart, data)
       .then(() => {
         updateCartItems();
@@ -104,7 +111,7 @@ export const OrderDetailsTable: React.FC<OrderDetailsTableParams> = ({
                     </Link>
                   </div>
                   <Link to={`/product/${[product.sku]}`} className="orderdetailstable__productname">
-                      {product.name}
+                      {product.name}hhhsgggbdfgdf
                     </Link>
                   <div className="orderdetailstable__productsku">
                     <span className="orderdetailstable__titlespan">{t("sku")}: </span>{product.sku}

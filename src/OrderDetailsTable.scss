@@ -52,7 +52,6 @@
   &__reorderbutton {
     display: none;
     width: 300px;
-    z-index: 10;
     background: $buttonActiveColor;
     height: fit-content;
     padding: 15px;
@@ -91,13 +90,16 @@
   }
 
   &__itemimage {
-    grid-row-start: 0;
-    grid-row-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 4;
     align-self: center;
     font-style: normal;
     font-weight: normal;
     font-size: 13px;
     line-height: 16px;
+    height: 24px;
+    overflow: visible;
+    align-self: center;
 
     img {
       width: 40px!important;
@@ -106,6 +108,9 @@
       border: 1px solid $secondBorderColor;
       box-sizing: border-box;
       margin-right: 8px;
+      position: relative;
+      top: 50%;
+      transform: translate(0, -50%);
     }
   }
 
@@ -146,12 +151,15 @@
     border-bottom: 1px solid #C6CBD4;
     display: grid;
     grid-template-columns: 50px 1fr 1fr;
-    grid-template-rows: repeat(3, 24px);
+    grid-column-gap: 10px;
   }
 
   &__productname,  &__productsku, &__productprice{
     grid-column-start: 2;
     grid-column-end: 3;
+    min-height: 24px;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   &__productquantity,  &__producttotal{
@@ -223,6 +231,12 @@
       align-items: center;
       grid-row-start: auto;
       grid-row-end: auto;
+      height:auto;
+      
+      img{
+        position: none;
+        transform: none;
+      }
     }
 
     &__productname{
