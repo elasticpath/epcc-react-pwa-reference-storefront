@@ -23,7 +23,7 @@ export const OrderDetailsTable: React.FC<OrderDetailsTableParams> = ({
 }) => {
   const { t } = useTranslation();
   const { addError } = useContext(APIErrorContext);
-  const { updateCartItems, setOpenModal } = useCartData();
+  const { updateCartItems, setOpenModal, handlePartialAddMessage, setPartialAddMessage } = useCartData();
   const { updateCartData } = useMultiCartData();
 
   const [showLoader, setShowLoader] = useState(false);
@@ -53,20 +53,17 @@ export const OrderDetailsTable: React.FC<OrderDetailsTableParams> = ({
   const reOrder = () => {
     setShowLoader(true);
     const mcart = localStorage.getItem('mcart') || '';
-    
-      const data=  [
-        {
-          type: 'order_items',
-          order_id: orderData.id
-        }
-      ];
-
-      // const options = {
-      //   add_all_or_nothing: false
-      // }
-   
+    const data=  [
+      {
+        type: 'order_items',
+        order_id: orderData.id
+      }
+    ];
+    setPartialAddMessage("");
     bulkAdd(mcart, data)
-      .then(() => {
+      .then((res:any) => {
+        const errorsContainer = res.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}`)).join('\n');
+        handlePartialAddMessage(errorsContainer);
         updateCartItems();
         updateCartData();
         setOpenModal(true);
@@ -76,6 +73,7 @@ export const OrderDetailsTable: React.FC<OrderDetailsTableParams> = ({
         setShowLoader(false);
     }) 
   }
+
   return (
     <div className="orderdetailstable__details">
       <div className="orderdetailstable__header">
@@ -87,7 +85,6 @@ export const OrderDetailsTable: React.FC<OrderDetailsTableParams> = ({
           {!showLoader ? t("re-order") : <div className="circularLoader" />}
         </button>
       </div>
-
       <div className="orderdetailstable__body">
       <button className="orderdetailstable__reorderbuttonmobile" onClick={reOrder}>
           {!showLoader ? t("re-order") : <div className="circularLoader" />}

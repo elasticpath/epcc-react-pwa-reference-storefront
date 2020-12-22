@@ -13,7 +13,7 @@ import './OrdersHistory.scss';
 export const OrdersHistory: React.FC = () => {
   const { t } = useTranslation();
   const { ordersData, ordersItemsData: items } = useOrdersData();
-  const { updateCartItems, setOpenModal } = useCartData();
+  const { updateCartItems, setOpenModal, handlePartialAddMessage, setPartialAddMessage } = useCartData();
   const { updateCartData } = useMultiCartData();
 
   const [sortedOrder, setSortedOrder] = useState(ordersData)
@@ -63,9 +63,11 @@ export const OrdersHistory: React.FC = () => {
       type: "order_items",
       order_id: activeOrderId,
     }];
-
+    setPartialAddMessage("");
     bulkAdd(mcart, data)
-      .then(() => {
+      .then((res:any) => {
+        const errorsContainer = res.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}`)).join('\n');
+        handlePartialAddMessage(errorsContainer);
         updateCartItems();
         updateCartData();
         setOpenModal(true);
@@ -84,7 +86,6 @@ export const OrdersHistory: React.FC = () => {
       setActiveOrderId(orderId);
     }
   useEffect(() => {
-   
     filterByDate();
   }, [filterByDate])
 

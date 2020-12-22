@@ -409,7 +409,8 @@ function useCartItemsState() {
   const [count, setCount] = useState(0);
   const [cartQuantity, setCartQuantity] = useState(0);
   const [showCartPopup, setShowCartPopup] = useState(false);
-  const [openModal, setOpenModal] = useState(false)
+  const [openModal, setOpenModal] = useState(false);
+  const [partialAddMessage, setPartialAddMessage] = useState("");
   const [totalPrice, setTotalPrice] = useState('');
   const mcart = localStorage.getItem('mcart') || '';
 
@@ -446,8 +447,16 @@ function useCartItemsState() {
       }, 3200);
     }
   };
+  const handlePartialAddMessage = (errors:string) => {
+    if(!partialAddMessage){
+      setPartialAddMessage(errors);
+      setTimeout(() => {
+        setPartialAddMessage("");
+      }, 8000);
+    }
+  }
 
-  return { cartData, promotionItems, count, cartQuantity, setCartQuantity, showCartPopup, handleShowCartPopup, totalPrice, updateCartItems , openModal, setOpenModal }
+  return { cartData, promotionItems, count, cartQuantity, setCartQuantity, showCartPopup, handleShowCartPopup, totalPrice, updateCartItems , openModal, setOpenModal, handlePartialAddMessage, partialAddMessage, setPartialAddMessage }
 }
 
 function useMultiCartDataState() {
