@@ -1,18 +1,26 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import * as moltin from '@moltin/sdk';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useOrdersData, useTranslation, useCartData , useMultiCartData } from './app-state';
 import { ReactComponent as CaretIcon } from './images/icons/ic_caret.svg';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { bulkAdd } from "./service";
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
-
-
+import { Pagination } from './Pagination';
+import { createOrdersHistoryUrl } from './routes';
 import './OrdersHistory.scss';
 
+
+interface OrderParams {
+  categorySlug: string;
+  pageNum?: string;
+}
+
 export const OrdersHistory: React.FC = () => {
+  const params = useParams<OrderParams>();
+
   const { t } = useTranslation();
-  const { ordersData, ordersItemsData: items } = useOrdersData();
+  const { ordersData, ordersItemsData: items , total } = useOrdersData();
   const { updateCartItems, setOpenModal, handlePartialAddMessage, setPartialAddMessage } = useCartData();
   const { updateCartData } = useMultiCartData();
 
@@ -22,9 +30,13 @@ export const OrdersHistory: React.FC = () => {
   const [showLoader, setShowLoader] = useState(false);
   const [reorderConfirmation, setReorderConfirmation] = useState(false);
   const [activeOrderId, setActiveOrderId] = useState("");
+  // const [totalPages, setTotalPages] = useState<number>();
  
   const dateDropDown = ["last-6-months", "last-12-months", "last-18-months"];
   const [selectedDate, setSelectedDate] = useState(dateDropDown[0]);
+
+  const parsedPageNum = parseInt(params.pageNum!);
+  const pageNum = isNaN(parsedPageNum) ? 1 : parsedPageNum;
 
   const handleSelectorClicked = () => {
     setDateDropDownOpen(!dateDropDownOpen);
@@ -56,6 +68,7 @@ export const OrdersHistory: React.FC = () => {
   const ref = useOnclickOutside(() => {
     setDateDropDownOpen(false);
   });
+
   const reOrder = () => {
     setShowLoader(true);
     const mcart = localStorage.getItem('mcart') || '';
@@ -80,11 +93,13 @@ export const OrdersHistory: React.FC = () => {
         setReorderConfirmation(false);
         setActiveOrderId("");
       }) 
-    }
-    const ReOrderConfirmation = (orderId:string) => {
-      setReorderConfirmation(true);
-      setActiveOrderId(orderId);
-    }
+  }
+
+  const ReOrderConfirmation = (orderId:string) => {
+    setReorderConfirmation(true);
+    setActiveOrderId(orderId);
+  }
+
   useEffect(() => {
     filterByDate();
   }, [filterByDate])
@@ -200,8 +215,15 @@ export const OrdersHistory: React.FC = () => {
                 <button className="ordershistory__reorderbtn" onClick={reOrder}>{!showLoader ? t("re-order") : <div className="circularLoader" />}</button>
                 <button className="ordershistory__cancelbtn" onClick={() => {setReorderConfirmation(false); setActiveOrderId("")}}>cancel</button>
               </div>
-
+              
             </div>
+            <Pagination
+                totalPages={total}
+                currentPage={pageNum}
+                formatUrl={(page) => createOrdersHistoryUrl(page)}
+              />
+              {console.log("total" , total)}
+              {console.log("pageNum" , pageNum)}
           </div>   
         ) : (
           <div>

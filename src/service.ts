@@ -198,9 +198,9 @@ export async function deleteAddress(customer: string, address: any, token: strin
   await moltin.Addresses.Delete({ customer, address, token });
 }
 
-export async function getAllOrders(token: string): Promise<{ data: moltin.Order[] }> {
+export async function getAllOrders(token: string, pageNum:number): Promise<{ data: moltin.Order[] }> {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
-  const result = await moltin.Orders.Limit(100).With('items').All(token);
+  const result = await moltin.Orders.Offset((pageNum - 1) * 4).Limit(4).With('items').All(token);
   return result;
 }
 

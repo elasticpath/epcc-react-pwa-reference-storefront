@@ -218,11 +218,17 @@ function usePurchaseHistoryState() {
 
   const [ordersData, setOrdersData] = useState<moltin.Order[]>([]);
   const [ordersItemsData, setOrdersItemsData] = useState<moltin.OrderItem[]>([]);
-
+  const [pageNum, setPageNum] = useState<number>(1);
+  const [total, setTotal] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+ 
   useEffect(() => {
-    if (token) {
-      getAllOrders(token).then((res: any) => {
+    if (token) {  
+      getAllOrders(token, pageNum).then((res: any) => {
         setData(res.data);
+        setTotal(res.meta.page.total);
+        setCurrentPage(res.meta.page.current)
+        console.log(res.meta)
         if (res && res.included)
          setItemsData(res.included.items);
       });
@@ -230,10 +236,10 @@ function usePurchaseHistoryState() {
     else {
       clearCustomerData();
     }
-  }, [id, token]);
+  }, [id, token, pageNum]);
 
   const updatePurchaseHistory = () => {
-    getAllOrders(token).then(res => {
+    getAllOrders(token, pageNum).then(res => {
       setData(res.data);
     });
   };
@@ -241,6 +247,7 @@ function usePurchaseHistoryState() {
   const setData = (data: any) => {
     setOrdersData(data);
   };
+
 
   const setItemsData = (data: any) => {
     setOrdersItemsData(data);
@@ -251,7 +258,7 @@ function usePurchaseHistoryState() {
     setOrdersItemsData([]);
   };
 
-  return { ordersData, ordersItemsData, updatePurchaseHistory }
+  return { ordersData, ordersItemsData, updatePurchaseHistory, setPageNum, total, currentPage, setCurrentPage }
 }
 
 const defaultCurrency = config.defaultCurrency;

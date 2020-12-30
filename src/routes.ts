@@ -51,7 +51,7 @@ export const routes: RouteConfig[] = [
 export const routesAccount: RouteConfig[] = [
   { exact: true, path: '/account', component: Profile, },
   { exact: true, path: '/account/address', component: Address, },
-  { exact: true, path: '/account/orders-history', component: OrdersHistory, },
+  { exact: true, path: '/account/orders-history/:pageNum?', component: OrdersHistory, },
 ];
 
 export const routesOrders: RouteConfig[] = [
@@ -91,8 +91,8 @@ export function createAddressUrl(): string {
   return `/account/address`;
 }
 
-export function createOrdersHistoryUrl(): string {
-  return `/account/orders-history`;
+export function createOrdersHistoryUrl(pageNum?: number): string {
+  return `/account/orders-history${pageNum && pageNum > 1 ? `/${pageNum}` : ''}`;
 }
 
 export function createSearchUrl(): string {
