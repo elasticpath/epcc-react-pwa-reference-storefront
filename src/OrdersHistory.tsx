@@ -20,7 +20,7 @@ export const OrdersHistory: React.FC = () => {
   const params = useParams<OrderParams>();
 
   const { t } = useTranslation();
-  const { ordersData, ordersItemsData: items , total } = useOrdersData();
+  const { ordersData, ordersItemsData: items , total, setPageNum, currentPage } = useOrdersData();
   const { updateCartItems, setOpenModal, handlePartialAddMessage, setPartialAddMessage } = useCartData();
   const { updateCartData } = useMultiCartData();
 
@@ -30,13 +30,9 @@ export const OrdersHistory: React.FC = () => {
   const [showLoader, setShowLoader] = useState(false);
   const [reorderConfirmation, setReorderConfirmation] = useState(false);
   const [activeOrderId, setActiveOrderId] = useState("");
-  // const [totalPages, setTotalPages] = useState<number>();
  
   const dateDropDown = ["last-6-months", "last-12-months", "last-18-months"];
   const [selectedDate, setSelectedDate] = useState(dateDropDown[0]);
-
-  const parsedPageNum = parseInt(params.pageNum!);
-  const pageNum = isNaN(parsedPageNum) ? 1 : parsedPageNum;
 
   const handleSelectorClicked = () => {
     setDateDropDownOpen(!dateDropDownOpen);
@@ -99,6 +95,10 @@ export const OrdersHistory: React.FC = () => {
     setReorderConfirmation(true);
     setActiveOrderId(orderId);
   }
+  useEffect(() => {
+    const parsedPageNum = parseInt(params.pageNum!);
+    setPageNum(isNaN(parsedPageNum) ? 1 : parsedPageNum)
+  }, [params, setPageNum])
 
   useEffect(() => {
     filterByDate();
@@ -219,11 +219,10 @@ export const OrdersHistory: React.FC = () => {
             </div>
             <Pagination
                 totalPages={total}
-                currentPage={pageNum}
+                currentPage={currentPage}
                 formatUrl={(page) => createOrdersHistoryUrl(page)}
               />
-              {console.log("total" , total)}
-              {console.log("pageNum" , pageNum)}
+
           </div>   
         ) : (
           <div>
