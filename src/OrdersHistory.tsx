@@ -20,11 +20,10 @@ export const OrdersHistory: React.FC = () => {
   const params = useParams<OrderParams>();
 
   const { t } = useTranslation();
-  const { ordersData, ordersItemsData: items , total, setPageNum, currentPage } = useOrdersData();
+  const { ordersData, ordersItemsData: items , total, setPageNum, currentPage, setDateIndex, setSort, sort } = useOrdersData();
   const { updateCartItems, setOpenModal, handlePartialAddMessage, setPartialAddMessage } = useCartData();
   const { updateCartData } = useMultiCartData();
 
-  const [sortedOrder, setSortedOrder] = useState(ordersData)
   const [dateDropDownOpen, setDateDropDownOpen] = useState(false);
   const [ascending, setAscending] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
@@ -39,27 +38,21 @@ export const OrdersHistory: React.FC = () => {
   };
 
   const sortByDate = () => {
-    const sortedOrderCopy = [...sortedOrder];
-    if (ascending){
-      const sortDateOrder = sortedOrderCopy.sort((a,b) => new Date(b.meta.timestamps.created_at).valueOf()  - new Date(a.meta.timestamps.created_at).valueOf());
-      setAscending(!ascending)
-      setSortedOrder(sortDateOrder) ;
+    if(sort === "") {
+      setSort("created_at");
+      setAscending(true);
     }
     else {
-      const sortDateOrder = sortedOrderCopy.sort((a,b) => new Date(a.meta.timestamps.created_at).valueOf()  - new Date(b.meta.timestamps.created_at).valueOf());
-      setAscending(!ascending)
-      setSortedOrder(sortDateOrder);
+      setSort("");
+      setAscending(false);
     }
   }
-
+  
   const filterByDate = useCallback((date:string = 'last-6-months', index:number = 0) => {
       setSelectedDate(date);
       setDateDropDownOpen(false);
-      const endDate = new Date();
-      const startDate =  endDate.setMonth(endDate.getMonth() - (6 * index + 6));
-      const dateFilterOrders = ordersData.filter((order:moltin.Order) => Date.parse(order.meta.timestamps.created_at) > startDate );
-      setSortedOrder(dateFilterOrders)
-  }, [ordersData])
+      setDateIndex(index);
+  }, [setDateIndex]);
 
   const ref = useOnclickOutside(() => {
     setDateDropDownOpen(false);
@@ -95,20 +88,21 @@ export const OrdersHistory: React.FC = () => {
     setReorderConfirmation(true);
     setActiveOrderId(orderId);
   }
+
   useEffect(() => {
     const parsedPageNum = parseInt(params.pageNum!);
     setPageNum(isNaN(parsedPageNum) ? 1 : parsedPageNum)
   }, [params, setPageNum])
 
   useEffect(() => {
-    filterByDate();
+      filterByDate();  
   }, [filterByDate])
 
   return (
     <div className="ordershistory">
       <h1 className="ordershistory__title">{t('orders')}</h1>
       <div className="ordershistory__searchfilterbar">
-        <button className="ordershistory__searchfilterbar --mbldate" onClick={sortByDate}>
+        <button className="--mbldate" onClick={sortByDate}>
           <span>{t('date')}</span>
           <span>
             <CaretIcon
@@ -147,10 +141,14 @@ export const OrdersHistory: React.FC = () => {
                   ))}
                 </div>
               </div>
-              
             )}
           </div>
         </div>
+        <Pagination
+                totalPages={total}
+                currentPage={currentPage}
+                formatUrl={(page) => createOrdersHistoryUrl(page)}
+              />
       </div>
       <div>
         {1 ? (
@@ -172,7 +170,7 @@ export const OrdersHistory: React.FC = () => {
               <h3 className="ordershistory__informationtitle">{t('payment')}</h3>
               <h3 className="ordershistory__informationtitle">{t('action')}</h3>
             </div>
-            {sortedOrder.map((order: moltin.Order)=> (
+            {ordersData.map((order: moltin.Order)=> (
               <div className="ordershistory__ordersdetails" key={order.id}>
                 <p className="ordershistory__detail --leftclmn">
                   {order.meta.timestamps.created_at.replace(/(.*?)T.*/i, "$1") }
@@ -210,20 +208,17 @@ export const OrdersHistory: React.FC = () => {
                  <h1 >{t('re-order')}</h1>
                  <CloseIcon onClick={() => {setReorderConfirmation(false); setActiveOrderId("")}}/>
                 </div>
-                
                 <p>Would you like to add re-order {activeOrderId} ?</p>
                 <button className="ordershistory__reorderbtn" onClick={reOrder}>{!showLoader ? t("re-order") : <div className="circularLoader" />}</button>
                 <button className="ordershistory__cancelbtn" onClick={() => {setReorderConfirmation(false); setActiveOrderId("")}}>cancel</button>
               </div>
-              
             </div>
             <Pagination
                 totalPages={total}
                 currentPage={currentPage}
                 formatUrl={(page) => createOrdersHistoryUrl(page)}
               />
-
-          </div>   
+          </div>  
         ) : (
           <div>
             {t('no-purchase-message')}

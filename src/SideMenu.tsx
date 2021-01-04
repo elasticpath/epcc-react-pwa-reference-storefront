@@ -50,14 +50,15 @@ export const SideMenu: React.FC<SideMenuProps> = (props) => {
       <div className={`sidemenu__dropdown ${!isOpen ? 'sidemenu__hidden' : ''}`}>
         {sideMenuItems.map(elem => (
           <div className='sidemenu__item' key={elem.to}>
-            {location.pathname === `/orderdetails/${orderId}`
-              ?
-                <Link to={elem.to} className={`sidemenu__link ${ elem.to === ordersHistoryUrl ? '--selected' : ''}`} onClick={handleHideMenu}>{t(elem.children)}</Link>
-              :
-                <Link to={elem.to} className={`sidemenu__link ${location.pathname === elem.to ? '--selected' : ''}`} onClick={handleHideMenu}>{t(elem.children)}</Link>}
+            <Link to={elem.to}
+              className={`sidemenu__link ${(location.pathname === `/orderdetails/${orderId}` || location.pathname.includes('/orders-history/')
+              ? (elem.to === ordersHistoryUrl ? '--selected' : '') 
+              : (location.pathname === elem.to ? '--selected' : ''))}`}
+              onClick={handleHideMenu}>
+                {t(elem.children)}
+            </Link>
           </div>
         ))}
-       
       </div>
     </div>
   )

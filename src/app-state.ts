@@ -209,7 +209,6 @@ function useAddressDataState() {
   };
 
   return { addressData, updateAddresses }
-
 }
 
 function usePurchaseHistoryState() {
@@ -221,14 +220,17 @@ function usePurchaseHistoryState() {
   const [pageNum, setPageNum] = useState<number>(1);
   const [total, setTotal] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
- 
+  const [dateIndex, setDateIndex] = useState<number>(0);
+  const [sort, setSort] = useState("");
+
   useEffect(() => {
+    const endDate = new Date();
+    const startDate =  endDate.setMonth(endDate.getMonth() - ((6 * dateIndex) + 6))
     if (token) {  
-      getAllOrders(token, pageNum).then((res: any) => {
+      getAllOrders(token, pageNum, startDate, sort).then((res: any) => {
         setData(res.data);
         setTotal(res.meta.page.total);
         setCurrentPage(res.meta.page.current)
-        console.log(res.meta)
         if (res && res.included)
          setItemsData(res.included.items);
       });
@@ -236,10 +238,12 @@ function usePurchaseHistoryState() {
     else {
       clearCustomerData();
     }
-  }, [id, token, pageNum]);
+  }, [id, token, pageNum, sort, dateIndex]);
 
   const updatePurchaseHistory = () => {
-    getAllOrders(token, pageNum).then(res => {
+    const endDate = new Date();
+    const startDate =  endDate.setMonth(endDate.getMonth() - ((6 * dateIndex) + 6))
+    getAllOrders(token, pageNum, startDate).then(res => {
       setData(res.data);
     });
   };
@@ -247,7 +251,6 @@ function usePurchaseHistoryState() {
   const setData = (data: any) => {
     setOrdersData(data);
   };
-
 
   const setItemsData = (data: any) => {
     setOrdersItemsData(data);
@@ -258,7 +261,7 @@ function usePurchaseHistoryState() {
     setOrdersItemsData([]);
   };
 
-  return { ordersData, ordersItemsData, updatePurchaseHistory, setPageNum, total, currentPage, setCurrentPage }
+  return { ordersData, ordersItemsData, updatePurchaseHistory, setPageNum, total, currentPage, setCurrentPage, setDateIndex, setSort, sort }
 }
 
 const defaultCurrency = config.defaultCurrency;
