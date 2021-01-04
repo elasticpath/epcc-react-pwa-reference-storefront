@@ -1,0 +1,51 @@
+@import './theme/common';
+
+.CoveoSearchButton {
+  color: $mainNavigationColor !important;
+  border: 1px solid $secondComplimentTextColor !important;
+  border-left: none !important;
+  text-decoration: none !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+  overflow: hidden !important;
+  height: 50px !important;
+  width: 60px !important;
+  cursor: pointer !important;
+  line-height: 0 !important;
+}
+
+.CoveoImageFieldValue {
+  img {
+    object-fit: contain;
+  }
+}
+
+.coveo-result-list-container {
+  justify-content: space-between;
+}
+
+.coveo-card-layout.CoveoResult {
+  min-width: 30%;
+  max-width: 30%;
+}
+
+.coveo-dynamic-facet-header-title, .coveo-dynamic-facet-collapse-toggle-svg,
+.CoveoResultLink, a.CoveoResultLink, .CoveoResult a.CoveoResultLink, .coveo-results-per-page-list-item,
+.coveo-search-button-svg {
+  color: $firstComplimentColor;
+}
+
+.CoveoSort.coveo-selected, .CoveoSort.coveo-selected:hover {
+  border-bottom-color: $firstComplimentColor;
+}
+
+.coveo-results-per-page-list-item.coveo-active, .coveo-results-per-page-list-item:hover {
+  background-color: $firstComplimentColor;
+}
+
+@media (max-width: $mobileWidth - 1px) {
+  .coveo-card-layout.CoveoResult {
+    min-width: 100%;
+    max-width: 100%;
+  }
+}

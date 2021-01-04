@@ -29,4 +29,8 @@ export const config = {
   ],
   defaultLanguage: process.env.REACT_APP_DEFAULT_LANGUAGE || "en",
   defaultCurrency: process.env.REACT_APP_DEFAULT_CURRENCY || "USD",
+  coveoOrg: '',
+  coveroApiKey: '',
+  coveoSourceId: '',
+  searchProvider: 'algolia'
 };
