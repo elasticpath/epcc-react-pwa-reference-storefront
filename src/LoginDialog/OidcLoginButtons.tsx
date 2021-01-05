@@ -13,7 +13,7 @@ import './OidcLoginButtons.scss';
 
 const knownProfilePrefixes: { [key: string]: string } = {
   'https://auth0.auth0.com': 'auth0',
-  'https://login.microsoftonline.com': 'microsoft',
+  'https://login.live.com': 'microsoft',
   'https://elasticpath.okta.com': 'okta',
   'https://accounts.google.com': 'google',
   'https://appleid.apple.com': 'apple',
