@@ -80,6 +80,8 @@
     display: grid;
     grid-template-columns: 1fr 1.8fr;
     align-items: center;
+    grid-row-start: 2;
+    grid-row-end: 3;
   }
 
   .--mbldate{
@@ -317,8 +319,19 @@
       color: $firstComplimentColor;
     }
   }
-  
+
+  &__header{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  &__pagination{
+    padding: 28px 0px;
+    grid-row-start: 1;
+    grid-row-end: 2;
+  }
   @media screen and (min-width: $tabletSmallWidth) {
+
     &__title {
       display: block;
       font-style: normal;
@@ -383,12 +396,13 @@
     &__searchfilterbar{
       margin-top: 24px;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       justify-content: start;
       gap: 24px;
-      height: fit-content;
       background-color: unset;
       padding: 0px 10px;
+      grid-row-start: unset;
+      grid-row-end: unset;
     }
 
     .--mbldate{
@@ -427,7 +441,17 @@
         color: white;
       }
     }
-    
+
+    &__header{
+      grid-template-rows: none;
+      grid-template-columns: 2fr 1fr;
+    }
+
+    &__pagination{
+      grid-row-start: unset;
+      grid-row-end: unset;
+    }
+
     &__datedropdowncontent{
       position: absolute;
       border: 1px solid $firstComplimentColor;
@@ -457,11 +481,13 @@
     &__datedropdowndonebtn {
       display: none;
     }
+
     &__confirmationmessage{
       top: 100px;
       left: 50%;
       transform: translate(-50%, 0);
     }
+
     &__reorderbtn, &__cancelbtn {
       width:148px;
       float: right;
@@ -479,7 +505,5 @@
         color: $firstComplimentColor;
       }
     }
-
-   
   }
 }

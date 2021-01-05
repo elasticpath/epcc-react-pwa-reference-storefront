@@ -6,7 +6,7 @@ import { ReactComponent as CaretIcon } from './images/icons/ic_caret.svg';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { bulkAdd } from "./service";
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
-import { Pagination } from './Pagination';
+import { OrdersPagination } from './OrdersPagination';
 import { createOrdersHistoryUrl } from './routes';
 import './OrdersHistory.scss';
 
@@ -20,10 +20,9 @@ export const OrdersHistory: React.FC = () => {
   const params = useParams<OrderParams>();
 
   const { t } = useTranslation();
-  const { ordersData, ordersItemsData: items , total, setPageNum, currentPage, setDateIndex, setSort, sort } = useOrdersData();
+  const { ordersData, ordersItemsData: items , total, setPageNum, currentPage, setDateIndex, setSort, sort, totalOrders } = useOrdersData();
   const { updateCartItems, setOpenModal, handlePartialAddMessage, setPartialAddMessage } = useCartData();
   const { updateCartData } = useMultiCartData();
-
   const [dateDropDownOpen, setDateDropDownOpen] = useState(false);
   const [ascending, setAscending] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
@@ -68,8 +67,10 @@ export const OrdersHistory: React.FC = () => {
     setPartialAddMessage("");
     bulkAdd(mcart, data)
       .then((res:any) => {
-        const errorsContainer = res.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}`)).join('\n');
-        handlePartialAddMessage(errorsContainer);
+        if(res.erros){
+          const errorsContainer = res.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}`)).join('\n');
+          handlePartialAddMessage(errorsContainer);
+        }
         updateCartItems();
         updateCartData();
         setOpenModal(true);
@@ -101,54 +102,60 @@ export const OrdersHistory: React.FC = () => {
   return (
     <div className="ordershistory">
       <h1 className="ordershistory__title">{t('orders')}</h1>
-      <div className="ordershistory__searchfilterbar">
-        <button className="--mbldate" onClick={sortByDate}>
-          <span>{t('date')}</span>
-          <span>
-            <CaretIcon
-              className={`ordershistory__sortbydatecaret ${
-                ascending ? "--rotated" : ""
-              }`}
-            />
-          </span> 
-        </button>
-        <div className="ordershistory__datedropdown">
-            <span className="--showheader">{t('show')}</span>
-          <div className="ordershistory__datedropdowncontainer" ref={ref}>
-            <div className="ordershistory__datedropdownwrap">
-              <button className={`ordershistory__datedropdowntoggle ${
-                dateDropDownOpen ? " --open" : ""}`}
-                onClick={handleSelectorClicked}
-              >
-                {t(selectedDate)}
-                <CaretIcon
-                  className={`ordershistory__dropdowncaret ${dateDropDownOpen ? "--rotatedcaret" : ""}`}
-                />
-              </button>
-            </div>
-            {dateDropDownOpen && (
-              <div>
-                <div className="ordershistory__bgdatedropdowncontent"></div>
-                <div className="ordershistory__datedropdowncontent">
-                  <div className="ordershistory__datedropdowndonebtn">
-                    <p>Show</p>
-                    <button onClick={() => setDateDropDownOpen(false)}>Done</button>
-                  </div>
-                  {dateDropDown.map((date, id) => (
-                    <button className="ordershistory__datedropdownbtn" key={id} onClick={() => filterByDate(date, id)}> 
-                      {t(date)}
-                    </button>
-                  ))}
-                </div>
+      <div className="ordershistory__header">
+        <div className="ordershistory__searchfilterbar">
+          <button className="--mbldate" onClick={sortByDate}>
+            <span>{t('date')}</span>
+            <span>
+              <CaretIcon
+                className={`ordershistory__sortbydatecaret ${
+                  ascending ? "--rotated" : ""
+                }`}
+              />
+            </span> 
+          </button>
+          <div className="ordershistory__datedropdown">
+              <span className="--showheader">{t('show')}</span>
+            <div className="ordershistory__datedropdowncontainer" ref={ref}>
+              <div className="ordershistory__datedropdownwrap">
+                <button className={`ordershistory__datedropdowntoggle ${
+                  dateDropDownOpen ? " --open" : ""}`}
+                  onClick={handleSelectorClicked}
+                >
+                  {t(selectedDate)}
+                  <CaretIcon
+                    className={`ordershistory__dropdowncaret ${dateDropDownOpen ? "--rotatedcaret" : ""}`}
+                  />
+                </button>
               </div>
-            )}
+              {dateDropDownOpen && (
+                <div>
+                  <div className="ordershistory__bgdatedropdowncontent"></div>
+                  <div className="ordershistory__datedropdowncontent">
+                    <div className="ordershistory__datedropdowndonebtn">
+                      <p>Show</p>
+                      <button onClick={() => setDateDropDownOpen(false)}>Done</button>
+                    </div>
+                    {dateDropDown.map((date, id) => (
+                      <button className="ordershistory__datedropdownbtn" key={id} onClick={() => filterByDate(date, id)}> 
+                        {t(date)}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-        <Pagination
-                totalPages={total}
-                currentPage={currentPage}
-                formatUrl={(page) => createOrdersHistoryUrl(page)}
-              />
+        <div className="ordershistory__pagination">
+            <OrdersPagination
+              totalPages={total}
+              currentPage={currentPage}
+              pageOrders={ordersData.length}
+              totalOrders={totalOrders}
+              formatUrl={(page) => createOrdersHistoryUrl(page)}
+            />
+        </div>
       </div>
       <div>
         {1 ? (
@@ -213,17 +220,21 @@ export const OrdersHistory: React.FC = () => {
                 <button className="ordershistory__cancelbtn" onClick={() => {setReorderConfirmation(false); setActiveOrderId("")}}>cancel</button>
               </div>
             </div>
-            <Pagination
+           <div className="ordershistory__pagination">
+              <OrdersPagination
                 totalPages={total}
+                totalOrders={totalOrders}
+                pageOrders={ordersData.length}
                 currentPage={currentPage}
                 formatUrl={(page) => createOrdersHistoryUrl(page)}
               />
+           </div>
           </div>  
         ) : (
           <div>
             {t('no-purchase-message')}
           </div>
-        )}
+        )}               
       </div>
     </div>
   )

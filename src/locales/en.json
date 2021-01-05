@@ -257,5 +257,8 @@
   "back-to-order-history" : "Back to order history", 
   "order" : "Order",
   "price": "Price", 
-  "show": "Show"
+  "show": "Show",
+  "page": "Page", 
+  "of": "of", 
+  "results": "results"
 }

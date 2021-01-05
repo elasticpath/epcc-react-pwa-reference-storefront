@@ -222,6 +222,7 @@ function usePurchaseHistoryState() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [dateIndex, setDateIndex] = useState<number>(0);
   const [sort, setSort] = useState("");
+  const [totalOrders, setTotalOrders] = useState<number>(1);
 
   useEffect(() => {
     const endDate = new Date();
@@ -229,6 +230,7 @@ function usePurchaseHistoryState() {
     if (token) {  
       getAllOrders(token, pageNum, startDate, sort).then((res: any) => {
         setData(res.data);
+        setTotalOrders(res.meta.results.total)
         setTotal(res.meta.page.total);
         setCurrentPage(res.meta.page.current)
         if (res && res.included)
@@ -261,7 +263,7 @@ function usePurchaseHistoryState() {
     setOrdersItemsData([]);
   };
 
-  return { ordersData, ordersItemsData, updatePurchaseHistory, setPageNum, total, currentPage, setCurrentPage, setDateIndex, setSort, sort }
+  return { ordersData, ordersItemsData, updatePurchaseHistory, setPageNum, total, currentPage, setCurrentPage, setDateIndex, setSort, sort, totalOrders }
 }
 
 const defaultCurrency = config.defaultCurrency;
@@ -462,7 +464,7 @@ function useCartItemsState() {
       setPartialAddMessage(errors);
       setTimeout(() => {
         setPartialAddMessage("");
-      }, 8000);
+      }, 10000);
     }
   }
 

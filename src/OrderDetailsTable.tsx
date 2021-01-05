@@ -62,8 +62,10 @@ export const OrderDetailsTable: React.FC<OrderDetailsTableParams> = ({
     setPartialAddMessage("");
     bulkAdd(mcart, data)
       .then((res:any) => {
-        const errorsContainer = res.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}`)).join('\n');
-        handlePartialAddMessage(errorsContainer);
+        if(res.erros){
+          const errorsContainer = res.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}`)).join('\n');
+          handlePartialAddMessage(errorsContainer);
+        }
         updateCartItems();
         updateCartData();
         setOpenModal(true);
