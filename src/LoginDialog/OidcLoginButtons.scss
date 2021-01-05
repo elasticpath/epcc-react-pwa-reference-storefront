@@ -33,6 +33,19 @@
 
     }
 
+    &--auth0 {
+      background-color: #dc5e37;
+      color: #fff;
+
+      .oidcloginbuttons__buttoncontent {
+        &:before {
+          display: inline-block;
+          width: 50px;
+          background-image: url('./../images/oidc-provider-logos/auth0.svg');
+        }
+      }
+    }
+
     &--microsoft {
       border: solid 1px #333;
       background-color: white;

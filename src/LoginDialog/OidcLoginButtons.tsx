@@ -12,11 +12,12 @@ import { generateOidcLoginRedirectUrl } from './OidcUtilities';
 import './OidcLoginButtons.scss';
 
 const knownProfilePrefixes: { [key: string]: string } = {
-  'https://login.live.com/.well-known/openid-configuration': 'microsoft',
-  'https://elasticpath.okta.com/.well-known/openid-configuration': 'okta',
-  'https://accounts.google.com/.well-known/openid-configuration': 'google',
-  'https://appleid.apple.com/.well-known/openid-configuration': 'apple',
-  'https://login.salesforce.com/.well-known/openid-configuration': 'salesforce',
+  'https://auth0.auth0.com': 'auth0',
+  'https://login.microsoftonline.com': 'microsoft',
+  'https://elasticpath.okta.com': 'okta',
+  'https://accounts.google.com': 'google',
+  'https://appleid.apple.com': 'apple',
+  'https://login.salesforce.com': 'salesforce',
 };
 
 function knownOidcProfileName(profile: any) {
