@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ProductMainImage } from "./ProductMainImage";
 import { useTranslation, useCartData, useMultiCartData } from "./app-state";
 import { useResolve } from "./hooks";
@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 interface OrderDetailsTableParams {
   orderData: any;
   orderItems: moltin.OrderItem[];
+  modalUI?:boolean;
 }
 
 interface OrderItemWithProductData extends moltin.OrderItem {
@@ -20,6 +21,7 @@ interface OrderItemWithProductData extends moltin.OrderItem {
 export const OrderDetailsTable: React.FC<OrderDetailsTableParams> = ({
   orderData,
   orderItems,
+  modalUI,
 }) => {
   const { t } = useTranslation();
   const { addError } = useContext(APIErrorContext);
@@ -27,6 +29,7 @@ export const OrderDetailsTable: React.FC<OrderDetailsTableParams> = ({
   const { updateCartData } = useMultiCartData();
 
   const [showLoader, setShowLoader] = useState(false);
+  const [className, setClassName] = useState("orderdetailstable")
 
   const [products] = useResolve(async () => {
     try {
@@ -75,57 +78,63 @@ export const OrderDetailsTable: React.FC<OrderDetailsTableParams> = ({
         setShowLoader(false);
     }) 
   }
+  useEffect(() => {
+    if(modalUI)
+      setClassName("modalUI")
+    else
+      setClassName("orderdetailstable")
+  }, [modalUI])
 
   return (
-    <div className="orderdetailstable__details">
-      <div className="orderdetailstable__header">
-        <div className="orderdetailstable__title">
+    <div className={`${className}__details`}>
+      <div className={`${className}__header`}>
+        <div className={`${className}__title`}>
           <h1>{t("orderid")} : {orderData.id}</h1>
           <p>Placed at: {orderData.meta.timestamps.created_at.replace("T", " - ")}</p>
         </div>
-        <button className="orderdetailstable__reorderbutton" onClick={reOrder}>
+        <button className={`${className}__reorderbutton`} onClick={reOrder}>
           {!showLoader ? t("re-order") : <div className="circularLoader" />}
         </button>
       </div>
-      <div className="orderdetailstable__body">
-      <button className="orderdetailstable__reorderbuttonmobile" onClick={reOrder}>
+      <div className={`${className}__body`}>
+      <button className={`${className}__reorderbuttonmobile`} onClick={reOrder}>
           {!showLoader ? t("re-order") : <div className="circularLoader" />}
         </button>
         {products && (
-          <div className="orderdetailstable-ordersitemsdetail">
-            <div className="orderdetailstable__itemsheaderwrapper">
-              <h3 className="orderdetailstable__itemsheader">{t("product")}</h3>
-              <h3 className="orderdetailstable__itemsheader">{t("sku")}</h3>
-              <h3 className="orderdetailstable__itemsheader">{t("price")}</h3>
-              <h3 className="orderdetailstable__itemsheader">{t("quantity")}</h3>
-              <h3 className="orderdetailstable__itemsheader">{t("total")}</h3>
+          <div className={`${className}__ordersitemsdetail`}>
+            <div className={`${className}__itemsheaderwrapper`}>
+              <h3 className={`${className}__itemsheader`}>{t("product")}</h3>
+              <h3 className={`${className}__itemsheader`}>{t("sku")}</h3>
+              <h3 className={`${className}__itemsheader`}>{t("price")}</h3>
+              <h3 className={`${className}__itemsheader`}>{t("quantity")}</h3>
+              <h3 className={`${className}__itemsheader`}>{t("total")}</h3>
             </div>
-            <ul className="orderdetailstable__items">
+            <ul className={`${className}__items`}>
               {products.map((product: OrderItemWithProductData) => (
-                <li className="orderdetailstable__item" key={product.sku}>
-                  <div className="orderdetailstable__itemimage">
+                <li className={`${className}__item`} key={product.sku}>
+                  <div className={`${className}__itemimage`}>
                     <ProductMainImage product={product.productData} />
-                    <Link to={`/product/${[product.sku]}`} className="orderdetailstable__name">
+                    <Link to={`/product/${[product.sku]}`} className={`${className}__name`}>
                       {product.name}
                     </Link>
                   </div>
-                  <Link to={`/product/${[product.sku]}`} className="orderdetailstable__productname">
-                      {product.name}hhhsgggbdfgdf
+                  <Link to={`/product/${[product.sku]}`} className={`${className}__productname`}>
+                      {product.name}
                     </Link>
-                  <div className="orderdetailstable__productsku">
-                    <span className="orderdetailstable__titlespan">{t("sku")}: </span>{product.sku}
+                  <div className={`${className}__productsku`}>
+                    <span className={`${className}__titlespan`}>{t("sku")}: </span>{product.sku}
                   </div>
-                  <div className="orderdetailstable__productprice">
-                    <span className="orderdetailstable__titlespan">{t("price")}: </span>
+                  <div className={`${className}__productprice`}>
+                    <span className={`${className}__titlespan`}>{t("price")}: </span>
                     {
                       product.meta?.display_price?.without_tax?.value.formatted
                     }
                   </div>
-                  <div className="orderdetailstable__productquantity">
-                    <span className="orderdetailstable__titlespan">{t("quantity")}: </span>{product.quantity}
+                  <div className={`${className}__productquantity`}>
+                    <span className={`${className}__titlespan`}>{t("quantity")}: </span>{product.quantity}
                   </div>
-                  <div className="orderdetailstable__producttotal">
-                    <span className="orderdetailstable__titlespan">{t("total")}: </span>
+                  <div className={`${className}__producttotal`}>
+                    <span className={`${className}__titlespan`}>{t("total")}: </span>
                     {
                       product.meta?.display_price?.with_tax?.value.formatted
                     }
@@ -133,23 +142,23 @@ export const OrderDetailsTable: React.FC<OrderDetailsTableParams> = ({
                 </li>
               ))}
             </ul>
-            <div className="orderdetailstable__taxprice">
-                <h1 className="orderdetailstable__totalpricetitle">{t("tax")}</h1>
-                <h1 className="orderdetailstable__taxpricenum">{orderData.meta?.display_price?.tax.formatted}</h1>
+            <div className={`${className}__taxprice`}>
+                <h1 className={`${className}__totalpricetitle`}>{t("tax")}</h1>
+                <h1 className={`${className}__taxpricenum`}>{orderData.meta?.display_price?.tax.formatted}</h1>
             </div>
-            <div className="orderdetailstable__totalprice">
-                <h1 className="orderdetailstable__totalpricetitle">{t("total")}</h1>
-                <h1 className="orderdetailstable__totalpricenum">{orderData.meta?.display_price?.with_tax.formatted}</h1>
+            <div className={`${className}__totalprice`}>
+                <h1 className={`${className}__totalpricetitle`}>{t("total")}</h1>
+                <h1 className={`${className}__totalpricenum`}>{orderData.meta?.display_price?.with_tax.formatted}</h1>
             </div>
           </div>
         )}
-        <div className="orderdetailstable__addrressdetails">
-          <div className="orderdetailstable__addresses">
-            <span className="orderdetailstable__addresstitle">
+        <div className={`${className}__addrressdetails`}>
+          <div className={`${className}__addresses`}>
+            <span className={`${className}__addresstitle`}>
               {t("billing-address")}
             </span>
-            <div className="orderdetailstable__block">
-              <div className="orderdetailstable__status">
+            <div className={`${className}__block`}>
+              <div className={`${className}__status`}>
                 {t("payment")} {t("status")}: {orderData.payment}
               </div>
               <div>{orderData.billing_address.line_1}</div>
@@ -161,12 +170,12 @@ export const OrderDetailsTable: React.FC<OrderDetailsTableParams> = ({
               <div>{orderData.billing_address.postcode}</div>
             </div>
           </div>
-          <div className="orderdetailstable__addresses">
-            <span className="orderdetailstable__addresstitle">
+          <div className={`${className}__addresses`}>
+            <span className={`${className}__addresstitle`}>
               {t("shipping-address")}
             </span>
-            <div className="orderdetailstable__block">
-              <div className="orderdetailstable__status">
+            <div className={`${className}__block`}>
+              <div className={`${className}__status`}>
               {t("order")} {t("status")}: {orderData.status}
               </div>
               <div>{orderData.shipping_address.line_1}</div>

@@ -1,6 +1,6 @@
 @import "./theme/common";
 
-.orderdetailstable {
+.orderdetailstable, .modalUI {
   $block: &;
   width: 100%;
   padding-bottom: 15px;
@@ -79,6 +79,7 @@
     color: white;
     border: 1px solid $buttonActiveColor;
     cursor: pointer;
+    margin-bottom: 15px;
 
     &:hover{
       background-color: $btnPrimaryHoverColor;
@@ -175,6 +176,9 @@
   &__producttotal{
     grid-row-start: 2;
   }
+}
+
+.orderdetailstable{
 
   @media screen and (min-width: $tabletSmallWidth) {
 
@@ -278,7 +282,3 @@
     }
   }
 }
-
-
-
-
