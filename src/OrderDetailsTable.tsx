@@ -25,7 +25,7 @@ export const OrderDetailsTable: React.FC<OrderDetailsTableParams> = ({
 }) => {
   const { t } = useTranslation();
   const { addError } = useContext(APIErrorContext);
-  const { updateCartItems, setOpenModal, handlePartialAddMessage, setPartialAddMessage } = useCartData();
+  const { updateCartItems, setOpenModal, handlePartialAddMessage, setPartialAddMessage, partialAddConfirmation } = useCartData();
   const { updateCartData } = useMultiCartData();
 
   const [showLoader, setShowLoader] = useState(false);
@@ -69,6 +69,7 @@ export const OrderDetailsTable: React.FC<OrderDetailsTableParams> = ({
         updateCartData();
         setOpenModal(true);
         setShowLoader(false);
+        partialAddConfirmation(res.data)
         const errorsContainer = res.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}`)).join('\n');
         handlePartialAddMessage(errorsContainer);
       }).catch( (error) => {

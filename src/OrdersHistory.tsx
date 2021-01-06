@@ -21,7 +21,7 @@ export const OrdersHistory: React.FC = () => {
 
   const { t } = useTranslation();
   const { ordersData, ordersItemsData: items , total, setPageNum, currentPage, setDateIndex, setSort, sort, totalOrders } = useOrdersData();
-  const { updateCartItems, setOpenModal, handlePartialAddMessage, setPartialAddMessage } = useCartData();
+  const { updateCartItems, setOpenModal, handlePartialAddMessage, setPartialAddMessage, partialAddConfirmation } = useCartData();
   const { updateCartData } = useMultiCartData();
   const [dateDropDownOpen, setDateDropDownOpen] = useState(false);
   const [ascending, setAscending] = useState(false);
@@ -73,6 +73,7 @@ export const OrdersHistory: React.FC = () => {
         setShowLoader(false);
         setReorderConfirmation(false);
         setActiveOrderId("");
+        partialAddConfirmation(res.data)
         const errorsContainer = res.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}`)).join('\n');
         handlePartialAddMessage(errorsContainer);
       }).catch( (error) => {

@@ -428,6 +428,7 @@ function useCartItemsState() {
   const [partialAddMessage, setPartialAddMessage] = useState("");
   const [totalPrice, setTotalPrice] = useState('');
   const mcart = localStorage.getItem('mcart') || '';
+  const [addedtItem, setAddedItem] = useState("");
 
   useEffect(() => {
     if (mcart) {
@@ -471,7 +472,16 @@ function useCartItemsState() {
     }
   }
 
-  return { cartData, promotionItems, count, cartQuantity, setCartQuantity, showCartPopup, handleShowCartPopup, totalPrice, updateCartItems , openModal, setOpenModal, handlePartialAddMessage, partialAddMessage, setPartialAddMessage }
+  const partialAddConfirmation = (data:any) => {
+    const reducebeshe = cartData.reduce(function(acc:any, obj:any) {return acc+ obj.quantity}, 0)
+    const itemsQuantity = data.reduce(function(acc:any, obj:any) {return acc+ obj.quantity}, 0);
+    setAddedItem(`${itemsQuantity - reducebeshe}`);
+    setTimeout(() => {
+      setAddedItem("");
+    }, 10000);
+  }
+
+  return { cartData, promotionItems, count, cartQuantity, setCartQuantity, showCartPopup, handleShowCartPopup, totalPrice, updateCartItems , openModal, setOpenModal, handlePartialAddMessage, partialAddMessage, setPartialAddMessage, partialAddConfirmation, addedtItem, setAddedItem }
 }
 
 function useMultiCartDataState() {

@@ -28,7 +28,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const { items, handlePage, promotionItems, handleCloseCartModal, newCart, handleNewCart } = props;
   const { t } = useTranslation();
   const { isLoggedIn } = useCustomerData();
-  const { count, totalPrice, updateCartItems, partialAddMessage, setPartialAddMessage} = useCartData();
+  const { count, totalPrice, updateCartItems, partialAddMessage, setPartialAddMessage, addedtItem, setAddedItem} = useCartData();
   const { selectedCart, updateCartData } = useMultiCartData();
   const { addError } = useContext(APIErrorContext);
   const quantityItems = count.toString();
@@ -126,12 +126,22 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
           <CloseIcon onClick={() => setShowUpdateCartAlert(false)}/>
         </div>
       )}
-      {partialAddMessage &&  (
-        <div className="partialadd__alertMessage">
-          <p>{partialAddMessage}</p>
-          <CloseIcon onClick={() => setPartialAddMessage("")}/>
+      
+        <div className="partialadd">
+          {addedtItem &&  ( <div className="partialadd__confirmationmessage">
+            <p>{addedtItem}  items have been added to the cart</p>
+            <CloseIcon onClick={() => setAddedItem("")}/>
+          </div>
+          )}
+          {partialAddMessage &&  (
+            <div className="partialadd__alertMessage">
+              <p>{partialAddMessage}</p>
+              <CloseIcon onClick={() => setPartialAddMessage("")}/>
+            </div>
+          )}
         </div>
-      )}
+       
+      
 
       <div className="cartitemlist__header">
         <h2 className="cartitemlist__title">

@@ -383,23 +383,25 @@
 }
 
 .partialadd{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  
   &__alertMessage{
-    width: 100%;
-    padding: 20px 20px;
-    position: absolute;
+    padding: 20px;
     height: fit-content;
-    top: 0;
-    left: 0;
     font-size: $sizeSmall;
     color: $mainErrorColor;
     border: 1px solid $mainErrorColor;
     background-color: $mainBackgroundColor;
     white-space: pre-wrap;
-    z-index: 10;
     height: fit-content;
     display: flex;
     column-gap: 20px;
     justify-content: space-between;
+
     p {
       width: 100%;
       font-style: normal;
@@ -409,6 +411,7 @@
       text-align: left;
       text-overflow: clip;
     }
+
     svg {
       cursor: pointer;
       fill: $fourthComplimentTextColor;
@@ -416,7 +419,37 @@
       height: 20px;
       align-items:flex-end;
       justify-content: flex-end;
-  
+    }
+  }
+
+  &__confirmationmessage{
+    border: 1px solid $secondBorderColor;
+    background-color: $mainBackgroundColor;
+    box-sizing: border-box;
+    white-space: pre-wrap;
+    height: fit-content;
+    display: flex;
+    column-gap: 20px;
+    justify-content: space-between;
+    padding: 10px 20px;
+
+    p {
+      width: 100%;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 13px;
+      line-height: 20px;
+      text-align: left;
+      text-overflow: clip;
+    }
+
+    svg {
+      cursor: pointer;
+      fill: $fourthComplimentTextColor;
+      width: 20px;
+      height: 20px;
+      align-items:flex-end;
+      justify-content: flex-end;
     }
   }
 }
