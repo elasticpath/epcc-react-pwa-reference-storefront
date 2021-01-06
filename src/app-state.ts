@@ -245,8 +245,11 @@ function usePurchaseHistoryState() {
   const updatePurchaseHistory = () => {
     const endDate = new Date();
     const startDate =  endDate.setMonth(endDate.getMonth() - ((6 * dateIndex) + 6))
-    getAllOrders(token, pageNum, startDate).then(res => {
+    getAllOrders(token, pageNum, startDate).then((res:any) => {
       setData(res.data);
+      setTotalOrders(res.meta.results.total)
+      setTotal(res.meta.page.total);
+      setCurrentPage(res.meta.page.current)
     });
   };
 

@@ -200,8 +200,8 @@ export async function deleteAddress(customer: string, address: any, token: strin
 
 export async function getAllOrders(token: string, pageNum:number,dates: number, x?:any ): Promise<{ data: moltin.Order[] }> {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
-  const result = await moltin.Orders.Offset((pageNum - 1) * 3)
-    .Limit(3)
+  const result = await moltin.Orders.Offset((pageNum - 1) * 20)
+    .Limit(20)
     .With("items")
     .Filter({
       ge: {

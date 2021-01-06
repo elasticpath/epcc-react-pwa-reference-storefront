@@ -14,12 +14,20 @@ interface PaginationProps {
 }
 
 export const OrdersPagination: React.FC<PaginationProps> = (props) => {
-    const { t } = useTranslation();
-    const items = [];
-    items.push(<Link key="prev" className={`orderspagination__link --prev ${props.currentPage === 1 ? "--deactive" : "--active"}`} to={props.formatUrl(props.currentPage - 1)}><PaginationIcon className="orderspagination__prevpageicon" /></Link>);
-    items.push(<span key={props.currentPage} >{t('page')} {props.currentPage} {t('of')} {props.totalPages}</span>)
+  const { t } = useTranslation();
+  const items = [];
+  
+  items.push(<Link key="prev" className={`orderspagination__link --prev ${props.currentPage === 1 ? "--deactive" : "--active"}`} to={props.formatUrl(props.currentPage - 1)}><PaginationIcon className="orderspagination__prevpageicon" /></Link>);
+  
+  items.push(<span key={props.currentPage} >{t('page')} {props.currentPage} {t('of')} {props.totalPages}</span>)
+  
+  if(props.currentPage < props.totalPages)
     items.push(<Link key="next" className={`orderspagination__link --next ${props.currentPage === props.totalPages ? "--deactive" : "--active"}`} to={props.formatUrl(props.currentPage + 1)}><PaginationIcon className="orderspagination__nextpageicon" /></Link>);
-    const startNum = ((props.currentPage-1)*3)+1;
+  
+  if(props.currentPage === props.totalPages)
+    items.push(<span className={"orderspagination__link --next --deactive"}><PaginationIcon className="orderspagination__nextpageicon" /></span>);
+  
+  const startNum = ((props.currentPage-1)*20)+1;
     const endNum = startNum + props.pageOrders - 1;
   return (
     <div className="orderspagination">
