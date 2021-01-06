@@ -473,9 +473,9 @@ function useCartItemsState() {
   }
 
   const partialAddConfirmation = (data:any) => {
-    const reducebeshe = cartData.reduce(function(acc:any, obj:any) {return acc+ obj.quantity}, 0)
+    const prevItemQuantity = cartData.reduce(function(acc:any, obj:any) {return acc+ obj.quantity}, 0)
     const itemsQuantity = data.reduce(function(acc:any, obj:any) {return acc+ obj.quantity}, 0);
-    setAddedItem(`${itemsQuantity - reducebeshe}`);
+    setAddedItem(`${itemsQuantity - prevItemQuantity}`);
     setTimeout(() => {
       setAddedItem("");
     }, 10000);
