@@ -11,7 +11,7 @@ export const CoveoSearchBar: React.FC = () => {
 
 
   useEffect(() => {
-    Coveo.SearchEndpoint.configureCloudV2Endpoint(config.coveoOrg, config.coveroApiKey);
+    Coveo.SearchEndpoint.configureCloudV2Endpoint(config.coveoOrg, config.coveoApiKey);
     Coveo.initSearchbox(searchRef.current, "/search");
   }, [searchRef])
 
@@ -19,7 +19,7 @@ export const CoveoSearchBar: React.FC = () => {
     <div>
       <div id="searchbox" ref={searchRef}>
         <div className="CoveoSearchbox searchbar">
-          <div className="CoveoFieldSuggestions" data-query-override={`@source==${config.coveoSourceId}`} data-field="@name"></div>
+          <div className="CoveoFieldSuggestions" data-query-override={`@source==${config.coveoSourceName}`} data-field="@name"></div>
         </div>
       </div>
     </div>

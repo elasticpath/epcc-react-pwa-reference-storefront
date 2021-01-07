@@ -38,7 +38,7 @@ export const CoveoSearch: React.FC = () => {
   }
 
   useEffect(() => {
-    Coveo.SearchEndpoint.configureCloudV2Endpoint(config.coveoOrg, config.coveroApiKey);
+    Coveo.SearchEndpoint.configureCloudV2Endpoint(config.coveoOrg, config.coveoApiKey);
     Coveo.init(searchRef.current, {
       ResultLink: {
         onClick: (e: any, result: any) => {
@@ -52,12 +52,12 @@ export const CoveoSearch: React.FC = () => {
   }, [searchRef, history])
 
   return (
-    <div id="search" className="CoveoSearchInterface" data-expression={`@source==${config.coveoSourceId}`} ref={searchRef} data-enable-history="true">
+    <div id="search" className="CoveoSearchInterface" data-expression={`@source==${config.coveoSourceName}`} ref={searchRef} data-enable-history="true">
       <div className="CoveoFolding"></div>
       <div className="CoveoAnalytics"></div>
       <div className="coveo-search-section">
         <div className="CoveoSearchbox" data-enable-omnibox="true">
-          <div className="CoveoFieldSuggestions" data-query-override={`@source==${config.coveoSourceId}`} data-field="@name"></div>
+          <div className="CoveoFieldSuggestions" data-query-override={`@source==${config.coveoSourceName}`} data-field="@name"></div>
         </div>
       </div>
       <div className="coveo-main-section">
