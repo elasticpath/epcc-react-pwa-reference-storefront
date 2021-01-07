@@ -31,8 +31,9 @@ export const OrdersPagination: React.FC<PaginationProps> = (props) => {
   if(props.currentPage === props.totalPages)
     items.push(<span className={"orderspagination__link --next --deactive"}><PaginationIcon className="orderspagination__nextpageicon" /></span>);
   
-    const startNum = ((props.currentPage-1)*20)+1;
-    const endNum = startNum + props.pageOrders - 1;
+  const startNum = ((props.currentPage-1)*20)+1;
+  const endNum = startNum + props.pageOrders - 1;
+
   return (
     <div className="orderspagination">
         <span className="orderspagination__pageinfo">
@@ -43,7 +44,6 @@ export const OrdersPagination: React.FC<PaginationProps> = (props) => {
             :
             `${startNum} - ${endNum} ${t('of')} ${props.totalOrders} ${t('results')}`
           }
-           
         </span>
         <span className="orderspagination__paginateinfo">
            {items}
