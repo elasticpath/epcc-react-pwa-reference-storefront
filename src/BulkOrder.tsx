@@ -1,12 +1,14 @@
-
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
-import { useTranslation, useCartData, useMultiCartData } from './app-state';
+import useOnclickOutside from 'react-cool-onclickoutside';
+import { useTranslation, useCartData, useMultiCartData, useCustomerData } from './app-state';
 import { bulkAdd } from './service';
 
 import { ReactComponent as ClearIcon } from './images/icons/ic_clear.svg';
+import { ReactComponent as SpinnerIcon } from './images/icons/ic_spinner.svg';
+import { ReactComponent as CaretIcon } from './images/icons/ic_caret.svg';
 
-import './BulkOrder.scss'
+import './BulkOrder.scss';
 
 interface FormValues {
   productSKU: string,
@@ -15,10 +17,93 @@ interface FormValues {
 export const BulkOrder: React.FC = (props) => {
   const { t } = useTranslation();
   const { updateCartItems, setCartQuantity, handleShowCartPopup } = useCartData();
-  const { updateCartData } = useMultiCartData();
+  const { multiCartData, updateCartData, updateSelectedCart, setIsCartSelected } = useMultiCartData();
+
+  const { isLoggedIn } = useCustomerData();
+
   const [bulkOrderItems, setBulkOrderItems] = useState([]);
   const [bulkError, setBulkError] = useState('');
   const [showLoader, setShowLoader] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [cartID, setCartId] = useState("");
+
+  const dropdownRef = useOnclickOutside(() => {
+    setDropdownOpen(false)
+  });
+
+  const handleAddToSelectedCart = (cart:any) => {
+    updateSelectedCart(cart);
+    setCartId(cart.id)
+  };
+
+  const handleAddToDefaultCart = () => {
+    if (multiCartData && multiCartData.length > 0) {
+      handleAddToSelectedCart(multiCartData[0]);
+    }
+  };
+
+  const CartButton = () => {
+    if (isLoggedIn) {
+      return (
+        <div className="bulkorder__addtocartdropdowncontainer">
+          <div className="bulkorder__addtocartdropdownwrap">
+            <button
+              className="epbtn --primary bulkorder__addtocartbtn"
+              type="submit"
+              onClick={handleAddToDefaultCart}
+              disabled={!values.productSKU}
+            >
+              {t("add-to-cart")}
+              {' - '}
+              {multiCartData && multiCartData.length > 0 && multiCartData[0].name}
+            </button>
+            <button onClick={() => setDropdownOpen(!dropdownOpen)} disabled={!values.productSKU} className={`epbtn --primary bulkorder__addtocartdropdowntoggle${
+              dropdownOpen ? " --open" : ""
+            }`}>
+              {showLoader ? (
+                <SpinnerIcon className="bulkorder__addtocartdropdownicspinner" />
+              ) : (
+                <CaretIcon
+                  className={`bulkorder__addtocartdropdowniscaret ${
+                    dropdownOpen ? "--rotated" : ""
+                  }`}
+                />
+              )}
+            </button>
+          </div>
+          {dropdownOpen ? (
+            <div className="bulkorder__addtocartdropdowncontent">
+              {multiCartData.slice(1).map((cart: moltin.CartItem) => (
+                <button
+                  className="bulkorder__addtocartdropdownbtn"
+                  key={cart.id}
+                  type="submit"
+                  onClick={() => { handleAddToSelectedCart(cart) }}
+                >
+                  {cart.name}
+                </button>
+              ))}
+              <button
+                className="bulkorder__addtocartdropdownbtn"
+                key="create-cart-btn"
+                onClick={() => setModalOpen(true)}
+                type="submit"
+              >
+                {t('create-new-cart')}
+              </button>
+            </div>
+          ) : null}
+        </div>
+      );
+    }
+
+    return (
+      <button className="epbtn --secondary" >
+        {t("add-to-cart")}
+      </button>
+    );
+  };
 
   const initialValues:FormValues = {
     productSKU: '',
@@ -27,18 +112,26 @@ export const BulkOrder: React.FC = (props) => {
   const {handleSubmit, resetForm, handleChange, values} = useFormik({
     initialValues,
     onSubmit: (values) => {
+      console.log(values)
       setBulkError('');
       setShowLoader(true);
       const totalQuantity = bulkOrderItems.reduce((sum, { quantity }) => sum + quantity, 0);
-      const mcart = localStorage.getItem('mcart') || '';
+      const currentCart = localStorage.getItem("mcart") || "";
+      const mcart = cartID ? cartID : currentCart;
       bulkAdd(mcart, bulkOrderItems)
         .then(() => {
-          updateCartItems();
+          if (cartID && cartID !== currentCart) {
+            localStorage.setItem('mcart', cartID);
+          } else {
+            updateCartItems();
+          }
           updateCartData();
           setCartQuantity(totalQuantity);
           handleShowCartPopup();
           resetForm();
           setShowLoader(false);
+          setIsCartSelected(true);
+          setDropdownOpen(false);
         })
         .catch(error => {
           const errorsContainer = error.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}`)).join('\n');
@@ -63,6 +156,10 @@ export const BulkOrder: React.FC = (props) => {
     setBulkError('');
   };
 
+  useEffect(() => {
+    document.body.style.overflow = modalOpen ? 'hidden' : 'unset';
+  }, [modalOpen])
+
   return (
     <div className="bulkorder">
       {bulkError && (
@@ -83,15 +180,10 @@ export const BulkOrder: React.FC = (props) => {
         <div className="bulkorder__info">
           <p>{t('bulk-order-format')}</p>
         </div>
-        <div className="bulkorder__btns">
-          <button className="epbtn --primary" type="submit" disabled={!values.productSKU}>
-            {!showLoader ?
-              (bulkOrderItems.length > 0 ? (
-              bulkOrderItems.length === 1 ? t('add-item-to-cart') : t('add-items-to-cart', { quantity: bulkOrderItems.length.toString() })
-            ) : t('add-to-cart'))
-              : (<div className="circularLoader" />)
-            }
-          </button>
+        <div className="product__moltinbtncontainer">
+            <div ref={dropdownRef}>
+              <CartButton/>
+            </div>
         </div>
       </form>
     </div>

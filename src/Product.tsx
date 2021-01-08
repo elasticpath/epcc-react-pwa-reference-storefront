@@ -48,6 +48,7 @@ export const Product: React.FC = () => {
   const dropdownRef = useOnclickOutside(() => {
     setDropdownOpen(false)
   });
+  
   const { addError } = useContext(APIErrorContext);
 
   const [product] = useResolve(
