@@ -18,7 +18,6 @@ export const BulkOrder: React.FC = (props) => {
   const { t } = useTranslation();
   const { updateCartItems, setCartQuantity, handleShowCartPopup } = useCartData();
   const { multiCartData, updateCartData, updateSelectedCart, setIsCartSelected } = useMultiCartData();
-
   const { isLoggedIn } = useCustomerData();
 
   const [bulkOrderItems, setBulkOrderItems] = useState([]);
@@ -112,7 +111,6 @@ export const BulkOrder: React.FC = (props) => {
   const {handleSubmit, resetForm, handleChange, values} = useFormik({
     initialValues,
     onSubmit: (values) => {
-      console.log(values)
       setBulkError('');
       setShowLoader(true);
       const totalQuantity = bulkOrderItems.reduce((sum, { quantity }) => sum + quantity, 0);
