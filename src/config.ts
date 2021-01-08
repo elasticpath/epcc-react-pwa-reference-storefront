@@ -5,12 +5,12 @@ const splitCompareKeys = (keyStr: string) =>
     .map(subStr => subStr.split(','));
 
 export const config = {
-  clientId: process.env.REACT_APP_CLIENT_ID || '1NgdZlkNCJ5miRkpQ0ly75HOZOFM0rKf2taUujquog',
+  clientId: process.env.REACT_APP_CLIENT_ID || 'UM0zJIikYFqQlNuSxWGe8Pj0Lh0cmvOFb29kHHMbaz',
   stripeKey: process.env.REACT_APP_STRIPE_KEY || 'pk_test_JwRX4cevuCysIEQrpwcbn3j8',
   categoryPageSize: 8,
   maxCompareProducts: 4,
-  algoliaAppId: process.env.REACT_APP_ALGOLIA_APP_ID || '6MAFUOD23U',
-  algoliaApiKey: process.env.REACT_APP_ALGOLIA_API_KEY || '7d829396bbf202b30bfe7ad52120bbac',
+  algoliaAppId: process.env.REACT_APP_ALGOLIA_APP_ID || '2MQV38SF63',
+  algoliaApiKey: process.env.REACT_APP_ALGOLIA_API_KEY || '9fcc9c2c97e03ebb7d4eb19297ad12e4',
   algoliaPlacesAppId: process.env.REACT_APP_ALGOLIA_PLACES_APP_ID || 'plEPUZAA2D2L',
   algoliaPlacesApiKey: process.env.REACT_APP_ALGOLIA_PLACES_API_KEY || '4c9f0832a65f800e31b0d50f44670b1f',
   algoliaIndexName: process.env.REACT_APP_ALGOLIA_INDEX_NAME || 'product',
