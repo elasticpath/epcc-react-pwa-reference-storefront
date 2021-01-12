@@ -1,15 +1,21 @@
 
-import React, { useState } from 'react';
-import { useTranslation, useCartData, useMultiCartData } from './app-state';
+import React, { useState, useEffect } from 'react';
+import { useTranslation, useCartData, useMultiCartData, useCustomerData } from './app-state';
+import useOnclickOutside from 'react-cool-onclickoutside';
 import { bulkAdd } from './service';
+import { SettingsCart } from './SettingsCart';
 import { ReactComponent as ClearIcon } from './images/icons/ic_clear.svg';
+import { ReactComponent as SpinnerIcon } from './images/icons/ic_spinner.svg';
+import { ReactComponent as CaretIcon } from './images/icons/ic_caret.svg';
+import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 
 import './QuickOrder.scss'
 
 export const QuickOrder: React.FC = (props) => {
   const { t } = useTranslation();
   const { updateCartItems, setCartQuantity, handleShowCartPopup } = useCartData();
-  const { updateCartData } = useMultiCartData();
+  const { updateCartData, updateSelectedCart, multiCartData, setIsCartSelected } = useMultiCartData();
+  const { isLoggedIn } = useCustomerData();
 
   const defaultItem = {
     code: '', quantity: 0, isInvalid: false, errorMsg: ''
@@ -21,6 +27,99 @@ export const QuickOrder: React.FC = (props) => {
   const [items, setItems] = useState(Array(defaultItemsCount).fill(defaultItem).map((item, index) => ({ ...item, key: `quick-order-sku-${index}` })));
   const [error, setError] = useState('');
   const [showLoader, setShowLoader] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const modalRef = useOnclickOutside(() => {
+    setModalOpen(false);
+  });
+
+  const dropdownRef = useOnclickOutside(() => {
+    setDropdownOpen(false)
+  });
+
+  const handleAddToSelectedCart = (cart:any) => {
+    updateSelectedCart(cart);
+    handleSubmit(cart.id);
+  };
+
+  const handleAddToDefaultCart = () => {
+    if (multiCartData && multiCartData.length > 0) {
+      handleAddToSelectedCart(multiCartData[0]);
+    }
+  };
+
+  const CartButton = () => {
+    if (isLoggedIn) {
+      return (
+        <div className="quickorder__addtocartdropdowncontainer">
+          <div className="quickorder__addtocartdropdownwrap">
+            <button
+              className="epbtn --primary quickorder__addtocartbtn"
+              onClick={handleAddToDefaultCart}
+              disabled={items.filter(el => (el.quantity !== 0)).length === 0}
+            >
+              {t("add-to-cart")}
+              {' - '}
+              {multiCartData && multiCartData.length > 0 && multiCartData[0].name}
+            </button>
+            <button onClick={() => setDropdownOpen(!dropdownOpen)} disabled={items.filter(el => (el.quantity !== 0)).length === 0} className={`epbtn --primary quickorder__addtocartdropdowntoggle${
+              dropdownOpen ? " --open" : ""
+            }`}>
+              {showLoader ? (
+                <SpinnerIcon className="quickorder__addtocartdropdownicspinner" />
+              ) : (
+                <CaretIcon
+                  className={`quickorder__addtocartdropdowniscaret ${
+                    dropdownOpen ? "--rotated" : ""
+                  }`}
+                />
+              )}
+            </button>
+          </div>
+          {dropdownOpen ? (
+            <div className="quickorder__addtocartdropdowncontent">
+              {multiCartData.slice(1).map((cart: moltin.CartItem) => (
+                <button
+                  className="quickorder__addtocartdropdownbtn"
+                  key={cart.id}
+                  onClick={() => { handleAddToSelectedCart(cart) }}
+                >
+                  {cart.name}
+                </button>
+              ))}
+              <button
+                className="quickorder__addtocartdropdownbtn"
+                key="create-cart-btn"
+                onClick={() => setModalOpen(true)}
+                type="submit"
+              >
+                {t('create-new-cart')}
+              </button>
+            </div>
+          ) : null}
+        </div>
+      );
+    }
+
+    return (
+      <button className="epbtn --secondary" >
+        {t("add-to-cart")}
+      </button>
+    );
+  };
+
+  const CreateCartHeader = (
+    <div className="quickorder__createcartheader">
+      <span className="quickorder__createcartheadertext">{t("create-cart")}</span>
+      <button
+        className="quickorder__createcartheaderbnt"
+        onClick={() => setModalOpen(false)}
+      >
+        <CloseIcon />
+      </button>
+    </div>
+  );
 
   const handleUpdate = (index:number, arg:{[key: string]: any}[]) => {
     const itemsArr:any[] = [...items];
@@ -64,8 +163,7 @@ export const QuickOrder: React.FC = (props) => {
     setItems(additionalItems);
   };
 
-  const handleSubmit = () => {
-    const mcart = localStorage.getItem('mcart') || '';
+  const handleSubmit = (cartId?: string) => {
     const products = items.filter(el => (el.code && el.quantity > 0)).map(el => {
       return {
         type: 'cart_item',
@@ -75,15 +173,23 @@ export const QuickOrder: React.FC = (props) => {
     });
     setError('');
     setShowLoader(true);
-    const totalQuantity = products.reduce((sum, { quantity }) => sum + quantity, 0);
+      const totalQuantity = products.reduce((sum, { quantity }) => sum + quantity, 0);
+      const currentCart = localStorage.getItem("mcart") || "";
+      const mcart = cartId ? cartId : currentCart;
     bulkAdd(mcart, products)
       .then(() => {
-        updateCartItems();
+        if (cartId && cartId !== currentCart) {
+          localStorage.setItem('mcart', cartId);
+        } else {
+          updateCartItems();
+        }
         updateCartData();
         setCartQuantity(totalQuantity);
         handleShowCartPopup();
         setItems(Array(defaultItemsCount).fill(defaultItem).map((item, index) => ({ ...item, key: `quick-order-sku-${index}` })));
         setShowLoader(false);
+        setIsCartSelected(true);
+        setDropdownOpen(false);
       })
       .catch(error => {
         console.error(error);
@@ -103,6 +209,10 @@ export const QuickOrder: React.FC = (props) => {
         setItems(itemsArr);
       });
   };
+
+  useEffect(() => {
+    document.body.style.overflow = modalOpen ? 'hidden' : 'unset';
+  }, [modalOpen])
 
   return (
     <div className="quickorder">
@@ -142,15 +252,24 @@ export const QuickOrder: React.FC = (props) => {
         <button className="epbtn" onClick={handleAddFields}>
           {t('add-more-fields')}
         </button>
-        <button className="epbtn --primary" type="button" onClick={handleSubmit} disabled={items.filter(el => (el.quantity !== 0)).length === 0}>
-          { !showLoader ?
-            (items.filter(el => (el.quantity !== 0)).length > 0 ? (
-            items.filter(el => (el.quantity !== 0)).length === 1 ? t('add-item-to-cart') : t('add-items-to-cart', { quantity: items.filter(el => (el.quantity !== 0)).length.toString() })
-          ) : t('add-to-cart'))
-            : (<div className="circularLoader" />)
-          }
-        </button>
+        <div className="quickorder__moltinbtncontainer">
+            <div ref={dropdownRef}>
+              <CartButton/>
+            </div>
+        </div>
       </div>
+      {modalOpen ? (
+        <div className="quickorder__createcartmodalbg">
+          <div className="quickorder__createcartmodal" ref={modalRef}>
+            <SettingsCart
+              title={CreateCartHeader}
+              onCartCreate={() => {setModalOpen(false)}}
+              handleHideSettings={() => {setModalOpen(false)}}
+              setShowCartAlert={() => ''}
+            />
+          </div>
+        </div>
+      ) : null}
     </div>
   )
 };

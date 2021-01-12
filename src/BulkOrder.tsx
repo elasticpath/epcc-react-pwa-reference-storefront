@@ -3,10 +3,11 @@ import { useFormik } from 'formik';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { useTranslation, useCartData, useMultiCartData, useCustomerData } from './app-state';
 import { bulkAdd } from './service';
-
+import { SettingsCart } from './SettingsCart';
 import { ReactComponent as ClearIcon } from './images/icons/ic_clear.svg';
 import { ReactComponent as SpinnerIcon } from './images/icons/ic_spinner.svg';
 import { ReactComponent as CaretIcon } from './images/icons/ic_caret.svg';
+import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 
 import './BulkOrder.scss';
 
@@ -27,13 +28,18 @@ export const BulkOrder: React.FC = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [cartID, setCartId] = useState("");
 
+  const modalRef = useOnclickOutside(() => {
+    setModalOpen(false)
+  });
+
   const dropdownRef = useOnclickOutside(() => {
     setDropdownOpen(false)
   });
 
   const handleAddToSelectedCart = (cart:any) => {
     updateSelectedCart(cart);
-    setCartId(cart.id)
+    setCartId(cart.id);
+    handleSubmit();
   };
 
   const handleAddToDefaultCart = () => {
@@ -49,7 +55,6 @@ export const BulkOrder: React.FC = (props) => {
           <div className="bulkorder__addtocartdropdownwrap">
             <button
               className="epbtn --primary bulkorder__addtocartbtn"
-              type="submit"
               onClick={handleAddToDefaultCart}
               disabled={!values.productSKU}
             >
@@ -77,7 +82,6 @@ export const BulkOrder: React.FC = (props) => {
                 <button
                   className="bulkorder__addtocartdropdownbtn"
                   key={cart.id}
-                  type="submit"
                   onClick={() => { handleAddToSelectedCart(cart) }}
                 >
                   {cart.name}
@@ -104,6 +108,18 @@ export const BulkOrder: React.FC = (props) => {
     );
   };
 
+  const CreateCartHeader = (
+    <div className="bulkorder__createcartheader">
+      <span className="bulkorder__createcartheadertext">{t("create-cart")}</span>
+      <button
+        className="bulkorder__createcartheaderbnt"
+        onClick={() => setModalOpen(false)}
+      >
+        <CloseIcon />
+      </button>
+    </div>
+  );
+
   const initialValues:FormValues = {
     productSKU: '',
   };
@@ -117,7 +133,7 @@ export const BulkOrder: React.FC = (props) => {
       const currentCart = localStorage.getItem("mcart") || "";
       const mcart = cartID ? cartID : currentCart;
       bulkAdd(mcart, bulkOrderItems)
-        .then(() => {
+        .then((res:any) => {
           if (cartID && cartID !== currentCart) {
             localStorage.setItem('mcart', cartID);
           } else {
@@ -130,6 +146,9 @@ export const BulkOrder: React.FC = (props) => {
           setShowLoader(false);
           setIsCartSelected(true);
           setDropdownOpen(false);
+          const errorsContainer = res.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}`)).join('\n');
+          console.log(errorsContainer);
+          setBulkError(errorsContainer);
         })
         .catch(error => {
           const errorsContainer = error.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}`)).join('\n');
@@ -178,12 +197,24 @@ export const BulkOrder: React.FC = (props) => {
         <div className="bulkorder__info">
           <p>{t('bulk-order-format')}</p>
         </div>
-        <div className="product__moltinbtncontainer">
+        <div className="bulkorder__moltinbtncontainer">
             <div ref={dropdownRef}>
               <CartButton/>
             </div>
         </div>
       </form>
+      {modalOpen ? (
+        <div className="bulkorder__createcartmodalbg">
+          <div className="bulkorder__createcartmodal" ref={modalRef}>
+            <SettingsCart
+              title={CreateCartHeader}
+              onCartCreate={() => {setModalOpen(false)}}
+              handleHideSettings={() => {setModalOpen(false)}}
+              setShowCartAlert={() => ''}
+            />
+          </div>
+        </div>
+      ) : null}
     </div>
   )
 };
