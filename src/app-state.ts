@@ -209,7 +209,6 @@ function useAddressDataState() {
   };
 
   return { addressData, updateAddresses }
-
 }
 
 function usePurchaseHistoryState() {
@@ -218,11 +217,22 @@ function usePurchaseHistoryState() {
 
   const [ordersData, setOrdersData] = useState<moltin.Order[]>([]);
   const [ordersItemsData, setOrdersItemsData] = useState<moltin.OrderItem[]>([]);
+  const [pageNum, setPageNum] = useState<number>(1);
+  const [total, setTotal] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [dateIndex, setDateIndex] = useState<number>(0);
+  const [sort, setSort] = useState("");
+  const [totalOrders, setTotalOrders] = useState<number>(1);
 
   useEffect(() => {
-    if (token) {
-      getAllOrders(token).then((res: any) => {
+    const endDate = new Date();
+    const startDate =  endDate.setMonth(endDate.getMonth() - ((6 * dateIndex) + 6))
+    if (token) {  
+      getAllOrders(token, pageNum, startDate, sort).then((res: any) => {
         setData(res.data);
+        setTotalOrders(res.meta.results.total)
+        setTotal(res.meta.page.total);
+        setCurrentPage(res.meta.page.current)
         if (res && res.included)
          setItemsData(res.included.items);
       });
@@ -230,11 +240,16 @@ function usePurchaseHistoryState() {
     else {
       clearCustomerData();
     }
-  }, [id, token]);
+  }, [id, token, pageNum, sort, dateIndex]);
 
   const updatePurchaseHistory = () => {
-    getAllOrders(token).then(res => {
+    const endDate = new Date();
+    const startDate =  endDate.setMonth(endDate.getMonth() - ((6 * dateIndex) + 6))
+    getAllOrders(token, pageNum, startDate).then((res:any) => {
       setData(res.data);
+      setTotalOrders(res.meta.results.total)
+      setTotal(res.meta.page.total);
+      setCurrentPage(res.meta.page.current)
     });
   };
 
@@ -251,7 +266,7 @@ function usePurchaseHistoryState() {
     setOrdersItemsData([]);
   };
 
-  return { ordersData, ordersItemsData, updatePurchaseHistory }
+  return { ordersData, ordersItemsData, updatePurchaseHistory, setPageNum, total, currentPage, setCurrentPage, setDateIndex, setSort, sort, totalOrders }
 }
 
 const defaultCurrency = config.defaultCurrency;
@@ -409,8 +424,11 @@ function useCartItemsState() {
   const [count, setCount] = useState(0);
   const [cartQuantity, setCartQuantity] = useState(0);
   const [showCartPopup, setShowCartPopup] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [partialAddMessage, setPartialAddMessage] = useState("");
   const [totalPrice, setTotalPrice] = useState('');
   const mcart = localStorage.getItem('mcart') || '';
+  const [addedtItem, setAddedItem] = useState("");
 
   useEffect(() => {
     if (mcart) {
@@ -445,8 +463,25 @@ function useCartItemsState() {
       }, 3200);
     }
   };
+  const handlePartialAddMessage = (errors:string) => {
+    if(!partialAddMessage){
+      setPartialAddMessage(errors);
+      setTimeout(() => {
+        setPartialAddMessage("");
+      }, 10000);
+    }
+  }
 
-  return { cartData, promotionItems, count, cartQuantity, setCartQuantity, showCartPopup, handleShowCartPopup, totalPrice, updateCartItems }
+  const partialAddConfirmation = (data:any) => {
+    const prevItemQuantity = cartData.reduce(function(acc:any, obj:any) {return acc+ obj.quantity}, 0)
+    const itemsQuantity = data.reduce(function(acc:any, obj:any) {return acc+ obj.quantity}, 0);
+    setAddedItem(`${itemsQuantity - prevItemQuantity}`);
+    setTimeout(() => {
+      setAddedItem("");
+    }, 10000);
+  }
+
+  return { cartData, promotionItems, count, cartQuantity, setCartQuantity, showCartPopup, handleShowCartPopup, totalPrice, updateCartItems , openModal, setOpenModal, handlePartialAddMessage, partialAddMessage, setPartialAddMessage, partialAddConfirmation, addedtItem, setAddedItem }
 }
 
 function useMultiCartDataState() {

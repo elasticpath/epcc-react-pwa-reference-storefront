@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ProductMainImage } from "./ProductMainImage";
-import { useTranslation } from "./app-state";
+import { useTranslation, useCartData, useMultiCartData } from "./app-state";
 import { useResolve } from "./hooks";
-import { getProductsByIds } from "./service";
+import { getProductsByIds , bulkAdd } from "./service";
 import { APIErrorContext } from "./APIErrorProvider";
 
 import "./OrderDetailsTable.scss";
@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 interface OrderDetailsTableParams {
   orderData: any;
   orderItems: moltin.OrderItem[];
+  modalUI?:boolean;
 }
 
 interface OrderItemWithProductData extends moltin.OrderItem {
@@ -20,9 +21,15 @@ interface OrderItemWithProductData extends moltin.OrderItem {
 export const OrderDetailsTable: React.FC<OrderDetailsTableParams> = ({
   orderData,
   orderItems,
+  modalUI,
 }) => {
   const { t } = useTranslation();
   const { addError } = useContext(APIErrorContext);
+  const { updateCartItems, setOpenModal, handlePartialAddMessage, setPartialAddMessage, partialAddConfirmation } = useCartData();
+  const { updateCartData } = useMultiCartData();
+
+  const [showLoader, setShowLoader] = useState(false);
+  const [className, setClassName] = useState("orderdetailstable")
 
   const [products] = useResolve(async () => {
     try {
@@ -36,7 +43,6 @@ export const OrderDetailsTable: React.FC<OrderDetailsTableParams> = ({
           (acum = [...acum, orderProduct.product_id]),
         []
       );
-
       const products: moltin.Product[] = await getProductsByIds(ids);
       return orderProducts.map((item: moltin.OrderItem) => ({
         ...item,
@@ -47,65 +53,112 @@ export const OrderDetailsTable: React.FC<OrderDetailsTableParams> = ({
     }
   }, [orderData, addError, orderItems]);
 
+  const reOrder = () => {
+    setShowLoader(true);
+    const mcart = localStorage.getItem('mcart') || '';
+    const data=  [
+      {
+        type: 'order_items',
+        order_id: orderData.id
+      }
+    ];
+    setPartialAddMessage("");
+    bulkAdd(mcart, data)
+      .then((res:any) => {
+        updateCartItems();
+        updateCartData();
+        setOpenModal(true);
+        setShowLoader(false);
+        partialAddConfirmation(res.data)
+        const errorsContainer = res.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}`)).join('\n');
+        handlePartialAddMessage(errorsContainer);
+      }).catch( (error) => {
+        console.error(error);
+        setShowLoader(false);
+    }) 
+  }
+  useEffect(() => {
+    if(modalUI)
+      setClassName("modalUI")
+    else
+      setClassName("orderdetailstable")
+  }, [modalUI])
+
   return (
-    <div className="orderdetailstable__details">
-      <div className="orderdetailstable__body">
-        <div className="orderdetailstable__title">{t("summary")}</div>
-        <table className="orderdetailstable__table">
-          <tbody>
-            <tr className="orderdetailstable__tr">
-              <td className="orderdetailstable__td">{t("status")}:</td>
-              <td className="orderdetailstable__td">{orderData.status}</td>
-            </tr>
-            <tr className="orderdetailstable__tr">
-              <td className="orderdetailstable__td">{t("order-tax-total")}:</td>
-              <td className="orderdetailstable__td">
-                {orderData.meta.display_price.tax.formatted}
-              </td>
-            </tr>
-            <tr className="orderdetailstable__tr">
-              <td className="orderdetailstable__td">
-                {t("order-purchase-date")}:
-              </td>
-              <td className="orderdetailstable__td">
-                {orderData.meta.timestamps.created_at}
-              </td>
-            </tr>
-            <tr className="py-4">
-              <td className="orderdetailstable__td">{t("order-total")}:</td>
-              <td className="orderdetailstable__td">
-                {orderData.meta.display_price.with_tax.formatted}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div className="orderdetailstable__details">
-          <div className="orderdetailstable__addresses">
-            <span className="orderdetailstable__title">
-              {t("shipping-address")}
-            </span>
-            <div className="orderdetailstable__block">
-              <div>
-                {orderData.shipping_address.first_name}{" "}
-                {orderData.shipping_address.last_name}
-              </div>
-              <div>{orderData.shipping_address.line_1}</div>
-              <div>
-                {orderData.shipping_address.city},{" "}
-                {orderData.shipping_address.county},{" "}
-                {orderData.shipping_address.country}
-              </div>
-              <div>{orderData.shipping_address.postcode}</div>
+    <div className={`${className}__details`}>
+      <div className={`${className}__header`}>
+        <div className={`${className}__title`}>
+          <h1>{t("orderid")} : {orderData.id}</h1>
+          <p>Placed at: {orderData.meta.timestamps.created_at.replace("T", " - ")}</p>
+        </div>
+        <button className={`${className}__reorderbutton`} onClick={reOrder}>
+          {!showLoader ? t("re-order") : <div className="circularLoader" />}
+        </button>
+      </div>
+      <div className={`${className}__body`}>
+      <button className={`${className}__reorderbuttonmobile`} onClick={reOrder}>
+          {!showLoader ? t("re-order") : <div className="circularLoader" />}
+        </button>
+        {products && (
+          <div className={`${className}__ordersitemsdetail`}>
+            <div className={`${className}__itemsheaderwrapper`}>
+              <h3 className={`${className}__itemsheader`}>{t("product")}</h3>
+              <h3 className={`${className}__itemsheader`}>{t("sku")}</h3>
+              <h3 className={`${className}__itemsheader`}>{t("price")}</h3>
+              <h3 className={`${className}__itemsheader`}>{t("quantity")}</h3>
+              <h3 className={`${className}__itemsheader`}>{t("total")}</h3>
+            </div>
+            <ul className={`${className}__items`}>
+              {products.map((product: OrderItemWithProductData) => (
+                <li className={`${className}__item`} key={product.sku}>
+                  <div className={`${className}__itemimage`}>
+                    <ProductMainImage product={product.productData} />
+                    <Link to={`/product/${[product.sku]}`} className={`${className}__name`}>
+                      {product.name}
+                    </Link>
+                  </div>
+                  <Link to={`/product/${[product.sku]}`} className={`${className}__productname`}>
+                      {product.name}
+                    </Link>
+                  <div className={`${className}__productsku`}>
+                    <span className={`${className}__titlespan`}>{t("sku")}: </span>{product.sku}
+                  </div>
+                  <div className={`${className}__productprice`}>
+                    <span className={`${className}__titlespan`}>{t("price")}: </span>
+                    {
+                      product.meta?.display_price?.without_tax?.value.formatted
+                    }
+                  </div>
+                  <div className={`${className}__productquantity`}>
+                    <span className={`${className}__titlespan`}>{t("quantity")}: </span>{product.quantity}
+                  </div>
+                  <div className={`${className}__producttotal`}>
+                    <span className={`${className}__titlespan`}>{t("total")}: </span>
+                    {
+                      product.meta?.display_price?.with_tax?.value.formatted
+                    }
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <div className={`${className}__taxprice`}>
+                <h1 className={`${className}__totalpricetitle`}>{t("tax")}</h1>
+                <h1 className={`${className}__taxpricenum`}>{orderData.meta?.display_price?.tax.formatted}</h1>
+            </div>
+            <div className={`${className}__totalprice`}>
+                <h1 className={`${className}__totalpricetitle`}>{t("total")}</h1>
+                <h1 className={`${className}__totalpricenum`}>{orderData.meta?.display_price?.with_tax.formatted}</h1>
             </div>
           </div>
-          <div className="orderdetailstable__addresses">
-            <span className="orderdetailstable__title">
+        )}
+        <div className={`${className}__addrressdetails`}>
+          <div className={`${className}__addresses`}>
+            <span className={`${className}__addresstitle`}>
               {t("billing-address")}
             </span>
-            <div className="orderdetailstable__block">
-              <div>
-                {orderData.billing_address.first_name}{" "}
-                {orderData.billing_address.last_name}
+            <div className={`${className}__block`}>
+              <div className={`${className}__status`}>
+                {t("payment")} {t("status")}: {orderData.payment}
               </div>
               <div>{orderData.billing_address.line_1}</div>
               <div>
@@ -116,69 +169,24 @@ export const OrderDetailsTable: React.FC<OrderDetailsTableParams> = ({
               <div>{orderData.billing_address.postcode}</div>
             </div>
           </div>
+          <div className={`${className}__addresses`}>
+            <span className={`${className}__addresstitle`}>
+              {t("shipping-address")}
+            </span>
+            <div className={`${className}__block`}>
+              <div className={`${className}__status`}>
+              {t("order")} {t("status")}: {orderData.status}
+              </div>
+              <div>{orderData.shipping_address.line_1}</div>
+              <div>
+                {orderData.shipping_address.city},{" "}
+                {orderData.shipping_address.county},{" "}
+                {orderData.shipping_address.country}
+              </div>
+              <div>{orderData.shipping_address.postcode}</div>
+            </div>
+          </div>
         </div>
-        {products && (
-          <>
-            <div className="orderdetailstable__title">{t("items")}</div>
-            <ul className="orderdetailstable__items">
-              {products.map((product: OrderItemWithProductData) => (
-                <li className="orderdetailstable__item" key={product.sku}>
-                  <div className="orderdetailstable__itemimage">
-                    <ProductMainImage product={product.productData} />
-                  </div>
-                  <table className="orderdetailstable__table">
-                    <tbody>
-                      <tr className="orderdetailstable__tr">
-                        <td className="orderdetailstable__td">{t("name")}:</td>
-                        <td className="orderdetailstable__td">
-                          <Link to={`/product/${[product.sku]}`}>
-                            {product.name}
-                          </Link>
-                        </td>
-                      </tr>
-                      <tr className="orderdetailstable__tr">
-                        <td className="orderdetailstable__td">
-                          {t("quantity")}:
-                        </td>
-                        <td className="orderdetailstable__td">
-                          {product.quantity}
-                        </td>
-                      </tr>
-                      <tr className="orderdetailstable__tr">
-                        <td className="orderdetailstable__td">
-                          {t("sub-total")}:
-                        </td>
-                        <td className="orderdetailstable__td">
-                          {
-                            product.meta?.display_price?.without_tax?.value
-                              .formatted
-                          }
-                        </td>
-                      </tr>
-                      <tr className="orderdetailstable__tr" key={product.sku}>
-                        <td className="orderdetailstable__td">{t("tax")}:</td>
-                        <td className="orderdetailstable__td">
-                          {product.meta?.display_price?.tax?.value.formatted}
-                        </td>
-                      </tr>
-                      <tr className="orderdetailstable__tr">
-                        <td className="orderdetailstable__td">
-                          {t("item-total")}:
-                        </td>
-                        <td className="orderdetailstable__td">
-                          {
-                            product.meta?.display_price?.with_tax?.value
-                              .formatted
-                          }
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
       </div>
     </div>
   );

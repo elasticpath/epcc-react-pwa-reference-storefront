@@ -28,7 +28,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const { items, handlePage, promotionItems, handleCloseCartModal, newCart, handleNewCart } = props;
   const { t } = useTranslation();
   const { isLoggedIn } = useCustomerData();
-  const { count, totalPrice, updateCartItems } = useCartData();
+  const { count, totalPrice, updateCartItems, partialAddMessage, setPartialAddMessage, addedtItem, setAddedItem} = useCartData();
   const { selectedCart, updateCartData } = useMultiCartData();
   const { addError } = useContext(APIErrorContext);
   const quantityItems = count.toString();
@@ -43,7 +43,6 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const [isShowModal, setIsShowModal] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
   
-
   const modalRef = useOnclickOutside(() => {
     setShowLoginModal(false);
   });
@@ -110,7 +109,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   useEffect(() => {
     if(showUpdateCartAlert)
       setTimeout(() => {
-        setShowUpdateCartAlert(false)
+        setShowUpdateCartAlert(false);
       }, 4000);
   }, [showUpdateCartAlert])
 
@@ -127,6 +126,23 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
           <CloseIcon onClick={() => setShowUpdateCartAlert(false)}/>
         </div>
       )}
+      
+        <div className="partialadd">
+          {addedtItem &&  ( <div className="partialadd__confirmationmessage">
+            <p>{addedtItem}  items have been added to the cart</p>
+            <CloseIcon onClick={() => setAddedItem("")}/>
+          </div>
+          )}
+          {partialAddMessage &&  (
+            <div className="partialadd__alertMessage">
+              <p>{partialAddMessage}</p>
+              <CloseIcon onClick={() => setPartialAddMessage("")}/>
+            </div>
+          )}
+        </div>
+       
+      
+
       <div className="cartitemlist__header">
         <h2 className="cartitemlist__title">
           {isLoggedIn && selectedCart ? (
@@ -138,7 +154,6 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
               {t('your-shopping-cart')}
             </span>
             )}
-
         </h2>
         <span className="cartitemlist__settingsicon">
           {isLoggedIn && selectedCart && <SettingsIcon onClick={() => setShowSettings(true)} /> }

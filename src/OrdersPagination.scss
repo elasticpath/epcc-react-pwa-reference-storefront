@@ -1,0 +1,79 @@
+@import './theme/common';
+
+.orderspagination {
+    float: right;
+    width: 100%;
+    font-style: normal;
+    font-weight: normal;
+    font-size: $sizeSmall;
+    line-height: 21px;
+    text-align: center;
+    color: #333333;
+    padding: 0px 12px;
+
+    &__link {
+        margin: 10px 12px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        border-radius: 50%;
+        text-align: center;
+    }
+
+    .--active{
+        cursor: pointer;
+        svg{
+            path{
+                fill:  #197C93;
+            }
+        }
+        &:hover{
+            background-color: $sixthComplimentBackground;
+        }
+        &:active{
+            background-color: $firstComplimentColor;
+            svg{
+                path{
+                    fill: white;
+                }
+            }
+        }
+    }
+    .--deactive{
+        cursor: unset;
+        background: #F7F7F7;
+        svg{
+            path{
+                fill: #CCCCCC;
+            }
+        }
+    }
+
+    &__prevpageicon {
+        transform: rotate(90deg);
+    }
+
+    &__nextpageicon {
+        transform: matrix(0, 1, 1, 0, 0, 0);
+    }
+
+    &__pageinfo{
+        float: left;
+    }
+
+    &__paginateinfo{
+        float: right;
+    }
+
+    @media screen and (min-width: $tabletSmallWidth) {
+        width: fit-content;
+        padding: 0px;
+        
+        &__pageinfo{
+            float: none;
+        }
+    
+        &__paginateinfo{
+            float: none;
+        }
+    }
+}

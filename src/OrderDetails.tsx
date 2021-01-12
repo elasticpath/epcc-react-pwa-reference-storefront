@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as ArrowLeft } from './images/icons/arrow_left.svg';
 import { useTranslation } from './app-state';
 import { OrderDetailsTable } from './OrderDetailsTable';
-
+import {SideMenu} from './SideMenu'
 import './OrderDetails.scss';
 
 interface LocationState {
@@ -19,15 +19,23 @@ export const OrderDetails: React.FC = () => {
   const orderItems = location?.state?.items;
 
   return (
-    <div className="orderdetail container">
-      <Link to="/account/orders-history" className="orderdetail__link">
-        <ArrowLeft />
-        {t('back')}
-      </Link>
-      <h1 className="orderdetail__title">{t('purchase-details')}</h1>
-      {orderData && (
-        <OrderDetailsTable orderItems={orderItems} orderData={orderData} />
-      )}
+    <div className="orderdetail">
+      <div className="orderdetail__wrap">
+        <div className="orderdetail__side">
+          <SideMenu orderId={
+            orderData.id
+          }/>
+        </div>
+        <div className="orderdetail__content">
+          <Link to="/account/orders-history" className="orderdetail__backbtn">
+            <ArrowLeft />
+            {t('back-to-order-history')}
+          </Link>
+          {orderData && (
+            <OrderDetailsTable orderItems={orderItems} orderData={orderData} />
+          )}
+        </div>
+      </div>
     </div>
   )
 };
