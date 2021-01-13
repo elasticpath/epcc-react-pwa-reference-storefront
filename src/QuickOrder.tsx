@@ -13,7 +13,7 @@ import './QuickOrder.scss'
 
 export const QuickOrder: React.FC = (props) => {
   const { t } = useTranslation();
-  const { updateCartItems, setCartQuantity, handleShowCartPopup } = useCartData();
+  const { updateCartItems, setCartQuantity, handleShowCartPopup, cartData} = useCartData();
   const { updateCartData, updateSelectedCart, multiCartData, setIsCartSelected } = useMultiCartData();
   const { isLoggedIn } = useCustomerData();
 
@@ -46,6 +46,9 @@ export const QuickOrder: React.FC = (props) => {
   const handleAddToDefaultCart = () => {
     if (multiCartData && multiCartData.length > 0) {
       handleAddToSelectedCart(multiCartData[0]);
+    }
+    else {
+      handleAddToSelectedCart(cartData);
     }
   };
 
@@ -103,7 +106,9 @@ export const QuickOrder: React.FC = (props) => {
     }
 
     return (
-      <button className="epbtn --secondary quickorder__addtocartbtn" >
+      <button className="epbtn --secondary quickorder__addtocartbtn"
+          onClick={handleAddToDefaultCart}
+          disabled={items.filter(el => (el.quantity !== 0)).length === 0} >
         {t("add-to-cart")}
       </button>
     );

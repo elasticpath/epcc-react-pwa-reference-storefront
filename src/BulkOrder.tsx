@@ -102,7 +102,7 @@ export const BulkOrder: React.FC = (props) => {
     }
 
     return (
-      <button className="epbtn --secondary bulkorder__addtocartbtn" >
+      <button className="epbtn --secondary bulkorder__addtocartbtn" type="submit">
         {t("add-to-cart")}
       </button>
     );
@@ -135,8 +135,6 @@ export const BulkOrder: React.FC = (props) => {
         .then((res:any) => {
           const prevCartQuantity = cartData.reduce(function(acc:any, obj:any) {return acc+ obj.quantity}, 0)
           const totalQuantity = res.data.reduce(function(acc:any, obj:any) {return acc+ obj.quantity}, 0);
-          console.log(cartData);
-          console.log(res.data);
           if (cartID && cartID !== currentCart) {
             localStorage.setItem('mcart', cartID);
           } else {
@@ -151,7 +149,6 @@ export const BulkOrder: React.FC = (props) => {
           setDropdownOpen(false);
           const errorsContainer = res.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}
           `)).join('\n');
-          console.log(errorsContainer);
           setBulkError(errorsContainer);
         })
         .catch(error => {
