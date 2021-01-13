@@ -20,9 +20,7 @@
     margin-bottom: 5px;
 
     .epform__group {
-      flex-grow: 1;
-      margin-right: 20px;
-
+      margin-bottom: 0px;
       &.--error {
         .quickorder__clearicon {
           fill: $mainErrorColor;
@@ -40,6 +38,12 @@
     }
   }
 
+  &__groupwrap {
+    flex-grow: 1;
+    margin-right: 20px;
+    margin-bottom: 18px;
+  }
+
   &__clearbtn {
     position: absolute;
     right: 2px;
@@ -49,6 +53,10 @@
 
   &__clearicon {
     fill: $thirdComplimentTextColor;
+  }
+
+  &__partialmsg {
+    color: $mainErrorColor;
   }
 
   &__quantity {
@@ -107,6 +115,7 @@
   &__addtocartdropdownwrap {
     max-width: 330px;
     display: flex;
+    margin: 0px auto;
   }
 
   &__addtocartbtn {
@@ -116,6 +125,7 @@
     width: 270px;
     white-space: nowrap;
     overflow: hidden;
+    margin: 0px auto;
   }
 
   &__addtocartdropdowntoggle {
@@ -135,6 +145,11 @@
     .epbtn{
       align-self: flex-start;
       height: 42px;
+      font-size: 13px;
+      line-height: 16px;
+      text-align: center;
+      letter-spacing: 0.2px;
+      font-weight: bold;
     }
 
     .circularLoader {
@@ -142,6 +157,9 @@
     }
   }
 
+  .--secondary{
+    width: 100%;
+  }
 
   @keyframes rotating {
     from {
@@ -235,6 +253,20 @@
   @media (max-width: $mobileWidth - 1px) {
     &__feedback {
       padding: 15px;
+    }
+    &__btns {
+      display: flex;
+      flex-direction: column;
+
+      
+      .epbtn{
+        align-self: center;
+        height: 42px;
+      }
+  
+      .circularLoader {
+        border-top-color: $mainColor;
+      }
     }
   }
 

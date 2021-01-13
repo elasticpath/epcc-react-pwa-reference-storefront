@@ -1,9 +1,10 @@
 @import './theme/common';
 
 .bulkorder {
+  position: relative;
 
   &__form {
-    max-width: 800px;
+    max-width: 600px;
   }
 
   &__group {
@@ -67,15 +68,12 @@
 
   &__feedback {
     width: 100%;
-    padding: 20px 60px;
-    position: absolute;
-    top: 0;
-    left: 0;
     font-size: $sizeSmall;
     color: $mainErrorColor;
-    border: 1px solid $mainErrorColor;
     background-color: $mainBackgroundColor;
-    white-space: pre;
+    white-space: pre-line;
+    text-overflow: clip;
+    line-height: 18px;
   }
 
   &__addtocartdropdowncontainer {
@@ -132,7 +130,6 @@
   }
 
   &__addtocartdropdowncontent {
-    // position: relative;
     border: 1px solid $mainColor;
     width: 100%;
     max-width: 330px;
@@ -198,9 +195,34 @@
     cursor: pointer;
   }
 
+  &__messagewrap {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-top: 23px;
+    padding:10px;
+    text-align: justify;
+    border: 1px solid red;
+    border-radius: 5px;
+  }
+  
+  &__clearerrorbtn {
+    cursor: pointer;
+    position: absolute;
+    right: 0px;
+    bottom: 145px;
+  }
+
+  &__clearerrorbtnicon{
+      fill: $mainErrorColor
+  }
+
   @media (max-width: $mobileWidth - 1px) {
     &__feedback {
       padding: 15px;
+    }
+
+    .--secondary{
+      width: 100%;
     }
   }
 
@@ -211,4 +233,27 @@
       }
     }
   }
+
+  @media screen and (min-width: $tabletSmallWidth) {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    column-gap: 40px;
+
+    &__group {
+      width: 600px;
+    max-width: 800px;
+    }
+
+  }
+  @media screen and (min-width: $fullHDWidth) {
+
+    &__group {
+      width: 700px;
+    }
+
+    &__form {
+     max-width: 700px;
+    }
+  }
+
 }

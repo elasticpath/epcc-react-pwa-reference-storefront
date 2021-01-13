@@ -17,7 +17,7 @@ interface FormValues {
 
 export const BulkOrder: React.FC = (props) => {
   const { t } = useTranslation();
-  const { updateCartItems, setCartQuantity, handleShowCartPopup } = useCartData();
+  const { updateCartItems, setCartQuantity, handleShowCartPopup, cartData } = useCartData();
   const { multiCartData, updateCartData, updateSelectedCart, setIsCartSelected } = useMultiCartData();
   const { isLoggedIn } = useCustomerData();
 
@@ -102,7 +102,7 @@ export const BulkOrder: React.FC = (props) => {
     }
 
     return (
-      <button className="epbtn --secondary" >
+      <button className="epbtn --secondary bulkorder__addtocartbtn" >
         {t("add-to-cart")}
       </button>
     );
@@ -129,30 +129,32 @@ export const BulkOrder: React.FC = (props) => {
     onSubmit: (values) => {
       setBulkError('');
       setShowLoader(true);
-      const totalQuantity = bulkOrderItems.reduce((sum, { quantity }) => sum + quantity, 0);
       const currentCart = localStorage.getItem("mcart") || "";
       const mcart = cartID ? cartID : currentCart;
       bulkAdd(mcart, bulkOrderItems)
         .then((res:any) => {
+          const prevCartQuantity = cartData.reduce(function(acc:any, obj:any) {return acc+ obj.quantity}, 0)
+          const totalQuantity = res.data.reduce(function(acc:any, obj:any) {return acc+ obj.quantity}, 0);
+          console.log(cartData);
+          console.log(res.data);
           if (cartID && cartID !== currentCart) {
             localStorage.setItem('mcart', cartID);
           } else {
             updateCartItems();
           }
           updateCartData();
-          setCartQuantity(totalQuantity);
+          setCartQuantity(totalQuantity - prevCartQuantity);
           handleShowCartPopup();
           resetForm();
           setShowLoader(false);
           setIsCartSelected(true);
           setDropdownOpen(false);
-          const errorsContainer = res.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}`)).join('\n');
+          const errorsContainer = res.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}
+          `)).join('\n');
           console.log(errorsContainer);
           setBulkError(errorsContainer);
         })
         .catch(error => {
-          const errorsContainer = error.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}`)).join('\n');
-          setBulkError(errorsContainer);
           setShowLoader(false);
           console.error(error);
         });
@@ -179,9 +181,6 @@ export const BulkOrder: React.FC = (props) => {
 
   return (
     <div className="bulkorder">
-      {bulkError && (
-        <div className="bulkorder__feedback">{bulkError}</div>
-      )}
       <form className="bulkorder__form" onSubmit={handleSubmit}>
         <div className="bulkorder__group">
           <label className="bulkorder__label" htmlFor="productSKU">
@@ -197,12 +196,22 @@ export const BulkOrder: React.FC = (props) => {
         <div className="bulkorder__info">
           <p>{t('bulk-order-format')}</p>
         </div>
-        <div className="bulkorder__moltinbtncontainer">
-            <div ref={dropdownRef}>
-              <CartButton/>
-            </div>
+        <div className="" ref={dropdownRef}>
+          <CartButton/>
         </div>
       </form>
+      {
+        bulkError &&        
+        <div className="bulkorder__messagewrap">
+          
+          <div className="bulkorder__feedback">{bulkError}</div>
+         
+          <button className="bulkorder__clearerrorbtn" type="reset" >
+              <ClearIcon className="bulkorder__clearerrorbtnicon" />
+            </button>
+              </div>
+     } 
+
       {modalOpen ? (
         <div className="bulkorder__createcartmodalbg">
           <div className="bulkorder__createcartmodal" ref={modalRef}>

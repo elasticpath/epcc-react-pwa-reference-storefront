@@ -103,7 +103,7 @@ export const QuickOrder: React.FC = (props) => {
     }
 
     return (
-      <button className="epbtn --secondary" >
+      <button className="epbtn --secondary quickorder__addtocartbtn" >
         {t("add-to-cart")}
       </button>
     );
@@ -150,7 +150,7 @@ export const QuickOrder: React.FC = (props) => {
   };
 
   const handleClear = (index:number) => {
-    handleUpdate(index, [{'code': ''}, {'isInvalid': false}, {'quantity': 0}]);
+    handleUpdate(index, [{'code': ''}, {'isInvalid': false}, {'quantity': 0}, {'errorMsg': ""}]);
     if (items.filter(el => (el.quantity !== 0)).length === 1) {
       setError('');
     }
@@ -177,7 +177,7 @@ export const QuickOrder: React.FC = (props) => {
       const currentCart = localStorage.getItem("mcart") || "";
       const mcart = cartId ? cartId : currentCart;
     bulkAdd(mcart, products)
-      .then(() => {
+      .then((res:any) => {
         if (cartId && cartId !== currentCart) {
           localStorage.setItem('mcart', cartId);
         } else {
@@ -190,23 +190,27 @@ export const QuickOrder: React.FC = (props) => {
         setShowLoader(false);
         setIsCartSelected(true);
         setDropdownOpen(false);
+        const itemsArr:any[] = [...items];
+        res.errors.forEach((errorEl:any, idx:number) => (
+          items.forEach((el, index) => {
+              if (el.code === errorEl.meta.sku) {
+                itemsArr[index] = {...itemsArr[index]};
+                itemsArr[index].errorMsg = errorEl.detail;
+                itemsArr[index].isInvalid = true;
+              }
+          }
+        )
+        ));
+        itemsArr.forEach((item) =>{
+          if(item.errorMsg === ""){
+            item.code = ""
+          }
+        })
+        setItems(itemsArr);
       })
       .catch(error => {
         console.error(error);
         setShowLoader(false);
-        const errorsContainer = error.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}`)).join('\n');
-        setError(errorsContainer);
-        const itemsArr:any[] = [...items];
-        error.errors.forEach((errorEl:any) => (
-          items.forEach((el, index) => {
-            if (el.code === errorEl.meta.sku) {
-              itemsArr[index] = {...itemsArr[index]};
-              itemsArr[index].errorMsg = errorEl.detail;
-              itemsArr[index].isInvalid = true;
-            }
-          }
-        )));
-        setItems(itemsArr);
       });
   };
 
@@ -223,21 +227,25 @@ export const QuickOrder: React.FC = (props) => {
       <div className="quickorder__formwrap">
         {items.map((item, index) => (
           <div className="quickorder__form" key={item.key}>
-            <div className={`epform__group ${item.isInvalid ? '--error' : ''}`}>
-              <label className="epform__label" htmlFor={item.key}>{t('sku')}</label>
-              <input
-                className="epform__input"
-                id={item.key}
-                type="text"
-                value={item.code}
-                onChange={(e) => {handleChange(index, e.target.value)}}
-              />
-              {item.code &&
-              <button className="quickorder__clearbtn" type="reset" onClick={() => {handleClear(index)}}>
-                <ClearIcon className="quickorder__clearicon" />
-              </button>
-              }
+            <div className="quickorder__groupwrap">
+              <div className={`epform__group ${item.isInvalid ? '--error' : ''}`}>
+                <label className="epform__label" htmlFor={item.key}>{t('sku')}</label>
+                <input
+                  className="epform__input"
+                  id={item.key}
+                  type="text"
+                  value={item.code}
+                  onChange={(e) => {handleChange(index, e.target.value)}}
+                />
+                {item.code &&
+                <button className="quickorder__clearbtn" type="reset" onClick={() => {handleClear(index)}}>
+                  <ClearIcon className="quickorder__clearicon" />
+                </button>
+                }
+              </div>
+              <span className="quickorder__partialmsg">{item.errorMsg}</span>
             </div>
+
             <div className="quickorder__quantity">
               <button className="quickorder__arrow --top" aria-label={t('add-item')} onClick={() => {handleUpdate(index, [{'quantity': (item.quantity + 1)}])}} />
               <p className='quickorder__count'>
@@ -245,6 +253,7 @@ export const QuickOrder: React.FC = (props) => {
               </p>
               <button className="quickorder__arrow --bottom" aria-label={t('remove-item')} disabled={item.quantity === 0} onClick={() => {handleDecrement(index, 'quantity', item.quantity)}} />
             </div>
+            
           </div>
         ))}
       </div>
@@ -252,10 +261,8 @@ export const QuickOrder: React.FC = (props) => {
         <button className="epbtn" onClick={handleAddFields}>
           {t('add-more-fields')}
         </button>
-        <div className="quickorder__moltinbtncontainer">
-            <div ref={dropdownRef}>
-              <CartButton/>
-            </div>
+        <div className="" ref={dropdownRef}>
+          <CartButton/>
         </div>
       </div>
       {modalOpen ? (
