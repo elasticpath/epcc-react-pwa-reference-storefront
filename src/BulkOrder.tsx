@@ -17,7 +17,7 @@ interface FormValues {
 
 export const BulkOrder: React.FC = (props) => {
   const { t } = useTranslation();
-  const { updateCartItems, setCartQuantity, handleShowCartPopup, cartData } = useCartData();
+  const { updateCartItems, setCartQuantity, handleShowCartPopup } = useCartData();
   const { multiCartData, updateCartData, updateSelectedCart, setIsCartSelected } = useMultiCartData();
   const { isLoggedIn } = useCustomerData();
 
@@ -133,15 +133,21 @@ export const BulkOrder: React.FC = (props) => {
       const mcart = cartID ? cartID : currentCart;
       bulkAdd(mcart, bulkOrderItems)
         .then((res:any) => {
-          const prevCartQuantity = cartData.reduce(function(acc:any, obj:any) {return acc+ obj.quantity}, 0)
-          const totalQuantity = res.data.reduce(function(acc:any, obj:any) {return acc+ obj.quantity}, 0);
+          const totalQuantity = bulkOrderItems.reduce((sum, { quantity }) => sum + quantity, 0);
+          const errorsWQ: [{type:string, sku:string, quantity:number}] = [{type: "", sku: "", quantity: 0}];
+          res.errors.map(function(x:any){
+            var result = bulkOrderItems.filter((a:any) => a.sku === x.meta.sku)
+            errorsWQ.push(result[0]);
+            return errorsWQ;
+          })
+          const errorsquantity = errorsWQ.reduce((sum, { quantity }) => sum + quantity, 0);
           if (cartID && cartID !== currentCart) {
             localStorage.setItem('mcart', cartID);
           } else {
             updateCartItems();
           }
           updateCartData();
-          setCartQuantity(totalQuantity - prevCartQuantity);
+          setCartQuantity(totalQuantity - errorsquantity);
           handleShowCartPopup();
           resetForm();
           setShowLoader(false);
@@ -172,6 +178,10 @@ export const BulkOrder: React.FC = (props) => {
     setBulkError('');
   };
 
+  const clearError = () => {
+    setBulkError('');
+  }
+
   useEffect(() => {
     document.body.style.overflow = modalOpen ? 'hidden' : 'unset';
   }, [modalOpen])
@@ -200,13 +210,11 @@ export const BulkOrder: React.FC = (props) => {
       {
         bulkError &&        
         <div className="bulkorder__messagewrap">
-          
-          <div className="bulkorder__feedback">{bulkError}</div>
-         
-          <button className="bulkorder__clearerrorbtn" type="reset" >
+          <button className="bulkorder__clearerrorbtn" type="reset" onClick={clearError} >
               <ClearIcon className="bulkorder__clearerrorbtnicon" />
-            </button>
-              </div>
+          </button>
+          <div className="bulkorder__feedback">{bulkError}</div>
+        </div>
      } 
 
       {modalOpen ? (

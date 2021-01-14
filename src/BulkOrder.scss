@@ -74,6 +74,11 @@
     white-space: pre-line;
     text-overflow: clip;
     line-height: 18px;
+    max-height: 390px;
+    overflow-y: auto;
+    padding:10px;
+    text-align: justify;
+    border-radius: 5px;
   }
 
   &__addtocartdropdowncontainer {
@@ -106,7 +111,6 @@
       background-color: $mainColor!important;
     }
   }
-
 
   @keyframes rotating {
     from {
@@ -196,24 +200,18 @@
   }
 
   &__messagewrap {
-    max-height: 400px;
-    overflow-y: auto;
-    margin-top: 23px;
-    padding:10px;
-    text-align: justify;
-    border: 1px solid red;
-    border-radius: 5px;
+    position: relative;
   }
   
   &__clearerrorbtn {
     cursor: pointer;
-    position: absolute;
-    right: 0px;
-    bottom: 145px;
+    display:block;
+    position: relative;
+    left:93%
   }
 
   &__clearerrorbtnicon{
-      fill: $mainErrorColor
+      fill: $mainErrorColor;
   }
 
   @media (max-width: $mobileWidth - 1px) {
