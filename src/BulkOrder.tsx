@@ -133,6 +133,17 @@ export const BulkOrder: React.FC = (props) => {
       const mcart = cartID ? cartID : currentCart;
       bulkAdd(mcart, bulkOrderItems)
         .then((res:any) => {
+          if (cartID && cartID !== currentCart) {
+            localStorage.setItem('mcart', cartID);
+          } else {
+            updateCartItems();
+          }
+          updateCartData();
+          handleShowCartPopup();
+          resetForm();
+          setShowLoader(false);
+          setIsCartSelected(true);
+          setDropdownOpen(false);
           const totalQuantity = bulkOrderItems.reduce((sum, { quantity }) => sum + quantity, 0);
           const errors: [{type:string, sku:string, quantity:number}] = [{type: "", sku: "", quantity: 0}];
           res.errors.map(function(x:any){
@@ -141,18 +152,7 @@ export const BulkOrder: React.FC = (props) => {
             return errors;
           })
           const errorsquantity = errors.reduce((sum, { quantity }) => sum + quantity, 0);
-          if (cartID && cartID !== currentCart) {
-            localStorage.setItem('mcart', cartID);
-          } else {
-            updateCartItems();
-          }
-          updateCartData();
           setCartQuantity(totalQuantity - errorsquantity);
-          handleShowCartPopup();
-          resetForm();
-          setShowLoader(false);
-          setIsCartSelected(true);
-          setDropdownOpen(false);
           const errorsContainer = res.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}
           `)).join('\n');
           setBulkError(errorsContainer);
