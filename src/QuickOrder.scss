@@ -183,7 +183,7 @@
   }
 
   &__addtocartdropdowncontent {
-    // position: absolute;
+    margin: 0px auto;
     border: 1px solid $mainColor;
     width: 100%;
     max-width: 330px;
@@ -272,6 +272,17 @@
 
   @media (max-width: $mobileXSmallWidth - 1px) {
     &__form {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: $mobileSmallWidth - 1px) {
+    &__createcartmodalbg {
+      position: fixed;
+    }
+
+    &__createcartmodal {
+      height: 100%;
       width: 100%;
     }
   }

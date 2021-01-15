@@ -2,6 +2,8 @@
 
 .bulkorder {
   position: relative;
+  display: flex;
+  flex-direction: column-reverse;
 
   &__form {
     max-width: 600px;
@@ -20,7 +22,7 @@
 
   &__textarea {
     width: 100%;
-    min-height: 400px;
+    min-height: 200px;
     padding: 10px;
     font-size: $sizeSmall;
     border: 1px solid $secondBorderColor;
@@ -74,10 +76,9 @@
     white-space: pre-line;
     text-overflow: clip;
     line-height: 18px;
-    max-height: 390px;
+    max-height: 190px;
     overflow-y: auto;
     padding:10px;
-    text-align: justify;
     border-radius: 5px;
   }
 
@@ -230,6 +231,20 @@
         min-width: 100%;
       }
     }
+
+    &__addtocartdropdowncontainer {
+      width: 100%;
+    }
+    
+    &__addtocartdropdownwrap {
+      max-width: 100%;
+    }
+
+    &__addtocartdropdowncontent {
+
+      max-width: 100%;
+
+    }
   }
 
   @media screen and (min-width: $tabletSmallWidth) {
@@ -242,6 +257,13 @@
     max-width: 800px;
     }
 
+    &__feedback {
+      max-height: 390px;
+    }
+
+    &__textarea {
+      min-height: 400px;
+    }
   }
   @media screen and (min-width: $fullHDWidth) {
 
@@ -251,6 +273,17 @@
 
     &__form {
      max-width: 700px;
+    }
+  }
+
+  @media (max-width: $mobileSmallWidth - 1px) {
+    &__createcartmodalbg {
+      position: fixed;
+    }
+
+    &__createcartmodal {
+      height: 100%;
+      width: 100%;
     }
   }
 
