@@ -183,13 +183,13 @@ export const QuickOrder: React.FC = (props) => {
       const mcart = cartId ? cartId : currentCart;
     bulkAdd(mcart, products)
       .then((res:any) => {
-        const errorsWQ: [{type:string, sku:string, quantity:number}] = [{type: "", sku: "", quantity: 0}];
+        const errors: [{type:string, sku:string, quantity:number}] = [{type: "", sku: "", quantity: 0}];
         res.errors.map(function(x:any){
           var result = products.filter(a => a.sku === x.meta.sku)
-          errorsWQ.push(result[0]);
-          return errorsWQ;
+          errors.push(result[0]);
+          return errors;
         })
-        const errorsquantity = errorsWQ.reduce((sum, { quantity }) => sum + quantity, 0);
+        const errorsquantity = errors.reduce((sum, { quantity }) => sum + quantity, 0);
         const itemsAddedQuantity = totalQuantity - errorsquantity;
         if (cartId && cartId !== currentCart) {
           localStorage.setItem('mcart', cartId);

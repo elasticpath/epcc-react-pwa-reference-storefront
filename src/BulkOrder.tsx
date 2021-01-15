@@ -134,13 +134,13 @@ export const BulkOrder: React.FC = (props) => {
       bulkAdd(mcart, bulkOrderItems)
         .then((res:any) => {
           const totalQuantity = bulkOrderItems.reduce((sum, { quantity }) => sum + quantity, 0);
-          const errorsWQ: [{type:string, sku:string, quantity:number}] = [{type: "", sku: "", quantity: 0}];
+          const errors: [{type:string, sku:string, quantity:number}] = [{type: "", sku: "", quantity: 0}];
           res.errors.map(function(x:any){
             var result = bulkOrderItems.filter((a:any) => a.sku === x.meta.sku)
-            errorsWQ.push(result[0]);
-            return errorsWQ;
+            errors.push(result[0]);
+            return errors;
           })
-          const errorsquantity = errorsWQ.reduce((sum, { quantity }) => sum + quantity, 0);
+          const errorsquantity = errors.reduce((sum, { quantity }) => sum + quantity, 0);
           if (cartID && cartID !== currentCart) {
             localStorage.setItem('mcart', cartID);
           } else {

@@ -251,14 +251,15 @@
   }
 
   @media (max-width: $mobileWidth - 1px) {
+
     &__feedback {
       padding: 15px;
     }
+
     &__btns {
       display: flex;
       flex-direction: column;
 
-      
       .epbtn{
         align-self: center;
         height: 42px;
@@ -271,12 +272,14 @@
   }
 
   @media (max-width: $mobileXSmallWidth - 1px) {
+
     &__form {
       width: 100%;
     }
   }
 
   @media (max-width: $mobileSmallWidth - 1px) {
+    
     &__createcartmodalbg {
       position: fixed;
     }

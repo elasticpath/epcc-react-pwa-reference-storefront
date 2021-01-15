@@ -68,6 +68,10 @@
     }
   }
 
+  &__messagewrap {
+    margin-top: -25px;
+  }
+
   &__feedback {
     width: 100%;
     font-size: $sizeSmall;
@@ -78,8 +82,8 @@
     line-height: 18px;
     max-height: 190px;
     overflow-y: auto;
-    padding:10px;
     border-radius: 5px;
+    margin-bottom: 30px;
   }
 
   &__addtocartdropdowncontainer {
@@ -212,13 +216,10 @@
   }
 
   &__clearerrorbtnicon{
-      fill: $mainErrorColor;
+    fill: $mainErrorColor;
   }
 
   @media (max-width: $mobileWidth - 1px) {
-    &__feedback {
-      padding: 15px;
-    }
 
     .--secondary{
       width: 100%;
@@ -226,6 +227,7 @@
   }
 
   @media (max-width: $mobileXSmallWidth - 1px) {
+
     &__btns {
       .epbtn {
         min-width: 100%;
@@ -241,9 +243,7 @@
     }
 
     &__addtocartdropdowncontent {
-
       max-width: 100%;
-
     }
   }
 
@@ -259,6 +259,12 @@
 
     &__feedback {
       max-height: 390px;
+      padding:10px;
+      margin-bottom: 0px;
+    }
+
+    &__messagewrap {
+      margin-top: 0px;
     }
 
     &__textarea {
@@ -277,6 +283,7 @@
   }
 
   @media (max-width: $mobileSmallWidth - 1px) {
+
     &__createcartmodalbg {
       position: fixed;
     }
@@ -286,5 +293,4 @@
       width: 100%;
     }
   }
-
 }
