@@ -183,26 +183,28 @@ export const QuickOrder: React.FC = (props) => {
       const mcart = cartId ? cartId : currentCart;
     bulkAdd(mcart, products)
       .then((res:any) => {
+        const errorsWQ: [{type:string, sku:string, quantity:number}] = [{type: "", sku: "", quantity: 0}];
+        if(res.errors){
+          res.errors.map(function(x:any){
+            var result = products.filter(a => a.sku === x.meta.sku)
+            errorsWQ.push(result[0]);
+            return errorsWQ;
+          })
+        }
+        const errorsquantity = errorsWQ.reduce((sum, { quantity }) => sum + quantity, 0);
+        const itemsAddedQuantity = totalQuantity - errorsquantity;
         if (cartId && cartId !== currentCart) {
           localStorage.setItem('mcart', cartId);
         } else {
           updateCartItems();
         }
         updateCartData();
+        setCartQuantity(itemsAddedQuantity);
         handleShowCartPopup();
         setItems(Array(defaultItemsCount).fill(defaultItem).map((item, index) => ({ ...item, key: `quick-order-sku-${index}` })));
         setShowLoader(false);
         setIsCartSelected(true);
         setDropdownOpen(false);
-        const errors: [{type:string, sku:string, quantity:number}] = [{type: "", sku: "", quantity: 0}];
-        res.errors.map(function(x:any){
-          var result = products.filter(a => a.sku === x.meta.sku)
-          errors.push(result[0]);
-          return errors;
-        })
-        const errorsquantity = errors.reduce((sum, { quantity }) => sum + quantity, 0);
-        const itemsAddedQuantity = totalQuantity - errorsquantity;
-        setCartQuantity(itemsAddedQuantity);
         const itemsArr:any[] = [...items];
         res.errors.forEach((errorEl:any, idx:number) => (
           items.forEach((el, index) => {

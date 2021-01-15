@@ -133,26 +133,28 @@ export const BulkOrder: React.FC = (props) => {
       const mcart = cartID ? cartID : currentCart;
       bulkAdd(mcart, bulkOrderItems)
         .then((res:any) => {
+          const totalQuantity = bulkOrderItems.reduce((sum, { quantity }) => sum + quantity, 0);
+          const errorsWQ: [{type:string, sku:string, quantity:number}] = [{type: "", sku: "", quantity: 0}];
+          if (res.errors) {
+            res.errors.map(function(x:any){
+              var result = bulkOrderItems.filter((a:any) => a.sku === x.meta.sku)
+              errorsWQ.push(result[0]);
+              return errorsWQ;
+            })
+          }
+          const errorsquantity = errorsWQ.reduce((sum, { quantity }) => sum + quantity, 0);
           if (cartID && cartID !== currentCart) {
             localStorage.setItem('mcart', cartID);
           } else {
             updateCartItems();
           }
           updateCartData();
+          setCartQuantity(totalQuantity - errorsquantity);
           handleShowCartPopup();
           resetForm();
           setShowLoader(false);
           setIsCartSelected(true);
           setDropdownOpen(false);
-          const totalQuantity = bulkOrderItems.reduce((sum, { quantity }) => sum + quantity, 0);
-          const errors: [{type:string, sku:string, quantity:number}] = [{type: "", sku: "", quantity: 0}];
-          res.errors.map(function(x:any){
-            var result = bulkOrderItems.filter((a:any) => a.sku === x.meta.sku)
-            errors.push(result[0]);
-            return errors;
-          })
-          const errorsquantity = errors.reduce((sum, { quantity }) => sum + quantity, 0);
-          setCartQuantity(totalQuantity - errorsquantity);
           const errorsContainer = res.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}
           `)).join('\n');
           setBulkError(errorsContainer);
