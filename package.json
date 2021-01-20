@@ -3,7 +3,7 @@
   "version": "3.0.0",
   "private": true,
   "dependencies": {
-    "@moltin/sdk": "^5.0.1",
+    "@moltin/sdk": "5.5.0",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
@@ -17,7 +17,7 @@
     "css-reset-and-normalize": "^2.1.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "formik": "^2.1.4",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-axe": "^3.5.2",
     "react-cool-onclickoutside": "^1.5.2",

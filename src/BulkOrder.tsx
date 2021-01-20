@@ -31,8 +31,11 @@ export const BulkOrder: React.FC = (props) => {
       setShowLoader(true);
       const totalQuantity = bulkOrderItems.reduce((sum, { quantity }) => sum + quantity, 0);
       const mcart = localStorage.getItem('mcart') || '';
+      
       bulkAdd(mcart, bulkOrderItems)
-        .then(() => {
+        .then((res:any) => {
+          const errorsContainer = res.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}`)).join('\n');
+          setBulkError(errorsContainer);
           updateCartItems();
           updateCartData();
           setCartQuantity(totalQuantity);
@@ -41,8 +44,6 @@ export const BulkOrder: React.FC = (props) => {
           setShowLoader(false);
         })
         .catch(error => {
-          const errorsContainer = error.errors.map((el:any) => (`"${el.meta.sku}" ${el.detail}`)).join('\n');
-          setBulkError(errorsContainer);
           setShowLoader(false);
           console.error(error);
         });

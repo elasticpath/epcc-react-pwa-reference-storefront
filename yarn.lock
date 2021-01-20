@@ -1458,10 +1458,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@moltin/sdk@^5.0.1":
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/@moltin/sdk/-/sdk-5.0.1.tgz#d95407c661293210d746f92f52c040c42043ed09"
-  integrity sha512-UsHQnN41foYf+bjib8BYuSxwkMLSUnfRmnscXnwTimMVAVOoTvG/guvdko7brxWXpEesi1odgj/fljG9ud8KKQ==
+"@moltin/sdk@5.5.0":
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/@moltin/sdk/-/sdk-5.5.0.tgz#55b7c33df0f437cdf76ce7bf04344bf7ba76cbd0"
+  integrity sha512-TzNBdnv/eI5Bi4FrE3zxpp6Udn7QEl4XnZZXjpwJKTSJQhxGhdpP1au4p5fVdeD3QD8T2cwyJ0H9FE8k6vC8cA==
   dependencies:
     es6-promise "^4.0.5"
     fetch-everywhere "^1.0.5"
@@ -8225,10 +8225,15 @@ mute-stream@0.0.8:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
   integrity sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==
 
-nan@^2.12.1, nan@^2.13.2:
+nan@^2.12.1:
   version "2.14.1"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.1.tgz#d7be34dfa3105b91494c3147089315eff8874b01"
   integrity sha512-isWHgVjnFjh2x2yuJ/tj3JbwoHu3UC2dX5G/88Cm24yB6YopVgxvBObDY7n5xW6ExmFhJpSEQqFPvq9zaXc8Jw==
+
+nan@^2.13.2:
+  version "2.14.2"
+  resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.2.tgz#f5376400695168f4cc694ac9393d0c9585eeea19"
+  integrity sha512-M2ufzIiINKCuDfBSAUr1vWQ+vuVcA9kqx8JJUsbQi6yf1uGRyb7HfpdfUr5qLXf3B/t8dPvcjhKMmlfnP47EzQ==
 
 nanomatch@^1.2.9:
   version "1.2.13"
@@ -8378,7 +8383,7 @@ node-releases@^1.1.52, node-releases@^1.1.61:
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.61.tgz#707b0fca9ce4e11783612ba4a2fcba09047af16e"
   integrity sha512-DD5vebQLg8jLCOzwupn954fbIiZht05DAZs0k2u8NStSe6h9XdsuIQL8hSRKYiU8WUQRznmSDrKGbv3ObOmC7g==
 
-node-sass@^4.13.0:
+node-sass@^4.14.1:
   version "4.14.1"
   resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-4.14.1.tgz#99c87ec2efb7047ed638fb4c9db7f3a42e2217b5"
   integrity sha512-sjCuOlvGyCJS40R8BscF5vhVlQjNN069NtQ1gSxyK1u9iqvn6tf7O1R4GNowVZfiZUCRt5MmMs1xd+4V/7Yr0g==

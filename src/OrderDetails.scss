@@ -1,8 +1,7 @@
 @import './theme/common';
 
 .orderdetail {
-  width: 100%;
-  padding: 40px;
+ width: 100%;
 
   &__link {
     text-decoration: none;
@@ -19,5 +18,41 @@
     margin: 30px 0;
     text-transform: capitalize;
     text-align: center;
+  }
+
+  &__container{
+    margin:200px;
+  }
+
+  &__wrap {
+    padding: 40px 0 20px;
+  }
+
+  &__content {
+    flex: 1 0;
+  }
+
+  &__container {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  &__backbtn{
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+  
+  @media screen and (min-width: $tabletSmallWidth) {
+    width: 80%;
+
+    &__wrap {
+      display: flex;
+    }
+
+    &__side {
+      width: 200px;
+      margin-right: 40px;
+    }
   }
 }
