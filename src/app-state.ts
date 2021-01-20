@@ -9,6 +9,7 @@ import {
   getCartItems,
   loadEnabledCurrencies,
   getMultiCarts,
+  getMultiCartsList,
   createNewCart,
   editCartInfo,
   addCustomerAssociation,
@@ -488,10 +489,14 @@ function useMultiCartDataState() {
   const token = localStorage.getItem('mtoken') || '';
   const mcustomer = localStorage.getItem('mcustomer') || '';
   const [multiCartData, setMultiCartData] = useState<moltin.CartItem[]>([]);
+  const [multiCartDataList, setMultiCartDataList] = useState<moltin.Cart[]>([]);
   const [selectedCart, setSelectedCart] = useState<moltin.CartItem>();
   const [isCreateNewCart, setIsCreateNewCart] = useState(false);
   const [isCartSelected, setIsCartSelected] = useState(false);
   const [guestCartId, setGuestCartId] = useState('');
+  const [pageNum, setPageNum] = useState<number>(1);
+  const [total, setTotal] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
     if (token) {
@@ -501,11 +506,16 @@ function useMultiCartDataState() {
         updateSelectedCart(res.data[0]);
         localStorage.setItem('mcart', cartId);
       });
+      getMultiCartsList(token, pageNum).then( res => {
+        setMultiCartDataList(res.data);
+        setTotal(res.meta.page.total);
+        setCurrentPage(res.meta.page.current)
+      })
     }
     else {
       clearCartData();
     }
-  }, [mcustomer, token]);
+  }, [mcustomer, token, pageNum]);
 
   const createCart = (data: any) => (
     createNewCart(data, token).then((cartRes: any) => {
@@ -558,6 +568,9 @@ function useMultiCartDataState() {
 
   const updateCartData = () => {
     const selectedCart = localStorage.getItem('mcart');
+    getMultiCartsList(token, pageNum).then(res => {
+      setMultiCartDataList(res.data)
+    });
     getMultiCarts(token).then(res => {
       setMultiCartData(res.data);
       const selectedCartData = res.data.filter(el => (el.id === selectedCart));
@@ -567,11 +580,16 @@ function useMultiCartDataState() {
         localStorage.setItem('mcart', cartId);
       }
     });
+    
   };
 
   return {
     multiCartData,
     setMultiCartData,
+    multiCartDataList,
+    setMultiCartDataList,
+    setPageNum,
+    total, currentPage, setCurrentPage,
     createCart,
     selectedCart,
     updateSelectedCart,

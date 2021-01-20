@@ -19,14 +19,19 @@
 
     &__prevpageicon {
         transform: rotate(90deg);
+        
     }
 
     &__nextpageicon {
         transform: rotate(-90deg);
+        
     }
 
     svg {
-        fill: #3C4858;
+        path{
+            fill: #3C4858;
+        }
+       
         cursor: pointer;
 
         &:hover{

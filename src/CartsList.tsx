@@ -7,6 +7,7 @@ import { SettingsCart } from "./SettingsCart";
 import { ReactComponent as ArrowRightIcon } from "./images/icons/keyboard_arrow_right-black-24dp.svg";
 import { ReactComponent as DeleteIcon } from "./images/icons/delete-black-24dp.svg";
 import { ReactComponent as CloseIcon } from "./images/icons/ic_close.svg";
+import { CartsPagination }  from './CartsPagination';
 
 import './CartsList.scss';
 
@@ -17,7 +18,7 @@ interface CartsListParams {
 
 export  const CartsList: React.FC<CartsListParams> = (props) => {
   const { onHandlePage } = props;
-  const { multiCartData, updateSelectedCart, setIsCartSelected, updateCartData } = useMultiCartData();
+  const { multiCartData, updateSelectedCart, setIsCartSelected, updateCartData, multiCartDataList, total, currentPage } = useMultiCartData();
   const { updateCartItems } = useCartData();
   const [selectedCarts, setSelectedCarts] = useState<string[]>([]);
   const [deletedCartNumber , setDeletedCartNumber] = useState(Number);
@@ -39,7 +40,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
   };
 
   const handleSelectAll = () => {
-    const allCarts = multiCartData.map((cart: moltin.Cart) => cart.id);
+    const allCarts = multiCartDataList.map((cart: moltin.Cart) => cart.id);
     if(selectedCarts.length < allCarts.length) {
       setSelectedCarts(allCarts);
     } else {
@@ -109,7 +110,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
         </div>
       )}
       <div className="cartslist__content">
-        {multiCartData.length && (
+        {multiCartDataList.length && (
           <button className="cartslist__editbutton" onClick={handleCartEdit}>
             {t(isEdit ? 'done' : 'edit')}
           </button>
@@ -117,26 +118,26 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
         <h2 className="cartslist__title">
           {t('my-carts')}
         </h2>
-        {multiCartData && multiCartData.length ? (
+        {multiCartDataList && multiCartDataList.length ? (
           <div>
             <div className="cartslist__editview">
               <div className="cartslist__selectedtitle">
                 <div className={`${isEdit ? 'isshow' : ''}`}>
                   <span>
-                    <input type="checkbox" name="cartCheck" id="select-all" className="cartslist__checkall epcheckbox" checked={selectedCarts.length === multiCartData.length} onChange={() => {handleSelectAll()}} />
+                    <input type="checkbox" name="cartCheck" id="select-all" className="cartslist__checkall epcheckbox" checked={selectedCarts.length === multiCartDataList.length} onChange={() => {handleSelectAll()}} />
                     <label htmlFor="select-all" className="">
                       {selectedCarts.length === 1 ?  `${selectedCarts.length} ${t('cart')}
                       ${t('selected')}` : `${selectedCarts.length} ${t('carts')}
                       ${t('selected')}` }
                     </label>
                   </span>
-                  <button className="cartslist__deletebutton" disabled={selectedCarts.length === 0 || multiCartData.length === 1} onClick={() => setIsShowModal(true)}>
+                  <button className="cartslist__deletebutton" disabled={selectedCarts.length === 0 || multiCartDataList.length === 1} onClick={() => setIsShowModal(true)}>
                     {!isShowModal ? <DeleteIcon /> : <span className="circularLoader" aria-label={t('loading')} />}
                   </button>
                 </div>
               </div>
               <div className={`cartslist__cartlist${isEdit ? ' --editmode' : ''}`}>
-                {multiCartData.map((cart: any) => (
+                {multiCartDataList.map((cart: any) => (
                   <div role="presentation" className='cartslist__cartelement' key={cart.id} onClick={() => handleCart(cart)} tabIndex={-1}>
                     {isEdit && (
                       <input type="checkbox" name="cartCheck" id={`cart_${cart.id}`} className="cartslist__check epcheckbox" checked={selectedCarts.includes(cart.id)} onChange={() => {handleSelectCart(cart.id)}} />
@@ -187,8 +188,8 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
                 </div>
               </div>
               <div className={`cartslist__cartlist${isEdit ? ' --editmode' : ''}`}>
-                {multiCartData.map((cart: any) => (
-                  <div className='cartslist__cartelement'>
+                {multiCartDataList.map((cart: any) => (
+                  <div className='cartslist__cartelement' key={cart.id}>
                     <input type="checkbox" name="cartCheck" id={`cart_${cart.id}`} className="cartslist__check epcheckbox" checked={selectedCarts.includes(cart.id)} onChange={() => {handleSelectCart(cart.id)}} />
                     <label htmlFor={`cart_${cart.id}`} className="cartslist__description">
                       <div role="presentation"  key={cart.id} onClick={() => handleCart(cart)} tabIndex={-1}>
@@ -248,6 +249,8 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
           <div className="cartslist__confirmationoverlay" />
         </React.Fragment>
       )}
+      <CartsPagination   totalPages={total}
+                currentPage={currentPage} />
       <SettingsCart showSettings={showSettings} handleHideSettings={() => setShowSettings(false)} setShowCartAlert={() => setShowCreateCartAlert(true)}/>
     </div>
   )
