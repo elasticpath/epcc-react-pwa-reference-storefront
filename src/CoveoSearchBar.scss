@@ -1,0 +1,32 @@
+@import './theme/common';
+
+.CoveoSearchbox.searchbar {
+  display: flex !important;
+ }
+
+@media (max-width: $tabletSmallWidth - 1px) {
+  .CoveoSearchInterface {
+    min-width: 0px;
+  }
+  .CoveoSearchbox.searchbar {
+    margin-right: 0px;
+    width: 200px;
+  }
+}
+ 
+@media (max-width: $mobileWidth - 1px) {
+  .CoveoSearchInterface {
+    min-width: 0px;
+  }
+  .CoveoSearchbox.searchbar {
+    margin-right: 0px;
+    width: 40px;
+
+    .CoveoOmnibox {
+      display: none;
+    }
+    .CoveoSearchButton {
+      border: 0 !important;
+    }
+  }
+}

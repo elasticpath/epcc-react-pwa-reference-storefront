@@ -260,5 +260,6 @@
   "show": "Show",
   "page": "Page", 
   "of": "of", 
-  "results": "results"
+  "results": "results",
+  "unsupported-search-message": "Unsupported search provider"
 }

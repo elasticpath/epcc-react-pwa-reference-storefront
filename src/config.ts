@@ -29,4 +29,8 @@ export const config = {
   ],
   defaultLanguage: process.env.REACT_APP_DEFAULT_LANGUAGE || "en",
   defaultCurrency: process.env.REACT_APP_DEFAULT_CURRENCY || "USD",
+  coveoOrg: process.env.REACT_APP_COVEO_ORG || '',
+  coveoApiKey: process.env.REACT_APP_COVEO_API_KEY || '',
+  coveoSourceName: process.env.REACT_APP_COVEO_SOURCE_NAME || '',
+  searchProvider: process.env.REACT_APP_SEARCH_PROVIDER|| 'algolia'
 };
