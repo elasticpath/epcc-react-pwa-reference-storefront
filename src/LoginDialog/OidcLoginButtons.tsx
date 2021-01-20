@@ -11,6 +11,29 @@ import { generateOidcLoginRedirectUrl } from './OidcUtilities';
 
 import './OidcLoginButtons.scss';
 
+const knownProfilePrefixes: { [key: string]: string } = {
+  'https://auth0.auth0.com': 'auth0',
+  'https://login.live.com': 'microsoft',
+  'https://elasticpath.okta.com': 'okta',
+  'https://accounts.google.com': 'google',
+  'https://appleid.apple.com': 'apple',
+  'https://login.salesforce.com': 'salesforce',
+};
+
+function knownOidcProfileName(profile: any) {
+  if (!profile?.meta?.issuer) {
+    return 'unknown';
+  }
+
+  for (const p of Object.keys(knownProfilePrefixes)) {
+    if (profile.meta.issuer.startsWith(p)) {
+      return knownProfilePrefixes[p];
+    }
+  }
+
+  return 'unknown';
+}
+
 export const OidcLoginButtons: React.FC = () => {
   const { authenticationSettings, isLoadingOidcProfiles, oidcProfiles } = useCustomerAuthenticationSettings()
   const [ isLoading ] = useState(false);
@@ -28,16 +51,18 @@ export const OidcLoginButtons: React.FC = () => {
   const clientId = `${authenticationSettings?.data.meta.client_id}`;
 
   return (
-    <div className="auth-opt">
+    <div className="oidcloginbuttons">
       {isLoadingOidcProfiles && (
         <div key="oidcLoginButtonLoader" className="epminiLoader" />
       )}
 
       {oidcProfiles && (
-        oidcProfiles.data.map((profile:any)=>{
+        oidcProfiles.data.map((profile:any) => {
           return (
-            <button key={`${profile.name}`} className={`authbtn ${profile.name}`} onClick={()=>handleOidcButtonClicked(profile, clientId)}>
-              {isLoading ? 'Loading' : `Login with ${profile.name}`}
+            <button key={`${profile.name}`} className={`oidcloginbuttons__button oidcloginbuttons__button--${knownOidcProfileName(profile)}`} onClick={()=>handleOidcButtonClicked(profile, clientId)}>
+              <div className="oidcloginbuttons__buttoncontent">
+                {isLoading ? 'Loading' : `Login with ${profile.name}`}
+              </div>
             </button>
           );
         })
