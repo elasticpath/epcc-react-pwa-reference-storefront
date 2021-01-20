@@ -218,7 +218,10 @@ export const QuickOrder: React.FC = (props) => {
         ));
         itemsArr.forEach((item) =>{
           if(item.errorMsg === ""){
-            item.code = ""
+            item.code = "";
+            item.quantity=  0;
+            item.isInvalid= false;
+            item.errorMsg= ''
           }
         })
         setItems(itemsArr);
