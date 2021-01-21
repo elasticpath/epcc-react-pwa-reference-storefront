@@ -16,9 +16,8 @@ export const CartsPagination: React.FC<Props> = ({
   const { setPageNum} = useMultiCartData();
   return (
     <div className="CartsPagination">
-      
         {currentPage !== 1 && (
-         <button onClick={() => setPageNum(currentPage-1)}>prev <PaginationIcon className="CartsPagination__prevpageicon"/></button>
+         <button onClick={() => setPageNum(currentPage-1)}> <PaginationIcon className="CartsPagination__prevpageicon"/></button>
         )}
         
         <span className="CartsPagination__pagenumber">
@@ -26,8 +25,9 @@ export const CartsPagination: React.FC<Props> = ({
         </span>
 
         {currentPage !== totalPages && (
-           <button onClick={() => setPageNum(currentPage+1)}>Next <PaginationIcon className="CartsPagination__nextpageicon" /></button>
+           <button onClick={() => setPageNum(currentPage+1)}> <PaginationIcon className="CartsPagination__nextpageicon" /></button>
         )}
+
     </div>
   );
 };

@@ -7,7 +7,7 @@ import { SettingsCart } from "./SettingsCart";
 import { ReactComponent as ArrowRightIcon } from "./images/icons/keyboard_arrow_right-black-24dp.svg";
 import { ReactComponent as DeleteIcon } from "./images/icons/delete-black-24dp.svg";
 import { ReactComponent as CloseIcon } from "./images/icons/ic_close.svg";
-import { CartsPagination }  from './CartsPagination';
+
 
 import './CartsList.scss';
 
@@ -18,7 +18,7 @@ interface CartsListParams {
 
 export  const CartsList: React.FC<CartsListParams> = (props) => {
   const { onHandlePage } = props;
-  const { multiCartData, updateSelectedCart, setIsCartSelected, updateCartData, multiCartDataList, total, currentPage } = useMultiCartData();
+  const { multiCartData, updateSelectedCart, setIsCartSelected, updateCartData, multiCartDataList } = useMultiCartData();
   const { updateCartItems } = useCartData();
   const [selectedCarts, setSelectedCarts] = useState<string[]>([]);
   const [deletedCartNumber , setDeletedCartNumber] = useState(Number);
@@ -249,8 +249,7 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
           <div className="cartslist__confirmationoverlay" />
         </React.Fragment>
       )}
-      <CartsPagination   totalPages={total}
-                currentPage={currentPage} />
+
       <SettingsCart showSettings={showSettings} handleHideSettings={() => setShowSettings(false)} setShowCartAlert={() => setShowCreateCartAlert(true)}/>
     </div>
   )

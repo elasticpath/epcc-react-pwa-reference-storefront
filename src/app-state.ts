@@ -524,7 +524,13 @@ function useMultiCartDataState() {
         addCustomerAssociation(cartRes.data.id, customerId, token).then(() =>
           getMultiCarts(token).then(res => {
             setMultiCartData(res.data);
+            getMultiCartsList(token, pageNum).then(res => {
+              setMultiCartDataList(res.data);
+              setTotal(res.meta.page.total);
+              setCurrentPage(res.meta.page.current)
+            });
           })
+          
         )
       }
     )
