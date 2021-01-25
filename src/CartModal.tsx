@@ -255,7 +255,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
               </div>
               <div className="completed__body">
                 <p>{t('thank-you-for-your-order')}</p>
-                <OrderDetailsTable orderData={orderData.data} orderItems={orderData.included.items} />
+                <OrderDetailsTable modalUI={true} orderData={orderData.data} orderItems={orderData.included.items} />
                 <button className="epbtn --secondary --large" onClick={onCloseModal}>{t('continue-shopping')}</button>
               </div>
             </div>

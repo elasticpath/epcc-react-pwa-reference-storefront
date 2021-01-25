@@ -1,5 +1,4 @@
 importScripts('/workbox-sw.js');
-importScripts('/config.js');
 
 workbox.core.skipWaiting();
 workbox.core.clientsClaim();
@@ -21,7 +20,7 @@ workbox.routing.registerRoute(/https:\/\/fonts.googleapis.com\/.*/, webFontHandl
 workbox.routing.registerRoute(/https:\/\/fonts.gstatic.com\/.*/, webFontHandler);
 
 // get-urls-cache
-const API = new RegExp('https:\/\/' + config.endpointURL + '\/.*');
+const API = new RegExp('https:\/\/' + 'config.endpointURL' + '\/.*');
 const apiHandler = new workbox.strategies.NetworkFirst({
   cacheName: 'get-urls-cache'
 });
