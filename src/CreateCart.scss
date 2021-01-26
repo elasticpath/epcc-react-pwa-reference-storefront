@@ -3,13 +3,11 @@
 .createcart {
   $block: &;
 
-  position: absolute;
+  position: fixed;
   top: 0px;
   right: 0px;
   bottom: 0px;
   left: 0px;
-  height: 100%;
-  min-height: 100%;
   width: 100%;
   padding: 32px;
   background: $mainBackgroundColor;
@@ -36,12 +34,10 @@
 
     h2 {
       font-style: normal;
+      font-weight: bold;
       font-size: 28px;
       line-height: 34px;
       text-align: center;
-      font-weight: bold;
-      text-align: center;
-      flex-grow: 1;
     }
 
     button {
@@ -53,7 +49,27 @@
     padding-bottom: 35px;
     font-size: 18px;
     text-align: center;
+    color: $firstComplimentTextColor;
+  }
+
+  &__infospan {
     border-bottom: 1px solid $secondBorderColor;
+    margin-bottom: 32px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    padding: 20px 0px;
+    color: $firstComplimentTextColor;
+  }
+
+  &__optionstitle {
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 14px;
+    color: $mainTextColor;
+    text-align: center;
     margin-bottom: 40px;
   }
 

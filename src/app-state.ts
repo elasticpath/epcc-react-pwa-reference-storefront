@@ -530,7 +530,6 @@ function useMultiCartDataState() {
               setCurrentPage(res.meta.page.current)
             });
           })
-          
         )
       }
     )

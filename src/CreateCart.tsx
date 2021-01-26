@@ -19,7 +19,7 @@ interface FormValues {
 export const CreateCart: React.FC<CreateCartParams> = (props) => {
   const { showCreateCart, handleHideCreateCart } = props;
   const { t } = useTranslation();
-  const { guestCartId, setMultiCartData, updateSelectedCart } = useMultiCartData();
+  const { guestCartId, setMultiCartData, updateSelectedCart, multiCartData } = useMultiCartData();
   const [isLoading, setIsLoading] = useState(false);
 
   let initialValues: FormValues = {
@@ -71,10 +71,12 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
       <div className="createcart__content">
         <div className="createcart__title">
           <h2>
-            {t('creating-new-cart')}
+            {t('carts-found-in-your-account')}
           </h2>
         </div>
         <p className="createcart__info">{t('creating-cart-info')}</p>
+        <p className="createcart__infospan">Select how you’d like to proceed below </p>
+        <p className="createcart__optionstitle">{t("create-new-cart")}</p>
         <form className="epform" onSubmit={handleSubmit}>
           <div className={`epform__group ${errors.cartName ? '--error' : ''}`}>
             <label className="epform__label" htmlFor="name">{t('cart-name')}</label>
@@ -88,6 +90,44 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
               {errors.cartName ? errors.cartName : null}
             </div>
           </div>
+          <div>
+            <p className="createcart__infospan">{t("or")}</p>
+            <p className="createcart__optionstitle">{t("select-cart-merge-with")}</p>
+          </div>
+          
+
+          {multiCartData.map((cart: any) => (
+              <div>
+              <input type="radio" name="cartCheck" id={`cart_${cart.id}`} className="cartslist__check epcheckbox" />
+            <label htmlFor={`cart_${cart.id}`} className="cartslist__description">
+              {console.log(multiCartData)}
+            <div className="cartslist__cartname">
+              <strong className="--overflowtext">
+                {cart.name}
+              </strong>
+              <span className="cartslist__select">
+                <span className="cartslist__date">
+                  {t('created')} - {(cart.meta.timestamps.created_at).substring(0, 10)}
+                </span>
+                <button className="cartslist__selectcart">
+                </button>
+                <br />
+                <span className="cartslist__date">
+                  {t('edited')} - {(cart.meta.timestamps.updated_at).substring(0, 10)}
+                </span>
+              </span>
+            </div>
+            <p className="cartslist__quantity">
+              {cart.relationships.items.data ? cart.relationships.items.data.length : 0} {cart.relationships.items.data && cart.relationships.items.data.length === 1 ? t('product') : t('products') }
+            </p>
+            <p>
+              {cart.description}
+            </p>
+            </label>
+            </div>
+          ))}
+
+
           <div className="createcart__btns">
             <button
               className={`epbtn --primary ${
@@ -100,6 +140,7 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
             </button>
           </div>
         </form>
+
       </div>
     </div>
   )
