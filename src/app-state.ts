@@ -524,10 +524,11 @@ function useMultiCartDataState() {
         addCustomerAssociation(cartRes.data.id, customerId, token).then(() =>
           getMultiCarts(token).then(res => {
             setMultiCartData(res.data);
-            getMultiCartsList(token, pageNum).then(res => {
+            getMultiCartsList(token, 1).then(res => {
               setMultiCartDataList(res.data);
               setTotal(res.meta.page.total);
-              setCurrentPage(res.meta.page.current)
+              setCurrentPage(1);
+              setPageNum(1);
             });
           })
         )
@@ -559,6 +560,12 @@ function useMultiCartDataState() {
         setMultiCartData(res.data);
         const selectedCartData = res.data.filter(el => el.id === updatedCart.data.id);
         setSelectedCart(selectedCartData[0]);
+        getMultiCartsList(token, 1).then(res => {
+          setMultiCartDataList(res.data);
+          setTotal(res.meta.page.total);
+          setCurrentPage(1);
+          setPageNum(1);
+        });
       })
     )
   );
@@ -584,6 +591,12 @@ function useMultiCartDataState() {
         updateSelectedCart(res.data[0]);
         localStorage.setItem('mcart', cartId);
       }
+      getMultiCartsList(token, 1).then(res => {
+        setMultiCartDataList(res.data);
+        setTotal(res.meta.page.total);
+        setCurrentPage(1);
+        setPageNum(1);
+      });
     });
     
   };
@@ -594,7 +607,8 @@ function useMultiCartDataState() {
     multiCartDataList,
     setMultiCartDataList,
     setPageNum,
-    total, currentPage, setCurrentPage,
+    total,
+    currentPage,
     createCart,
     selectedCart,
     updateSelectedCart,

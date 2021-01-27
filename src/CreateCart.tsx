@@ -94,13 +94,10 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
             <p className="createcart__infospan">{t("or")}</p>
             <p className="createcart__optionstitle">{t("select-cart-merge-with")}</p>
           </div>
-          
-
           {multiCartData.map((cart: any) => (
               <div>
               <input type="radio" name="cartCheck" id={`cart_${cart.id}`} className="cartslist__check epcheckbox" />
             <label htmlFor={`cart_${cart.id}`} className="cartslist__description">
-              {console.log(multiCartData)}
             <div className="cartslist__cartname">
               <strong className="--overflowtext">
                 {cart.name}
@@ -126,8 +123,6 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
             </label>
             </div>
           ))}
-
-
           <div className="createcart__btns">
             <button
               className={`epbtn --primary ${
