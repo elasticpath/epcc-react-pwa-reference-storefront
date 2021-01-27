@@ -75,10 +75,10 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
           </h2>
         </div>
         <p className="createcart__info">{t('creating-cart-info')}</p>
-        <p className="createcart__infospan">Select how you’d like to proceed below </p>
+        <p className="createcart__infospan --selectinfo">Select how you’d like to proceed below </p>
         <p className="createcart__optionstitle">{t("create-new-cart")}</p>
         <form className="epform" onSubmit={handleSubmit}>
-          <div className={`epform__group ${errors.cartName ? '--error' : ''}`}>
+          <div className={`createcart__createcartinput epform__group ${errors.cartName ? '--error' : ''}`}>
             <label className="epform__label" htmlFor="name">{t('cart-name')}</label>
             <input className="epform__input" id="cartName" placeholder={t('new-cart')} onChange={handleChange} value={values.cartName}/>
             {(values.cartName && values.cartName.length > 0) && (
@@ -92,35 +92,33 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
           </div>
           <div>
             <p className="createcart__infospan">{t("or")}</p>
-            <p className="createcart__optionstitle">{t("select-cart-merge-with")}</p>
+            <p className="createcart__optionstitle --mergetitle">{t("select-cart-merge-with")}</p>
           </div>
           {multiCartData.map((cart: any) => (
-              <div>
-              <input type="radio" name="cartCheck" id={`cart_${cart.id}`} className="cartslist__check epcheckbox" />
-            <label htmlFor={`cart_${cart.id}`} className="cartslist__description">
-            <div className="cartslist__cartname">
-              <strong className="--overflowtext">
-                {cart.name}
-              </strong>
-              <span className="cartslist__select">
-                <span className="cartslist__date">
-                  {t('created')} - {(cart.meta.timestamps.created_at).substring(0, 10)}
-                </span>
-                <button className="cartslist__selectcart">
-                </button>
-                <br />
-                <span className="cartslist__date">
-                  {t('edited')} - {(cart.meta.timestamps.updated_at).substring(0, 10)}
-                </span>
-              </span>
-            </div>
-            <p className="cartslist__quantity">
-              {cart.relationships.items.data ? cart.relationships.items.data.length : 0} {cart.relationships.items.data && cart.relationships.items.data.length === 1 ? t('product') : t('products') }
-            </p>
-            <p>
-              {cart.description}
-            </p>
-            </label>
+            <div className="createcart__cart">
+              <input type="radio" name="cartCheck" id={`cart_${cart.id}`} className="createcart__radio epradio" />
+              <label htmlFor={`cart_${cart.id}`} className="createcart__label">
+                <div className="createcart__cartinfo"  role="presentation" key={cart.id} tabIndex={-1}>
+                  <strong className="createcart__cartname --overflowtext ">
+                    {cart.name}
+                  </strong>
+                  <span className="createcart__select">
+                    <span className="createcart__date">
+                      {t('created')} - {(cart.meta.timestamps.created_at).substring(0, 10)}
+                    </span>
+                    <br />
+                    <span className="createcart__date">
+                      {t('edited')} - {(cart.meta.timestamps.updated_at).substring(0, 10)}
+                    </span>
+                  </span>
+                </div>
+                <p className="createcart__quantity">
+                  {cart.relationships.items.data ? cart.relationships.items.data.length : 0} {cart.relationships.items.data && cart.relationships.items.data.length === 1 ? t('product') : t('products') }
+                </p>
+                <p>
+                  {cart.description}
+                </p>
+              </label>
             </div>
           ))}
           <div className="createcart__btns">
