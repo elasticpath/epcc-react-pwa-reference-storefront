@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { useFormik } from 'formik';
-import { useMultiCartData, useTranslation } from "./app-state";
-import { addCustomerAssociation, getMultiCarts, editCartInfo } from "./service";
+import { useMultiCartData, useTranslation, useCartData } from "./app-state";
+import { addCustomerAssociation, getMultiCarts, bulkAdd, editCartInfo} from "./service";
 import { ReactComponent as ClearIcon } from "./images/icons/ic_clear.svg";
 
 
@@ -12,44 +11,45 @@ interface CreateCartParams {
   handleHideCreateCart: () => void
 }
 
-interface FormValues {
-  cartName: string,
-}
-
 export const CreateCart: React.FC<CreateCartParams> = (props) => {
   const { showCreateCart, handleHideCreateCart } = props;
   const { t } = useTranslation();
-  const { guestCartId, setMultiCartData, updateSelectedCart, multiCartData } = useMultiCartData();
+  const { updateCartItems } = useCartData();
+  const { guestCartId, setMultiCartData, updateSelectedCart, multiCartData, updateCartData } = useMultiCartData();
+  
   const [isLoading, setIsLoading] = useState(false);
+  const [ cartName, setCartName ] = useState("New Cart");
+  const [ isCreatNewCart, setIsCreatNewCart ] = useState(true);
+  const [ selectedCart, setSelectedcart ] = useState("1");
 
-  let initialValues: FormValues = {
-    cartName: 'New Cart',
-  };
+  const handleCreateCart = (e:any) => {
+    setIsCreatNewCart(true);
+    setCartName(e.target.value)
+  }
 
-  const validate = (values: any) => {
-    const errors: any = {};
-    if (!values.cartName) {
-      errors.cartName = t('cart-name-is-required');
-    }
-    return errors;
-  };
+  const handleCartOptions = (cart:any) => {
+    setIsCreatNewCart(false);
+    updateSelectedCart(cart)
+    setSelectedcart(cart.id)
+    localStorage.setItem('mcart', cart.id)  
+  }
 
-  const {handleSubmit, handleChange, values, errors, setFieldValue} = useFormik({
-    initialValues,
-    validate,
-    onSubmit: async () => {
-      setIsLoading(true);
-      const token = localStorage.getItem('mtoken') || '';
+  const handleSubmit = async() => {
+    const token = localStorage.getItem('mtoken') || '';
+    setIsLoading(true);
+    if(isCreatNewCart){
       const mcustomer = localStorage.getItem('mcustomer') || '';
       localStorage.setItem('mcart', guestCartId);
       addCustomerAssociation(guestCartId, mcustomer, token)
         .then(() =>
-          editCartInfo({name: values.cartName}, token).then(() => {
+          editCartInfo({name:cartName}, token).then(() => {
             getMultiCarts(token).then(res => {
               setMultiCartData(res.data);
               const selectedCart: any = res.data.filter(el => el.id === guestCartId);
               updateSelectedCart(selectedCart[0]);
               setIsLoading(false);
+              updateCartItems();
+              updateCartData();
               handleHideCreateCart();
             })
             .catch(error => {
@@ -63,8 +63,26 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
         .catch(error => {
           console.error(error);
         })
-    },
-  });
+    }
+    else {
+      const data = [{
+        type: "cart_items",
+        cart_id: guestCartId,
+      }];
+      bulkAdd(selectedCart, data)
+      .then(() => {
+        updateCartData();
+        updateCartItems();
+        setIsLoading(false);
+        handleHideCreateCart();
+        })
+      .catch(error => {
+        setIsLoading(false);
+        console.error(error);
+      });
+    }
+  }
+
 
   return (
     <div className={`createcart${showCreateCart ? ' --show' : ''}`}>
@@ -77,26 +95,30 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
         <p className="createcart__info">{t('creating-cart-info')}</p>
         <p className="createcart__infospan --selectinfo">Select how you’d like to proceed below </p>
         <p className="createcart__optionstitle">{t("create-new-cart")}</p>
-        <form className="epform" onSubmit={handleSubmit}>
-          <div className={`createcart__createcartinput epform__group ${errors.cartName ? '--error' : ''}`}>
-            <label className="epform__label" htmlFor="name">{t('cart-name')}</label>
-            <input className="epform__input" id="cartName" placeholder={t('new-cart')} onChange={handleChange} value={values.cartName}/>
-            {(values.cartName && values.cartName.length > 0) && (
-              <button type="button" className="createcart__clearbtn" onClick={() => setFieldValue('cartName', '')}>
+        {/* add error handing messaging */}
+          <div className={`createcart__createcartinput epform__group`} >
+            <p className='crreatecart__createcarttitle'>{t('cart-name')}</p>
+            <input type="radio" name="cartCheck" id={'createcart'} checked={isCreatNewCart} className="createcart__radio epradio" />
+            <label className="epform__label createcart__createcartlabel" htmlFor={'createcart'}>
+            
+            <input className="epform__input" id="cartName" placeholder={t('new-cart')} value={cartName} onChange={(e) => handleCreateCart(e)} />
+            {(cartName && cartName.length > 0) && (
+              <button type="button" className="createcart__clearbtn" onClick={() => setCartName('')}>
                 <ClearIcon/>
               </button>
             )}
-            <div className="epform__error">
+            {/* <div className="epform__error">
               {errors.cartName ? errors.cartName : null}
-            </div>
-          </div>
+            </div> */}
+            </label>
+           </div>
           <div>
             <p className="createcart__infospan">{t("or")}</p>
             <p className="createcart__optionstitle --mergetitle">{t("select-cart-merge-with")}</p>
           </div>
           {multiCartData.map((cart: any) => (
-            <div className="createcart__cart">
-              <input type="radio" name="cartCheck" id={`cart_${cart.id}`} className="createcart__radio epradio" />
+            <div className="createcart__cart" key={cart.id}>
+              <input type="radio" name="cartCheck" id={`cart_${cart.id}`} className="createcart__radio epradio"  value={cart.id} onChange={() => handleCartOptions(cart)}/>
               <label htmlFor={`cart_${cart.id}`} className="createcart__label">
                 <div className="createcart__cartinfo"  role="presentation" key={cart.id} tabIndex={-1}>
                   <strong className="createcart__cartname --overflowtext ">
@@ -127,13 +149,11 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
                 isLoading ? "--loading" : ""
               }`}
               type="submit"
-              disabled={isLoading || !values.cartName}
+              onClick={() => handleSubmit()}
             >
               {!isLoading ? t("next") : <span className="circularLoader" aria-label={t('loading')}/>}
             </button>
           </div>
-        </form>
-
       </div>
     </div>
   )

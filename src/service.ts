@@ -292,7 +292,6 @@ export async function editCartInfo(data: any, token: string) {
 export async function getMultiCarts(token: string ){
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const cartsList = await moltin.Cart().GetCartsList(token);
-
   return cartsList;
 }
 
@@ -302,7 +301,6 @@ export async function getMultiCartsList(token: string, pageNum:number){
   .Offset((pageNum - 1) * 20)
   .Limit(20)
   .All(token);
-  
   return cartsList;
 }
 
