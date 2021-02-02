@@ -15,7 +15,7 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
   const { showCreateCart, handleHideCreateCart } = props;
   const { t } = useTranslation();
   const { updateCartItems } = useCartData();
-  const { guestCartId, setMultiCartData, updateSelectedCart, multiCartData, updateCartData } = useMultiCartData();
+  const { guestCartId, setMultiCartData, updateSelectedCart, multiCartData, updateCartData, handleMergedMessage } = useMultiCartData();
   
   const [isLoading, setIsLoading] = useState(false);
   const [ cartName, setCartName ] = useState("New Cart");
@@ -51,6 +51,7 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
               updateCartItems();
               updateCartData();
               handleHideCreateCart();
+              handleMergedMessage(t("items-merged-to-created-cart"));
             })
             .catch(error => {
               console.error(error);
@@ -75,6 +76,7 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
         updateCartItems();
         setIsLoading(false);
         handleHideCreateCart();
+        handleMergedMessage(t("items-merged-to-account-cart"));
         })
       .catch(error => {
         setIsLoading(false);
@@ -98,7 +100,7 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
         {/* add error handing messaging */}
           <div className={`createcart__createcartinput epform__group`} >
             <p className='crreatecart__createcarttitle'>{t('cart-name')}</p>
-            <input type="radio" name="cartCheck" id={'createcart'} checked={isCreatNewCart} className="createcart__radio epradio" />
+            <input type="radio" name="cartCheck" id={'createcart'} defaultChecked={isCreatNewCart} className="createcart__radio epradio" />
             <label className="epform__label createcart__createcartlabel" htmlFor={'createcart'}>
             
             <input className="epform__input" id="cartName" placeholder={t('new-cart')} value={cartName} onChange={(e) => handleCreateCart(e)} />

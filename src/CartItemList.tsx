@@ -29,7 +29,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
   const { t } = useTranslation();
   const { isLoggedIn } = useCustomerData();
   const { count, totalPrice, updateCartItems, partialAddMessage, setPartialAddMessage, addedtItem, setAddedItem} = useCartData();
-  const { selectedCart, updateCartData } = useMultiCartData();
+  const { selectedCart, updateCartData, setMergedMessaged, mergedMessage } = useMultiCartData();
   const { addError } = useContext(APIErrorContext);
   const quantityItems = count.toString();
 
@@ -120,29 +120,35 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
           {t('my-carts')}
         </button>
       )}
+
       {showUpdateCartAlert &&  (
         <div className="cartslist__alertMessage">
           <p>{t('update-cart-message')}</p>
           <CloseIcon onClick={() => setShowUpdateCartAlert(false)}/>
         </div>
       )}
-      
-        <div className="partialadd">
-          {addedtItem &&  ( <div className="partialadd__confirmationmessage">
-            <p>{addedtItem}  items have been added to the cart</p>
-            <CloseIcon onClick={() => setAddedItem("")}/>
-          </div>
-          )}
-          {partialAddMessage &&  (
-            <div className="partialadd__alertMessage">
-              <p>{partialAddMessage}</p>
-              <CloseIcon onClick={() => setPartialAddMessage("")}/>
-            </div>
-          )}
-        </div>
-       
-      
 
+      {mergedMessage &&  (
+        <div className="cartslist__alertMessage">
+          <p>{mergedMessage}</p>
+          <CloseIcon onClick={() => setMergedMessaged("")}/>
+        </div>
+      )}
+      
+      <div className="partialadd">
+        {addedtItem &&  ( <div className="partialadd__confirmationmessage">
+          <p>{addedtItem}  items have been added to the cart</p>
+          <CloseIcon onClick={() => setAddedItem("")}/>
+        </div>
+        )}
+        {partialAddMessage &&  (
+          <div className="partialadd__alertMessage">
+            <p>{partialAddMessage}</p>
+            <CloseIcon onClick={() => setPartialAddMessage("")}/>
+          </div>
+        )}
+      </div>
+       
       <div className="cartitemlist__header">
         <h2 className="cartitemlist__title">
           {isLoggedIn && selectedCart ? (

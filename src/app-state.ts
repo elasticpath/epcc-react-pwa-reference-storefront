@@ -464,6 +464,7 @@ function useCartItemsState() {
       }, 3200);
     }
   };
+
   const handlePartialAddMessage = (errors:string) => {
     if(!partialAddMessage){
       setPartialAddMessage(errors);
@@ -497,6 +498,7 @@ function useMultiCartDataState() {
   const [pageNum, setPageNum] = useState<number>(1);
   const [total, setTotal] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [ mergedMessage, setMergedMessaged ] = useState("");
 
   useEffect(() => {
     if (token) {
@@ -598,8 +600,16 @@ function useMultiCartDataState() {
         setPageNum(1);
       });
     });
-    
   };
+
+  const handleMergedMessage = (message:string) => {
+    if(!mergedMessage){
+      setMergedMessaged(message);
+      setTimeout(() => {
+        setMergedMessaged("");
+      }, 4000);
+    }
+  }
 
   return {
     multiCartData,
@@ -620,7 +630,10 @@ function useMultiCartDataState() {
     isCreateNewCart,
     guestCartId,
     setGuestCartId,
-    createDefaultCart
+    createDefaultCart,
+    mergedMessage,
+    setMergedMessaged, 
+    handleMergedMessage
   }
 }
 

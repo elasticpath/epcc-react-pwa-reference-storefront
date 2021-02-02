@@ -262,5 +262,7 @@
   "of": "of", 
   "results": "results", 
   "carts-found-in-your-account" : "Carts found in your account",
-  "select-cart-merge-with" : "Select cart to merge with"
+  "select-cart-merge-with" : "Select cart to merge with",
+  "items-merged-to-account-cart" : "Your items have been merged to your account cart",
+  "items-merged-to-created-cart" : "Your items have been merged to your created cart "
 }
