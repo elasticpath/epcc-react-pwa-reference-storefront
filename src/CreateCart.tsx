@@ -100,9 +100,8 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
         {/* add error handing messaging */}
           <div className={`createcart__createcartinput epform__group`} >
             <p className='crreatecart__createcarttitle'>{t('cart-name')}</p>
-            <input type="radio" name="cartCheck" id={'createcart'} defaultChecked={isCreatNewCart} className="createcart__radio epradio" />
+            <input type="radio" name="cartCheck" id={'createcart'} defaultChecked={isCreatNewCart} className="createcart__radio epradio" onChange={(e) => handleCreateCart(e)} value={cartName}/>
             <label className="epform__label createcart__createcartlabel" htmlFor={'createcart'}>
-            
             <input className="epform__input" id="cartName" placeholder={t('new-cart')} value={cartName} onChange={(e) => handleCreateCart(e)} />
             {(cartName && cartName.length > 0) && (
               <button type="button" className="createcart__clearbtn" onClick={() => setCartName('')}>
