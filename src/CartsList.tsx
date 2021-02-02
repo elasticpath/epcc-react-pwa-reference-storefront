@@ -94,6 +94,19 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
         setShowCreateCartAlert(false)
       }, 4000);
   }, [showCreateCartAlert]);
+  
+
+  useEffect(() => {
+    const el = document.querySelector('.cartmodal__content');
+    console.log(el)
+    if(el && showSettings)
+    {
+      el.scrollTo({
+        top: 0,
+        left: 0, 
+      });
+    }
+  })
 
   return (
     <div className="cartslist">

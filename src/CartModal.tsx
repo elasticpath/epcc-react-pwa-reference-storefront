@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect} from 'react';
+import React, { useContext, useState } from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { Elements, StripeProvider } from 'react-stripe-elements';
 import { useCartData, useCustomerData, useMultiCartData, useOrdersData, useTranslation } from './app-state';
@@ -148,9 +148,6 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
     onCloseModal();
   });
 
-  useEffect(() => {
-    window.scrollTo(0,0);
-  })
   return (
     <div className={`cartmodal ${isCartModalOpen ? '--open' : ''}`}>
       <div className="cartmodal__content" ref={ref}>
