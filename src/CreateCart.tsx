@@ -51,6 +51,7 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
               updateCartItems();
               updateCartData();
               handleHideCreateCart();
+              setCartName("New Cart")
               handleMergedMessage(t("items-merged-to-created-cart"));
             })
             .catch(error => {
@@ -97,10 +98,9 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
         <p className="createcart__info">{t('creating-cart-info')}</p>
         <p className="createcart__infospan --selectinfo">Select how you’d like to proceed below </p>
         <p className="createcart__optionstitle">{t("create-new-cart")}</p>
-        {/* add error handing messaging */}
           <div className={`createcart__createcartinput epform__group`} >
-            <p className='crreatecart__createcarttitle'>{t('cart-name')}</p>
-            <input type="radio" name="cartCheck" id={'createcart'} defaultChecked={isCreatNewCart} className="createcart__radio epradio" onChange={(e) => handleCreateCart(e)} value={cartName}/>
+            <p className='createcart__createcarttitle'>{t('cart-name')}</p>
+            <input type="radio" name="cartCheck" id={'createcart'} checked={isCreatNewCart} className="createcart__radio epradio" onChange={(e) => handleCreateCart(e)} value={cartName}/>
             <label className="epform__label createcart__createcartlabel" htmlFor={'createcart'}>
             <input className="epform__input" id="cartName" placeholder={t('new-cart')} value={cartName} onChange={(e) => handleCreateCart(e)} />
             {(cartName && cartName.length > 0) && (
@@ -108,9 +108,6 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
                 <ClearIcon/>
               </button>
             )}
-            {/* <div className="epform__error">
-              {errors.cartName ? errors.cartName : null}
-            </div> */}
             </label>
            </div>
           <div>
