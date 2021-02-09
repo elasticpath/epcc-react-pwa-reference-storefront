@@ -12,6 +12,7 @@ interface VariationsSelectorParams {
 export const VariationsSelector: React.FC<VariationsSelectorParams> = ({ product, onChange }) => {
   const { variations, variation_matrix: variationMatrix } = product.meta;
 
+  
   const initialOptions = variations.reduce(
     (acum: any, variation: any) => ({ ...acum, [variation.id]: variation.options[0].id }),
     {}
@@ -44,6 +45,7 @@ export const VariationsSelector: React.FC<VariationsSelectorParams> = ({ product
     setSelectedOptions(updatedOptions);
     processOptions(updatedOptions);
   };
+
 
   return (
     <div className="variationsselector">
