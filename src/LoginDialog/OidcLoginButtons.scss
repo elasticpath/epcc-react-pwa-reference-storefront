@@ -1,20 +1,112 @@
 @import './../theme/common.scss';
 
-.authbtn {
+.oidcloginbuttons {
+  display: flex;
+  flex-direction: column;
+
+  &__button {
     position: relative;
-    display: inline-block;
+    display: block;
     text-align: center;
     font-size: 14px;
     border: 1px solid #FFFFFF;
     color: #ffffff;
     cursor: pointer;
-    padding: 10px 15px;
+    height: 50px;
     background-color: grey;
-}
+    margin-bottom: 16px;
 
-.Keycloak {
-    background-color:#1eb9e1
- }
- .Auth0 {
-     background-color: #f95624
- }
+    .oidcloginbuttons__buttoncontent {
+      display: inline-flex;
+      align-items: center;
+
+      &::before {
+        content: '';
+        display: none;
+        width: 30px;
+        height: 30px;
+        margin-right: 16px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+
+    }
+
+    &--auth0 {
+      background-color: #dc5e37;
+      color: #fff;
+
+      .oidcloginbuttons__buttoncontent {
+        &:before {
+          display: inline-block;
+          width: 50px;
+          background-image: url('./../images/oidc-provider-logos/auth0.svg');
+        }
+      }
+    }
+
+    &--microsoft {
+      border: solid 1px #333;
+      background-color: white;
+      color: #333;
+
+      .oidcloginbuttons__buttoncontent {
+        &:before {
+          display: inline-block;
+          width: 50px;
+          background-image: url('./../images/oidc-provider-logos/microsoft.svg');
+        }
+      }
+    }
+
+    &--okta {
+      background-color: #0079bb;
+      color: #fff;
+
+      .oidcloginbuttons__buttoncontent {
+        &:before {
+          display: inline-block;
+          width: 50px;
+          background-image: url('./../images/oidc-provider-logos/okta.png');
+        }
+      }
+    }
+
+    &--google {
+      border: solid 1px #333;
+      background-color: white;
+      color: #333;
+
+      .oidcloginbuttons__buttoncontent {
+        &:before {
+          display: inline-block;
+          background-image: url('./../images/oidc-provider-logos/google.png');
+        }
+      }
+    }
+
+    &--apple {
+      background-color: black;
+
+      .oidcloginbuttons__buttoncontent {
+        &:before {
+          display: inline-block;
+          background-image: url('./../images/oidc-provider-logos/apple.png');
+        }
+      }
+    }
+
+    &--salesforce {
+      background-color: #00a1e0;
+
+      .oidcloginbuttons__buttoncontent {
+        &:before {
+          display: inline-block;
+          width: 50px;
+          background-image: url('./../images/oidc-provider-logos/salesforce.svg');
+        }
+      }
+    }
+  }
+}

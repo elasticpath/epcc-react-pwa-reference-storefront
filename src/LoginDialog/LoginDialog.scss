@@ -59,15 +59,6 @@
   }
 }
 
-.auth-opt {
-  display: flex;
-  flex-direction: column;
-
-  .authbtn {
-    margin: 0 0 3% 0;
-  }
-}
-
 @media (max-width: $mobileWidth - 1) {
   .logindialog {
     height: 100%;
