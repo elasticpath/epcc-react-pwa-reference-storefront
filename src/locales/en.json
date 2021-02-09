@@ -219,7 +219,7 @@
   "or": "OR",
   "checkout-as-guest": "Checkout as guest",
   "creating-new-cart": "Creating a new cart",
-  "creating-cart-info": "You have other carts in your account. Select ‘Next’ to continue with your current cart \nand add it to your account.  ",
+  "creating-cart-info": "You have other carts in your account. You can create a new cart or merge from your items with an account cart.  ",
   "delete-cart-message" : "You have deleted",
   "update-cart-message" : "Your cart settings have been updated",
   "create-cart-message" : "You've added a new cart to your cart list",
@@ -260,6 +260,11 @@
   "show": "Show",
   "page": "Page", 
   "of": "of", 
-  "results": "results",
+  "results": "results", 
+  "carts-found-in-your-account" : "Carts found in your account",
+  "select-cart-merge-with" : "Select cart to merge with",
+  "items-merged-to-account-cart" : "Your items have been merged to your account cart",
+  "items-merged-to-created-cart" : "Your items have been merged to your created cart ",
+  "items-added-to-the-cart" : "items have been added to the cart",
   "unsupported-search-message": "Unsupported search provider"
 }

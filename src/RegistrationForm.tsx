@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import { useFormik } from 'formik';
-import {register, login, addCustomerAssociation, getMultiCarts} from './service';
+import {register, login, addCustomerAssociation, getMultiCarts, getMultiCartsList } from './service';
 import { useCustomerData, useMultiCartData, useTranslation } from './app-state';
 
 import './RegistrationForm.scss';
@@ -16,7 +16,7 @@ interface FormValues {
 
 export const RegistrationForm: React.FC = (props) => {
   const { setCustomerData } = useCustomerData();
-  const { setMultiCartData, updateSelectedCart } = useMultiCartData();
+  const { setMultiCartData, updateSelectedCart, setMultiCartDataList } = useMultiCartData();
   const { t } = useTranslation();
   const history = useHistory();
 
@@ -69,10 +69,13 @@ export const RegistrationForm: React.FC = (props) => {
             setCustomerData(result.token, result.customer_id);
               addCustomerAssociation(guestCart, result.customer_id, result.token)
               .then(() =>
-                getMultiCarts(result.token).then(res => {
-                  setMultiCartData(res.data);
-                  updateSelectedCart(res.data[0]);
-                  localStorage.setItem('mcart', res.data[0].id);
+                getMultiCartsList(result.token, 1).then((res) => {
+                  setMultiCartDataList(res.data);
+                  getMultiCarts(result.token).then(res => {
+                    setMultiCartData(res.data);
+                    updateSelectedCart(res.data[0]);
+                    localStorage.setItem('mcart', res.data[0].id);                
+                  })
                 })
                 .catch(error => {
                   console.error(error);
