@@ -119,7 +119,6 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
 
   useEffect(() => {
     const el = document.querySelector('.cartmodal__content');
-    console.log(el)
     if(el && !newCart)
     {
       el.scrollTo({
@@ -153,7 +152,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
       
       <div className="partialadd">
         {addedtItem &&  ( <div className="partialadd__confirmationmessage">
-          <p>{addedtItem}  items have been added to the cart</p>
+      <p>{addedtItem} {t("items-added-to-the-cart")}</p>
           <CloseIcon onClick={() => setAddedItem("")}/>
         </div>
         )}

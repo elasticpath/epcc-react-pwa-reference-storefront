@@ -98,7 +98,6 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
 
   useEffect(() => {
     const el = document.querySelector('.cartmodal__content');
-    console.log(el)
     if(el && showSettings)
     {
       el.scrollTo({
