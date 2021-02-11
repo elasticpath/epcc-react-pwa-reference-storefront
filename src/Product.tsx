@@ -100,24 +100,6 @@ export const Product: React.FC = () => {
     setCurrentImageIndex(currentImageIndex - 1);
   };
 
-  useEffect(() => {
-    if(product)
-      if(product.relationships.children) {
-        product.relationships.children.data.map((element) => {
-            getProductById(element.id).then((res) => {
-             if(res.meta.stock.availability !== "out-stock")
-             {
-                  setChildProduct(res.id);
-                setProductId(res.id)
-             }
-             return
-            
-          })
-          return 
-        })
-      }
-  }, [product])
-
   const handleAddToCart = (cartId?: string) => {
     const currentCart = localStorage.getItem("mcart") || "";
     const mcart = cartId ? cartId : currentCart;
