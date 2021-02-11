@@ -140,9 +140,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
             </div>
           )}
         </div>
-       
-      
-
+            {console.log(selectedCart)}
       <div className="cartitemlist__header">
         <h2 className="cartitemlist__title">
           {isLoggedIn && selectedCart ? (
@@ -158,6 +156,14 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
         <span className="cartitemlist__settingsicon">
           {isLoggedIn && selectedCart && <SettingsIcon onClick={() => setShowSettings(true)} /> }
         </span>
+      </div>
+      <div className="cartitemlist__date">
+        { isLoggedIn && 
+          <p className="cartitemlist__expierydate">
+          {t('expires')} - {(selectedCart?.meta.timestamps.expires_at).substring(0, 10)}
+        </p>
+        }
+        
       </div>
       {items && items.length > 0 ? (
         <div>

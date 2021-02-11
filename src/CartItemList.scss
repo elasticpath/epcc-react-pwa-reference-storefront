@@ -17,8 +17,8 @@
 
   &__header{
     line-height: 34px;
-    padding-bottom: 50px;
     padding-top: 20px;
+    padding-bottom: 15px;
     max-width: 300px;
     margin: 0 auto;
     display: flex;
@@ -328,6 +328,14 @@
       visibility: visible;
       transform: translateX(0px);
     }
+  }
+
+  &__date {
+    padding-bottom: 50px;
+  }
+  
+  &__expierydate {
+    text-align: center;
   }
 
   @media (min-width: $mobileXSmallWidth) {

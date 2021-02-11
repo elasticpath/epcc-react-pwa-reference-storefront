@@ -157,6 +157,10 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
                           <span className="cartslist__date">
                             {t('edited')} - {(cart.meta.timestamps.updated_at).substring(0, 10)}
                           </span>
+                          <br />
+                          <span className="cartslist__date">
+                            {t('expires')} - {(cart.meta.timestamps.expires_at).substring(0, 10)}
+                          </span>
                         </span>
                       </div>
                       <p className="cartslist__quantity">
@@ -206,6 +210,10 @@ export  const CartsList: React.FC<CartsListParams> = (props) => {
                             <br />
                             <span className="cartslist__date">
                               {t('edited')} - {(cart.meta.timestamps.updated_at).substring(0, 10)}
+                            </span>
+                            <br />
+                            <span className="cartslist__date">
+                              {t('expires')} - {(cart.meta.timestamps.expires_at).substring(0, 10)}
                             </span>
                           </span>
                         </div>
