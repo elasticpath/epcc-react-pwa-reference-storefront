@@ -64,8 +64,6 @@ export const Product: React.FC = () => {
 
   const handleVariationChange = (childID: string) => {
     setProductId(childID);
-    console.log(product)
-    console.log(childID)
     setChildProduct(childID)
   };
 
@@ -74,7 +72,8 @@ export const Product: React.FC = () => {
       try {
         if(childProduct.length > 0)
         return getProductById(childProduct)
-      }catch (error) {
+      }
+       catch (error) {
         addError(error.errors);
       }
     }, [childProduct, addError]
@@ -99,6 +98,15 @@ export const Product: React.FC = () => {
   const handlePrevImageClicked = () => {
     setCurrentImageIndex(currentImageIndex - 1);
   };
+
+  useEffect(() => {
+    if(product)
+      if(product.relationships.children) {
+        setChildProduct(product.relationships.children.data[0].id);
+        setProductId(product.relationships.children.data[0].id)
+        
+      }
+  }, [product])
 
   const handleAddToCart = (cartId?: string) => {
     const currentCart = localStorage.getItem("mcart") || "";

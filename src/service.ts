@@ -215,7 +215,6 @@ export async function getProductById(productId: string): Promise<moltin.Product>
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const result = await moltin.Products.Get(productId);
   const product = result.data;
-  console.log(product)
   return product
 }
 

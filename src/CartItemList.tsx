@@ -12,7 +12,6 @@ import { SettingsCart } from "./SettingsCart";
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import { ReactComponent as BackArrowIcon } from './images/icons/arrow_back-black-24dp.svg';
 
-
 import './CartItemList.scss';
 
 interface CartItemListParams {
@@ -126,21 +125,19 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
           <CloseIcon onClick={() => setShowUpdateCartAlert(false)}/>
         </div>
       )}
-      
-        <div className="partialadd">
-          {addedtItem &&  ( <div className="partialadd__confirmationmessage">
-            <p>{addedtItem}  items have been added to the cart</p>
-            <CloseIcon onClick={() => setAddedItem("")}/>
-          </div>
-          )}
-          {partialAddMessage &&  (
-            <div className="partialadd__alertMessage">
-              <p>{partialAddMessage}</p>
-              <CloseIcon onClick={() => setPartialAddMessage("")}/>
-            </div>
-          )}
+      <div className="partialadd">
+        {addedtItem &&  ( <div className="partialadd__confirmationmessage">
+          <p>{addedtItem}  items have been added to the cart</p>
+          <CloseIcon onClick={() => setAddedItem("")}/>
         </div>
-            {console.log(selectedCart)}
+        )}
+        {partialAddMessage &&  (
+          <div className="partialadd__alertMessage">
+            <p>{partialAddMessage}</p>
+            <CloseIcon onClick={() => setPartialAddMessage("")}/>
+          </div>
+        )}
+      </div>
       <div className="cartitemlist__header">
         <h2 className="cartitemlist__title">
           {isLoggedIn && selectedCart ? (
@@ -158,12 +155,11 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
         </span>
       </div>
       <div className="cartitemlist__date">
-        { isLoggedIn && 
+        { isLoggedIn && selectedCart?.meta.timestamps.expires_at &&
           <p className="cartitemlist__expierydate">
-          {t('expires')} - {(selectedCart?.meta.timestamps.expires_at).substring(0, 10)}
-        </p>
-        }
-        
+            {t('expires')} - {(selectedCart?.meta.timestamps.expires_at).substring(0, 10)}
+          </p>
+        }      
       </div>
       {items && items.length > 0 ? (
         <div>
