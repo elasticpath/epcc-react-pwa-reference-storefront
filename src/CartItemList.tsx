@@ -179,7 +179,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
       </div>
       <div className="cartitemlist__date">
         { isLoggedIn && selectedCart?.meta.timestamps.expires_at &&
-          <p className="cartitemlist__expierydate">
+          <p className="cartitemlist__expirydate">
             {t('expires')} - {(selectedCart?.meta.timestamps.expires_at).substring(0, 10)}
           </p>
         }      
