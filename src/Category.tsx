@@ -68,7 +68,6 @@ export const Category: React.FC = () => {
 
           <ul className="category__productlist">
             {products && products.data.map(product => (
-              !product.relationships.parent &&
               <li key={product.id} className="category__product">
                 <ProductThumbnail product={product} />
               </li>

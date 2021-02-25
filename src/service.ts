@@ -222,7 +222,6 @@ export async function getProductsByIds(ids: string[]): Promise<any> {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const productsRequests = ids.map(id => moltin.Products.Get(id));
   const products = await Promise.all(productsRequests);
-  console.log(products.map(product => product.data))
   return products.map(product => product.data)
 }
 
