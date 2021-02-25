@@ -3,6 +3,7 @@
 .cartslist {
   $block: &;
   text-align: center;
+  margin-bottom: 25px;
 
   &__editview {
     display: block;

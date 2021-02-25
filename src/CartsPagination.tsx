@@ -1,29 +1,33 @@
 import React from 'react';
+import { useMultiCartData } from './app-state';
 import { ReactComponent as PaginationIcon } from "./images/icons/ic_caret.svg";
 
 import './CartsPagination.scss';
 
 export interface Props {
-  page: number;
+  currentPage: number;
   totalPages: number;
-//   handlePagination: (page: number) => void;
 }
 export const CartsPagination: React.FC<Props> = ({
-  page,
+  currentPage,
   totalPages,
-//   handlePagination,
 }) => {
+
+  const { setPageNum} = useMultiCartData();
   return (
     <div className="CartsPagination">
-        {page !== 1 && (
-            <PaginationIcon className="CartsPagination__prevpageicon" />
+        {currentPage !== 1 && (
+         <button onClick={() => setPageNum(currentPage-1)}> <PaginationIcon className="CartsPagination__prevpageicon"/></button>
         )}
+        
         <span className="CartsPagination__pagenumber">
-            Page {page} of {totalPages}
+            Page {currentPage} of {totalPages}
         </span>
-        {page !== totalPages && (
-            <PaginationIcon className="CartsPagination__nextpageicon" />
+
+        {currentPage !== totalPages && (
+           <button onClick={() => setPageNum(currentPage+1)}> <PaginationIcon className="CartsPagination__nextpageicon" /></button>
         )}
+
     </div>
   );
 };

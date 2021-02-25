@@ -13,6 +13,7 @@ import { CartsList } from "./CartsList";
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import { ReactComponent as BackArrowIcon } from './images/icons/arrow_back-black-24dp.svg';
 import { APIErrorContext } from "./APIErrorProvider";
+import { CartsPagination }  from './CartsPagination';
 
 import './CartModal.scss';
 import {OrderDetailsTable} from './OrderDetailsTable';
@@ -55,7 +56,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
   const { cartData, promotionItems, updateCartItems } = useCartData();
   const { isLoggedIn } = useCustomerData();
   const { updatePurchaseHistory } = useOrdersData();
-  const { isCartSelected, isCreateNewCart, updateCartData } = useMultiCartData();
+  const { isCartSelected, isCreateNewCart, updateCartData,  total, currentPage } = useMultiCartData();
   const { t } = useTranslation();
   const { addError } = useContext(APIErrorContext);
 
@@ -185,10 +186,15 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
             />
           )}
           {isLoggedIn && route === 'cartsList' && (
-            <CartsList
-              onHandlePage={(page: string) => handlePage(page)}
-              handleHideBackButton={(value:boolean) => {setHideBackButton(value)}}
-            />
+            <>
+              <CartsList
+                onHandlePage={(page: string) => handlePage(page)}
+                handleHideBackButton={(value:boolean) => {setHideBackButton(value)}}
+              />
+              <CartsPagination   totalPages={total}
+                currentPage={currentPage} />
+            </>
+
           )}
           {route === 'shipping' && (
             <div>

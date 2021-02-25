@@ -1,13 +1,15 @@
 @import './theme/common.scss';
 
 .CartsPagination {
-    position: relative;
-    bottom: 0;
+    position: absolute;
+    bottom: 25px;
     font-style: normal;
     font-weight: normal;
     font-size: 13px;
     line-height: 15px;
     text-align: center;
+    left: 50%;
+    transform: translate(-50%, 0);
 
     &__pagenumber {
         font-style: normal;
@@ -15,18 +17,24 @@
         font-size: 13px;
         line-height: 15px;
         text-align: center;
+        padding: 0 10px;
     }
 
     &__prevpageicon {
         transform: rotate(90deg);
+        
     }
 
     &__nextpageicon {
         transform: rotate(-90deg);
+        
     }
 
     svg {
-        fill: #3C4858;
+        path{
+            fill: #3C4858;
+        }
+       
         cursor: pointer;
 
         &:hover{
