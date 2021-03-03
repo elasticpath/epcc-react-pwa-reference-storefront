@@ -128,7 +128,6 @@ export async function loadProductBySlug(productSlug: string, language: string, c
   const productId = resultSlug?.data[0]?.id;
   const result = await moltin.Products.Get(productId);
   const product = result.data;
-
   setProductCache(product.slug, language, currency, product);
 
   return product;
@@ -212,11 +211,17 @@ export async function getAllOrders(token: string, pageNum:number,dates: number, 
   return result;
 }
 
+export async function getProductById(productId: string): Promise<moltin.Product> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const result = await moltin.Products.Get(productId);
+  const product = result.data;
+  return product
+}
+
 export async function getProductsByIds(ids: string[]): Promise<any> {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const productsRequests = ids.map(id => moltin.Products.Get(id));
   const products = await Promise.all(productsRequests);
-
   return products.map(product => product.data)
 }
 

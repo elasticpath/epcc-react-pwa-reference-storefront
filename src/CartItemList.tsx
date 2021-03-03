@@ -12,7 +12,6 @@ import { SettingsCart } from "./SettingsCart";
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import { ReactComponent as BackArrowIcon } from './images/icons/arrow_back-black-24dp.svg';
 
-
 import './CartItemList.scss';
 
 interface CartItemListParams {
@@ -142,7 +141,6 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
           <CloseIcon onClick={() => setShowUpdateCartAlert(false)}/>
         </div>
       )}
-
       {mergedMessage &&  (
         <div className="cartslist__alertMessage">
           <p>{mergedMessage}</p>
@@ -163,7 +161,6 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
           </div>
         )}
       </div>
-       
       <div className="cartitemlist__header">
         <h2 className="cartitemlist__title">
           {isLoggedIn && selectedCart ? (
@@ -179,6 +176,13 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
         <span className="cartitemlist__settingsicon">
           {isLoggedIn && selectedCart && <SettingsIcon onClick={() => setShowSettings(true)} /> }
         </span>
+      </div>
+      <div className="cartitemlist__date">
+        { isLoggedIn && selectedCart?.meta.timestamps.expires_at &&
+          <p className="cartitemlist__expirydate">
+            {t('expires')} - {(selectedCart?.meta.timestamps.expires_at).substring(0, 10)}
+          </p>
+        }      
       </div>
       {items && items.length > 0 ? (
         <div>

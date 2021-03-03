@@ -78,7 +78,6 @@ export const LoginForm: React.FC<LoginFormProps> = (props) => {
               handleShowNewCart(true);
           }
           if (createCart) {
-            console.log("hello")
             setIsCreateNewCart(true);
           }
           if (onSubmit) {

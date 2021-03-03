@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { useResolve, useProductImages } from './hooks';
-import { addToCart, loadProductBySlug } from './service';
+import { addToCart, loadProductBySlug, getProductById } from './service';
 import { CompareCheck } from './CompareCheck';
 import { SocialShare } from './SocialShare';
 import {
@@ -22,7 +22,6 @@ import { ReactComponent as CaretIcon } from './images/icons/ic_caret.svg';
 import { APIErrorContext } from './APIErrorProvider';
 
 import './Product.scss';
-
 
 interface ProductParams {
   productSlug: string;
@@ -61,17 +60,37 @@ export const Product: React.FC = () => {
     },
     [productSlug, selectedLanguage, selectedCurrency, addError]
   );
+
+  const [childProduct, setChildProduct] = useState<string>(product?.relationships.children ? product.relationships.children.data[0].id : "")
+
+  const handleVariationChange = (childID: string) => {
+    setProductId(childID);
+    setChildProduct(childID)
+  };
+
+  const [child] = useResolve(
+    async () => {
+      try {
+        if(childProduct.length > 0)
+        return getProductById(childProduct)
+      }
+       catch (error) {
+        addError(error.errors);
+      }
+    }, [childProduct, addError]
+  )
+
   const [productId, setProductId] = useState('');
 
   useEffect(() => {
-    product && setProductId(product.id);
+    product && setProductId(product.id);    
   }, [product]);
 
   useEffect(() => {
     document.body.style.overflow = modalOpen ? 'hidden' : 'unset';
   }, [modalOpen])
 
-  const productImageHrefs = useProductImages(product);
+  const productImageHrefs = useProductImages(child ? child : product);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const isPrevImageVisible = currentImageIndex > 0;
   const isNextImageVisible = currentImageIndex < (productImageHrefs?.length ?? 0) - 1;
@@ -80,6 +99,15 @@ export const Product: React.FC = () => {
   const handlePrevImageClicked = () => {
     setCurrentImageIndex(currentImageIndex - 1);
   };
+
+  useEffect(() => {
+    if(product)
+      if(product.relationships.children) {
+        setChildProduct(product.relationships.children.data[0].id);
+        setProductId(product.relationships.children.data[0].id)
+        
+      }
+  }, [product])
 
   const handleAddToCart = (cartId?: string) => {
     const currentCart = localStorage.getItem("mcart") || "";
@@ -103,10 +131,6 @@ export const Product: React.FC = () => {
 
   const handleNextImageClicked = () => {
     setCurrentImageIndex(currentImageIndex + 1);
-  };
-
-  const handleVariationChange = (childID: string) => {
-    setProductId(childID);
   };
 
   const handleAddToSelectedCart = (cart:any) => {
@@ -218,14 +242,14 @@ export const Product: React.FC = () => {
               {product.name}
             </h1>
             <div className="product__sku">
-              {product.sku}
+              {child ? child.sku : product.sku}
             </div>
             <div className="product__price">
-              {product.meta.display_price.without_tax.formatted}
+              {child ? child.meta.display_price.without_tax.formatted : product.meta.display_price.without_tax.formatted}
             </div>
-            <Availability available={isProductAvailable(product)} />
+            <Availability available={child ? isProductAvailable(child) : isProductAvailable(product)} />
             <div className="product__comparecheck">
-              <CompareCheck product={product} />
+              <CompareCheck product={child ? child : product} />
             </div>
             {
               product.meta.variations
@@ -238,10 +262,10 @@ export const Product: React.FC = () => {
               </div>
             </div>
             <div className="product__description">
-              {product.description}
+              {child ? child.description : product.description}
             </div>
             <div className="product__socialshare">
-              <SocialShare name={product.name} description={product.description} imageHref={productImageHrefs?.[0]} />
+              <SocialShare name={child ? child.name : product.name} description={child ? child.description : product.description} imageHref={productImageHrefs?.[0]} />
             </div>
           </div>
         </div>
