@@ -73,10 +73,11 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
     try {
       const mcart = localStorage.getItem('mcart') || '';
       const mcustomer = localStorage.getItem('mcustomer') || '';
+      const mtoken = localStorage.getItem('mtoken') || '';
       const billing = isSameAddress ? shippingAddress : billingAddress;
       const name = `${shippingAddress.first_name} ${shippingAddress.last_name}`;
       const customerData = mcustomer && mcustomer.length ? {id: mcustomer} : {name: name, email: email};
-      const orderRes = await checkout(mcart, customerData, billing, shippingAddress);
+      const orderRes = await checkout(mcart, customerData, billing, shippingAddress, mtoken);
 
       const paymentParams = {
         gateway: 'stripe',

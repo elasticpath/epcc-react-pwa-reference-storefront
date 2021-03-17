@@ -250,9 +250,9 @@ export async function bulkAdd(reference: string, data: moltin.CartItemObject[]):
   return result;
 }
 
-export async function addPromotion(reference: string, promoCode: string): Promise<void> {
+export async function addPromotion(reference: string, promoCode: string, token: string): Promise<void> {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
-  await moltin.Cart(reference).AddPromotion(promoCode);
+  await moltin.Cart(reference).AddPromotion(promoCode, token);
 }
 
 export async function removeCartItem(reference: string, itemId: string): Promise<void> {
@@ -270,8 +270,8 @@ export async function updateCartItem(reference: string, productId: string, quant
   await moltin.Cart(reference).UpdateItem(productId, quantity);
 }
 
-export async function checkout(reference: string, customer: any, billing: any, shipping: any): Promise<{ data: moltin.Order }> {
-  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+export async function checkout(reference: string, customer: any, billing: any, shipping: any, customerToken: string): Promise<{ data: moltin.Order }> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId, headers: { 'X-Moltin-Customer-Token': customerToken } });
   const checkoutRes = await moltin.Cart(reference).Checkout(customer, billing, shipping);
 
   return checkoutRes;
