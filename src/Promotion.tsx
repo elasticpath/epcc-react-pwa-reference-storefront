@@ -28,7 +28,8 @@ export const Promotion: React.FC<PromotionProps> = (props) => {
   const {handleSubmit, handleChange, values, errors, setErrors} = useFormik({
     initialValues,
     onSubmit: (values) => {
-      addPromotion(mcart, values.promoCode)
+      const token = localStorage.getItem('mtoken') || '';
+      addPromotion(mcart, values.promoCode, token)
         .then(() => {
           updateCartItems();
           setErrors({promoCode: ''});

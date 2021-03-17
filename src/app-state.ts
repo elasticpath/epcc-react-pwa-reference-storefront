@@ -137,6 +137,10 @@ function useCustomerDataState() {
           setCustomerName(customer.name);
         }
         setIsLoggedIn(true);
+      }).catch(err => {
+        if (err.errors.find((error: any) => error.status === 403)) {
+          clearCustomerData();
+        }
       });
     } else {
       clearCustomerData();
