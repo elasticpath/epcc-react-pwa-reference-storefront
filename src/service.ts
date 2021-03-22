@@ -237,14 +237,14 @@ export async function deleteCart(reference: string) {
   await moltin.Cart(reference).Delete();
 }
 
-export async function addToCart(reference: string, productId: string): Promise<void> {
-  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+export async function addToCart(reference: string, productId: string, language: string, currency: string): Promise<void> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId, language, currency });
   const quantity = 1;
   await moltin.Cart(reference).AddProduct(productId, quantity);
 }
 
-export async function bulkAdd(reference: string, data: moltin.CartItemObject[]): Promise<moltin.CartItemsResponse> {
-  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+export async function bulkAdd(reference: string, data: moltin.CartItemObject[], language: string, currency: string): Promise<moltin.CartItemsResponse> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId, language, currency });
   const result = await moltin.Cart(reference).BulkAdd(data);
 
   return result;

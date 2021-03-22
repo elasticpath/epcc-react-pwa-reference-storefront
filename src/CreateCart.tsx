@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useMultiCartData, useTranslation, useCartData } from "./app-state";
+import { useMultiCartData, useTranslation, useCartData, useCurrency} from "./app-state";
 import { addCustomerAssociation, getMultiCarts, bulkAdd, editCartInfo} from "./service";
 import { ReactComponent as ClearIcon } from "./images/icons/ic_clear.svg";
 
@@ -13,7 +13,8 @@ interface CreateCartParams {
 
 export const CreateCart: React.FC<CreateCartParams> = (props) => {
   const { showCreateCart, handleHideCreateCart } = props;
-  const { t } = useTranslation();
+  const { t, selectedLanguage } = useTranslation();
+  const { selectedCurrency } = useCurrency();
   const { updateCartItems } = useCartData();
   const { guestCartId, setMultiCartData, updateSelectedCart, multiCartData, updateCartData, handleMergedMessage } = useMultiCartData();
   
@@ -71,7 +72,7 @@ export const CreateCart: React.FC<CreateCartParams> = (props) => {
         type: "cart_items",
         cart_id: guestCartId,
       }];
-      bulkAdd(selectedCart, data)
+      bulkAdd(selectedCart, data, selectedLanguage, selectedCurrency )
       .then(() => {
         updateCartData();
         updateCartItems();

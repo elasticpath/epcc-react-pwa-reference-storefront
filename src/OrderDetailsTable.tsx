@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ProductMainImage } from "./ProductMainImage";
-import { useTranslation, useCartData, useMultiCartData } from "./app-state";
+import { useTranslation, useCartData, useMultiCartData, useCurrency } from "./app-state";
 import { useResolve } from "./hooks";
 import { getProductsByIds , bulkAdd } from "./service";
 import { APIErrorContext } from "./APIErrorProvider";
@@ -23,7 +23,8 @@ export const OrderDetailsTable: React.FC<OrderDetailsTableParams> = ({
   orderItems,
   modalUI,
 }) => {
-  const { t } = useTranslation();
+  const { t, selectedLanguage } = useTranslation();
+  const { selectedCurrency } = useCurrency();
   const { addError } = useContext(APIErrorContext);
   const { updateCartItems, setOpenModal, handlePartialAddMessage, setPartialAddMessage, partialAddConfirmation } = useCartData();
   const { updateCartData } = useMultiCartData();
@@ -63,7 +64,7 @@ export const OrderDetailsTable: React.FC<OrderDetailsTableParams> = ({
       }
     ];
     setPartialAddMessage("");
-    bulkAdd(mcart, data)
+    bulkAdd(mcart, data, selectedLanguage, selectedCurrency)
       .then((res:any) => {
         updateCartItems();
         updateCartData();

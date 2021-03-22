@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { useTranslation, useCartData, useMultiCartData, useCustomerData } from './app-state';
+import { useTranslation, useCartData, useMultiCartData, useCustomerData, useCurrency } from './app-state';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { bulkAdd } from './service';
 import { SettingsCart } from './SettingsCart';
@@ -12,7 +12,8 @@ import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import './QuickOrder.scss'
 
 export const QuickOrder: React.FC = (props) => {
-  const { t } = useTranslation();
+  const { t, selectedLanguage } = useTranslation();
+  const { selectedCurrency } = useCurrency();
   const { updateCartItems, setCartQuantity, handleShowCartPopup, cartData} = useCartData();
   const { updateCartData, updateSelectedCart, multiCartData, setIsCartSelected } = useMultiCartData();
   const { isLoggedIn } = useCustomerData();
@@ -181,7 +182,7 @@ export const QuickOrder: React.FC = (props) => {
       const totalQuantity = products.reduce((sum, { quantity }) => sum + quantity, 0);
       const currentCart = localStorage.getItem("mcart") || "";
       const mcart = cartId ? cartId : currentCart;
-    bulkAdd(mcart, products)
+    bulkAdd(mcart, products, selectedLanguage, selectedCurrency)
       .then((res:any) => {
         const errorsWQ: [{type:string, sku:string, quantity:number}] = [{type: "", sku: "", quantity: 0}];
         if(res.errors){

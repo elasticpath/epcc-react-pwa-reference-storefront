@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import * as moltin from '@moltin/sdk';
 import { Link, useParams } from 'react-router-dom';
-import { useOrdersData, useTranslation, useCartData , useMultiCartData } from './app-state';
+import { useOrdersData, useTranslation, useCartData , useMultiCartData , useCurrency} from './app-state';
 import { ReactComponent as CaretIcon } from './images/icons/ic_caret.svg';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { bulkAdd } from "./service";
@@ -19,7 +19,8 @@ interface OrderParams {
 export const OrdersHistory: React.FC = () => {
   const params = useParams<OrderParams>();
 
-  const { t } = useTranslation();
+  const { t, selectedLanguage } = useTranslation();
+  const { selectedCurrency } = useCurrency();
   const { ordersData, ordersItemsData: items , total, setPageNum, currentPage, setDateIndex, setSort, sort, totalOrders } = useOrdersData();
   const { updateCartItems, setOpenModal, handlePartialAddMessage, setPartialAddMessage, partialAddConfirmation } = useCartData();
   const { updateCartData } = useMultiCartData();
@@ -65,7 +66,7 @@ export const OrdersHistory: React.FC = () => {
       order_id: activeOrderId,
     }];
     setPartialAddMessage("");
-    bulkAdd(mcart, data)
+    bulkAdd(mcart, data, selectedLanguage, selectedCurrency)
       .then((res:any) => {
         updateCartItems();
         updateCartData();
