@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { useCartData, useCustomerData, useTranslation, useMultiCartData } from './app-state';
-import { createAccountUrl, createOrdersHistoryUrl } from './routes';
+import { createAccountUrl, createOrdersHistoryUrl, createMyCartsUrl } from './routes';
 import { LoginDialog } from './LoginDialog/LoginDialog';
 import { ReactComponent as AccountIcon } from './images/icons/ic_account.svg';
 
@@ -27,6 +27,7 @@ export const AccountDropdown: React.FC<AccountDropdownProps> = (props) => {
 
   const accountUrl = createAccountUrl();
   const orderHistoryUrl = createOrdersHistoryUrl();
+  const cartsUrl = createMyCartsUrl();
 
   const handleHideDropdown = () => {
     setIsOpen(false);
@@ -72,7 +73,7 @@ export const AccountDropdown: React.FC<AccountDropdownProps> = (props) => {
                     <p className="accountdropdown__iteminfo accountdropdown__emailinfo">{customerEmail}</p>
                   </li>
                   <li className="accountdropdown__listitem">
-                    <Link to={accountUrl} className="accountdropdown__link" onClick={handleHideDropdown}>
+                    <Link to={cartsUrl} className="accountdropdown__link" onClick={handleHideDropdown}>
                       {t('my-carts')}
                     </Link>
                   </li>

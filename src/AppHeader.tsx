@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
+import { createCartsDetailsPageUrl } from './routes';
 // @ts-ignore
 import { Offline } from 'react-detect-offline';
 import { ImageContainer } from './ImageContainer';
-import { useCartData, useTranslation } from './app-state';
+import { useCartData, useTranslation, useMultiCartData, useCustomerData } from './app-state';
 import { LanguageDropdown } from './LanguageDropdown';
 import { SearchBar } from './SearchBar';
 import { AccountDropdown } from './AccountDropdown';
@@ -18,8 +19,12 @@ import './AppHeader.scss';
 
 export const AppHeader: React.FC = () => {
   const { t } = useTranslation();
-  const { count, cartQuantity, showCartPopup, updateCartItems, setOpenModal, openModal } = useCartData();
+  const { count, cartQuantity, showCartPopup, updateCartItems, setOpenModal, openModal,  } = useCartData();
+  const { isLoggedIn } = useCustomerData()
+  const { selectedCart } = useMultiCartData();
   const [newCart, setNewCart] = useState(false);
+
+  const cartsUrl = createCartsDetailsPageUrl(selectedCart?.name && isLoggedIn ? selectedCart.name : "")
 
   const handleCloseCartModal = () => {
     setOpenModal(false);
@@ -28,12 +33,6 @@ export const AppHeader: React.FC = () => {
   const openCartModal = () => {
     setOpenModal(true);
   }
-
-  const handleCartModal = () => {
-
-    updateCartItems();
-    setOpenModal(true);
-  };
 
   return (
     <div className="appheader">
@@ -56,18 +55,18 @@ export const AppHeader: React.FC = () => {
           <AccountDropdown openCartModal={openCartModal} handleShowNewCart={(bool:boolean) => setNewCart(bool)} />
         </div>
         <div className="appheader__moltincartcontainer">
-          <button className="epbtn appheader__cartbtn --bordered" aria-label={t('cart')} onClick={handleCartModal}>
+          <Link className="epbtn appheader__cartbtn --bordered" aria-label={t('cart')} to={cartsUrl}>
             <CartIcon className="appheader__carticon" />
             <span className="appheader__cartbtntxt">
               {count}
             </span>
-          </button>
-          {showCartPopup && (
+          </Link>
+          {/* {showCartPopup && (
             <div className="appheader__cartpopup">
               <p>{cartQuantity === 1 ? t('cart-popup-info-1') : t('cart-popup-info', {quantity: cartQuantity.toString()})}</p>
               <button className="epbtn" onClick={handleCartModal}>{t('view-cart')}</button>
             </div>
-          )}
+          )} */}
         </div>
       </div>
       <div className="appheader__navigation">
