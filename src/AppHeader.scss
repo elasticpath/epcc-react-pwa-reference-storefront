@@ -40,6 +40,13 @@
     flex: 0 0 auto;
   }
 
+
+  &__carticon {
+    width: 20px;
+    height: 20px;
+    fill: $firstComplimentColor;
+  }
+
   .toggle-btn {
     display: none;
   }
@@ -61,6 +68,16 @@
     color: $secondAccentColor;
     background-color: adjust-color($color: $secondAccentColor, $lightness: 65%);
     border: 1px solid adjust-color($color: $secondAccentColor, $lightness: 60%);
+  }
+
+  &__cartbtntxt {
+    padding-left: 7px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    letter-spacing: 0.2px;
   }
 
   &__cartpopup {
@@ -165,10 +182,6 @@
   @media (min-width: $mobileWidth) {
     &__cartbtn {
       padding: 10px 15px;
-    }
-
-    &__carticon {
-      display: none;
     }
   }
 

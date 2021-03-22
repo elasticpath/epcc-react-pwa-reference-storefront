@@ -49,17 +49,18 @@ export const AppHeader: React.FC = () => {
         <div className="appheader__language">
           <LanguageDropdown />
         </div>
+        <div className="appheader__bulkorder">
+          <BulkOrderDropdown />
+        </div>
+        <div className="appheader__account">
+          <AccountDropdown openCartModal={openCartModal} handleShowNewCart={(bool:boolean) => setNewCart(bool)} />
+        </div>
         <div className="appheader__moltincartcontainer">
-          <button className="epbtn --ghost appheader__cartbtn --bordered" aria-label={t('cart')} onClick={handleCartModal}>
-            <span className="appheader__cartbtntxt">
-              {t('cart')}
-              {' ('}
-              {count}
-              {' '}
-              {count !== 1 ? t('items') : t('item')}
-              {')'}
-            </span>
+          <button className="epbtn appheader__cartbtn --bordered" aria-label={t('cart')} onClick={handleCartModal}>
             <CartIcon className="appheader__carticon" />
+            <span className="appheader__cartbtntxt">
+              {count}
+            </span>
           </button>
           {showCartPopup && (
             <div className="appheader__cartpopup">
@@ -67,12 +68,6 @@ export const AppHeader: React.FC = () => {
               <button className="epbtn" onClick={handleCartModal}>{t('view-cart')}</button>
             </div>
           )}
-        </div>
-        <div className="appheader__bulkorder">
-          <BulkOrderDropdown />
-        </div>
-        <div className="appheader__account">
-          <AccountDropdown openCartModal={openCartModal} handleShowNewCart={(bool:boolean) => setNewCart(bool)} />
         </div>
       </div>
       <div className="appheader__navigation">

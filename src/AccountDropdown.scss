@@ -32,6 +32,21 @@
     margin-right: 5px;
   }
 
+  &__listitem {
+    padding: 5px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.2px;
+    color: $firstComplimentColor;
+    
+    &:hover {
+      background-color: $accountTreeActive;
+    }
+  }
+
   &__menu {
     padding: 10px 10px 15px;
     position: absolute;

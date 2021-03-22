@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { useCartData, useCustomerData, useTranslation, useMultiCartData } from './app-state';
-import { createAccountUrl } from './routes';
+import { createAccountUrl, createOrdersHistoryUrl } from './routes';
 import { LoginDialog } from './LoginDialog/LoginDialog';
 import { ReactComponent as AccountIcon } from './images/icons/ic_account.svg';
 
@@ -26,6 +26,7 @@ export const AccountDropdown: React.FC<AccountDropdownProps> = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const accountUrl = createAccountUrl();
+  const orderHistoryUrl = createOrdersHistoryUrl();
 
   const handleHideDropdown = () => {
     setIsOpen(false);
@@ -72,11 +73,21 @@ export const AccountDropdown: React.FC<AccountDropdownProps> = (props) => {
                   </li>
                   <li className="accountdropdown__listitem">
                     <Link to={accountUrl} className="accountdropdown__link" onClick={handleHideDropdown}>
+                      {t('my-carts')}
+                    </Link>
+                  </li>
+                  <li className="accountdropdown__listitem">
+                    <Link to={orderHistoryUrl} className="accountdropdown__link" onClick={handleHideDropdown}>
+                      {t('order-history')}
+                    </Link>
+                  </li>
+                  <li className="accountdropdown__listitem">
+                    <Link to={accountUrl} className="accountdropdown__link" onClick={handleHideDropdown}>
                       {t('my-account')}
                     </Link>
                   </li>
                   <li className="accountdropdown__listitem accountdropdown__itembtns">
-                    <button className="epbtn --secondary --fullwidth" type="button" onClick={logout}>
+                    <button className="ccountdropdown__link" type="button" onClick={logout}>
                       {t('logout')}
                     </button>
                   </li>
