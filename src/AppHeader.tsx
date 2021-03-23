@@ -19,7 +19,7 @@ import './AppHeader.scss';
 
 export const AppHeader: React.FC = () => {
   const { t } = useTranslation();
-  const { count, cartQuantity, showCartPopup, updateCartItems, setOpenModal, openModal,  } = useCartData();
+  const { count, setOpenModal, openModal,  } = useCartData();
   const { isLoggedIn } = useCustomerData()
   const { selectedCart } = useMultiCartData();
   const [newCart, setNewCart] = useState(false);

@@ -27,7 +27,7 @@
     &__addcartbtn {
         float: right;
         background: #FFFFFF;
-        border: 1px solid #197C93;
+        border: 1px solid $firstComplimentColor;
         font-style: normal;
         font-weight: 500;
         font-size: 13px;
@@ -36,13 +36,76 @@
         letter-spacing: 0.2px;
         color: #197C93;
         padding: 12px 15px;
+
+        &:hover {
+            background-color: $firstComplimentColor;
+            color: white;
+        }
+
+        &:focus {
+            background-color: $btnSecondaryHoverColor;
+            color: white;
+        }
+
     }
+
+   
+  
+     
+
+    &__createcartmodalbg {
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.3);
+      }
+    
+      &__createcartmodal {
+        position: absolute;
+        
+        padding: 25px;
+        height: 100%;
+        width: 100%;
+        z-index: 2;
+        background: $mainNavigationColor;
+        border: 1px solid $secondBorderColor;
+        box-sizing: border-box;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    
+      &__createcartheader {
+        display: flex;
+        justify-content: space-between;
+      }
+    
+      &__createcartheadertext {
+        font-weight: bold;
+        font-size: 24px;
+      }
+    
+      &__createcartheaderbnt {
+        cursor: pointer;
+      }
 
     @media (min-width: $tabletSmallWidth) {
         &__title {
             font-size: 28px;
             line-height: 32px;
             
+        }
+
+        &__createcartmodalbg {
+            position: absolute;
+        }
+
+        &__createcartmodal {
+            width: 460px;
+            height: fit-content;
         }
 
         &__tblheader {
@@ -54,68 +117,55 @@
         }
 
         &__cartelement {
-          
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
             width: 100%;
+
+            div, &__check {
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 16px;
+            }
         }
 
-        &__rowtitle{
+        &__rowtitle {
             font-weight: 500;
             font-size: 14px;
             line-height: 16px;
             color: #777777;
         }
 
-        &__cartelement {
-            
-            div, &__check {
-                font-weight: 500;
-                font-size: 14px;
-                line-height: 16px;
-            }
-            
+        &__cartname {
+            color: $firstComplimentColor;
+            padding-left: 5px;
         }
 
         &__check {
-         
-          position: relative;
-          left:20px;
-        top: 50%;
-        
-        width: 15px;
-        height: 15px;
-       
+            width: 15px;
+            height: 15px;    
         }
+
         &__cartrow {
-            padding: 24px ;
+            padding: 24px 52px 24px 24px;
             text-align: left;
             border-bottom: 1px solid $secondBorderColor;
-
-            .epcheckbox {
-                &__description {
-                  padding-left: 32px;
-          
-                  &:before {
-                    top: 20px;
-                    left: 8px;
-                  }
-                }
-            }
-            &:checked {
-                &__description {
-                  &:after {
-                    top: 23px;
-                    left: 9px;
-                  }
-                }
-              
-            }
         
             &:hover {
               background-color: $sixthComplimentBackground;
               color: $firstComplimentColor;
             }
+        }
+
+        &__action {
+            background: #4C5666;
+            border: 1px solid #4C5666;
+            padding: 8px 16px;
+            font-weight: 500;
+            font-size: 13px;
+            line-height: 16px;
+            text-align: center;
+            letter-spacing: 0.2px;
+            color: #FFFFFF;
         }
     }
 }
