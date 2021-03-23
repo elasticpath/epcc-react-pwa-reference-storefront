@@ -268,5 +268,10 @@
   "items-merged-to-created-cart" : "Your items have been merged to your created cart ",
   "items-added-to-the-cart" : "items have been added to the cart",
   "unsupported-search-message": "Unsupported search provider",
-  "order-history": "Order history"
+  "order-history": "Order history",
+  "add-new-cart": "Add a new cart",
+  "cart-total": "Cart Total",
+  "cart-expiry": "Cart Expity",
+  "products-number": "# Products",
+  "last-edit": "Last Edit"
 }

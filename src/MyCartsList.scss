@@ -4,6 +4,15 @@
     
     padding: 40px 0 20px;
     width: 100%;
+
+    &__clear {
+        clear: both;
+    }
+
+    &__header {
+        display: inline;
+        height: fit-content;
+    }
     
     &__title {
         font-style: normal;
@@ -11,6 +20,22 @@
         font-size: 18px;
         line-height: 24px;
         color: #333333;
+     
+        float: left;
+    }
+
+    &__addcartbtn {
+        float: right;
+        background: #FFFFFF;
+        border: 1px solid #197C93;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 16px;
+        text-align: center;
+        letter-spacing: 0.2px;
+        color: #197C93;
+        padding: 12px 15px;
     }
 
     @media (min-width: $tabletSmallWidth) {
@@ -18,6 +43,22 @@
             font-size: 28px;
             line-height: 32px;
             
+        }
+
+        &__tblheader {
+            margin-top: 25px;
+            background: #F7F7F7;
+            padding: 24px 52px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+            
+        }
+
+        &__rowtitle{
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 16px;
+            color: #777777;
         }
      
     }
