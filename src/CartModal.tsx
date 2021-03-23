@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { Elements, StripeProvider } from 'react-stripe-elements';
-import { useCartData, useCustomerData, useMultiCartData, useOrdersData, useTranslation } from './app-state';
+import { useCartData, useCustomerData, useMultiCartData, useOrdersData, useTranslation, useCurrency } from './app-state';
 import { config } from './config';
 import { checkout, payment, removeAllCartItems } from './service';
 
@@ -57,7 +57,8 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
   const { isLoggedIn } = useCustomerData();
   const { updatePurchaseHistory } = useOrdersData();
   const { isCartSelected, isCreateNewCart, updateCartData,  total, currentPage } = useMultiCartData();
-  const { t } = useTranslation();
+  const { t, selectedLanguage } = useTranslation();
+  const { selectedCurrency } = useCurrency();
   const { addError } = useContext(APIErrorContext);
 
   const [route, setRoute] = useState<string>('');
@@ -76,7 +77,7 @@ export const CartModal: React.FC<CartModalParams> = (props) => {
       const billing = isSameAddress ? shippingAddress : billingAddress;
       const name = `${shippingAddress.first_name} ${shippingAddress.last_name}`;
       const customerData = mcustomer && mcustomer.length ? {id: mcustomer} : {name: name, email: email};
-      const orderRes = await checkout(mcart, customerData, billing, shippingAddress);
+      const orderRes = await checkout(mcart, customerData, billing, shippingAddress, selectedLanguage, selectedCurrency);
 
       const paymentParams = {
         gateway: 'stripe',
