@@ -30,17 +30,30 @@ export  const MyCartsList: React.FC = () => {
             </div>
             <div >
                 {multiCartDataList.map((cart: any) => (
-                  <div className='mycarts__cartelement' key={cart.id}>
-                    <div className='mycarts__cartname'>
-                      <input type="checkbox" name="cartCheck" id={`cart_${cart.id}`} className="mycarts__check epcheckbox" />
-                      <label htmlFor={`cart_${cart.id}`} className='mycarts__name'>{cart.name}</label>
-                    </div>
-                    <div className='mycarts__productsquantity'>
-                      {cart.relationships.items.data ? cart.relationships.items.data.length : 0}
-                    </div>
-                    <div className='mycarts__total'></div>
-                    <div className='mycarts__expiry'></div>
-                    <div className='mycarts__lastedit'></div>
+                  // console.log(cart)
+                  <div className='mycarts__cartrow' key={cart.id}>
+                    <input type="checkbox" name="cartCheck" id={`cart_${cart.id}`} className="mycarts__check epcheckbox" />
+                    <label htmlFor={`cart_${cart.id}`} className='mycarts__cartelement'>
+
+                        <div className='mycarts__cartname'>
+                          {cart.name}
+                        </div>
+                        <div className='mycarts__productsquantity'>
+                          {cart.relationships.items.data ? cart.relationships.items.data.length : 0}
+                        </div>
+                        <div className='mycarts__total'>
+                          {cart.meta.display_price.without_tax.formatted}
+                        </div>
+                        <div className='mycarts__expiry'>
+                          {(cart.meta.timestamps.expires_at).substring(0, 10)}
+                        </div>
+                        <div className='mycarts__lastedit'>
+                          {(cart.meta.timestamps.updated_at).substring(0, 10)}
+                        </div>
+                        <div className='mycarts__action'>
+                          <button>action</button>
+                        </div>
+                    </label>
                 </div>
               ))}
             </div>
