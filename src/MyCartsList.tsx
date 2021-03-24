@@ -15,7 +15,6 @@ export  const MyCartsList: React.FC = () => {
 
   const [selectedCarts, setSelectedCarts] = useState<string[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const [isShowModal, setIsShowModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
 
   const modalRef = useOnclickOutside(() => {
