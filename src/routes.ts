@@ -21,6 +21,8 @@ import { OrderDetails } from './OrderDetails';
 import { Orders } from './Orders';
 import { BulkOrder } from './BulkOrder';
 import { QuickOrder } from './QuickOrder';
+import { MyCartsList } from './MyCartsList';
+import { CartsDetailsPage } from './CartsDetailsPage'
 
 interface RouteConfig {
   path: string;
@@ -46,6 +48,8 @@ export const routes: RouteConfig[] = [
   { exact: false, path: '/search', component: Search, },
   { exact: true, path: '/orderdetails/:orderId', component: OrderDetails, },
   { exact: false, path: '/orders', component: Orders, },
+  { exact:true, path:'/carts', component: MyCartsList, },
+  { exact:true, path:'/carts/:carId', component: CartsDetailsPage, },
 ];
 
 export const routesAccount: RouteConfig[] = [
@@ -105,4 +109,12 @@ export function createBulkOrderUrl(): string {
 
 export function createQuickOrderUrl(): string {
   return `/orders/quick-order`;
+}
+
+export function createMyCartsUrl(): string {
+  return `/carts`;
+}
+
+export function createCartsDetailsPageUrl(cartId?: string): string {
+  return `/carts/${cartId}`
 }

@@ -2,57 +2,51 @@
 @import './theme/common.scss';
 
 .bulkorderdropdown {
-  width: 30px;
+  width: fit-content;
   position: relative;
 
-  &__btn {
-    height: 27px;
-    width: 30px;
-    cursor: pointer;
-    border-radius: 50%;
-    background-color: transparent;
-    text-align: center;
-  }
-
   &__btnicon {
-    display: inline-block;
+    display: inline;
     content: " ";
-    width: 24px;
-    height: 24px;
+    width: 16px;
+    height: 12px;
     background-size: cover;
   }
 
-  &__menu {
-    min-width: 130px;
-    position: absolute;
-    right: 0;
-    top: 100%;
-    background-color: $mainBackgroundColor;
-    z-index: 2;
-    border: 1px solid $secondComplimentColor;
-    margin-top: 5px;
+  &__btntext {
+    display: inline;
+    padding-left: 7px;
   }
 
   &__link {
     width: 100%;
-    display: inline-block;
     padding: 7px 10px;
     color: $thirdComplimentColor;
     font-size: $sizeSmall;
     line-height: 19px;
-
+    color: black;
     &:hover {
-      background-color: adjust-color($color: $thirdComplimentColor, $lightness: 64%);
+      color: #115666;
+      svg {
+        path {
+          fill: #115666;
+        } 
+      }
+    }
+    
+    &:focus {
+      color: #0C3D47;
+      svg {
+        path {
+          fill: #0C3D47;
+        }
+      }
     }
   }
 
-  &__open & {
-    &__btn {
-      background-color: $firstComplimentColor;
-    }
-
-    &__btnicon {
-      fill: $mainBackgroundColor;
+  @media (max-width: $mobileWidth - 1px) {
+    &__btntext {
+      display: none;
     }
   }
 }
