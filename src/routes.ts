@@ -49,7 +49,7 @@ export const routes: RouteConfig[] = [
   { exact: true, path: '/orderdetails/:orderId', component: OrderDetails, },
   { exact: false, path: '/orders', component: Orders, },
   { exact:true, path:'/carts', component: MyCartsList, },
-  { exact:true, path:'/carts/:cartName', component: CartsDetailsPage, },
+  { exact:true, path:'/carts/:carId', component: CartsDetailsPage, },
 ];
 
 export const routesAccount: RouteConfig[] = [
@@ -115,6 +115,6 @@ export function createMyCartsUrl(): string {
   return `/carts`;
 }
 
-export function createCartsDetailsPageUrl(cartName?: string): string {
-  return `/carts/${cartName}`
+export function createCartsDetailsPageUrl(cartId?: string): string {
+  return `/carts/${cartId}`
 }

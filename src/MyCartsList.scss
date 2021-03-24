@@ -7,13 +7,19 @@
 
     &__clear {
         clear: both;
+        margin-bottom: 25px;
     }
 
-    &__header {
-        display: inline;
-        height: fit-content;
+    &__ishidden {
+        display: none;
     }
-    
+
+    &__isshow {
+        display: block;
+        padding: 20px;
+        background-color:  #E8F2F4;
+    }
+
     &__title {
         font-style: normal;
         font-weight: bold;
@@ -96,7 +102,6 @@
         &__title {
             font-size: 28px;
             line-height: 32px;
-            
         }
 
         &__createcartmodalbg {
@@ -109,7 +114,6 @@
         }
 
         &__tblheader {
-            margin-top: 25px;
             background: #F7F7F7;
             padding: 24px 52px;
             display: grid;
@@ -142,7 +146,7 @@
 
         &__check {
             width: 15px;
-            height: 15px;    
+            height: 15px; 
         }
 
         &__cartrow {

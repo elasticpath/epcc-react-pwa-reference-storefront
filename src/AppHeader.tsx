@@ -24,7 +24,7 @@ export const AppHeader: React.FC = () => {
   const { selectedCart } = useMultiCartData();
   const [newCart, setNewCart] = useState(false);
 
-  const cartsUrl = createCartsDetailsPageUrl(selectedCart?.name && isLoggedIn ? selectedCart.name : "")
+  const cartsUrl = createCartsDetailsPageUrl(selectedCart?.id && isLoggedIn ? selectedCart.id : "")
 
   const handleCloseCartModal = () => {
     setOpenModal(false);

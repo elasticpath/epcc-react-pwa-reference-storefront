@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation, useMultiCartData } from './app-state';
 import { SettingsCart } from './SettingsCart';
 import useOnclickOutside from 'react-cool-onclickoutside';
@@ -15,6 +15,8 @@ export  const MyCartsList: React.FC = () => {
 
   const [selectedCarts, setSelectedCarts] = useState<string[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [isShowModal, setIsShowModal] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   const modalRef = useOnclickOutside(() => {
     setModalOpen(false)
@@ -27,6 +29,24 @@ export  const MyCartsList: React.FC = () => {
       setSelectedCarts(selectedCarts.filter(c => c !== cartId));
     }
   };
+
+  const handleSelectAll = () => {
+    const allCarts = multiCartDataList.map((cart: moltin.Cart) => cart.id);
+    if(selectedCarts.length < allCarts.length) {
+      setSelectedCarts(allCarts);
+    } else {
+      setSelectedCarts([])
+    }
+  };
+
+  useEffect(() => {
+    if (selectedCarts.length > 0) {
+      setIsEdit (true)
+    }
+    else {
+      setIsEdit (false)
+    }
+  }, [selectedCarts])
 
   const CreateCartHeader = (
     <div className="mycarts__createcartheader">
@@ -50,6 +70,21 @@ export  const MyCartsList: React.FC = () => {
                 </button>
             </div>
             <div className='mycarts__clear'></div>
+            <div>
+            <div className={`${isEdit ? 'mycarts__isshow' : 'mycarts__ishidden'}`}>
+                  {/* <span> */}
+                    <input type="checkbox" name="cartCheck" id="select-all" className="cartslist__checkall epcheckbox" checked={selectedCarts.length === multiCartDataList.length} onChange={() => {handleSelectAll()}} />
+                    <label htmlFor="select-all" className="">
+                      {selectedCarts.length === 1 ?  `${selectedCarts.length} ${t('cart')}
+                      ${t('selected')}` : `${selectedCarts.length} ${t('carts')}
+                      ${t('selected')}` }
+                    </label>
+                  {/* </span> */}
+                  {/* <button className="cartslist__deletebutton" disabled={selectedCarts.length === 0 || multiCartDataList.length === 1} onClick={() => setIsShowModal(true)}>
+                    {/* {!isShowModal ? <DeleteIcon /> : <span className="circularLoader" aria-label={t('loading')} />} */}
+                  {/* </button> */} 
+                </div>
+            </div>
             <div className="mycarts__tblheader">
               <p className='mycarts__rowtitle'>{t('cart-name')}</p>
               <p className='mycarts__rowtitle'>{t('products-number')}</p>
