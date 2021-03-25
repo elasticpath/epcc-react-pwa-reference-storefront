@@ -497,6 +497,7 @@ function useMultiCartDataState() {
   const [guestCartId, setGuestCartId] = useState('');
   const [pageNum, setPageNum] = useState<number>(1);
   const [total, setTotal] = useState<number>(1);
+  const [totalCarts, setTotalCarts] = useState<number>(1)
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [ mergedMessage, setMergedMessaged ] = useState("");
 
@@ -510,6 +511,7 @@ function useMultiCartDataState() {
       });
       getMultiCartsList(token, pageNum).then( res => {
         setMultiCartDataList(res.data);
+        setTotalCarts(res.meta.results.total);
         setTotal(res.meta.page.total);
         setCurrentPage(res.meta.page.current)
       })
@@ -618,6 +620,7 @@ function useMultiCartDataState() {
     setMultiCartDataList,
     setPageNum,
     total,
+    totalCarts,
     currentPage,
     createCart,
     selectedCart,

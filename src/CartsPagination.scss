@@ -1,45 +1,79 @@
-@import './theme/common.scss';
+@import './theme/common';
 
-.CartsPagination {
-    position: absolute;
-    bottom: 25px;
+.cartspagination {
+    width: 100%;
     font-style: normal;
     font-weight: normal;
-    font-size: 13px;
-    line-height: 15px;
+    font-size: $sizeSmall;
+    line-height: 21px;
     text-align: center;
-    left: 50%;
-    transform: translate(-50%, 0);
+    color: #333333;
+    margin:50px auto;
 
-    &__pagenumber {
-        font-style: normal;
-        font-weight: normal;
-        font-size: 13px;
-        line-height: 15px;
+
+    &__link {
+        margin: 10px 12px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        border-radius: 50%;
         text-align: center;
-        padding: 0 10px;
+    }
+
+    .--active{
+        cursor: pointer;
+        svg{
+            path{
+                fill:  #197C93;
+            }
+        }
+        &:hover{
+            background-color: $sixthComplimentBackground;
+        }
+        &:active{
+            background-color: $firstComplimentColor;
+            svg{
+                path{
+                    fill: white;
+                }
+            }
+        }
+    }
+    .--deactive{
+        cursor: unset;
+        background: #F7F7F7;
+        svg{
+            path{
+                fill: #CCCCCC;
+            }
+        }
     }
 
     &__prevpageicon {
         transform: rotate(90deg);
-        
     }
 
     &__nextpageicon {
-        transform: rotate(-90deg);
+        transform: matrix(0, 1, 1, 0, 0, 0);
+    }
+
+    &__pageinfo{
+        float: left;
+    }
+
+    &__paginateinfo{
+        float: right;
+    }
+
+    @media screen and (min-width: $tabletSmallWidth) {
+        width: fit-content;
+        padding: 0px;
         
-    }
-
-    svg {
-        path{
-            fill: #3C4858;
+        &__pageinfo{
+            float: none;
         }
-       
-        cursor: pointer;
-
-        &:hover{
-            fill:$firstComplimentTextColor;
+    
+        &__paginateinfo{
+            float: none;
         }
     }
-
 }

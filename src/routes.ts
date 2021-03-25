@@ -48,8 +48,8 @@ export const routes: RouteConfig[] = [
   { exact: false, path: '/search', component: Search, },
   { exact: true, path: '/orderdetails/:orderId', component: OrderDetails, },
   { exact: false, path: '/orders', component: Orders, },
-  { exact:true, path:'/carts', component: MyCartsList, },
-  { exact:true, path:'/carts/:carId', component: CartsDetailsPage, },
+  { exact:true, path:'/carts/:pageNum?', component: MyCartsList, },
+  { exact:true, path:'/cartsdetails/:carId', component: CartsDetailsPage, },
 ];
 
 export const routesAccount: RouteConfig[] = [
@@ -111,10 +111,10 @@ export function createQuickOrderUrl(): string {
   return `/orders/quick-order`;
 }
 
-export function createMyCartsUrl(): string {
-  return `/carts`;
+export function createMyCartsUrl(pageNum?: number): string {
+  return `/carts${pageNum && pageNum > 1 ? `/${pageNum}` : ''}`;
 }
 
 export function createCartsDetailsPageUrl(cartId?: string): string {
-  return `/carts/${cartId}`
+  return `/cartsdetails/${cartId}`
 }

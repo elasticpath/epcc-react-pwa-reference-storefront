@@ -1,24 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation, useMultiCartData } from './app-state';
+import { useParams } from 'react-router-dom';
 import { SettingsCart } from './SettingsCart';
+import { deleteCart } from './service';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
-
-
+import { ReactComponent as RemoveIcon } from './images/icons/removeAll.svg'
+import { CartsPagination } from './CartsPagination';
+import { createMyCartsUrl } from './routes';
 
 import './MyCartsList.scss';
 
+interface CartsParams {
+  pageNum?: string;
+}
 export  const MyCartsList: React.FC = () => {
+  const params = useParams<CartsParams>();
 
   const { t } = useTranslation();
-  const { multiCartDataList } = useMultiCartData();
+  const { multiCartDataList, multiCartData, updateCartData, total, currentPage, totalCarts, setPageNum} = useMultiCartData();
 
   const [selectedCarts, setSelectedCarts] = useState<string[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [isShowModal, setIsShowModal] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
+  const [showDeletedCartsnumber, setShowDeletedCartsnumber ] = useState(false);
+  const [deletedCartNumber , setDeletedCartNumber] = useState(Number);
+
+  const createModalRef = useOnclickOutside(() => {
+    setModalOpen(false)
+  });
 
   const modalRef = useOnclickOutside(() => {
-    setModalOpen(false)
+    setIsShowModal(false);
   });
 
   const handleSelectCart = (cartId: string) => {
@@ -29,13 +44,30 @@ export  const MyCartsList: React.FC = () => {
     }
   };
 
-  const handleSelectAll = () => {
-    const allCarts = multiCartDataList.map((cart: moltin.Cart) => cart.id);
-    if(selectedCarts.length < allCarts.length) {
-      setSelectedCarts(allCarts);
-    } else {
-      setSelectedCarts([])
-    }
+  const handleRemoveAll = () => {
+    setSelectedCarts([])
+  }
+
+  const onDeleteCart = () => {
+    setShowLoader(true);
+    setShowDeletedCartsnumber(true);
+    setDeletedCartNumber(selectedCarts.length);
+    const promises = selectedCarts.map(el => deleteCart(el));
+    Promise.all(promises)
+      .then(() => {
+        updateCartData();
+        setIsShowModal(false);
+        setShowLoader(false);
+        setSelectedCarts([]);
+      })
+      .catch(error => {
+        setIsShowModal(false);
+        setShowLoader(false);
+        console.error(error);
+      });
+      setTimeout(() => {
+        setShowDeletedCartsnumber(false)
+      }, 4000);
   };
 
   useEffect(() => {
@@ -46,6 +78,11 @@ export  const MyCartsList: React.FC = () => {
       setIsEdit (false)
     }
   }, [selectedCarts])
+
+  useEffect(() => {
+    const parsedPageNum = parseInt(params.pageNum!);
+    setPageNum(isNaN(parsedPageNum) ? 1 : parsedPageNum)
+  }, [params, setPageNum])
 
   const CreateCartHeader = (
     <div className="mycarts__createcartheader">
@@ -62,6 +99,12 @@ export  const MyCartsList: React.FC = () => {
   return (
       <div className='mycarts'>
         <div className="container">
+        {showDeletedCartsnumber &&  (
+        <div className="mycarts__alertMessage">
+          <p>{t('delete-cart-message')} {deletedCartNumber} {deletedCartNumber === 1 ? `${t('cart')}` : `${t('carts')}`}</p>
+          <CloseIcon onClick={() => setShowDeletedCartsnumber(false)}/>
+        </div>
+      )}
             <div  className='mycarts__header'>
                 <h1 className="mycarts__title">My Carts</h1>
                 <button className="mycarts__addcartbtn" onClick={() => setModalOpen(true)}>
@@ -71,17 +114,15 @@ export  const MyCartsList: React.FC = () => {
             <div className='mycarts__clear'></div>
             <div>
             <div className={`${isEdit ? 'mycarts__isshow' : 'mycarts__ishidden'}`}>
-                  {/* <span> */}
-                    <input type="checkbox" name="cartCheck" id="select-all" className="cartslist__checkall epcheckbox" checked={selectedCarts.length === multiCartDataList.length} onChange={() => {handleSelectAll()}} />
-                    <label htmlFor="select-all" className="">
+                   <RemoveIcon className='mycarts__removeIcon' onClick={handleRemoveAll}/>
+                    <label htmlFor="select-all" className="mycarts__cartsselected">
                       {selectedCarts.length === 1 ?  `${selectedCarts.length} ${t('cart')}
                       ${t('selected')}` : `${selectedCarts.length} ${t('carts')}
                       ${t('selected')}` }
                     </label>
-                  {/* </span> */}
-                  {/* <button className="cartslist__deletebutton" disabled={selectedCarts.length === 0 || multiCartDataList.length === 1} onClick={() => setIsShowModal(true)}>
-                    {/* {!isShowModal ? <DeleteIcon /> : <span className="circularLoader" aria-label={t('loading')} />} */}
-                  {/* </button> */} 
+                  <button className="mycarts__deletebutton" disabled={selectedCarts.length === 0 || multiCartDataList.length === 1} onClick={() => setIsShowModal(true)}>
+                    REMOVE
+                  </button> 
                 </div>
             </div>
             <div className="mycarts__tblheader">
@@ -98,10 +139,16 @@ export  const MyCartsList: React.FC = () => {
                     <input type="checkbox" name="cartCheck" id={`carts_${cart.id}`} className="mycarts__check epcheckbox" checked={selectedCarts.includes(cart.id)} onChange={() => {handleSelectCart(cart.id)}}/>
                     <label htmlFor={`carts_${cart.id}`} className='mycarts__cartelement'>
                         <div className='mycarts__cartname'>
+                          <p>
                           {cart.name}
+
+                          </p>
                         </div>
                         <div className='mycarts__productsquantity'>
+                          <p>
                           {cart.relationships.items.data ? cart.relationships.items.data.length : 0}
+
+                          </p>
                         </div>
                         <div className='mycarts__total'>
                           {cart.meta.display_price.without_tax.formatted}
@@ -110,7 +157,10 @@ export  const MyCartsList: React.FC = () => {
                           {(cart.meta.timestamps.expires_at).substring(0, 10)}
                         </div>
                         <div className='mycarts__lastedit'>
+                          <p>
                           {(cart.meta.timestamps.updated_at).substring(0, 10)}
+
+                          </p>
                         </div>
                         <button className='mycarts__action'>
                             Review cart
@@ -122,7 +172,7 @@ export  const MyCartsList: React.FC = () => {
         </div>
         {modalOpen ? (
         <div className="mycarts__createcartmodalbg">
-          <div className="mycarts__createcartmodal" ref={modalRef}>
+          <div className="mycarts__createcartmodal" ref={createModalRef}>
             <SettingsCart
               title={CreateCartHeader}
               onCartCreate={() => {setModalOpen(false)}}
@@ -132,6 +182,35 @@ export  const MyCartsList: React.FC = () => {
           </div>
         </div>
       ) : null}
+      {isShowModal && (
+        <React.Fragment>
+          <div className="mycarts__confirmation" role="presentation" ref={modalRef}>
+            <div className="mycarts__confirmationtitle">
+              {selectedCarts.length !== multiCartData.length ? t('confirmation') : t('warning')}
+            </div>
+            <div className="mycarts__confirmationmsg">
+              {selectedCarts.length !== multiCartData.length ? (
+                selectedCarts.length === 1 ? t('are-you-sure-you-want-to-delete-your-cart') : t('are-you-sure-you-want-to-delete-your-carts')
+              ) : t('warning-msg')}
+            </div>
+            <div className="mycarts__confirmationbtns">
+              <button className="epbtn --primary" onClick={() => onDeleteCart()} disabled={selectedCarts.length === multiCartData.length}>{!showLoader ? t('delete') : <span className="circularLoader" aria-label={t('loading')} />}</button>
+              <button className="epbtn --ghost" onClick={() => setIsShowModal(false)}>{t("cancel")}</button>
+            </div>
+          </div>
+          <div className="mycarts__confirmationoverlay" />
+        </React.Fragment>
+      )}
+
+        <div className="ordershistory__pagination">
+          <CartsPagination
+            totalPages={total}
+            totalOrders={totalCarts}
+            pageOrders={multiCartData.length}
+            currentPage={currentPage}
+            formatUrl={(page) => createMyCartsUrl(page)}
+          />
+        </div>
       </div>
   )
 };

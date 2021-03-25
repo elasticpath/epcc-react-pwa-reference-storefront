@@ -4,6 +4,8 @@ import './CartsList.scss';
 
 export  const CartsDetailsPage: React.FC = () => {
   return (
-      <div className='cartsdetailspage'></div>
+      <div className='cartsdetailspage'>
+        Hello All
+      </div>
   )
 };

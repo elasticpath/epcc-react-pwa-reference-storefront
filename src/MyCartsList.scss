@@ -98,6 +98,77 @@
         cursor: pointer;
       }
 
+      &__cartsselected {
+          margin-right: 32px;
+          padding-left: 12px;
+      }
+
+      &__removeIcon {
+          cursor: pointer;
+          width: 18px;
+          height: 18px; 
+      }
+
+      &__deletebutton {
+          padding-left: 32px;
+          border-left: 2px solid #666666 ;
+          cursor: pointer;
+          text-decoration: underline;
+      }
+
+
+  &__confirmationoverlay {
+    background-color: $mainTextColor;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    opacity: 0.3;
+  }
+
+  &__confirmation {
+    width: 350px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: $secondComplimentBackground;
+    border: 1px solid $mainBorderColor;
+    padding: 20px 30px 30px;
+    z-index: 4;
+  }
+
+  &__closebtn {
+    cursor: pointer;
+  }
+
+  &__confirmationtitle {
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid $secondBorderColor;
+  }
+
+  &__confirmationmsg {
+    text-align: left;
+    margin-bottom: 30px;
+  }
+
+  &__confirmationbtns {
+    .epbtn {
+      width: 100%;
+      height: 42px;
+
+      &.--primary {
+        margin-bottom: 15px;
+      }
+    }
+  }
+
     @media (min-width: $tabletSmallWidth) {
         &__title {
             font-size: 28px;
@@ -126,6 +197,8 @@
             width: 100%;
 
             div, &__check {
+                display: flex;
+                align-items: center;
                 font-weight: 500;
                 font-size: 14px;
                 line-height: 16px;
@@ -145,14 +218,15 @@
         }
 
         &__check {
-            width: 15px;
-            height: 15px; 
+            display: flex;
+            align-items: center;
         }
 
         &__cartrow {
             padding: 24px 52px 24px 24px;
             text-align: left;
             border-bottom: 1px solid $secondBorderColor;
+            
         
             &:hover {
               background-color: $sixthComplimentBackground;
@@ -172,4 +246,13 @@
             color: #FFFFFF;
         }
     }
+}
+
+.epcheckbox + label:before {
+    transform: translate(0px , 50%);
+}
+
+.epcheckbox:checked + label:after {
+    top: 50%!important;
+    transform: translate(2px, -50%) rotate(-45deg)!important;
 }
