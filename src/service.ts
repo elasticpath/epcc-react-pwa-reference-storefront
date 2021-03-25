@@ -237,14 +237,14 @@ export async function deleteCart(reference: string) {
   await moltin.Cart(reference).Delete();
 }
 
-export async function addToCart(reference: string, productId: string): Promise<void> {
-  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+export async function addToCart(reference: string, productId: string, language: string, currency: string): Promise<void> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId, language, currency });
   const quantity = 1;
   await moltin.Cart(reference).AddProduct(productId, quantity);
 }
 
-export async function bulkAdd(reference: string, data: moltin.CartItemObject[]): Promise<moltin.CartItemsResponse> {
-  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+export async function bulkAdd(reference: string, data: moltin.CartItemObject[], language: string, currency: string): Promise<moltin.CartItemsResponse> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId, language, currency });
   const result = await moltin.Cart(reference).BulkAdd(data);
 
   return result;
@@ -270,8 +270,8 @@ export async function updateCartItem(reference: string, productId: string, quant
   await moltin.Cart(reference).UpdateItem(productId, quantity);
 }
 
-export async function checkout(reference: string, customer: any, billing: any, shipping: any): Promise<{ data: moltin.Order }> {
-  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+export async function checkout(reference: string, customer: any, billing: any, shipping: any,  language: string, currency: string): Promise<{ data: moltin.Order }> {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId, language, currency });
   const checkoutRes = await moltin.Cart(reference).Checkout(customer, billing, shipping);
 
   return checkoutRes;

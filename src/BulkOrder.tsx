@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import useOnclickOutside from 'react-cool-onclickoutside';
-import { useTranslation, useCartData, useMultiCartData, useCustomerData } from './app-state';
+import { useTranslation, useCartData, useMultiCartData, useCustomerData, useCurrency } from './app-state';
 import { bulkAdd } from './service';
 import { SettingsCart } from './SettingsCart';
 import { ReactComponent as ClearIcon } from './images/icons/ic_clear.svg';
@@ -20,6 +20,8 @@ export const BulkOrder: React.FC = (props) => {
   const { updateCartItems, setCartQuantity, handleShowCartPopup } = useCartData();
   const { multiCartData, updateCartData, updateSelectedCart, setIsCartSelected } = useMultiCartData();
   const { isLoggedIn } = useCustomerData();
+  const { selectedLanguage } = useTranslation();
+  const { selectedCurrency } = useCurrency();
 
   const [bulkOrderItems, setBulkOrderItems] = useState([]);
   const [bulkError, setBulkError] = useState('');
@@ -131,7 +133,7 @@ export const BulkOrder: React.FC = (props) => {
       setShowLoader(true);
       const currentCart = localStorage.getItem("mcart") || "";
       const mcart = cartID ? cartID : currentCart;
-      bulkAdd(mcart, bulkOrderItems)
+      bulkAdd(mcart, bulkOrderItems, selectedLanguage, selectedCurrency)
         .then((res:any) => {
           const totalQuantity = bulkOrderItems.reduce((sum, { quantity }) => sum + quantity, 0);
           const errorsWQ: [{type:string, sku:string, quantity:number}] = [{type: "", sku: "", quantity: 0}];
