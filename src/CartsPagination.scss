@@ -56,24 +56,10 @@
         transform: matrix(0, 1, 1, 0, 0, 0);
     }
 
-    &__pageinfo{
-        float: left;
-    }
-
-    &__paginateinfo{
-        float: right;
-    }
-
     @media screen and (min-width: $tabletSmallWidth) {
         width: fit-content;
         padding: 0px;
-        
-        &__pageinfo{
-            float: none;
-        }
+        margin:50px auto;
     
-        &__paginateinfo{
-            float: none;
-        }
     }
 }

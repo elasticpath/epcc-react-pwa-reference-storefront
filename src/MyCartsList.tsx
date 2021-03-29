@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation, useMultiCartData } from './app-state';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { SettingsCart } from './SettingsCart';
 import { deleteCart } from './service';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
-import { ReactComponent as RemoveIcon } from './images/icons/removeAll.svg'
+import { ReactComponent as RemoveIcon } from './images/icons/removeAll.svg';
+import { ReactComponent as PaginationIcon } from "./images/icons/ic_caret.svg";import { ReactComponent as TooltipIcon } from './images/icons/icon-tooltip.svg';
 import { CartsPagination } from './CartsPagination';
-import { createMyCartsUrl } from './routes';
+import { createMyCartsUrl, createCartsDetailsPageUrl } from './routes';
 
 import './MyCartsList.scss';
 
@@ -27,6 +28,7 @@ export  const MyCartsList: React.FC = () => {
   const [showLoader, setShowLoader] = useState(false);
   const [showDeletedCartsnumber, setShowDeletedCartsnumber ] = useState(false);
   const [deletedCartNumber , setDeletedCartNumber] = useState(Number);
+  const [showCreateCartAlert, setShowCreateCartAlert ] = useState(false);
 
   const createModalRef = useOnclickOutside(() => {
     setModalOpen(false)
@@ -82,7 +84,14 @@ export  const MyCartsList: React.FC = () => {
   useEffect(() => {
     const parsedPageNum = parseInt(params.pageNum!);
     setPageNum(isNaN(parsedPageNum) ? 1 : parsedPageNum)
-  }, [params, setPageNum])
+  }, [params, setPageNum]);
+
+  useEffect(() => {
+    if(showCreateCartAlert)
+      setTimeout(() => {
+        setShowCreateCartAlert(false)
+      }, 4000);
+  }, [showCreateCartAlert]);
 
   const CreateCartHeader = (
     <div className="mycarts__createcartheader">
@@ -101,17 +110,27 @@ export  const MyCartsList: React.FC = () => {
         <div className="container">
         {showDeletedCartsnumber &&  (
         <div className="mycarts__alertMessage">
-          <p>{t('delete-cart-message')} {deletedCartNumber} {deletedCartNumber === 1 ? `${t('cart')}` : `${t('carts')}`}</p>
-          <CloseIcon onClick={() => setShowDeletedCartsnumber(false)}/>
+          <p className='mycarts__messagetext'>{t('delete-cart-message')} {deletedCartNumber} {deletedCartNumber === 1 ? `${t('cart')}` : `${t('carts')}`}</p>
+          <CloseIcon onClick={() => setShowDeletedCartsnumber(false)} className="mycarts__messageicon"/>
+          <div className='mycarts__clear'></div>
         </div>
       )}
-            <div  className='mycarts__header'>
-                <h1 className="mycarts__title">My Carts</h1>
-                <button className="mycarts__addcartbtn" onClick={() => setModalOpen(true)}>
-                  {t('add-new-cart')}
-                </button>
-            </div>
+      {showCreateCartAlert &&  (
+        <div className="mycarts__alertMessage">
+          <p className='mycarts__messagetext'>{t('create-cart-message')}</p>
+          <CloseIcon onClick={() => setShowCreateCartAlert(false)} className="mycarts__messageicon"/>
+          <div className='mycarts__clear'></div>
+        </div>
+        
+      )}
+        <div  className='mycarts__header'>
+            <h1 className="mycarts__title">My Carts</h1>
+            <button className="mycarts__addcartbtn" onClick={() => setModalOpen(true)}>
+              {t('add-new-cart')}
+            </button>
             <div className='mycarts__clear'></div>
+        </div>
+            
             <div>
             <div className={`${isEdit ? 'mycarts__isshow' : 'mycarts__ishidden'}`}>
                    <RemoveIcon className='mycarts__removeIcon' onClick={handleRemoveAll}/>
@@ -127,7 +146,16 @@ export  const MyCartsList: React.FC = () => {
             </div>
             <div className="mycarts__tblheader">
               <p className='mycarts__rowtitle'>{t('cart-name')}</p>
-              <p className='mycarts__rowtitle'>{t('products-number')}</p>
+              <p className='mycarts__rowtitle '>
+                {t('products-number')}
+                <div className="mycarts__tooltip">
+                  <TooltipIcon className='mycarts__tooltipicon'/>
+                  <span className="mycarts__tooltiptext">
+                  The number of different types of products added to a cart.
+                  </span>
+                </div>
+                
+              </p>
               <p className='mycarts__rowtitle'>{t('cart-total')}</p>
               <p className='mycarts__rowtitle'>{t('cart-expiry')}</p>
               <p className='mycarts__rowtitle'>{t('last-edit')}</p>
@@ -141,20 +169,24 @@ export  const MyCartsList: React.FC = () => {
                         <div className='mycarts__cartname'>
                           <p>
                           {cart.name}
-
                           </p>
                         </div>
                         <div className='mycarts__productsquantity'>
                           <p>
                           {cart.relationships.items.data ? cart.relationships.items.data.length : 0}
-
                           </p>
                         </div>
                         <div className='mycarts__total'>
                           {cart.meta.display_price.without_tax.formatted}
                         </div>
                         <div className='mycarts__expiry'>
+                          <span className='mycarts__expiresspan'>expires: </span>
                           {(cart.meta.timestamps.expires_at).substring(0, 10)}
+                          <div className="mycarts__tooltip">
+                            <TooltipIcon className='mycarts__tooltipicon'/>
+                            <span className="mycarts__tooltiptext">
+                              To extend cart expiry date, add or remove an item.                            </span>
+                           </div>
                         </div>
                         <div className='mycarts__lastedit'>
                           <p>
@@ -162,9 +194,10 @@ export  const MyCartsList: React.FC = () => {
 
                           </p>
                         </div>
-                        <button className='mycarts__action'>
-                            Review cart
-                        </button>
+                        <Link className='mycarts__action' to={createCartsDetailsPageUrl(cart.id)}>
+                           <p className="mycarts__actionbtn">action</p>
+                           <span className={"mycarts__actionicon --next --active"}><PaginationIcon className="mycarts__nexticon" /></span>
+                        </Link>
                     </label>
                 </div>
               ))}
@@ -177,7 +210,7 @@ export  const MyCartsList: React.FC = () => {
               title={CreateCartHeader}
               onCartCreate={() => {setModalOpen(false)}}
               handleHideSettings={() => {setModalOpen(false)}}
-              setShowCartAlert={() => ''}
+              setShowCartAlert={() => setShowCreateCartAlert(true)}
             />
           </div>
         </div>
@@ -202,7 +235,7 @@ export  const MyCartsList: React.FC = () => {
         </React.Fragment>
       )}
 
-        <div className="ordershistory__pagination">
+        <div className="mycarts__pagination">
           <CartsPagination
             totalPages={total}
             totalOrders={totalCarts}
