@@ -186,7 +186,7 @@
   "create-cart": "Create cart",
   "select-cart": "Select cart",
   "cart-name": "Cart name",
-  "cart-description": "Cart description",
+  "cart-description": "Cart description (optional)",
   "new-cart": "New Cart",
   "edited": "Edited",
   "created": "Created",
@@ -276,5 +276,6 @@
   "last-edit": "Last Edit",
   "product-tooltip" : " The number of different types of products added to a cart.",
   "expiry-tooltip": "To extend cart expiry date, add or remove an item.",
-  "review-cart" : "Review Cart"
+  "review-cart" : "Review Cart",
+  "cart-empty": "Carts is empty"
 }

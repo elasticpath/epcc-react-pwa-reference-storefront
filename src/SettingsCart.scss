@@ -95,19 +95,6 @@
       fill: $thirdComplimentTextColor;
     }
   }
-
-  @media screen and (max-width: $mobileXSmallWidth - 1px) {
-    &__btns {
-      .epbtn {
-        min-width: 100%;
-
-        &:first-child {
-          margin-right: 0;
-          margin-bottom: 15px;
-        }
-      }
-    }
-  }
 }
 
 

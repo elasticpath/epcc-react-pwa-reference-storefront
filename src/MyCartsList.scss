@@ -2,11 +2,15 @@
 
 .mycarts {
     
-    padding: 40px 0 20px;
+    
     width: 100%;
 
     &__header {
         margin: 25px 0px;
+        text-align:center; 
+        display:grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
     }
 
     &__clear {
@@ -32,12 +36,12 @@
         font-size: 18px;
         line-height: 24px;
         color: #333333;
-     
-        float: left;
+        vertical-align: middle;
+        justify-self: flex-start;
     }
 
     &__addcartbtn {
-        float: right;
+        justify-self: flex-end;
         background: #FFFFFF;
         border: 1px solid $firstComplimentColor;
         font-style: normal;
@@ -99,6 +103,7 @@
       &__createcartheader {
         display: flex;
         justify-content: space-between;
+        border-bottom: 1px solid #CCCCCC;
       }
     
       &__createcartheadertext {
@@ -200,6 +205,7 @@
     &__expiry {
         grid-row-start: 2;
         grid-row-end: 3;
+        font-weight: 600;
     }
        
 
@@ -259,6 +265,13 @@
     &__alertMessage {
         background-color: #E8F2F4;
         padding: 16px;
+        position: absolute;
+        display: grid;
+        left:0;
+        width: 100%;
+        grid-template-columns: 92% 8%;
+        column-gap: 15px;
+
         p {
             font-style: normal;
             font-weight: normal;
@@ -274,7 +287,9 @@
     }
 
     &__expiresspan {
-        color: black;
+        color: #666666;
+        font-size: 12px;
+        line-height: 16px;
     }
 
     &__bgcolor {
@@ -286,7 +301,24 @@
         height: 20px;
         float: right;
     }
+
+    &__quantityshow {
+        display: none;
+    }
     @media (min-width: $tabletSmallWidth) {
+        &__alertMessage {
+            width: 500px;
+            left:50%;
+            transform: translate(-50%, 0);
+            grid-template-columns: 92% 8%;
+            
+        }
+
+        padding: 40px 0 20px;
+        
+        &__quantityshow {
+            display: block;
+        }
 
         &__cartname, &__total, &__productsquantity, &__expiry , &__action{
             grid-row-start: unset;

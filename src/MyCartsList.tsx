@@ -86,17 +86,17 @@ export  const MyCartsList: React.FC = () => {
     setPageNum(isNaN(parsedPageNum) ? 1 : parsedPageNum)
   }, [params, setPageNum]);
 
-  useEffect(() => {
-    if(showCreateCartAlert)
-      setTimeout(() => {
-        setShowCreateCartAlert(false)
-      }, 4000);
-  }, [showCreateCartAlert]);
+  // useEffect(() => {
+  //   if(showCreateCartAlert)
+  //     setTimeout(() => {
+  //       setShowCreateCartAlert(false)
+  //     }, 4000);
+  // }, [showCreateCartAlert]);
 
-  const expiryAler = (date:any) => {
+  const expiryAlert = (date:any) => {
     const expiryDate = new Date(date);
     const dayBefore =   new Date(expiryDate.getTime());
-    dayBefore.setDate(expiryDate.getDate() -2);
+    dayBefore.setDate(expiryDate.getDate() - 1);
     const today = new Date();
     if(dayBefore.getDate() === today.getDate() && dayBefore.getMonth() === today.getMonth() && dayBefore.getFullYear() === today.getFullYear()) {
       return true
@@ -104,7 +104,6 @@ export  const MyCartsList: React.FC = () => {
     else {
       return false
     }
-    
   }
 
   const CreateCartHeader = (
@@ -129,14 +128,13 @@ export  const MyCartsList: React.FC = () => {
           <div className='mycarts__clear'></div>
         </div>
       )}
-      {showCreateCartAlert &&  (
-        <div className="mycarts__alertMessage">
-          <p className='mycarts__messagetext'>{t('create-cart-message')}</p>
-          <CloseIcon onClick={() => setShowCreateCartAlert(false)} className="mycarts__messageicon"/>
-          <div className='mycarts__clear'></div>
-        </div>
-        
-      )}
+        {showCreateCartAlert &&  (
+          <div className="mycarts__alertMessage">
+            <p className='mycarts__messagetext'>{t('create-cart-message')}</p>
+            <CloseIcon onClick={() => setShowCreateCartAlert(false)} className="mycarts__messageicon"/>
+            <div className='mycarts__clear'></div>
+          </div>
+        )}
         <div  className='mycarts__header'>
             <h1 className="mycarts__title">My Carts</h1>
             <button className="mycarts__addcartbtn" onClick={() => setModalOpen(true)}>
@@ -186,17 +184,17 @@ export  const MyCartsList: React.FC = () => {
                         </div>
                         <div className='mycarts__productsquantity'>
                           <p>
-                          {cart.relationships.items.data ? cart.relationships.items.data.length : 0}
+                            {cart.relationships.items.data ? cart.relationships.items.data.length : '0'} <span className='mycarts__expiresspan'>{cart.relationships.items.data && cart.relationships.items.data.length === 1 ? t('product') : t('products') }</span>
                           </p>
                         </div>
                         <div className='mycarts__total'>
-                          {cart.meta.display_price.without_tax.formatted}
+                          {cart.meta.display_price.without_tax.formatted === '0' ? '0.00' : cart.meta.display_price.without_tax.formatted}
                         </div>
-                        <div className={expiryAler(cart.meta.timestamps.expires_at) ? 'mycarts__expiry mycarts__expiralert' : 'mycarts__expiry'} >
-                          <span className='mycarts__expiresspan'>expires: </span>
+                        <div className={expiryAlert(cart.meta.timestamps.expires_at) ? 'mycarts__expiry mycarts__expiralert' : 'mycarts__expiry'} >
+                          <span className='mycarts__expiresspan'>{t('expires')}: </span>
                             {new Date(cart.meta.timestamps.expires_at).toLocaleString('default', {month: 'short'})} {new Date(cart.meta.timestamps.expires_at).getDate() > 9 ? new Date(cart.meta.timestamps.expires_at).getDate() : ('0' + new Date(cart.meta.timestamps.expires_at).getDate()) }, {new Date(cart.meta.timestamps.expires_at).getFullYear()}
                            {
-                             expiryAler(cart.meta.timestamps.expires_at) ? <div className="mycarts__tooltip">
+                             expiryAlert(cart.meta.timestamps.expires_at) ? <div className="mycarts__tooltip">
                              <TooltipIcon className='mycarts__tooltipicon'/>
                              <span className="mycarts__tooltiptext">
                                {t('expiry-tooltip')}
