@@ -77,8 +77,7 @@
       }
 
       &__cartrow {
-        padding: 0px 0px 20px 20px;
-        margin-bottom: 16px;
+        padding: 16px 0px 20px 20px;
         text-align: left;
         border-bottom: 1px solid $secondBorderColor;
     }
@@ -270,6 +269,18 @@
           }
     }
 
+    &__expiralert {
+        color: red;
+    }
+
+    &__expiresspan {
+        color: black;
+    }
+
+    &__bgcolor {
+        background-color: $sixthComplimentBackground;
+    }
+
     &__messageicon{
         width:20px;
         height: 20px;
@@ -282,6 +293,7 @@
             grid-column-end: unset;
             grid-column-start:unset ;
             grid-row-end: unset;
+            justify-self: normal;
         }
 
         &__actionicon {
@@ -359,7 +371,6 @@
             padding: 24px 52px 24px 24px;
             text-align: left;
             border-bottom: 1px solid $secondBorderColor;
-            
         
             &:hover {
               background-color: $sixthComplimentBackground;
@@ -367,26 +378,6 @@
             }
         }
 
-        // &__action {
-        //     display: block;
-        //     background: #4C5666;
-        //     border: 1px solid #4C5666;
-        //     padding: 8px 16px;
-        //     font-weight: 500;
-        //     font-size: 13px;
-        //     line-height: 16px;
-        //     text-align: center;
-        //     letter-spacing: 0.2px;
-        //     color: #FFFFFF;
-
-        //     &:hover {
-        //         background: #3a4049;
-        //     }
-
-        //     &:focus {
-        //         background: #222529;
-        //     }
-        // }
         &__actionbtn {
             display: block;
             background: #4C5666;

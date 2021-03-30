@@ -93,6 +93,20 @@ export  const MyCartsList: React.FC = () => {
       }, 4000);
   }, [showCreateCartAlert]);
 
+  const expiryAler = (date:any) => {
+    const expiryDate = new Date(date);
+    const dayBefore =   new Date(expiryDate.getTime());
+    dayBefore.setDate(expiryDate.getDate() -2);
+    const today = new Date();
+    if(dayBefore.getDate() === today.getDate() && dayBefore.getMonth() === today.getMonth() && dayBefore.getFullYear() === today.getFullYear()) {
+      return true
+    }
+    else {
+      return false
+    }
+    
+  }
+
   const CreateCartHeader = (
     <div className="mycarts__createcartheader">
       <span className="mycarts__createcartheadertext">{t("create-cart")}</span>
@@ -163,7 +177,7 @@ export  const MyCartsList: React.FC = () => {
             </div>
             <div >
                 {multiCartDataList.map((cart: any) => (
-                  <div className='mycarts__cartrow' key={cart.id}>
+                  <div className={selectedCarts.includes(cart.id) ? 'mycarts__cartrow mycarts__bgcolor': 'mycarts__cartrow'} key={cart.id}>
                     <input type="checkbox" name="cartCheck" id={`carts_${cart.id}`} className="mycarts__check epcheckbox" checked={selectedCarts.includes(cart.id)} onChange={() => {handleSelectCart(cart.id)}}/>
                     <label htmlFor={`carts_${cart.id}`} className='mycarts__cartelement'>
                         <div className='mycarts__cartname'>
@@ -179,19 +193,21 @@ export  const MyCartsList: React.FC = () => {
                         <div className='mycarts__total'>
                           {cart.meta.display_price.without_tax.formatted}
                         </div>
-                        <div className='mycarts__expiry'>
+                        <div className={asd(cart.meta.timestamps.expires_at) ? 'mycarts__expiry mycarts__expiralert' : 'mycarts__expiry'} >
                           <span className='mycarts__expiresspan'>expires: </span>
-                          {(cart.meta.timestamps.expires_at).substring(0, 10)}
-                          <div className="mycarts__tooltip">
-                            <TooltipIcon className='mycarts__tooltipicon'/>
-                            <span className="mycarts__tooltiptext">
-                              To extend cart expiry date, add or remove an item.                            </span>
-                           </div>
+                            {new Date(cart.meta.timestamps.expires_at).toLocaleString('default', {month: 'short'})} {new Date(cart.meta.timestamps.expires_at).getDate() > 9 ? new Date(cart.meta.timestamps.expires_at).getDate() : ('0' + new Date(cart.meta.timestamps.expires_at).getDate()) }, {new Date(cart.meta.timestamps.expires_at).getFullYear()}
+                           {
+                             expiryAler(cart.meta.timestamps.expires_at) ? <div className="mycarts__tooltip">
+                             <TooltipIcon className='mycarts__tooltipicon'/>
+                             <span className="mycarts__tooltiptext">
+                               To extend cart expiry date, add or remove an item.</span>
+                            </div> : <></>
+                           } 
+                          
                         </div>
                         <div className='mycarts__lastedit'>
                           <p>
-                          {(cart.meta.timestamps.updated_at).substring(0, 10)}
-
+                          {new Date(cart.meta.timestamps.updated_at).toLocaleString('default', {month: 'short'})} {new Date(cart.meta.timestamps.updated_at).getDate() > 9 ? new Date().getDate() : ('0' + new Date(cart.meta.timestamps.updated_at).getDate()) }, {new Date(cart.meta.timestamps.updated_at).getFullYear()} 
                           </p>
                         </div>
                         <Link className='mycarts__action' to={createCartsDetailsPageUrl(cart.id)}>
