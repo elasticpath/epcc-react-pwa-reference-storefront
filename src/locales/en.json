@@ -273,5 +273,8 @@
   "cart-total": "Cart Total",
   "cart-expiry": "Cart Expity",
   "products-number": "# Products",
-  "last-edit": "Last Edit"
+  "last-edit": "Last Edit",
+  "product-tooltip" : " The number of different types of products added to a cart.",
+  "expiry-tooltip": "To extend cart expiry date, add or remove an item.",
+  "review-cart" : "Review Cart"
 }

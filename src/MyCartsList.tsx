@@ -154,7 +154,7 @@ export  const MyCartsList: React.FC = () => {
                       ${t('selected')}` }
                     </label>
                   <button className="mycarts__deletebutton" disabled={selectedCarts.length === 0 || multiCartDataList.length === 1} onClick={() => setIsShowModal(true)}>
-                    REMOVE
+                    {t('remove')}
                   </button> 
                 </div>
             </div>
@@ -165,10 +165,9 @@ export  const MyCartsList: React.FC = () => {
                 <div className="mycarts__tooltip">
                   <TooltipIcon className='mycarts__tooltipicon'/>
                   <span className="mycarts__tooltiptext">
-                  The number of different types of products added to a cart.
+                    {t('product-tooltip')}
                   </span>
                 </div>
-                
               </p>
               <p className='mycarts__rowtitle'>{t('cart-total')}</p>
               <p className='mycarts__rowtitle'>{t('cart-expiry')}</p>
@@ -193,14 +192,15 @@ export  const MyCartsList: React.FC = () => {
                         <div className='mycarts__total'>
                           {cart.meta.display_price.without_tax.formatted}
                         </div>
-                        <div className={asd(cart.meta.timestamps.expires_at) ? 'mycarts__expiry mycarts__expiralert' : 'mycarts__expiry'} >
+                        <div className={expiryAler(cart.meta.timestamps.expires_at) ? 'mycarts__expiry mycarts__expiralert' : 'mycarts__expiry'} >
                           <span className='mycarts__expiresspan'>expires: </span>
                             {new Date(cart.meta.timestamps.expires_at).toLocaleString('default', {month: 'short'})} {new Date(cart.meta.timestamps.expires_at).getDate() > 9 ? new Date(cart.meta.timestamps.expires_at).getDate() : ('0' + new Date(cart.meta.timestamps.expires_at).getDate()) }, {new Date(cart.meta.timestamps.expires_at).getFullYear()}
                            {
                              expiryAler(cart.meta.timestamps.expires_at) ? <div className="mycarts__tooltip">
                              <TooltipIcon className='mycarts__tooltipicon'/>
                              <span className="mycarts__tooltiptext">
-                               To extend cart expiry date, add or remove an item.</span>
+                               {t('expiry-tooltip')}
+                              </span>
                             </div> : <></>
                            } 
                           
@@ -211,7 +211,7 @@ export  const MyCartsList: React.FC = () => {
                           </p>
                         </div>
                         <Link className='mycarts__action' to={createCartsDetailsPageUrl(cart.id)}>
-                           <p className="mycarts__actionbtn">action</p>
+                           <p className="mycarts__actionbtn">{t('review-cart')}</p>
                            <span className={"mycarts__actionicon --next --active"}><PaginationIcon className="mycarts__nexticon" /></span>
                         </Link>
                     </label>
