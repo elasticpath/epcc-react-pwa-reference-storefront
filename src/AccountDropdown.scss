@@ -2,7 +2,7 @@
 @import './theme/common.scss';
 
 .accountdropdown {
-  width: 50px;
+  // width: 50px;
   position: relative;
 
   &__btn {
@@ -12,11 +12,11 @@
     &:after {
       display: inline-block;
       content: ' ';
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       border: none;
-      border-left: 1.5px solid $mainColor;
-      border-bottom: 1.5px solid $mainColor;
+      border-left: 1.9px solid $mainColor;
+      border-bottom: 1.9px solid $mainColor;
       transform-origin: center;
       transform: rotate(-45deg);
       vertical-align: middle;
@@ -30,6 +30,12 @@
     height: 21px;
     background-size: cover;
     margin-right: 5px;
+  }
+
+  &__btntxt {
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: middle;
   }
 
   &__listitem {
@@ -105,10 +111,21 @@
     &__btnicon {
       fill: $thirdComplimentColor;
     }
+
+    &__btntxt {
+      color: $thirdComplimentColor;
+    }
   }
 
   &__loginbtn{
     color: $mainTextColor;
     cursor: pointer;
   }
+
+  @media(max-width : $tabletSmallWidth) {
+    &__btntxt {
+      display: none;
+    }
+  }
 }
+

@@ -86,19 +86,19 @@ export  const MyCartsList: React.FC = () => {
     setPageNum(isNaN(parsedPageNum) ? 1 : parsedPageNum)
   }, [params, setPageNum]);
 
-  // useEffect(() => {
-  //   if(showCreateCartAlert)
-  //     setTimeout(() => {
-  //       setShowCreateCartAlert(false)
-  //     }, 4000);
-  // }, [showCreateCartAlert]);
+  useEffect(() => {
+    if(showCreateCartAlert)
+      setTimeout(() => {
+        setShowCreateCartAlert(false)
+      }, 4000);
+  }, [showCreateCartAlert]);
 
   const expiryAlert = (date:any) => {
     const expiryDate = new Date(date);
     const dayBefore =   new Date(expiryDate.getTime());
     dayBefore.setDate(expiryDate.getDate() - 1);
     const today = new Date();
-    if(dayBefore.getDate() === today.getDate() && dayBefore.getMonth() === today.getMonth() && dayBefore.getFullYear() === today.getFullYear()) {
+    if((dayBefore.getDate() === today.getDate() && dayBefore.getMonth() === today.getMonth() && dayBefore.getFullYear() === today.getFullYear()) || (expiryDate.getDate() === today.getDate() && expiryDate.getMonth() === today.getMonth() && expiryDate.getFullYear() === today.getFullYear())) {
       return true
     }
     else {
@@ -140,7 +140,6 @@ export  const MyCartsList: React.FC = () => {
             <button className="mycarts__addcartbtn" onClick={() => setModalOpen(true)}>
               {t('add-new-cart')}
             </button>
-            <div className='mycarts__clear'></div>
         </div>
             
             <div>
