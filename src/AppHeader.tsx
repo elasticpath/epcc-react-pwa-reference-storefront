@@ -37,7 +37,6 @@ export const AppHeader: React.FC = () => {
 
   return (
     <div className="appheader">
-      {console.log(selectedCart)}
       <div className="appheader__container">
         <div className="appheader__logo">
           <Link to="/" aria-label={t('bellvie-logo')}>

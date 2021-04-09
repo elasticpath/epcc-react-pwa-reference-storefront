@@ -281,5 +281,6 @@
   "account" : "Account", 
   "current-cart" : "Current cart", 
   "unit-price" : "Unit Price", 
-  "line-subtotal" : "Line subtotal"
+  "line-subtotal" : "Line subtotal",
+  "see-all-carts" : "See all carts"
 }

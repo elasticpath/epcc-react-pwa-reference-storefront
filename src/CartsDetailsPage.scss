@@ -65,7 +65,7 @@
     }
 
     &__emptystate {
-        padding-bottom: 150px;
+        padding-bottom: 20px;
         justify-self: center;
         align-self: center;
         display: flex;
@@ -85,12 +85,6 @@
         color: #333333;
         text-align: center;
         padding: 40px;
-    }
-
-    &__body {
-        display: grid;
-        grid-template-rows: 2.2fr 1fr;
-        column-gap: 60px;
     }
 
     &__productimage {
@@ -278,6 +272,7 @@
 
     &__addtocartdropdowncontainer {
         position: relative;
+        z-index: 10;
     }
     &__addtocartdropdowncontent {
         position: absolute;
@@ -287,7 +282,7 @@
         max-width: 330px;
         max-height: 180px;
         overflow-x: hidden;
-        z-index: 1;
+        z-index: 10;
       }
   
       &__addtocartdropdownbtn {
@@ -327,6 +322,28 @@
     
     &__navigation {
         display: none;
+    }
+
+    &__quantityinput {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 32px;
+        width: 50px;
+        height: 32px;
+        color: #4C5666;
+        margin: 0px 12px;
+        text-align: center;
+    }
+
+    &__arrow {
+        cursor: pointer;
+    }
+
+    &__promotionbox {
+        margin-top: 15px;
+        border-top: 1px solid #CCCCCC; ;
+        padding: 17px 0;
     }
 
     @media (min-width: $tabletSmallWidth) {
@@ -424,9 +441,10 @@
             }
         }
 
-        &__body {
+        &__body , &__emptystatebody{
             display: grid;
             grid-template-columns: 2.2fr 1fr;
+            grid-template-rows: none;
             column-gap: 60px;
             width: 100%;
         }
@@ -488,6 +506,10 @@
             margin-bottom: 0px;
         }
 
+        &__quantity {
+            float: none;
+        }
+
         &__action {
             margin-left: 0px;
             align-self: center;
@@ -495,13 +517,14 @@
         }
 
         &__promotionbox {
+            border-top: none;
+            margin-top: 0;
             padding: 25px;
             background: #F7F7F7;
             height: fit-content;
         }
 
         &__emptystate {
-            padding-bottom: 150px;
             justify-self: center;
             align-self: center;
             img{

@@ -11,6 +11,8 @@ import useOnclickOutside from 'react-cool-onclickoutside';
 import { Link } from 'react-router-dom';
 import { ReactComponent as CaretIcon } from './images/icons/ic_caret.svg';
 import { ReactComponent as NextIcon } from './images/icons/ic_next.svg';
+import { ReactComponent as MinusIcon } from './images/icons/minus.svg';
+import { ReactComponent as PlusIcon } from './images/icons/plus.svg';
 
 import { createMyCartsUrl } from './routes';
 
@@ -42,9 +44,9 @@ export  const CartsDetailsPage: React.FC = () => {
     setShowLoginModal(false);
   });
 
-  // const dropdownRef = useOnclickOutside(() => {
-  //   setDropdownOpen(false)
-  // });
+  const dropdownRef = useOnclickOutside(() => {
+    setDropdownOpen(false)
+  });
 
   const emptycartRef = useOnclickOutside(() => {
     setIsShowModal(false);
@@ -132,6 +134,10 @@ export  const CartsDetailsPage: React.FC = () => {
           </div>
           {dropdownOpen ? (
             <div className="cartsdetailspage__addtocartdropdowncontent">
+              <Link className="cartsdetailspage__addtocartdropdownbtn"
+                 to={createMyCartsUrl()}>
+                  {t('see-all-carts')}
+                </Link>
               {multiCartData.map((cart: moltin.CartItem) => (
                 <Link className="cartsdetailspage__addtocartdropdownbtn"
                 onClick={() => handleCart(cart)}
@@ -148,13 +154,11 @@ export  const CartsDetailsPage: React.FC = () => {
         </div>
       );
     }
-
     return (
      <></>
     );
   };
-
-
+  
   useEffect(() => {
     if(showUpdateCartAlert)
       setTimeout(() => {
@@ -163,7 +167,6 @@ export  const CartsDetailsPage: React.FC = () => {
   }, [showUpdateCartAlert])
 
   return (
-    
       <div className='cartsdetailspage'>
         <div className='cartsdetailspage__navigation'>
           <Link to={'/'}>{t('home')}</Link>
@@ -221,7 +224,7 @@ export  const CartsDetailsPage: React.FC = () => {
                 )}
             </p>
             </div>
-            <div className="cartsdetailspage__carts">
+            <div className="cartsdetailspage__carts" ref={dropdownRef}>
             <CartButton />
             </div>
         </div>
@@ -264,16 +267,11 @@ export  const CartsDetailsPage: React.FC = () => {
                   {item.meta.display_price.without_tax.unit.formatted}<span className='--each'>&nbsp;/&nbsp;Each</span>
                 </div>
                 <div className="cartsdetailspage__quantity">
-                <div className="cartitemlist__quantitywrap">
-                  <div className="cartitemlist__quantity">
-                    <button className="cartitemlist__arrow --top" aria-label={t('add-item')} onClick={() => {handleUpdate(item.id, item.quantity + 1)}} />
-                    {/* <p className='cartitemlist__count'>
-                      {item.quantity}
-                    </p> */}
-
-                    <input value={item.quantity}/>
-                    <button className="cartitemlist__arrow --bottom" aria-label={t('remove-item')} disabled={item.quantity === 1} onClick={() => {handleUpdate(item.id, item.quantity - 1)}} />
-                  </div>
+                
+                  <div className="cartsdetailspage__quantity">
+                    <button className="cartsdetailspage__arrow" onClick={() => {handleUpdate(item.id, item.quantity - 1)}}> <MinusIcon /></button >
+                    <input placeholder={item.quantity}  className="cartsdetailspage__quantityinput" type='number' onChange={(e) => handleUpdate(item.id , parseInt(e.target.value) )}/>
+                    <button className="cartsdetailspage__arrow" onClick={() => {handleUpdate(item.id, item.quantity + 1)}} > <PlusIcon /> </button >
                 </div>
                 </div>
                 <div className="cartsdetailspage__subtotal">
@@ -303,7 +301,7 @@ export  const CartsDetailsPage: React.FC = () => {
         </div>
             )
              :
-             <div className="cartsdetailspage__body">
+             <div className="cartsdetailspage__emptystatebody">
               <div className="cartsdetailspage__emptystate">
                 <p className='cartsdetailspage__emptystatedescription'>
                    Your cart is empty.
@@ -334,6 +332,7 @@ export  const CartsDetailsPage: React.FC = () => {
           <div className="cartsdetailspage__confirmationoverlay" />
         </React.Fragment>
       )} 
+                {dropdownOpen && <div className="cartsdetailspage__confirmationoverlay" /> }
               {showSettings ? (
         <div className="mycarts__createcartmodalbg">
           <div className="mycarts__createcartmodal" ref={modalRef}>

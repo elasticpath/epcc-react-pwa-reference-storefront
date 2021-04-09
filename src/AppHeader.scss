@@ -5,6 +5,9 @@
   height: 100%;
 
   &__container {
+    border-top: 1px solid #EEEEEE;
+    border-bottom:1px solid #EEEEEE;
+    margin-top: 20px;
     display: flex;
     flex-direction: row;
     height: 60px;
@@ -122,6 +125,7 @@
   }
 
   @media(max-width: $tabletWidth) {
+
     .toggle-btn {
       display: inline-block;
     }
@@ -202,6 +206,14 @@
 
     &__cartbtn.epbtn {
       padding: 10px;
+    }
+  }
+
+  @media (min-width: $tabletSmallWidth) {
+    &__container {
+    border-top: none;
+    border-bottom:none;
+    margin-top: 0px;
     }
   }
 }
