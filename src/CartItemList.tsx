@@ -46,6 +46,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
     setShowLoginModal(false);
   });
 
+
   const onHandlePage = (page: string) => {
     handlePage(page)
   };
@@ -177,13 +178,13 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
           {isLoggedIn && selectedCart && <SettingsIcon onClick={() => setShowSettings(true)} /> }
         </span>
       </div>
-      <div className="cartitemlist__date">
+      {/* <div className="cartitemlist__date">
         { isLoggedIn && selectedCart?.meta.timestamps.expires_at &&
           <p className="cartitemlist__expirydate">
             {t('expires')} - {(selectedCart?.meta.timestamps.expires_at).substring(0, 10)}
           </p>
         }      
-      </div>
+      </div> */}
       {items && items.length > 0 ? (
         <div>
           <div className="cartitemlist__wrap">

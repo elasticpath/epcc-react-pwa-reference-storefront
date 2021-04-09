@@ -23,7 +23,7 @@ export const AppHeader: React.FC = () => {
   const { isLoggedIn } = useCustomerData()
   const { selectedCart } = useMultiCartData();
   const [newCart, setNewCart] = useState(false);
-  const currentCartID = (isLoggedIn && selectedCart?.id ? selectedCart.id : localStorage.getItem("mcart") || "");
+  const currentCartID = ((isLoggedIn && selectedCart ) ? selectedCart.id : localStorage.getItem("mcart") || "");
 
   const cartsUrl = createCartsDetailsPageUrl(currentCartID)
 
@@ -37,6 +37,7 @@ export const AppHeader: React.FC = () => {
 
   return (
     <div className="appheader">
+      {console.log(selectedCart)}
       <div className="appheader__container">
         <div className="appheader__logo">
           <Link to="/" aria-label={t('bellvie-logo')}>
@@ -62,12 +63,6 @@ export const AppHeader: React.FC = () => {
               {count}
             </span>
           </Link>
-          {/* {showCartPopup && (
-            <div className="appheader__cartpopup">
-              <p>{cartQuantity === 1 ? t('cart-popup-info-1') : t('cart-popup-info', {quantity: cartQuantity.toString()})}</p>
-              <button className="epbtn" onClick={handleCartModal}>{t('view-cart')}</button>
-            </div>
-          )} */}
         </div>
       </div>
       <div className="appheader__navigation">

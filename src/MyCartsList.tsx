@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useTranslation, useMultiCartData } from './app-state';
+import { useTranslation, useMultiCartData, useCartData } from './app-state';
 import { Link, useParams } from 'react-router-dom';
 import { SettingsCart } from './SettingsCart';
 import { deleteCart } from './service';
@@ -8,7 +8,9 @@ import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import { ReactComponent as RemoveIcon } from './images/icons/removeAll.svg';
 import { ReactComponent as PaginationIcon } from "./images/icons/ic_caret.svg";import { ReactComponent as TooltipIcon } from './images/icons/icon-tooltip.svg';
 import { CartsPagination } from './CartsPagination';
-import { createMyCartsUrl, createCartsDetailsPageUrl } from './routes';
+import { createMyCartsUrl } from './routes';
+import { ReactComponent as NextIcon } from './images/icons/ic_next.svg';
+
 
 import './MyCartsList.scss';
 
@@ -19,7 +21,8 @@ export  const MyCartsList: React.FC = () => {
   const params = useParams<CartsParams>();
 
   const { t } = useTranslation();
-  const { multiCartDataList, multiCartData, updateCartData, total, currentPage, totalCarts, setPageNum} = useMultiCartData();
+  const { updateCartItems , cartData : items} = useCartData();
+  const { multiCartDataList, multiCartData, updateSelectedCart, setIsCartSelected, updateCartData, total, currentPage, totalCarts, setPageNum} = useMultiCartData();
 
   const [selectedCarts, setSelectedCarts] = useState<string[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -106,6 +109,16 @@ export  const MyCartsList: React.FC = () => {
     }
   }
 
+  const handleCart = (cart:any) => {
+    if (!isEdit) {
+      localStorage.setItem('mcart', cart.id);
+      updateCartItems();
+      updateSelectedCart(cart);
+      setIsCartSelected(true);
+      
+    }
+  };
+
   const CreateCartHeader = (
     <div className="mycarts__createcartheader">
       <span className="mycarts__createcartheadertext">{t("create-cart")}</span>
@@ -121,6 +134,11 @@ export  const MyCartsList: React.FC = () => {
   return (
       <div className='mycarts'>
         <div className="container">
+        <div className='cartsdetailspage__navigation'>
+          <Link to={'/'}>{t('home')}</Link>
+          <NextIcon />
+          <p>{t('my-carts')}</p>
+        </div>
         {showDeletedCartsnumber &&  (
         <div className="mycarts__alertMessage">
           <p className='mycarts__messagetext'>{t('delete-cart-message')} {deletedCartNumber} {deletedCartNumber === 1 ? `${t('cart')}` : `${t('carts')}`}</p>
@@ -204,10 +222,15 @@ export  const MyCartsList: React.FC = () => {
                         </div>
                         <div className='mycarts__lastedit'>
                           <p>
-                          {new Date(cart.meta.timestamps.updated_at).toLocaleString('default', {month: 'short'})} {new Date(cart.meta.timestamps.updated_at).getDate() > 9 ? new Date().getDate() : ('0' + new Date(cart.meta.timestamps.updated_at).getDate()) }, {new Date(cart.meta.timestamps.updated_at).getFullYear()} 
+                            {new Date(cart.meta.timestamps.updated_at).toLocaleString('default', {month: 'short'})} {new Date(cart.meta.timestamps.updated_at).getDate() > 9 ? new Date().getDate() : ('0' + new Date(cart.meta.timestamps.updated_at).getDate()) }, {new Date(cart.meta.timestamps.updated_at).getFullYear()} 
                           </p>
                         </div>
-                        <Link className='mycarts__action' to={createCartsDetailsPageUrl(cart.id)}>
+                        <Link className='mycarts__action'
+                        onClick={() => handleCart(cart)}
+                        to={{
+                          pathname: `/cartsdetails/${cart.id}`,
+                          state: { cart, items }
+                      }}>
                            <p className="mycarts__actionbtn">{t('review-cart')}</p>
                            <span className={"mycarts__actionicon --next --active"}><PaginationIcon className="mycarts__nexticon" /></span>
                         </Link>

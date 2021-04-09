@@ -63,9 +63,8 @@ export const AccountDropdown: React.FC<AccountDropdownProps> = (props) => {
           <div className={`accountdropdown__dropdown ${isOpen ? 'accountdropdown__open' : ''}`} ref={ref}>
             <button className="accountdropdown__btn" type="button" aria-label="toggle profile menu"
                     onClick={handleSelectorClicked}>
-                      
               <AccountIcon className="accountdropdown__btnicon"/>
-              <span className="accountdropdown__btntxt">account</span>
+              <span className="accountdropdown__btntxt">{t('account')}</span>
             </button>
             {isOpen && (
               <div className="accountdropdown__menu">

@@ -277,5 +277,9 @@
   "product-tooltip" : " The number of different types of products added to a cart.",
   "expiry-tooltip": "To extend cart expiry date, add or remove an item.",
   "review-cart" : "Review Cart",
-  "cart-empty": "Carts is empty"
+  "cart-empty": "Carts is empty",
+  "account" : "Account", 
+  "current-cart" : "Current cart", 
+  "unit-price" : "Unit Price", 
+  "line-subtotal" : "Line subtotal"
 }
