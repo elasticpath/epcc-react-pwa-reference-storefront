@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import { createCartsDetailsPageUrl } from './routes';
 // @ts-ignore
 import { Offline } from 'react-detect-offline';
 import { ImageContainer } from './ImageContainer';
@@ -24,8 +23,6 @@ export const AppHeader: React.FC = () => {
   const { selectedCart } = useMultiCartData();
   const [newCart, setNewCart] = useState(false);
   const currentCartID = ((isLoggedIn && selectedCart ) ? selectedCart.id : localStorage.getItem("mcart") || "");
-
-  const cartsUrl = createCartsDetailsPageUrl(currentCartID)
 
   const handleCloseCartModal = () => {
     setOpenModal(false);
@@ -56,7 +53,10 @@ export const AppHeader: React.FC = () => {
           <AccountDropdown openCartModal={openCartModal} handleShowNewCart={(bool:boolean) => setNewCart(bool)} />
         </div>
         <div className="appheader__moltincartcontainer">
-          <Link className="epbtn appheader__cartbtn --bordered" aria-label={t('cart')} to={cartsUrl}>
+          <Link className="epbtn appheader__cartbtn --bordered" aria-label={t('cart')}  to={{
+                          pathname: `/cartsdetails/${currentCartID}`,
+                          state: { cart: (isLoggedIn && selectedCart ? selectedCart : "") }
+                      }} >
             <CartIcon className="appheader__carticon" />
             <span className="appheader__cartbtntxt">
               {count}

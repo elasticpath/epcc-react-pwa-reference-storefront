@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useCartData, useCustomerData, useTranslation, useMultiCartData } from './app-state';
+import { useCustomerData, useTranslation, useMultiCartData } from './app-state';
 import { ReactComponent as SettingsIcon } from "./images/icons/settings-black-24dp.svg";
-import { removeAllCartItems, removeCartItem, updateCartItem } from './service';
+import { removeAllCartItems, removeCartItem, updateCartItem , getCartItems} from './service';
 import { SettingsCart } from "./SettingsCart";
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import { ImageContainer } from "./ImageContainer";
@@ -13,22 +13,40 @@ import { ReactComponent as CaretIcon } from './images/icons/ic_caret.svg';
 import { ReactComponent as NextIcon } from './images/icons/ic_next.svg';
 import { ReactComponent as MinusIcon } from './images/icons/minus.svg';
 import { ReactComponent as PlusIcon } from './images/icons/plus.svg';
-
+import { useLocation } from 'react-router-dom';
 import { createMyCartsUrl } from './routes';
 
 import emptyimage from './images/cart_empty.png';
 
 import './CartsDetailsPage.scss';
 
+interface Detailsprops {
+  cart: any
+}
 
-export  const CartsDetailsPage: React.FC = () => {
-
-
+export  const CartsDetailsPage: React.FC<Detailsprops> = () => {
+  const location = useLocation<Detailsprops>();
+  const cartInfo =  location?.state.cart;
   const { t } = useTranslation();
   const { isLoggedIn } = useCustomerData();
-  const { count, totalPrice, updateCartItems,cartData, promotionItems} = useCartData();
+  const [promotionItems, setPromotionItems] = useState<moltin.CartItem[]>([]);
+  const [count, setCount] = useState(0);
+  const [totalPrice, setTotalPrice] = useState('');
+  const [cartData, setCartData] = useState<moltin.CartItem[]>([]);
+  const mcart = (isLoggedIn && cartInfo) ?   cartInfo.id :  localStorage.getItem('mcart');
+  useEffect(() => {
+    console.log(mcart)
+    if (mcart) {
+      getCartItems(mcart).then(res => {
+        setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'));
+        setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'));
+        setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0));
+        setTotalPrice(res.meta.display_price.without_tax.formatted);
+      });
+    }
+  }, [mcart]);
   const imgSize = 40;
-  const mcart = localStorage.getItem('mcart') || '';
+
   const quantityItems = count.toString();
   const { selectedCart, updateCartData, multiCartData , updateSelectedCart, setIsCartSelected} = useMultiCartData();
   const { addError } = useContext(APIErrorContext);
@@ -55,6 +73,20 @@ export  const CartsDetailsPage: React.FC = () => {
   const handlePage = (page: string) => setRoute(page)
   const onHandlePage = (page: string) => {
     handlePage(page)
+  };
+
+  const updateCartItems = () => {
+    const mcart = localStorage.getItem('mcart') || '';
+    getCartItems(mcart).then(res => {
+      const cartData = res.data.length ? res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item') : [];
+      setCartData(cartData);
+      const promotionItems = res.data.length ? res.data.filter(({ type }) => type === 'promotion_item') : [];
+      setPromotionItems(promotionItems);
+      const itemQuantity = res.data.length ? res.data.reduce((sum, { quantity }) => sum + quantity, 0) : 0;
+      setCount(itemQuantity);
+      const totalPrice = res.meta ? res.meta.display_price.without_tax.formatted : '';
+      setTotalPrice(totalPrice);
+    });
   };
 
   const handleCheckout = () => {
@@ -168,13 +200,14 @@ export  const CartsDetailsPage: React.FC = () => {
 
   return (
       <div className='cartsdetailspage'>
-        <div className='cartsdetailspage__navigation'>
-          <Link to={'/'}>{t('home')}</Link>
-          <NextIcon />
-          <Link to={createMyCartsUrl()}>{t('my-carts')}</Link>
-          <NextIcon />
-          <p>{t("current-cart")}</p>
-        </div>
+        { isLoggedIn && <div className='cartsdetailspage__navigation'>
+              <Link to={'/'}>{t('home')}</Link>
+              <NextIcon />
+              <Link to={createMyCartsUrl()}>{t('my-carts')}</Link>
+              <NextIcon />
+             <p>{t("current-cart")}</p>
+          </div>
+        }
         {showUpdateCartAlert &&  (
         <div className="cartsdetailspage__alertMessage">
           <p>{t('update-cart-message')}</p>
@@ -185,9 +218,9 @@ export  const CartsDetailsPage: React.FC = () => {
           <div>
           <div>
             <h2 className="cartsdetailspage__title">
-              {isLoggedIn && selectedCart ? (
+              {isLoggedIn && cartInfo ? (
                 <span>
-                  {selectedCart.name || ''}
+                  {cartInfo.name || ''}
                 </span>
               ) : (
                 <span>
@@ -196,28 +229,28 @@ export  const CartsDetailsPage: React.FC = () => {
                 )}
             </h2>
             <span className="cartsdetailspage__settingsicon">
-              {isLoggedIn && selectedCart && <SettingsIcon onClick={() => setShowSettings(true)} /> }
+              {isLoggedIn && cartInfo && <SettingsIcon onClick={() => setShowSettings(true)} /> }
             </span>
           </div>
           <div className="cartsdetailspage__date">
-            { isLoggedIn && selectedCart?.meta.timestamps.expires_at &&
+            { isLoggedIn && cartInfo?.meta.timestamps.expires_at &&
               <div>
                 <p className="cartsdetailspage__dates">
                   <span className="cartsdetailspage__datestitle"> {t('expires')}: </span>
-                 {(selectedCart?.meta.timestamps.expires_at).substring(0, 10)}
+                 {(cartInfo?.meta.timestamps.expires_at).substring(0, 10)}
                  &nbsp;|&nbsp;
                 </p>
                 <p className="cartsdetailspage__dates">
                   <span className="cartsdetailspage__datestitle">{t('edited')}: </span>
-                  {(selectedCart?.meta.timestamps.updated_at).substring(0, 10)}
+                  {(cartInfo?.meta.timestamps.updated_at).substring(0, 10)}
                 </p>
               </div>
             }      
           </div>
           <p className="cartsdetailspage__description">
-              {isLoggedIn && selectedCart ? (
+              {isLoggedIn && cartInfo ? (
                 <span>
-                  {selectedCart.description || ''}
+                  {cartInfo.description || ''}
                 </span>
               ) : (
                 <span></span>
@@ -255,14 +288,14 @@ export  const CartsDetailsPage: React.FC = () => {
                     )}
                   </div>
                   <div className="cartsdetailspage__productname">
-                    <p>
+                    <Link to={`/product/${[item.sku]}`}>
                       {item.name}
-                    </p>
+                    </Link>
                   </div>
                 </div>
-                <div className="cartsdetailspage__sku">
+                <Link to={`/product/${[item.sku]}`} className="cartsdetailspage__sku">
                   {item.sku}
-                </div>
+                </Link>
                 <div className="cartsdetailspage__price">
                   {item.meta.display_price.without_tax.unit.formatted}<span className='--each'>&nbsp;/&nbsp;Each</span>
                 </div>

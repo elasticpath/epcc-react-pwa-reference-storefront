@@ -66,6 +66,7 @@ export const LoginForm: React.FC<LoginFormProps> = (props) => {
           setCustomerData(result.token, result.customer_id);
           setIsLoading(false);
           createDefaultCart();
+          
           if(browserHistory.location.pathname === "/registration")
           {
             history.push('/');

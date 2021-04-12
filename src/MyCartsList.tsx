@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useTranslation, useMultiCartData, useCartData } from './app-state';
+import { useTranslation, useMultiCartData } from './app-state';
 import { Link, useParams } from 'react-router-dom';
 import { SettingsCart } from './SettingsCart';
 import { deleteCart } from './service';
@@ -17,12 +17,13 @@ import './MyCartsList.scss';
 interface CartsParams {
   pageNum?: string;
 }
+
 export  const MyCartsList: React.FC = () => {
   const params = useParams<CartsParams>();
 
   const { t } = useTranslation();
-  const { updateCartItems , cartData : items} = useCartData();
-  const { multiCartDataList, multiCartData, updateSelectedCart, setIsCartSelected, updateCartData, total, currentPage, totalCarts, setPageNum} = useMultiCartData();
+
+  const { multiCartDataList, multiCartData, updateCartData, total, currentPage, totalCarts, setPageNum} = useMultiCartData();
 
   const [selectedCarts, setSelectedCarts] = useState<string[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -108,16 +109,6 @@ export  const MyCartsList: React.FC = () => {
       return false
     }
   }
-
-  const handleCart = (cart:any) => {
-    if (!isEdit) {
-      localStorage.setItem('mcart', cart.id);
-      updateCartItems();
-      updateSelectedCart(cart);
-      setIsCartSelected(true);
-      
-    }
-  };
 
   const CreateCartHeader = (
     <div className="mycarts__createcartheader">
@@ -226,10 +217,10 @@ export  const MyCartsList: React.FC = () => {
                           </p>
                         </div>
                         <Link className='mycarts__action'
-                        onClick={() => handleCart(cart)}
+                        // onClick={() => handleCart(cart)}
                         to={{
                           pathname: `/cartsdetails/${cart.id}`,
-                          state: { cart, items }
+                          state: { cart }
                       }}>
                            <p className="mycarts__actionbtn">{t('review-cart')}</p>
                            <span className={"mycarts__actionicon --next --active"}><PaginationIcon className="mycarts__nexticon" /></span>
