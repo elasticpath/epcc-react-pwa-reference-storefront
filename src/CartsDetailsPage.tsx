@@ -128,7 +128,8 @@ export  const CartsDetailsPage: React.FC<Detailsprops> = () => {
     updateCartItem(mcart, id, quantity)
       .then(() => {
         updateCartItems();
-        updateCartData();
+        if(isLoggedIn)
+          updateCartData();
       })
       .catch(error => {
         console.error(error);

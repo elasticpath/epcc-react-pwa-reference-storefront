@@ -120,8 +120,11 @@ export const Product: React.FC = () => {
         } else {
           updateCartItems();
         }
-        if (isLoggedIn) setIsCartSelected(true);
-        updateCartData();
+        if (isLoggedIn)
+        {
+          setIsCartSelected(true);
+          updateCartData();
+        } 
         setCartQuantity(1);
         handleShowCartPopup();
       }).finally(() => {

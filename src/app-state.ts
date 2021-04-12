@@ -586,6 +586,9 @@ function useMultiCartDataState() {
     const selectedCart = localStorage.getItem('mcart');
     getMultiCartsList(token, pageNum).then(res => {
       setMultiCartDataList(res.data)
+      setTotal(res.meta.page.total);
+        setCurrentPage(1);
+        setPageNum(1);
     });
     getMultiCarts(token).then(res => {
       setMultiCartData(res.data);
@@ -595,12 +598,6 @@ function useMultiCartDataState() {
         updateSelectedCart(res.data[0]);
         localStorage.setItem('mcart', cartId);
       }
-      getMultiCartsList(token, 1).then(res => {
-        setMultiCartDataList(res.data);
-        setTotal(res.meta.page.total);
-        setCurrentPage(1);
-        setPageNum(1);
-      });
     });
   };
 
