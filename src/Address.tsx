@@ -6,6 +6,8 @@ import { useTranslation } from './app-state';
 import { AddressForm } from './AddressForm';
 import { DeleteAddressDialog } from './DeleteAddressDialog';
 import { APIErrorContext } from "./APIErrorProvider";
+import countriesList from './data/countriesList.json';
+
 
 import './Address.scss';
 
@@ -90,7 +92,9 @@ export const Address: React.FC = () => {
                   <span className="">
                     {(address.country)
                       ? (
-                        `${address.country}, `
+                        
+                          `${countriesList.find((country:any) => address.country === country.key)?.value}, `
+                       
                       ) : ('')}
                   </span>
                   <span className="">
