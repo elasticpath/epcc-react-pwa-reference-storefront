@@ -51,7 +51,12 @@ export const Promotion: React.FC<PromotionProps> = (props) => {
   const handleRemove = () => {
     removeCartItem(mcart, promotionItems[0].id)
       .then(() => {
-        updateCartItems();
+        if (updateCartsItems)  {
+          updateCartsItems();
+        }
+        else {
+          updateCartItems();
+        }
       })
       .catch(error => {
         addError(error.errors);
