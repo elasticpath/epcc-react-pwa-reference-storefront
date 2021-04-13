@@ -109,6 +109,9 @@ export const AccountDropdown: React.FC<AccountDropdownProps> = (props) => {
         ? <LoginDialog createCart={true} openModal={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} openCartModal={openCartModal} handleShowNewCart={handleShowNewCart}/>
         : <LoginDialog createCart={false} openModal={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} />
       }
+      {
+        isOpen && <div className="accountdropdown__confirmationoverlay" />
+      }
       </div>
     );
 };

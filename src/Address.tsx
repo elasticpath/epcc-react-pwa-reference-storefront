@@ -85,25 +85,26 @@ export const Address: React.FC = () => {
                   {address.line_2}
                 </li>
                 <li>
+                <span className="">
+                    {address.city},
+                    &nbsp;
+                  </span>
                   <span className="">
                     {address.county}
-                    ,&nbsp;
-                  </span>
-                  <span className="">
-                    {(address.country)
-                      ? (
-                        
-                          `${countriesList.find((country:any) => address.country === country.key)?.value}, `
-                       
-                      ) : ('')}
-                  </span>
-                  <span className="">
-                    {address.city}
                     &nbsp;
+                  </span>
+                  <span className="">
+                  {address.postcode}
+                    
                   </span>
                 </li>
                 <li className="">
-                  {address.postcode}
+                {(address.country)
+                      ? (
+                        
+                          `${countriesList.find((country:any) => address.country === country.key)?.value}`
+                       
+                      ) : ('')}
                 </li>
               </ul>
               <button type="button" className="address__button --edit" onClick={() => handleEdit(address)}>
