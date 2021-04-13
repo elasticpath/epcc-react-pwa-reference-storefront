@@ -11,11 +11,12 @@ interface FormValues {
 }
 
 interface PromotionProps {
-  promotionItems: any
+  promotionItems: any,
+  updateCartsItems?: () => void
 }
 
 export const Promotion: React.FC<PromotionProps> = (props) => {
-  const { promotionItems } = props;
+  const { promotionItems, updateCartsItems } = props;
   const { t } = useTranslation();
   const { updateCartItems } = useCartData();
   const mcart = localStorage.getItem('mcart') || '';
@@ -30,7 +31,13 @@ export const Promotion: React.FC<PromotionProps> = (props) => {
     onSubmit: (values) => {
       addPromotion(mcart, values.promoCode)
         .then(() => {
-          updateCartItems();
+          if (updateCartsItems)  {
+            updateCartsItems();
+          }
+          else {
+            updateCartItems();
+          }
+          
           setErrors({promoCode: ''});
           values.promoCode = ''
         })

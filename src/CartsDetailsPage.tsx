@@ -320,7 +320,7 @@ export  const CartsDetailsPage: React.FC<Detailsprops> = () => {
               </div>
               <div className='cartsdetailspage__promotionbox'>
                 <div className="cartsdetailspage__promotion">
-                  <Promotion promotionItems={promotionItems} />
+                  <Promotion promotionItems={promotionItems}  updateCartsItems = {updateCartItems}/>
                 </div>
                 <div className="cartsdetailspage__total">
                   <span className="cartsdetailspage__totaltitle">{t('total')}</span>
