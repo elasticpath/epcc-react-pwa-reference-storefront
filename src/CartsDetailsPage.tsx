@@ -220,7 +220,8 @@ export  const CartsDetailsPage: React.FC<Detailsprops> = () => {
         </div>
       )}
         <div className='cartsdetailspage__header'>
-          <div>
+          <div className="cartsdetailspage__headerbox">
+          <div >
           <div>
             <h2 className="cartsdetailspage__title">
               {isLoggedIn && cartInfo ? (
@@ -265,6 +266,8 @@ export  const CartsDetailsPage: React.FC<Detailsprops> = () => {
             <div className="cartsdetailspage__carts" ref={dropdownRef}>
             <CartButton />
             </div>
+          </div>
+              <div></div>
         </div>
        
           {
