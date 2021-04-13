@@ -483,7 +483,7 @@ function useCartItemsState() {
     }, 10000);
   }
 
-  return { cartData, promotionItems, count, cartQuantity, setCartQuantity, showCartPopup, handleShowCartPopup, totalPrice, updateCartItems , openModal, setOpenModal, handlePartialAddMessage, partialAddMessage, setPartialAddMessage, partialAddConfirmation, addedtItem, setAddedItem }
+  return { cartData, promotionItems, count, setCount, cartQuantity, setCartQuantity, showCartPopup, handleShowCartPopup, totalPrice, updateCartItems , openModal, setOpenModal, handlePartialAddMessage, partialAddMessage, setPartialAddMessage, partialAddConfirmation, addedtItem, setAddedItem }
 }
 
 function useMultiCartDataState() {

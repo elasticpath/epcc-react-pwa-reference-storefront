@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useCustomerData, useTranslation, useMultiCartData } from './app-state';
+import { useCustomerData, useTranslation, useMultiCartData, useCartData } from './app-state';
 import { ReactComponent as SettingsIcon } from "./images/icons/settings-black-24dp.svg";
 import { removeAllCartItems, removeCartItem, updateCartItem , getCartItems} from './service';
 import { SettingsCart } from "./SettingsCart";
@@ -31,12 +31,13 @@ export  const CartsDetailsPage: React.FC<Detailsprops> = () => {
   const { t } = useTranslation();
   const { isLoggedIn } = useCustomerData();
   const [promotionItems, setPromotionItems] = useState<moltin.CartItem[]>([]);
-  const [count, setCount] = useState(0);
+  const { setCount } = useCartData();
+  const [counts, setCounts] = useState(0);
   const [totalPrice, setTotalPrice] = useState('');
   const [cartData, setCartData] = useState<moltin.CartItem[]>([]);
   const mcart = (isLoggedIn && cartInfo) ?   cartInfo.id :  localStorage.getItem('mcart');
   const imgSize = 40;
-  const quantityItems = count.toString();
+  const quantityItems = counts.toString();
   const { addError } = useContext(APIErrorContext);
   const [showSettings, setShowSettings] = useState(false);
   const [showUpdateCartAlert, setShowUpdateCartAlert ] = useState(false);
@@ -64,11 +65,12 @@ export  const CartsDetailsPage: React.FC<Detailsprops> = () => {
       getCartItems(mcart).then(res => {
         setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'));
         setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'));
-        setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0));
+        setCounts(res.data.reduce((sum, { quantity }) => sum + quantity, 0));
+        setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0))
         setTotalPrice(res.meta.display_price.without_tax.formatted);
       });
     }
-  }, [mcart]);
+  }, [mcart, setCount]);
 
 
   const handlePage = (page: string) => setRoute(page)
@@ -84,6 +86,7 @@ export  const CartsDetailsPage: React.FC<Detailsprops> = () => {
       const promotionItems = res.data.length ? res.data.filter(({ type }) => type === 'promotion_item') : [];
       setPromotionItems(promotionItems);
       const itemQuantity = res.data.length ? res.data.reduce((sum, { quantity }) => sum + quantity, 0) : 0;
+      setCounts(itemQuantity);
       setCount(itemQuantity);
       const totalPrice = res.meta ? res.meta.display_price.without_tax.formatted : '';
       setTotalPrice(totalPrice);

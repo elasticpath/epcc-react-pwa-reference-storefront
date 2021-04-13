@@ -250,9 +250,9 @@ export async function bulkAdd(reference: string, data: moltin.CartItemObject[]):
   return result;
 }
 
-export async function addPromotion(reference: string, promoCode: string): Promise<void> {
+export async function addPromotion(reference: string, promoCode: string, token: string): Promise<void> {
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
-  await moltin.Cart(reference).AddPromotion(promoCode);
+  await moltin.Cart(reference).AddPromotion(promoCode, token);
 }
 
 export async function removeCartItem(reference: string, itemId: string): Promise<void> {
