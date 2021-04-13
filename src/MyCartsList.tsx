@@ -217,7 +217,6 @@ export  const MyCartsList: React.FC = () => {
                           </p>
                         </div>
                         <Link className='mycarts__action'
-                        // onClick={() => handleCart(cart)}
                         to={{
                           pathname: `/cartsdetails/${cart.id}`,
                           state: { cart }

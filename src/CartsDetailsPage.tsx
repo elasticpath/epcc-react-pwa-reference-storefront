@@ -26,7 +26,8 @@ interface Detailsprops {
 
 export  const CartsDetailsPage: React.FC<Detailsprops> = () => {
   const location = useLocation<Detailsprops>();
-  const cartInfo =  location?.state.cart;
+  const { selectedCart,updateCartData, multiCartData , updateSelectedCart, setIsCartSelected} = useMultiCartData();
+  const cartInfo =  location?.state.cart.id === selectedCart?.id ? selectedCart : location.state.cart ;
   const { t } = useTranslation();
   const { isLoggedIn } = useCustomerData();
   const [promotionItems, setPromotionItems] = useState<moltin.CartItem[]>([]);
@@ -34,21 +35,8 @@ export  const CartsDetailsPage: React.FC<Detailsprops> = () => {
   const [totalPrice, setTotalPrice] = useState('');
   const [cartData, setCartData] = useState<moltin.CartItem[]>([]);
   const mcart = (isLoggedIn && cartInfo) ?   cartInfo.id :  localStorage.getItem('mcart');
-  useEffect(() => {
-    console.log(mcart)
-    if (mcart) {
-      getCartItems(mcart).then(res => {
-        setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'));
-        setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'));
-        setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0));
-        setTotalPrice(res.meta.display_price.without_tax.formatted);
-      });
-    }
-  }, [mcart]);
   const imgSize = 40;
-
   const quantityItems = count.toString();
-  const { selectedCart, updateCartData, multiCartData , updateSelectedCart, setIsCartSelected} = useMultiCartData();
   const { addError } = useContext(APIErrorContext);
   const [showSettings, setShowSettings] = useState(false);
   const [showUpdateCartAlert, setShowUpdateCartAlert ] = useState(false);
@@ -56,6 +44,7 @@ export  const CartsDetailsPage: React.FC<Detailsprops> = () => {
   const [isShowModal, setIsShowModal] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [route, setRoute] = useState<string>('');
 
 
   const modalRef = useOnclickOutside(() => {
@@ -69,7 +58,19 @@ export  const CartsDetailsPage: React.FC<Detailsprops> = () => {
   const emptycartRef = useOnclickOutside(() => {
     setIsShowModal(false);
   });
-  const [route, setRoute] = useState<string>('');
+
+  useEffect(() => {
+    if (mcart) {
+      getCartItems(mcart).then(res => {
+        setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'));
+        setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'));
+        setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0));
+        setTotalPrice(res.meta.display_price.without_tax.formatted);
+      });
+    }
+  }, [mcart]);
+
+
   const handlePage = (page: string) => setRoute(page)
   const onHandlePage = (page: string) => {
     handlePage(page)
@@ -370,7 +371,7 @@ export  const CartsDetailsPage: React.FC<Detailsprops> = () => {
               {showSettings ? (
         <div className="mycarts__createcartmodalbg">
           <div className="mycarts__createcartmodal" ref={modalRef}>
-          <SettingsCart isEditCart name={selectedCart?.name} description={selectedCart?.description} showSettings={showSettings} handleHideSettings={() => setShowSettings(false)} setShowCartAlert={() => setShowUpdateCartAlert(true)} />
+          <SettingsCart isEditCart name={cartInfo?.name} description={cartInfo?.description} showSettings={showSettings} handleHideSettings={() => setShowSettings(false)} setShowCartAlert={() => setShowUpdateCartAlert(true)} />
           </div>
         </div>
       ) : null}   
