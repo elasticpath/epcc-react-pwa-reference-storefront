@@ -7,6 +7,8 @@ import { ProductThumbnail } from './ProductThumbnail';
 import { createCategoryUrl } from './routes';
 import { Pagination } from './Pagination';
 import { useResolve } from './hooks';
+import Skeleton from '@material-ui/lab/Skeleton';
+import {config} from './config';
 
 import './Category.scss';
 
@@ -85,7 +87,24 @@ export const Category: React.FC = () => {
           </div>
         </>
       ) : (
-        <div className="loader" />
+        <>
+          <Skeleton className="category__breadcrumbs" animation="wave" variant="text" width={200} />
+          <Skeleton className="category__categoryname" animation="wave" variant="text" width={150} />
+          <ul className="category__productlist">
+            {[...Array(config.categoryPageSize).keys()].map((index) =>
+                <li key={`skeleton_${index}`} className="category__product">
+                  <Skeleton animation="wave" variant="rect" width={180} height={180}/>
+                  <Skeleton animation="wave" variant="text" width={180} />
+                  <Skeleton animation="wave" variant="text" width={180} />
+                  <Skeleton animation="wave" variant="text" width={100} />
+                  <Skeleton animation="wave" variant="text" width={100} />
+                  <Skeleton animation="wave" variant="text" width={100} />
+                </li>
+              )
+            }
+          </ul>
+          <Skeleton animation="wave" variant="text" height={46} width={100}/>
+        </>
       )}
     </div>
   );

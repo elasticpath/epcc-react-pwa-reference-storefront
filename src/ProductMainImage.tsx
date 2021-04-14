@@ -4,6 +4,7 @@ import { loadImageHref } from './service';
 import { useResolve } from './hooks';
 import { ImageContainer } from './ImageContainer';
 import { APIErrorContext } from './APIErrorProvider';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 interface ProductMainImageProps {
   product: moltin.Product;
@@ -29,13 +30,15 @@ export const ProductMainImage: React.FC<ProductMainImageProps> = (props) => {
 
   return (
     <>
-      {productImageUrl && (
+      {productImageUrl ? (
         <ImageContainer
         imgClassName="productmainimage"
         imgUrl={productImageUrl}
         alt={props.product.name}
         imageStyle={{ width: props.size, height: props.size, objectFit: 'fill', backgroundColor: productBackground }}
         />
+      ) : (
+        <Skeleton animation="wave" variant="rect" width={props.size || 180} height={props.size || 180}/>
       )}
     </>
   );
