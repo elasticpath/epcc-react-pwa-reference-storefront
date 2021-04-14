@@ -7,7 +7,7 @@ const splitCompareKeys = (keyStr: string) =>
 export const config = {
   clientId: process.env.REACT_APP_CLIENT_ID || '1NgdZlkNCJ5miRkpQ0ly75HOZOFM0rKf2taUujquog',
   stripeKey: process.env.REACT_APP_STRIPE_KEY || 'pk_test_JwRX4cevuCysIEQrpwcbn3j8',
-  categoryPageSize: 8,
+  categoryPageSize: 52,
   maxCompareProducts: 4,
   algoliaAppId: process.env.REACT_APP_ALGOLIA_APP_ID || '6MAFUOD23U',
   algoliaApiKey: process.env.REACT_APP_ALGOLIA_API_KEY || '7d829396bbf202b30bfe7ad52120bbac',
