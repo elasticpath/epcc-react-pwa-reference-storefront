@@ -267,5 +267,6 @@
   "items-merged-to-account-cart" : "Your items have been merged to your account cart",
   "items-merged-to-created-cart" : "Your items have been merged to your created cart ",
   "items-added-to-the-cart" : "items have been added to the cart",
-  "unsupported-search-message": "Unsupported search provider"
+  "unsupported-search-message": "Unsupported search provider",
+  "viewing": "Viewing"
 }
