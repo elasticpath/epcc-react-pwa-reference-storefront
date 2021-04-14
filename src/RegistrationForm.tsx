@@ -10,6 +10,7 @@ interface FormValues {
   firstName: string,
   lastName: string,
   email: string,
+  emailConfirm: string,
   password: string,
   passwordConfirm: string,
 }
@@ -27,6 +28,7 @@ export const RegistrationForm: React.FC = (props) => {
     firstName: '',
     lastName: '',
     email: '',
+    emailConfirm: '',
     password: '',
     passwordConfirm: '',
   };
@@ -41,6 +43,12 @@ export const RegistrationForm: React.FC = (props) => {
     }
     if (!values.email) {
       errors.email = t('required');
+    }
+    if (!values.emailConfirm) {
+      errors.emailConfirm = t('required');
+    }
+    if (values.email && values.emailConfirm && values.email !== values.emailConfirm) {
+      errors.emailConfirm = t('email-slash-username-confirm-error');
     }
     if (!values.password) {
       errors.password = t('required');
@@ -136,6 +144,15 @@ export const RegistrationForm: React.FC = (props) => {
             <input id="email" name="email" className="epform__input" type="email" onChange={handleChange} value={values.email} />
             <div className="epform__error">
               {errors.email ? errors.email : null}
+            </div>
+          </div>
+          <div className={`epform__group ${errors.emailConfirm ? '--error' : ''}`}>
+            <label htmlFor="email"  className="epform__label">
+              {t('email-slash-username-confirmation')} *
+            </label>
+            <input id="email" name="emailConfirm" className="epform__input" type="email" onChange={handleChange} value={values.emailConfirm} />
+            <div className="epform__error">
+              {errors.emailConfirm ? errors.emailConfirm : null}
             </div>
           </div>
           <div className={`epform__group ${errors.password ? '--error' : ''}`}>
