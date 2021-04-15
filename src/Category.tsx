@@ -88,24 +88,40 @@ export const Category: React.FC = () => {
         </>
       ) : (
         <>
-          <Skeleton className="category__breadcrumbs" animation="wave" variant="text" width={200} />
-          <Skeleton className="category__categoryname" animation="wave" variant="text" width={150} />
+          <div className="category__breadcrumbs">
+            <Skeleton animation="wave" variant="text" width={200}>
+              <a className="category__breadcrumblink" href="placeholder">placeholder</a>
+            </Skeleton>
+          </div>
+          
+          <div className="category__categoryname">
+            <Skeleton animation="wave" variant="text" width={150} />
+          </div>
+
           <ul className="category__productlist">
             {[...Array(config.categoryPageSize).keys()].map((index) =>
-                <li key={`skeleton_${index}`} className="category__product">
-                  <div className="category__productskeleton">
-                    <Skeleton animation="wave" variant="rect" width={180} height={180}/>
-                    <Skeleton animation="wave" variant="text" width={180} />
-                    <Skeleton animation="wave" variant="text" width={180} />
-                    <Skeleton animation="wave" variant="text" width={100} />
-                    <Skeleton animation="wave" variant="text" width={100} />
-                    <Skeleton animation="wave" variant="text" width={100} />
-                  </div>
-                </li>
-              )
-            }
+              <li key={`skeleton_${index}`} className="category__product">
+                <div className="category__productskeleton">
+                  <Skeleton animation="wave" variant="rect" width={180} height={180}/>
+                  <Skeleton animation="wave" variant="text" width={180} />
+                  <Skeleton animation="wave" variant="text" width={180} />
+                  <Skeleton animation="wave" variant="text" width={100} />
+                  <Skeleton animation="wave" variant="text" width={100} />
+                  <Skeleton animation="wave" variant="text" width={100} />
+                </div>
+              </li>
+            )}
           </ul>
-          <Skeleton animation="wave" variant="text" height={46} width={100}/>
+
+          <Skeleton animation="wave" variant="rect">
+            <div className="category__pagination">
+              <Pagination
+                totalPages={3}
+                currentPage={1}
+                formatUrl={(page) => createCategoryUrl("", page)}
+              />
+            </div>
+          </Skeleton>
         </>
       )}
     </div>
