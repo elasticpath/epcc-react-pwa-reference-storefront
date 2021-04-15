@@ -7,6 +7,12 @@
   text-align: left;
   margin-bottom: 40px;
 
+  &:hover {
+    #{$block}__comparecheck {
+      visibility: visible;
+    }
+  }
+
   #{$block}__imgcontainer {
     width: 160px;
     height: 160px;
@@ -38,6 +44,7 @@
   #{$block}__comparecheck {
     margin-top: 10px;
     font-size: smaller;
+    visibility: hidden;
 
     label {
       display: flex;
