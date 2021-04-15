@@ -46,6 +46,7 @@ export const Category: React.FC = () => {
   const category = categoryPath?.[categoryPath?.length - 1];
   const parsedPageNum = parseInt(params.pageNum!);
   const pageNum = isNaN(parsedPageNum) ? 1 : parsedPageNum;
+  const { t } = useTranslation();
 
   const { products, totalPages } = useCategoryProducts(category?.id, pageNum);
 
@@ -65,6 +66,22 @@ export const Category: React.FC = () => {
           </div>
 
           <h1 className="category__categoryname">{category?.name ?? ' '}</h1>
+
+          <div className="category__totalresults">
+            <span>
+              {t('viewing')}
+              &nbsp;
+              {products.data.length}
+            </span>
+            &nbsp;
+            <span>
+              {t('of')}
+              &nbsp;
+              {products.meta.results.total}
+              &nbsp;
+              {t('products')}
+            </span>
+          </div>
 
           <ul className="category__productlist">
             {products && products.data.map(product => (

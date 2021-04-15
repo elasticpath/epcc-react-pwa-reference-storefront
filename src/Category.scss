@@ -33,6 +33,10 @@
     font-weight: bold;
   }
 
+  #{$block}__totalresults {
+    margin-bottom: 20px;
+  }
+
   #{$block}__productlist {
     width: 100%;
     flex: 1 1 auto;
