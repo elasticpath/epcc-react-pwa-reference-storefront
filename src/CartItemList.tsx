@@ -57,7 +57,9 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
         setShowLoader(false);
         setIsShowModal(false);
         updateCartItems();
-        updateCartData();
+        if (isLoggedIn) {
+          updateCartData();
+        }
       })
       .catch(error => {
         setShowLoader(false);
@@ -71,7 +73,9 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
     removeCartItem(mcart, id)
       .then(() => {
         updateCartItems();
-        updateCartData();
+        if (isLoggedIn) {
+          updateCartData();
+        }
         setRemovingItem(-1);
       })
       .catch(error => {
@@ -84,7 +88,9 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
     updateCartItem(mcart, id, quantity)
       .then(() => {
         updateCartItems();
-        updateCartData();
+        if (isLoggedIn) {
+          updateCartData();
+        }
       })
       .catch(error => {
         console.error(error);
