@@ -44,6 +44,10 @@
     #{$block}__product {
       flex: 0 0 100%;
       text-align: center;
+
+      #{$block}__productskeleton {
+        margin-bottom: 40px;
+      }
     }
   }
 
@@ -94,6 +98,17 @@
   @media (min-width: $fullHDWidth) {
     #{$block}__productlist {
       width: 1000px;
+    }
+  }
+
+  @media (max-width: $mobileWidth - 1px) {
+    #{$block}__productlist {
+      #{$block}__product {
+        #{$block}__productskeleton {
+          margin: auto;
+          width: 180px;
+        }
+      }
     }
   }
 }

@@ -93,12 +93,14 @@ export const Category: React.FC = () => {
           <ul className="category__productlist">
             {[...Array(config.categoryPageSize).keys()].map((index) =>
                 <li key={`skeleton_${index}`} className="category__product">
-                  <Skeleton animation="wave" variant="rect" width={180} height={180}/>
-                  <Skeleton animation="wave" variant="text" width={180} />
-                  <Skeleton animation="wave" variant="text" width={180} />
-                  <Skeleton animation="wave" variant="text" width={100} />
-                  <Skeleton animation="wave" variant="text" width={100} />
-                  <Skeleton animation="wave" variant="text" width={100} />
+                  <div className="category__productskeleton">
+                    <Skeleton animation="wave" variant="rect" width={180} height={180}/>
+                    <Skeleton animation="wave" variant="text" width={180} />
+                    <Skeleton animation="wave" variant="text" width={180} />
+                    <Skeleton animation="wave" variant="text" width={100} />
+                    <Skeleton animation="wave" variant="text" width={100} />
+                    <Skeleton animation="wave" variant="text" width={100} />
+                  </div>
                 </li>
               )
             }
