@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
+import Skeleton from '@material-ui/lab/Skeleton';
 import { useResolve, useProductImages } from './hooks';
 import { addToCart, loadProductBySlug, getProductById } from './service';
 import { CompareCheck } from './CompareCheck';
@@ -270,7 +271,48 @@ export const Product: React.FC = () => {
           </div>
         </div>
       ) : (
-        <div className="loader" />
+        <div className="product__maincontainer">
+          <div className="product__imgcontainer">
+            <Skeleton className="product__img" animation="wave" variant="rect" />
+          </div>
+          <div className="product__details">
+            <Skeleton>
+              <h1 className="product__name">
+                placeholder
+              </h1>
+            </Skeleton>
+            <Skeleton>
+              <div className="product__sku">
+                placeholder
+              </div>
+            </Skeleton>
+            <Skeleton>
+              <div className="product__price">
+                placeholder
+              </div>
+            </Skeleton>
+            <Skeleton>
+              <Availability available={true} />
+            </Skeleton>
+            <Skeleton>
+              <div className="product__moltinbtncontainer">
+                <div ref={dropdownRef}>
+                  <CartButton/>
+                </div>
+              </div>
+            </Skeleton>
+            <Skeleton>
+              <div className="product__description">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </div>
+            </Skeleton>
+            <Skeleton>
+              <div className="product__socialshare">
+                <SocialShare name="skeletonproduct" description="placeholder" imageHref="" />
+              </div>
+            </Skeleton>
+          </div>
+        </div>
       )}
       {modalOpen ? (
         <div className="product__createcartmodalbg">
