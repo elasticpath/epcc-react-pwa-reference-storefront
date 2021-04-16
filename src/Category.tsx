@@ -7,7 +7,6 @@ import { ProductThumbnail } from './ProductThumbnail';
 import { createCategoryUrl } from './routes';
 import { Pagination } from './Pagination';
 import { useResolve } from './hooks';
-import Skeleton from '@material-ui/lab/Skeleton';
 import {config} from './config';
 
 import './Category.scss';
@@ -89,31 +88,29 @@ export const Category: React.FC = () => {
       ) : (
         <>
           <div className="category__breadcrumbs">
-            <Skeleton animation="wave" variant="text" width={200}>
-              <a className="category__breadcrumblink" href="placeholder">placeholder</a>
-            </Skeleton>
+            <div className="skeleton" style={{width: 200}}>&nbsp;</div>
           </div>
           
           <div className="category__categoryname">
-            <Skeleton animation="wave" variant="text" width={150} />
+            <div className="skeleton" style={{width: 150}}>&nbsp;</div>
           </div>
 
           <ul className="category__productlist">
             {[...Array(config.categoryPageSize).keys()].map((index) =>
               <li key={`skeleton_${index}`} className="category__product">
                 <div className="category__productskeleton">
-                  <Skeleton animation="wave" variant="rect" width={180} height={180}/>
-                  <Skeleton animation="wave" variant="text" width={180} />
-                  <Skeleton animation="wave" variant="text" width={180} />
-                  <Skeleton animation="wave" variant="text" width={100} />
-                  <Skeleton animation="wave" variant="text" width={100} />
-                  <Skeleton animation="wave" variant="text" width={100} />
+                  <div className="skeleton" style={{width: 180, height: 180}}/>
+                  <div className="skeleton" style={{width: 180, marginTop: 10}}>&nbsp;</div>
+                  <div className="skeleton" style={{width: 180, marginTop: 10}}>&nbsp;</div>
+                  <div className="skeleton" style={{width: 100, marginTop: 10}}>&nbsp;</div>
+                  <div className="skeleton" style={{width: 100, marginTop: 10}}>&nbsp;</div>
+                  <div className="skeleton" style={{width: 100, marginTop: 10}}>&nbsp;</div>
                 </div>
               </li>
             )}
           </ul>
 
-          <Skeleton animation="wave" variant="rect">
+          <div className="skeleton skeleton-parent">
             <div className="category__pagination">
               <Pagination
                 totalPages={3}
@@ -121,7 +118,7 @@ export const Category: React.FC = () => {
                 formatUrl={(page) => createCategoryUrl("", page)}
               />
             </div>
-          </Skeleton>
+          </div>
         </>
       )}
     </div>
