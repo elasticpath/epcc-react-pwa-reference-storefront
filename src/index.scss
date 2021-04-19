@@ -538,8 +538,11 @@ $shopkitBtnOutlineText: $firstComplimentColor;
   }
 }
 
-.skeleton-parent > * {
-  visibility: hidden;
+.skeleton-parent {
+  width: fit-content;
+  > * {
+    visibility: hidden;
+  }
 }
 
 @media (max-width: $mobileWidth - 1px) {
