@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import useOnclickOutside from 'react-cool-onclickoutside';
-import Skeleton from '@material-ui/lab/Skeleton';
 import { useResolve, useProductImages } from './hooks';
 import { addToCart, loadProductBySlug, getProductById } from './service';
 import { CompareCheck } from './CompareCheck';
@@ -272,45 +271,51 @@ export const Product: React.FC = () => {
         </div>
       ) : (
         <div className="product__maincontainer">
-          <div className="product__imgcontainer">
-            <Skeleton className="product__img" animation="wave" variant="rect" />
+          <div className="product__imgcontainer skeleton skeleton-parent">
+            <div className="product__img" />
           </div>
           <div className="product__details">
-            <Skeleton>
+            <div className="skeleton skeleton-parent">
               <h1 className="product__name">
                 placeholder
               </h1>
-            </Skeleton>
-            <Skeleton>
-              <div className="product__sku">
+            </div>
+            <div className="product__sku skeleton skeleton-parent">
+              <div>
                 placeholder
               </div>
-            </Skeleton>
-            <Skeleton>
-              <div className="product__price">
+            </div>
+            <div className="product__price skeleton skeleton-parent">
+              <div>
                 placeholder
               </div>
-            </Skeleton>
-            <Skeleton>
-              <Availability available={true} />
-            </Skeleton>
-            <Skeleton>
-              <div className="product__moltinbtncontainer">
-                <div ref={dropdownRef}>
-                  <CartButton/>
+            </div>
+            <div className="availability skeleton skeleton-parent">
+              <div>
+                {t('available')}
+              </div>
+            </div>
+            <div className="product__comparecheck">
+              <div className="skeleton skeleton-parent">
+                <input type="checkbox" />
+                <span>Compare</span>
+              </div>
+            </div>
+            <div className="product__moltinbtncontainer">
+              <button className="epbtn skeleton skeleton-parent">
+                <div>
+                  {t("add-to-cart")}
                 </div>
-              </div>
-            </Skeleton>
-            <Skeleton>
-              <div className="product__description">
+              </button>
+            </div>
+            <div className="product__description skeleton skeleton-parent">
+              <div>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
               </div>
-            </Skeleton>
-            <Skeleton>
-              <div className="product__socialshare">
-                <SocialShare name="skeletonproduct" description="placeholder" imageHref="" />
-              </div>
-            </Skeleton>
+            </div>
+            <div className="product__socialshare">
+              <div className="skeleton" style={{ width: 300, height: 40 }} />
+            </div>
           </div>
         </div>
       )}
