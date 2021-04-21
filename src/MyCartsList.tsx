@@ -166,7 +166,7 @@ export  const MyCartsList: React.FC = () => {
             </div>
             <div className="mycarts__tblheader">
               <p className='mycarts__rowtitle'>{t('cart-name')}</p>
-              <p className='mycarts__rowtitle '>
+              <div className='mycarts__rowtitle '>
                 {t('products-number')}
                 <div className="mycarts__tooltip">
                   <TooltipIcon className='mycarts__tooltipicon'/>
@@ -174,7 +174,7 @@ export  const MyCartsList: React.FC = () => {
                     {t('product-tooltip')}
                   </span>
                 </div>
-              </p>
+              </div>
               <p className='mycarts__rowtitle'>{t('cart-total')}</p>
               <p className='mycarts__rowtitle'>{t('cart-expiry')}</p>
               <p className='mycarts__rowtitle'>{t('last-edit')}</p>

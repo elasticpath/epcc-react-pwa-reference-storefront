@@ -262,8 +262,8 @@
   "page": "Page", 
   "of": "of", 
   "results": "results", 
-  "carts-found-in-your-account" : "Carts found in your account",
-  "select-cart-merge-with" : "Select cart to merge with",
+  "select-cart-to-continue" : "Select cart to continue",
+  "select-cart-merge-with" : "Select from existing cart",
   "items-merged-to-account-cart" : "Your items have been merged to your account cart",
   "items-merged-to-created-cart" : "Your items have been merged to your created cart ",
   "items-added-to-the-cart" : "items have been added to the cart",
@@ -282,5 +282,9 @@
   "current-cart" : "Current cart", 
   "unit-price" : "Unit Price", 
   "line-subtotal" : "Line subtotal",
-  "see-all-carts" : "See all carts"
+  "see-all-carts" : "See all carts",
+  "cart-merge-desc" : "You have carts in your account. You can create a new cart or merge your items with an existing cart.", 
+  "merge-cancelation" : "You will lose the items previously in your cart if you close the window without making a selection.",
+  "go-back": "Go back",
+  "skip": "Skip"
 }

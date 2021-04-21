@@ -3,7 +3,6 @@ import { useMultiCartData, useTranslation } from "./app-state";
 import { useFormik } from 'formik';
 import {ReactComponent as ClearIcon} from "./images/icons/ic_clear.svg";
 import { ReactComponent as BackArrowIcon } from './images/icons/arrow_back-black-24dp.svg';
-
 import './SettingsCart.scss';
 
 interface SettingsCartParams {
@@ -29,7 +28,6 @@ export  const SettingsCart: React.FC<SettingsCartParams> = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [nameError, setNameError ] = useState("");
   const [descriptionError , setDescriptionError ] = useState("");
-
 
   let initialValues: FormValues = {
     name: isEditCart && name ? name.toString() : '',

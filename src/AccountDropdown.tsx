@@ -17,7 +17,7 @@ interface AccountDropdownProps {
 export const AccountDropdown: React.FC<AccountDropdownProps> = (props) => {
   const { openCartModal, handleShowNewCart} = props;
   const { isLoggedIn, customerEmail, customerName, clearCustomerData } = useCustomerData();
-  const { count } = useCartData();
+  const { count, setNewCartModal } = useCartData();
   const { setIsCartSelected } = useMultiCartData();
   const { t } = useTranslation();
   const history = useHistory();
@@ -50,6 +50,7 @@ export const AccountDropdown: React.FC<AccountDropdownProps> = (props) => {
   const logout = () => {
     localStorage.setItem('mcart', createCartIdentifier());
     clearCustomerData();
+    setIsOpen(false);
     setIsCartSelected(false);
     if(handleShowNewCart)
       handleShowNewCart(false);
@@ -106,7 +107,7 @@ export const AccountDropdown: React.FC<AccountDropdownProps> = (props) => {
         </div>
       )}
       {count > 0
-        ? <LoginDialog createCart={true} openModal={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} openCartModal={openCartModal} handleShowNewCart={handleShowNewCart}/>
+        ? <LoginDialog createCart={true} openModal={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} openCartModal={openCartModal} handleShowNewCart={handleShowNewCart} newCartModal={() => {setNewCartModal(true)}}/>
         : <LoginDialog createCart={false} openModal={isModalOpen} handleModalClose={() => {setIsModalOpen(false)}} />
       }
       {

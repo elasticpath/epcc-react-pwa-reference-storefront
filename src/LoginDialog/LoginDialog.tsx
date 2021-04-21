@@ -16,10 +16,11 @@ interface AppModalLoginMainProps {
   createCart: boolean,
   handleShowNewCart?: (arg:boolean) => void,
   openCartModal?: (...args: any[]) => any,
+  newCartModal?: () => void
 }
 
 export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
-  const {handleModalClose,openCartModal, openModal, createCart, handleShowNewCart } = props;
+  const {handleModalClose,openCartModal, openModal, createCart, handleShowNewCart, newCartModal } = props;
 
   const { authenticationSettings, oidcProfiles } = useCustomerAuthenticationSettings()
 
@@ -67,6 +68,7 @@ export const LoginDialog: React.FC<AppModalLoginMainProps> = (props) => {
               openModal={openModal}
               openCartModal={openCartModal}
               handleShowNewCart={handleShowNewCart}
+              newCartModal = { newCartModal}
             />
           )}
 

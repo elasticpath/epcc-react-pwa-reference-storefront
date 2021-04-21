@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from "react-router-dom";
 // @ts-ignore
 import { Offline } from 'react-detect-offline';
@@ -8,25 +8,20 @@ import { LanguageDropdown } from './LanguageDropdown';
 import { SearchBar } from './SearchBar';
 import { AccountDropdown } from './AccountDropdown';
 import { Navigation } from "./Navigation";
-import { CartModal } from "./CartModal";
 import { BulkOrderDropdown } from './BulkOrderDropdown';
-
+import { createCartsDetailsPageUrl } from './routes'
 import headerLogo from './images/site-images/Company-Logo.svg';
 import { ReactComponent as CartIcon } from './images/icons/cart-icon.svg';
 
 import './AppHeader.scss';
+import { CreateCart } from './CreateCart';
 
 export const AppHeader: React.FC = () => {
   const { t } = useTranslation();
-  const { count, setOpenModal, openModal } = useCartData();
+  const {newCartModal,setNewCartModal, count, setOpenModal, showCartPopup, cartQuantity } = useCartData();
   const { isLoggedIn } = useCustomerData()
   const { selectedCart } = useMultiCartData();
-  const [newCart, setNewCart] = useState(false);
   const currentCartID = ((isLoggedIn && selectedCart ) ? selectedCart.id : localStorage.getItem("mcart") || "");
-
-  const handleCloseCartModal = () => {
-    setOpenModal(false);
-  };
 
   const openCartModal = () => {
     setOpenModal(true);
@@ -50,18 +45,21 @@ export const AppHeader: React.FC = () => {
           <BulkOrderDropdown />
         </div>
         <div className="appheader__account">
-          <AccountDropdown openCartModal={openCartModal} handleShowNewCart={(bool:boolean) => setNewCart(bool)} />
+          <AccountDropdown openCartModal={openCartModal} handleShowNewCart={(bool:boolean) => setNewCartModal(bool)} />
         </div>
         <div className="appheader__moltincartcontainer">
-          <Link className="epbtn appheader__cartbtn --bordered" aria-label={t('cart')}  to={{
-                          pathname: `/cartsdetails/${currentCartID}`,
-                          state: { cart: (isLoggedIn && selectedCart ? selectedCart : "") }
-                      }} >
+          <Link className="epbtn appheader__cartbtn --bordered" aria-label={t('cart')}  to={createCartsDetailsPageUrl(currentCartID)} >
             <CartIcon className="appheader__carticon" />
             <span className="appheader__cartbtntxt">
               {count}
             </span>
           </Link>
+         { showCartPopup && (
+            <div className="appheader__cartpopup">
+              <p>{cartQuantity === 1 ? t('cart-popup-info-1') : t('cart-popup-info', {quantity: cartQuantity.toString()})}</p>
+              <Link className="epbtn" to={createCartsDetailsPageUrl(currentCartID)}>{t('view-cart')}</Link>
+            </div>
+          )}
         </div>
       </div>
       <div className="appheader__navigation">
@@ -74,7 +72,10 @@ export const AppHeader: React.FC = () => {
           </strong>
         </div>
       </Offline>
-      <CartModal newCart={newCart} handleNewCart={(bool:boolean) => setNewCart(bool)} isCartModalOpen={openModal} handleCloseModal={handleCloseCartModal} />
+      {
+        newCartModal && <CreateCart />
+      }
+      {/* <CartModal newCart={newCart} handleNewCart={(bool:boolean) => setNewCart(bool)} isCartModalOpen={openModal} handleCloseModal={handleCloseCartModal} /> */}
     </div>
   );
 };

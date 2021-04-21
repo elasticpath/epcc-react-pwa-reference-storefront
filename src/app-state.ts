@@ -7,6 +7,7 @@ import {
   getAllOrders,
   loadCategoryTree,
   getCartItems,
+  GetCart,
   loadEnabledCurrencies,
   getMultiCarts,
   getMultiCartsList,
@@ -16,8 +17,12 @@ import {
   loadCustomerAuthenticationSettings,
   loadOidcProfiles
 } from './service';
+import { useHistory} from 'react-router-dom';
+
 
 import { config } from './config';
+import { Cart } from '@moltin/sdk';
+
 
 const languages = config.supportedLocales.map(el => {
   return {
@@ -420,30 +425,42 @@ function useCustomerAuthenticationSettingsState() {
 }
 
 function useCartItemsState() {
+  const history = useHistory();
+  const url = history.location.pathname;
+  const urlId = url.substring(url.lastIndexOf('/') + 1);
   const [cartData, setCartData] = useState<moltin.CartItem[]>([]);
+  const [ cartInfos, setCartInfo ] = useState<moltin.Resource<Cart>>();
   const [promotionItems, setPromotionItems] = useState<moltin.CartItem[]>([]);
   const [count, setCount] = useState(0);
   const [cartQuantity, setCartQuantity] = useState(0);
   const [showCartPopup, setShowCartPopup] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [newCartModal, setNewCartModal] = useState(false);
   const [partialAddMessage, setPartialAddMessage] = useState("");
   const [totalPrice, setTotalPrice] = useState('');
-  const mcart = localStorage.getItem('mcart') || '';
+  const mcart = history.location.pathname.includes(`/cartsdetails/`) ? urlId :  localStorage.getItem('mcart') || '';
   const [addedtItem, setAddedItem] = useState("");
 
   useEffect(() => {
     if (mcart) {
+      GetCart(mcart).then(res => {
+        setCartInfo(res)
+      });
       getCartItems(mcart).then(res => {
+        console.log(res)
         setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'));
         setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'));
         setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0));
         setTotalPrice(res.meta.display_price.without_tax.formatted);
       });
     }
-  }, [mcart]);
+  }, [mcart, history.location]);
 
   const updateCartItems = () => {
     const mcart = localStorage.getItem('mcart') || '';
+    GetCart(mcart).then(res => {
+      setCartInfo(res)
+    });
     getCartItems(mcart).then(res => {
       const cartData = res.data.length ? res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item') : [];
       setCartData(cartData);
@@ -483,7 +500,7 @@ function useCartItemsState() {
     }, 10000);
   }
 
-  return { cartData, promotionItems, count, setCount, cartQuantity, setCartQuantity, showCartPopup, handleShowCartPopup, totalPrice, updateCartItems , openModal, setOpenModal, handlePartialAddMessage, partialAddMessage, setPartialAddMessage, partialAddConfirmation, addedtItem, setAddedItem }
+  return {setNewCartModal, newCartModal, cartInfos, cartData, promotionItems, count, setCount, cartQuantity, setCartQuantity, showCartPopup, handleShowCartPopup, totalPrice, updateCartItems , openModal, setOpenModal, handlePartialAddMessage, partialAddMessage, setPartialAddMessage, partialAddConfirmation, addedtItem, setAddedItem }
 }
 
 function useMultiCartDataState() {

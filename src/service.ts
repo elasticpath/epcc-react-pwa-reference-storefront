@@ -300,6 +300,12 @@ export async function getMultiCarts(token: string ){
   return cartsList;
 }
 
+export async function GetCart(cartId:string) {
+  const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
+  const cartsList = await moltin.Cart(cartId).Get();
+  return cartsList;
+}
+
 export async function getMultiCartsList(token: string, pageNum:number){
   const moltin = MoltinGateway({ host: config.endpointURL, client_id: config.clientId });
   const cartsList = await moltin.Cart()

@@ -20,6 +20,7 @@ interface PasswordLoginFormProps {
   handleShowNewCart?: (arg:boolean) => void,
   openCartModal?: (...args: any[]) => any,
   onSubmit?: (...args: any[]) => any,
+  newCartModal?: () => void
 }
 
 interface FormValues {
@@ -28,12 +29,12 @@ interface FormValues {
 }
 
 export const PasswordLoginForm: React.FC<PasswordLoginFormProps> = (props) => {
-  const { handleModalClose,handleCloseCartModal, setIsLoading, setFailedLogin,onSubmit, openCartModal, openModal, createCart, handleShowNewCart  } = props;
+  const {newCartModal, handleModalClose,handleCloseCartModal, setIsLoading, setFailedLogin,onSubmit, openCartModal, openModal, createCart, handleShowNewCart  } = props;
   
   const { setCustomerData } = useCustomerData();
   const { t } = useTranslation();
   const registrationUrl = createRegistrationUrl();
-  const { setGuestCartId, setIsCreateNewCart, createDefaultCart  } = useMultiCartData();
+  const { setGuestCartId, setIsCreateNewCart, createDefaultCart, selectedCart  } = useMultiCartData();
 
   const browserHistory = createBrowserHistory();
   const history = useHistory();
@@ -78,11 +79,21 @@ export const PasswordLoginForm: React.FC<PasswordLoginFormProps> = (props) => {
             openCartModal();
             handleShowNewCart(true);
           }
+          if(newCartModal) {
+            newCartModal();
+          }
           if (createCart) {
             setIsCreateNewCart(true);
           }
           if (onSubmit) {
             onSubmit();
+          }
+          if(browserHistory.location.pathname === `/cartsdetails/${cartId}`) {
+            history.push(
+              {
+                pathname: `/cartsdetails/${selectedCart?.id}`,
+              }
+            )
           }
         })
         .catch(error => {

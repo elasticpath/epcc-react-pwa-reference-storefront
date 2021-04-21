@@ -291,7 +291,7 @@ export const CartItemList: React.FC<CartItemListParams> = (props) => {
         </React.Fragment>
       )}
       <SettingsCart isEditCart name={selectedCart?.name} description={selectedCart?.description} showSettings={showSettings} handleHideSettings={() => setShowSettings(false)} setShowCartAlert={() => setShowUpdateCartAlert(true)} />
-      <CreateCart showCreateCart={newCart} handleHideCreateCart={handleNewCart ? () => handleNewCart(false) : () => null} />
+      {/* <CreateCart showCreateCart={newCart} handleHideCreateCart={handleNewCart ? () => handleNewCart(false) : () => null} /> */}
     </div>
   )
 };

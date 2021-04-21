@@ -1,44 +1,38 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useCustomerData, useTranslation, useMultiCartData, useCartData } from './app-state';
 import { ReactComponent as SettingsIcon } from "./images/icons/settings-black-24dp.svg";
-import { removeAllCartItems, removeCartItem, updateCartItem , getCartItems} from './service';
+import { removeAllCartItems, removeCartItem, updateCartItem } from './service';
 import { SettingsCart } from "./SettingsCart";
 import { ReactComponent as CloseIcon } from './images/icons/ic_close.svg';
 import { ImageContainer } from "./ImageContainer";
 import { Promotion } from "./Promotion";
 import { APIErrorContext } from "./APIErrorProvider";
+import { createMyCartsUrl } from './routes';
 import useOnclickOutside from 'react-cool-onclickoutside';
 import { Link } from 'react-router-dom';
 import { ReactComponent as CaretIcon } from './images/icons/ic_caret.svg';
 import { ReactComponent as NextIcon } from './images/icons/ic_next.svg';
 import { ReactComponent as MinusIcon } from './images/icons/minus.svg';
 import { ReactComponent as PlusIcon } from './images/icons/plus.svg';
-import { useLocation } from 'react-router-dom';
-import { createMyCartsUrl } from './routes';
 
 import emptyimage from './images/cart_empty.png';
 
 import './CartsDetailsPage.scss';
 
-interface Detailsprops {
-  cart: any
-}
-
-export  const CartsDetailsPage: React.FC<Detailsprops> = () => {
-  const location = useLocation<Detailsprops>();
-  const { selectedCart,updateCartData, multiCartData , updateSelectedCart, setIsCartSelected} = useMultiCartData();
-  const cartInfo =  location?.state.cart.id === selectedCart?.id ? selectedCart : location.state.cart ;
+export  const CartsDetailsPage: React.FC = () => {
   const { t } = useTranslation();
+
+  const { selectedCart,updateCartData, multiCartData , updateSelectedCart, setIsCartSelected} = useMultiCartData();
+  const { count, cartData , updateCartItems, cartInfos, totalPrice, promotionItems } = useCartData();
   const { isLoggedIn } = useCustomerData();
-  const [promotionItems, setPromotionItems] = useState<moltin.CartItem[]>([]);
-  const { setCount } = useCartData();
-  const [counts, setCounts] = useState(0);
-  const [totalPrice, setTotalPrice] = useState('');
-  const [cartData, setCartData] = useState<moltin.CartItem[]>([]);
+  const { addError } = useContext(APIErrorContext);
+
+  const cartInfo =  cartInfos?.data.id === selectedCart?.id ? selectedCart : cartInfos?.data;
   const mcart = (isLoggedIn && cartInfo) ?   cartInfo.id :  localStorage.getItem('mcart');
   const imgSize = 40;
-  const quantityItems = counts.toString();
-  const { addError } = useContext(APIErrorContext);
+  const quantityItems = count.toString();
+ 
+
   const [showSettings, setShowSettings] = useState(false);
   const [showUpdateCartAlert, setShowUpdateCartAlert ] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -46,7 +40,6 @@ export  const CartsDetailsPage: React.FC<Detailsprops> = () => {
   const [showLoader, setShowLoader] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [route, setRoute] = useState<string>('');
-
 
   const modalRef = useOnclickOutside(() => {
     setShowLoginModal(false);
@@ -60,38 +53,11 @@ export  const CartsDetailsPage: React.FC<Detailsprops> = () => {
     setIsShowModal(false);
   });
 
-  useEffect(() => {
-    if (mcart) {
-      getCartItems(mcart).then(res => {
-        setCartData(res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item'));
-        setPromotionItems(res.data.filter(({ type }) => type === 'promotion_item'));
-        setCounts(res.data.reduce((sum, { quantity }) => sum + quantity, 0));
-        setCount(res.data.reduce((sum, { quantity }) => sum + quantity, 0))
-        setTotalPrice(res.meta.display_price.without_tax.formatted);
-      });
-    }
-  }, [mcart, setCount]);
-
-
   const handlePage = (page: string) => setRoute(page)
   const onHandlePage = (page: string) => {
     handlePage(page)
   };
 
-  const updateCartItems = () => {
-    const mcart = localStorage.getItem('mcart') || '';
-    getCartItems(mcart).then(res => {
-      const cartData = res.data.length ? res.data.filter(({ type }) => type === 'cart_item' || type === 'custom_item') : [];
-      setCartData(cartData);
-      const promotionItems = res.data.length ? res.data.filter(({ type }) => type === 'promotion_item') : [];
-      setPromotionItems(promotionItems);
-      const itemQuantity = res.data.length ? res.data.reduce((sum, { quantity }) => sum + quantity, 0) : 0;
-      setCounts(itemQuantity);
-      setCount(itemQuantity);
-      const totalPrice = res.meta ? res.meta.display_price.without_tax.formatted : '';
-      setTotalPrice(totalPrice);
-    });
-  };
 
   const handleCheckout = () => {
     if (!isLoggedIn) {
@@ -157,7 +123,7 @@ export  const CartsDetailsPage: React.FC<Detailsprops> = () => {
             <button
               className="cartsdetailspage__addtocartbtn"
             >
-              My carts
+              {t("my-carts")}
             </button>
             <button onClick={() => setDropdownOpen(!dropdownOpen)} className={`cartsdetailspage__addtocartdropdowntoggle${
               dropdownOpen ? " --open" : ""
@@ -381,7 +347,6 @@ export  const CartsDetailsPage: React.FC<Detailsprops> = () => {
           </div>
         </div>
       ) : null}   
-      
       </div>
   )
 };
