@@ -127,7 +127,7 @@ export const CreateCart: React.FC = (props) => {
             <div className='createcart__tableheader'>
               <p>{t("cart-name")}</p>
               <p>{t('product')}</p>
-              <p>{t('subtotal')}</p>
+              <p>{t('sub-total')}</p>
             </div>
           {multiCartData.map((cart: any) => (
             <div className="createcart__cart" key={cart.id}>
@@ -174,7 +174,7 @@ export const CreateCart: React.FC = (props) => {
               type="submit"
               onClick={() => handleSubmit()}
             >
-              {!isLoading ? t("next") : <span className="circularLoader" aria-label={t('loading')}/>}
+              {!isLoading ? t("continue") : <span className="circularLoader" aria-label={t('loading')}/>}
             </button>
           </div>
       </div>

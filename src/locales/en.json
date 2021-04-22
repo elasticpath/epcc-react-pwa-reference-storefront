@@ -225,7 +225,7 @@
   "update-cart-message" : "Your cart settings have been updated",
   "create-cart-message" : "You've added a new cart to your cart list",
   "quantity": "Quantity",
-  "sub-total": "Sub-total",
+  "sub-total": "Subtotal",
   "tax": "Tax",
   "item-total": "Item Total",
   "create-new-cart": "Create a new cart",
@@ -286,5 +286,6 @@
   "cart-merge-desc" : "You have carts in your account. You can create a new cart or merge your items with an existing cart.", 
   "merge-cancelation" : "You will lose the items previously in your cart if you close the window without making a selection.",
   "go-back": "Go back",
-  "skip": "Skip"
+  "skip": "Skip",
+  "continue" : "Continue"
 }
