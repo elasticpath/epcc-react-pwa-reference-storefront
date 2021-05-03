@@ -29,13 +29,15 @@ export const ProductMainImage: React.FC<ProductMainImageProps> = (props) => {
 
   return (
     <>
-      {productImageUrl && (
+      {productImageUrl ? (
         <ImageContainer
         imgClassName="productmainimage"
         imgUrl={productImageUrl}
         alt={props.product.name}
         imageStyle={{ width: props.size, height: props.size, objectFit: 'fill', backgroundColor: productBackground }}
         />
+      ) : (
+        <div className="skeleton" style={{width: props.size || 180, height: props.size || 180}} />
       )}
     </>
   );
