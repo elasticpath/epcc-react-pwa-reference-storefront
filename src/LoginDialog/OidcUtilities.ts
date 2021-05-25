@@ -3,7 +3,12 @@ import {generateCodeVerifierAndS256Challenge, PkceParameters} from './PkceUtilit
 const generateStateToken = () => {
     var array = new Uint8Array(20);
     const randomValues = window.crypto.getRandomValues(array)
-    return randomValues.join('');
+    return getBase64URLEncodedOfString(randomValues.join(''));
+}
+
+const getBase64URLEncodedOfString = (str: string) => {
+    return btoa(str)
+        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
 export const generateRedirectUri = () => {
