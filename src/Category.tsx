@@ -7,6 +7,7 @@ import { ProductThumbnail } from './ProductThumbnail';
 import { createCategoryUrl } from './routes';
 import { Pagination } from './Pagination';
 import { useResolve } from './hooks';
+import {config} from './config';
 
 import './Category.scss';
 
@@ -85,7 +86,40 @@ export const Category: React.FC = () => {
           </div>
         </>
       ) : (
-        <div className="loader" />
+        <>
+          <div className="category__breadcrumbs">
+            <div className="skeleton" style={{width: 200}}>&nbsp;</div>
+          </div>
+          
+          <div className="category__categoryname">
+            <div className="skeleton" style={{width: 150}}>&nbsp;</div>
+          </div>
+
+          <ul className="category__productlist">
+            {[...Array(config.categoryPageSize).keys()].map((index) =>
+              <li key={`skeleton_${index}`} className="category__product">
+                <div className="category__productskeleton">
+                  <div className="skeleton" style={{width: 180, height: 180}}/>
+                  <div className="skeleton" style={{width: 180, marginTop: 10}}>&nbsp;</div>
+                  <div className="skeleton" style={{width: 180, marginTop: 10}}>&nbsp;</div>
+                  <div className="skeleton" style={{width: 100, marginTop: 10}}>&nbsp;</div>
+                  <div className="skeleton" style={{width: 100, marginTop: 10}}>&nbsp;</div>
+                  <div className="skeleton" style={{width: 100, marginTop: 10}}>&nbsp;</div>
+                </div>
+              </li>
+            )}
+          </ul>
+
+          <div className="skeleton skeleton-parent">
+            <div className="category__pagination">
+              <Pagination
+                totalPages={3}
+                currentPage={1}
+                formatUrl={(page) => createCategoryUrl("", page)}
+              />
+            </div>
+          </div>
+        </>
       )}
     </div>
   );
