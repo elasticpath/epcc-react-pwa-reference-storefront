@@ -1,11 +1,11 @@
 
-$mainColor: #000000;
-$firstComplimentColor: #197C93;
-$secondComplimentColor: #228197;
-$thirdComplimentColor: #167A92;
+$mainColor: #FF117E;
+$firstComplimentColor: #FF4852;
+$secondComplimentColor: #FF4852;
+$thirdComplimentColor: #FF4852;
 
-$mainTextColor: #333333;
-$firstComplimentTextColor: #2D383C;
+$mainTextColor: #3D3D3D;
+$firstComplimentTextColor: #FF117E;
 $secondComplimentTextColor: #666666;
 $thirdComplimentTextColor: #565656;
 $fourthComplimentTextColor: #1F2532;
@@ -13,7 +13,7 @@ $fifthComplimentTextColor: #EEEEEE;
 $sixthComplimentTextColor: #777777;
 
 $mainNavigationColor: #FFFFFF;
-$mainNavigationBackgroundColor: #000000;
+$mainNavigationBackgroundColor: linear-gradient(225deg, #FF4852 0%, #FF117E 100%);
 
 $buttonFocusColor: #979797;
 $buttonActiveColor: #4C5666;
@@ -64,4 +64,3 @@ $sizeLarge: 24px;
 $sizeXLarge: 26px;
 $sizeXXLarge: 28px;
 $sizeXXXLarge: 36px;
-

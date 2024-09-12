@@ -31,12 +31,12 @@
       "type": "image/png"
     }
   ],
-  "name": "EPCC Reference Storefront",
-  "short_name": "EP Commerce Cloud",
+  "name": "Bright Cosmetics",
+  "short_name": "Bright Cosmetics",
   "orientation": "portrait",
   "display": "standalone",
   "start_url": ".",
-  "description": "EP Commerce Cloud Reference Storefront",
+  "description": "Bright Cosmetics Storefront",
   "background_color": "#FFFFFF",
   "theme_color": "#000000"
 }
