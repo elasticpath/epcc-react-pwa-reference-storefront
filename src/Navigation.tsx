@@ -43,6 +43,9 @@ export const Navigation: React.FC = () => {
       const updatedCategoryHistory: string[] = categoryHistory.slice(categoryHistory.length, 1);
       setCategoryName(t('products'));
       setCategoryHistory(updatedCategoryHistory);
+    } else if (categoryName === t('categories')) {
+      setIsTopMenuOpen(false);
+      setIsOpen(false);
     } else {
       setIsOpen(false);
       setCategoryName(t('categories'));
