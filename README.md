@@ -1,6 +1,6 @@
 <img src="https://www.elasticpath.com/themes/custom/bootstrap_sass/logo.svg" alt="" width="400" />
 
-# REACT PWA Reference Storefront
+# REACT PWA Reference Storefront for v2 Catalog (Legacy)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/174a486c-d1d9-4c2c-8434-94c30708c07d/deploy-status)](https://app.netlify.com/sites/epcc-ref-store/deploys)
 [![Stable Branch](https://img.shields.io/badge/stable%20branch-master-blue.svg)](https://github.com/elasticpath/epcc-react-pwa-reference-storefront)
