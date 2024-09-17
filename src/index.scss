@@ -310,6 +310,10 @@ img, svg {
 
 .static-container {
   padding-bottom: 60px;
+
+  @media (min-width: $tabletWidth) {
+    max-width: 740px;
+  }
 }
 
 @keyframes spin {
